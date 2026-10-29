@@ -1,316 +1,115 @@
-\documentclass[11pt]{article}
+\documentclass[10pt]{article}
 
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=0.6in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{microtype}
-\usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{enumitem}
-\usepackage[hidelinks]{hyperref}
 
-\setlist{itemsep=2pt, topsep=4pt}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\setlist{leftmargin=1.1em, itemsep=0.5pt, parsep=0pt, topsep=1pt}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-
-\title{ECE473 Midterm Report:\\[2pt]
-  Replicating USDA Rainfall Insurance with Kalshi Weather Contracts}
-\author{Maya, Evan, and Jack}
-\date{October 29, 2026}
+\newcommand{\head}[1]{\par\vspace{4pt}{\large\bfseries #1}\par\vspace{1pt}}
+\newcommand{\person}[2]{\par\vspace{2pt}\textbf{#1} \textit{(planned: #2)}}
 
 \begin{document}
-\maketitle
+
+\begin{center}
+  {\large\bfseries ECE473 Milestone I Update: Replicating USDA Rainfall
+  Insurance on Kalshi}\\[1pt]
+  Maya, Evan, and Jack \quad\textbullet\quad October 29, 2026
+\end{center}
+\vspace{-8pt}
+
+\textbf{Summary.} All nine Milestone I tasks in our one-pager are done. Today's
+Kalshi monthly rain contracts capture 43\% of the variation in USDA Pasture,
+Rangeland, Forage (PRF) insurance payouts at our seven study counties, at about
+1.8 times PRF's cost to a rancher per dollar of expected payout.
 
 % ---------------------------------------------------------------------------
-\section{Project summary}
+\head{1. Planned vs.\ actual progress}
 
-Today's Kalshi rain contracts can only partly replicate USDA rainfall insurance.
-They capture 43\% of the variation in insurance payouts and cost a rancher about
-1.8 times as much per dollar of expected payout. Milestone~1 built the research
-and data foundation behind that result and measured where the gap comes from.
-
-Our benchmark is USDA's Pasture, Rangeland, Forage (PRF) Rainfall Index policy,
-the only federal rainfall-index product. We study seven PRF counties, each 29 to
-55 miles from the nearest Kalshi monthly-rain settlement station:
+\person{Jack}{farm exposures; weather data and the CPC-to-NCEI change;
+geographic basis risk}
 \begin{itemize}
-  \item Parker County, TX (Dallas) and Atascosa County, TX (San Antonio)
-  \item Grady County, OK (Oklahoma City) and Dade County, MO (Springfield)
-  \item Elbert County, CO (Denver) and Torrance County, NM (Albuquerque)
-  \item Hardee County, FL (Tampa)
+  \item \textbf{W1:} built 11 hay and grazing farms in 7 PRF counties, each 29
+    to 55 miles from a Kalshi station.
+  \item \textbf{W2:} rebuilt the NOAA CPC index PRF paid on through 2026,
+    matching 854 published finals within 0.002 points. \emph{Challenge:}
+    USDA's tool now shows only a recomputed NCEI history, 12.6 points off on
+    average.
+  \item \textbf{W3:} station rain correlates only 0.74 to 0.89 with the farm
+    grid. Only 7.4\% of PRF grids are within 50 miles of a station.
 \end{itemize}
-Across these counties we defined 11 representative hay and grazing farms. All
-code, data, and sourced research notes are in the project repository.
 
-% ---------------------------------------------------------------------------
-\section{How farmers insure against weather today}
-
-Farmers buy subsidized federal crop insurance from 12 private insurers through
-licensed agents. USDA's Risk Management Agency (RMA) sets the terms and prices,
-and taxpayers paid 62.9\% of 2025 premiums. Row-crop farmers mostly buy yield or
-revenue policies that pay on actual loss. Ranchers use PRF, which pays on a
-rainfall index instead; in 2025 it covered 298 million acres and \$6.55 billion
-of liability.
-
-\paragraph{How PRF pays.}
-The country is divided into 0.25-degree grids, about 17 miles on a side. A
-rancher picks at least two non-overlapping two-month intervals, such as Apr--May
-and Jul--Aug, and splits coverage among them. Each interval's grid index is its
-rainfall as a percent of the long-run normal, and the payout is
-\cite{rma_handbook}:
-\begin{equation*}
-  \text{Indemnity} = \max\!\left(0,\ \frac{T - I}{T}\right) \times
-  \text{acres} \times \text{base value} \times \text{coverage} \times
-  \text{productivity} \times \text{allocation}
-\end{equation*}
-Here $T = 100 \times$ coverage level (70 to 90\%) and $I$ is the final grid
-index. The payout ignores the rancher's actual loss. For example, a 500-acre
-Parker County grazing policy at 90\% coverage, split evenly between two
-intervals, carries \$12,420 of protection. Its premium is \$2,180, of which the
-rancher pays \$1,068, and a final index of 62 in one interval pays \$1,931.
-
-\paragraph{Why PRF is hard to beat.}
-The subsidy covers 51 to 59\% of the premium. Over 2015--2025, ranchers got back
-\$2.11 in payouts for every \$1 they paid, and payouts beat producer premiums in
-43 of 44 states. Our PRF calculator reproduces the USDA handbook example and
-every published payment factor we checked.
-
-% ---------------------------------------------------------------------------
-\section{Data foundation: rainfall indexes and Kalshi markets}
-
-The backtests rest on solid data. Station records reproduce every Kalshi outcome
-we checked, and our index rebuild reproduces what PRF actually paid.
-
-\paragraph{USDA index data.}
-PRF paid on NOAA Climate Prediction Center (CPC) gridded rainfall through crop
-year 2026. From crop year 2027 it uses NOAA NCEI's nClimGrid data, averaged into
-the same grids \cite{rma_datasource}. USDA's online PRF tool now shows a
-recomputed NCEI history. For 2021--2026 it differs from the indexes ranchers
-were actually paid by 12.6 index points on average. Our CPC rebuild matches the
-paid final indexes to within 0.002 points over 854 values, so we keep both
-series.
-
-\paragraph{Kalshi markets.}
-Kalshi is a CFTC-regulated exchange with monthly rainfall markets for about 35
-US cities \cite{kalshi_api}. Each month is a ladder of binary contracts,
-``more than $X$ inches'' at whole inches from 1 to 7. Each settles on one NWS
-airport station's daily climate report. A drought hedge buys NO, which pays \$1
-if the month's rain is at or below $X$.
-
-\begin{table}[h]
-\centering
-\small
-\begin{tabularx}{\textwidth}{@{}lY@{}}
-\toprule
-Feature & Finding \\
-\midrule
-Fee & Takers only: round up$\bigl(0.07 \times \text{contracts} \times
-      \text{price} \times (1 - \text{price})\bigr)$. 100 contracts at
-      20 cents cost \$20 plus \$1.12 \\
-Settlement check & Station totals reproduce 922 of 922 settled monthly outcomes \\
-Trading history & Dallas and Denver since Nov 2025; our other five cities first
-      listed on 2026-10-25 \\
-Depth & The Dallas Nov 2026 book held about \$436 of drought payout across all
-      strikes \\
-Pricing & Cheap YES longshots are overpriced (4.7-cent average price, 1.6\% hit
-      rate) \cite{burgi2026}; drought NO contracts trade near fair value \\
-Strike gap & No strike below 1 inch, which exceeds the median month at
-      Albuquerque and Denver for much of the year \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-Kalshi's settlement rules also changed several times in 2026. Older cities now
-cite The Weather Company, which republishes the same NWS reports.
-
-% ---------------------------------------------------------------------------
-\section{How rainfall moves crop and forage yields}
-
-An extra inch of rain in the month that matters most is worth roughly 2 to 4\%
-of yield, but dry months cost far more than wet months gain. These slopes hold
-only near normal rainfall. Above an optimum, extra rain lowers yields.
-
-\begin{table}[h]
-\centering
-\small
-\begin{tabularx}{\textwidth}{@{}YllY@{}}
-\toprule
-Crop and place & Key window & Effect of +1 inch & Value per acre \\
-\midrule
-Corn, Illinois and Iowa & July & +3 to +7 bu/ac (2 to 3.5\%) & \$24 to \$33 \\
-Soybeans, Corn Belt & August & +1 to +2 bu/ac (2 to 3\%) & \$13 to \$23 \\
-Hay, TX, OK, MO & Apr--Jun & +2 to +4\% & \$5 to \$10 \\
-Rangeland, Elbert CO and Torrance NM & Apr--Jul & +6 to +10\% & varies with
-  grazing value \\
-Winter wheat, Kansas & growing season & +3.2 bu/ac & about \$20 \\
-Grain sorghum, Kansas & growing season & +6.6 bu/ac & about \$30 \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-In Illinois, July rain 2 inches below normal costs 17.5 to 22.6 bu/ac of corn,
-depending on the model, while 2 inches above gains about 6 \cite{tannura2008}.
-Excess spring rain also cuts corn yields, and the wettest seasons do about as
-much damage as extreme droughts. Dollar values use WASDE October 2026
-projections of \$4.70 for corn and \$12.00 for soybeans.
-
-% ---------------------------------------------------------------------------
-\section{Measuring the gaps}
-
-Today's Kalshi contracts capture 43\% of the variation in PRF payouts and match
-70\% of PRF dollars in the same year. They cost about 1.8 times as much per
-dollar of expected payout.
-
-\paragraph{Geographic basis risk.}
-An airport gauge tracks its own PRF grid closely, with correlation 0.92 to 0.97.
-It tracks the farm grid 24 to 58 miles away less well, at 0.74 to 0.89. At 90\%
-coverage, PRF pays in 17\% of farm-grid interval-years where the station signal
-does not. Correlation decays with distance on a scale of about 256 miles. Only
-7.4\% of US PRF grids lie within 50 miles of a Kalshi station.
-
-\paragraph{Replication quality.}
-We fit non-negative portfolios of monthly NO contracts to each PRF payout and
-tested them out of sample. Hedge effectiveness is the share of PRF payout
-variance the hedge removes. It falls in three steps:
-
-\begin{table}[h]
-\centering
-\small
-\begin{tabularx}{\textwidth}{@{}Yr@{}}
-\toprule
-Constraint added & Hedge effectiveness \\
-\midrule
-Perfect contract on the grid index & 1.00 \\
-Contract on the station's own two-month rain (geography, gauge vs.\ grid) & 0.73 \\
-Monthly contracts instead of two-month (fine 0.25-inch strikes) & 0.54 \\
-Kalshi's actual whole-inch strikes & 0.43 \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-Arid sites suffer most from whole-inch strikes, and Albuquerque reaches only
-0.19. The ladder misses only 1\% of PRF payouts. However, it pays extra in 47\%
-of years when PRF pays almost nothing, and it covers only 62\% of PRF's payout
-in deep droughts.
-
-\paragraph{Payouts and cost.}
-For the 11 farms over 2015--2025, PRF actually paid \$1.10 million and the
-Kalshi hedges would have paid \$1.20 million. Only 70\% of PRF's dollars were
-matched in the same year, and the median yearly correlation is 0.40.
-
-\begin{table}[h]
-\centering
-\small
-\begin{tabular}{@{}lll@{}}
-\toprule
-Per \$1 of expected payout & PRF (rancher) & Kalshi hedge \\
-\midrule
-Cost after subsidy & \$0.61 & \$1.09 (range \$0.89 to \$1.31) \\
-Cost before subsidy & \$1.28 & no subsidy \\
-Annual cost, all 11 farms & \$56,000 & \$107,500 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The cost gap is entirely the subsidy, since unsubsidized PRF costs more than
-Kalshi. Depth binds first: today's order books fill only 10 to 17\% of a Dallas
-farm's hedge and 46\% of a Denver farm's.
-
-% ---------------------------------------------------------------------------
-\section{Implications and Milestone 2 plan}
-
-Contract design, not geography, is the largest fixable gap. Because of the
-subsidy, a Kalshi product should complement PRF rather than replace it.
+\person{Maya}{PRF rules and payout math; Kalshi markets, cost, and trading;
+replication quality}
 \begin{itemize}
-  \item \textbf{Better contracts:} two-month or seasonal rain contracts would
-    recover about 0.19 of hedge effectiveness. Strikes below 1 inch, or in
-    0.25-inch steps, would recover about 0.11, mostly at arid sites.
-  \item \textbf{Where Kalshi can compete:} coverage above PRF's 90\% cap,
-    intervals PRF leaves open, excess-rain risk for row crops, and producers who
-    cannot buy PRF.
-  \item \textbf{Liquidity:} the platform needs market-maker partners or pooled
-    orders before it can fill even one ranch's hedge.
-  \item \textbf{Milestone 2 work, by owner:}
-  \begin{itemize}
-    \item Jack: a cost-aware optimizer for the contract portfolio, then live
-      price feeds.
-    \item Maya: a full error decomposition into binning, geography, settlement,
-      liquidity, and capital, then the farmer input screen.
-    \item Evan: the exposures current contracts cannot replicate and the
-      contracts that would fix them, then end-to-end app testing against PRF.
-  \end{itemize}
+  \item \textbf{W1:} built a PRF calculator that reproduces the USDA handbook
+    example and 73 published payment factors. \emph{Challenge:} the 2027 rules
+    changed allocation caps mid-project.
+  \item \textbf{W2:} documented rain ladders for about 35 cities, the fee
+    schedule, and a longshot bias. \emph{Challenge:} five of our seven cities first
+    listed on 10/25/2026, so only Dallas and Denver have price history.
+  \item \textbf{W3:} hedge effectiveness falls from 1.00 to 0.73 (station
+    gauge), 0.54 (monthly), and 0.43 (whole-inch strikes).
+\end{itemize}
+
+\person{Evan}{farmer scenarios; settlement proof on each side; PRF vs.\ Kalshi
+payouts}. We also added rain-yield effects by crop and how farmers buy
+insurance.
+\begin{itemize}
+  \item \textbf{W1:} modeled premiums, payouts, and uncovered losses for 11
+    farms. The 90th-percentile uncovered loss is \$1,800 to \$24,700 a year.
+  \item \textbf{W2:} PRF pays on gridded data, Kalshi on one NWS airport
+    report. Our station data reproduces all 922 settled Kalshi outcomes.
+  \item \textbf{W3:} Kalshi matched only 70\% of PRF dollars in the same year
+    (2015--2025) and costs \$1.09 per \$1 of expected payout, versus \$0.61 for
+    subsidized PRF. \emph{Challenge:} order books fill only 10 to 17\% of a
+    Dallas hedge.
 \end{itemize}
 
 % ---------------------------------------------------------------------------
-\section{Limitations}
+\head{2. Remaining work for Milestone II (due 11/12)}
 
-The main limits are thin price history and a single snapshot of market depth.
-\begin{itemize}
-  \item Real Kalshi prices exist only for Dallas and Denver, about one year
-    each. Elsewhere we price at fair value from station climatology.
-  \item Order-book depth comes from one November 2026 snapshot, taken while
-    Kalshi's liquidity rewards were active.
-  \item Results from Luo \cite{luo2026} come from the SSRN abstract, because the
-    full paper was not accessible. Related work on Kalshi rain contracts
-    includes Iturbide \cite{iturbide2026}; the replication idea builds on
-    state-contingent claims theory \cite{ross1976, breeden1978}.
-\end{itemize}
+{\small
+\begin{tabularx}{\textwidth}{@{}lYY@{}}
+\toprule
+Owner & Week 4: designing better options & Week 5: building the app \\
+\midrule
+Jack & Optimizer for the lowest-error, lowest-cost portfolio, with fees,
+  capital lock-up, and depth limits & Live-price backend that quotes a
+  farmer's custom plan \\
+Maya & Split the remaining error into binning, geography, settlement,
+  liquidity, and capital & Farmer screen: location to PRF grid and nearest
+  station, plus months to cover \\
+Evan & Find exposures current contracts replicate poorly and propose contracts
+  that fix them & Test the app on the 11 farms against the PRF benchmark \\
+\bottomrule
+\end{tabularx}
+}
+\par\vspace{1pt}
+All three of us will also fact-check six research notes and re-pull order books
+after 11/1.
 
 % ---------------------------------------------------------------------------
-\begin{thebibliography}{9}
-\small
-
-\bibitem{rma_handbook}
-USDA Risk Management Agency.
-\newblock \emph{Rainfall Index Plan Handbook}, FCIC-18150, 2026 crop year.
-\newblock \url{https://www.rma.usda.gov/sites/default/files/2025-08/2026-18150-Rainfall-Index-Handbook.pdf}
-
-\bibitem{rma_datasource}
-USDA Risk Management Agency.
-\newblock ``USDA Risk Management Agency Upgrades Rainfall Data Source.''
-  April 30, 2026.
-\newblock \url{https://www.rma.usda.gov/news-events/news/2026/washington-dc/usda-risk-management-agency-upgrades-rainfall-data-source}
-
-\bibitem{kalshi_api}
-Kalshi.
-\newblock Trade API documentation: historical data.
-\newblock \url{https://docs.kalshi.com/getting_started/historical_data}
-
-\bibitem{luo2026}
-Z.~Luo.
-\newblock ``Prediction Markets as Weather Hedges: Geographic Basis Risk,
-  Settlement Constraints, and Contract Replication.'' SSRN working paper.
-\newblock \url{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7138562}
-
-\bibitem{iturbide2026}
-P.~Iturbide.
-\newblock ``Basis Risk in Prediction Markets: Can a Rain Contract Hedge New York
-  Rooftop Bars?'' SSRN working paper, 2026.
-\newblock \url{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7552699}
-
-\bibitem{burgi2026}
-C.~B\"urgi, W.~Deng, and K.~Whelan.
-\newblock ``Makers and Takers: The Economics of the Kalshi Prediction Market.''
-  CESifo Working Paper 12122, 2026.
-\newblock \url{https://www.ifo.de/DocDL/cesifo1_wp12122.pdf}
-
-\bibitem{tannura2008}
-M.~A. Tannura, S.~H. Irwin, and D.~L. Good.
-\newblock ``Weather, Technology, and Corn and Soybean Yields in the U.S. Corn
-  Belt.'' Marketing and Outlook Research Report 2008-01, University of Illinois,
-  2008.
-\newblock \url{https://ageconsearch.umn.edu/record/37501}
-
-\bibitem{ross1976}
-S.~A. Ross.
-\newblock ``Options and Efficiency.''
-\newblock \emph{Quarterly Journal of Economics}, 90(1):75--89, 1976.
-\newblock \url{https://doi.org/10.2307/1886087}
-
-\bibitem{breeden1978}
-D.~T. Breeden and R.~H. Litzenberger.
-\newblock ``Prices of State-Contingent Claims Implicit in Option Prices.''
-\newblock \emph{Journal of Business}, 51(4):621--651, 1978.
-
-\end{thebibliography}
+\head{3. Refinements to our plan}
+\begin{itemize}
+  \item \textbf{Scope:} complement PRF instead of replacing it. The subsidy is
+    the whole cost gap, so we will target coverage above PRF's 90\% cap,
+    uncovered intervals, and excess-rain risk.
+  \item \textbf{Approach:} the optimizer will cap each contract at order-book
+    depth, which binds before price. Backtests use the as-paid CPC index, and
+    forward results use NCEI.
+  \item \textbf{App:} the farmer screen will show station distance and expected
+    hedge effectiveness, so basis risk is visible before buying.
+  \item \textbf{Timeline:} the fact-check and order-book re-pull move to the
+    start of Week 4, since our depth snapshot came during Kalshi's liquidity
+    rewards. \textbf{Responsibilities:} no changes.
+\end{itemize}
 
 \end{document}
