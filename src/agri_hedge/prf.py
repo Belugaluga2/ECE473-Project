@@ -81,6 +81,41 @@ MIN_PERCENT_OF_VALUE = 0.10
 #: is supplied; pass the ADM value for real policies.
 DEFAULT_MAX_PERCENT_OF_VALUE = 0.60
 
+#: Maximum percent of value per interval for crop year 2027, by state FIPS ([ADM] 2027 A00810
+#: "Maximum Acre Percent", intervals 626-635; uniform within each state). See
+#: data/processed/prf_rules.yaml (max_percent_per_interval) for the source trail.
+_MAX_PCT_2027_STATES = {
+    0.50: ["01", "04", "06", "12", "13", "22", "28", "35", "37", "45", "48"],
+    0.60: ["05", "08", "10", "15", "17", "18", "19", "20", "21", "24", "29", "31", "32", "34",
+           "39", "40", "42", "47", "49", "51", "54"],
+    0.70: ["09", "16", "23", "25", "26", "27", "30", "33", "36", "38", "41", "44", "46", "50",
+           "53", "55", "56"],
+}
+MAX_PERCENT_OF_VALUE_2027_BY_STATE = {f: v for v, fips in _MAX_PCT_2027_STATES.items() for f in fips}
+
+#: Jan-Feb (interval 625) cap, new for crop year 2027 (PM-26-053; [ADM] 2027 A00810): 25 percent,
+#: except 50 percent in California (state FIPS 06).
+JAN_FEB_MAX_PERCENT_2027 = 0.25
+JAN_FEB_MAX_PERCENT_2027_EXCEPTIONS = {"06": 0.50}
+
+
+def max_percent_of_value_for(state_fips: str, crop_year: int) -> dict[str, float]:
+    """Per-interval maximum percent of value for a state and crop year, keyed by interval name.
+
+    Crop years 2025-2026 use the 2025-26 ADM caps (0.50 in TX, NM, FL; 0.60 in OK, MO, CO; other
+    states fall back to DEFAULT_MAX_PERCENT_OF_VALUE). Crop year 2027 and later use the 2027 ADM
+    state caps and the new Jan-Feb cap. For a real policy, prefer the grid's own ADM value.
+    """
+    fips = str(state_fips).zfill(2)
+    if crop_year >= 2027:
+        base = MAX_PERCENT_OF_VALUE_2027_BY_STATE.get(fips, DEFAULT_MAX_PERCENT_OF_VALUE)
+        jan_feb = min(base, JAN_FEB_MAX_PERCENT_2027_EXCEPTIONS.get(fips, JAN_FEB_MAX_PERCENT_2027))
+    else:
+        base = {"48": 0.50, "35": 0.50, "12": 0.50, "40": 0.60, "29": 0.60, "08": 0.60}.get(
+            fips, DEFAULT_MAX_PERCENT_OF_VALUE)
+        jan_feb = base
+    return {name: (jan_feb if name == "Jan-Feb" else base) for name in INTERVAL_NAMES}
+
 #: FCIC premium subsidy share by coverage level for additional coverage. [ADM] A00070 Subsidy
 #: Percent, insurance plan 13, record category 04, coverage type A, reinsurance years 2025 and
 #: 2026 (identical); also [HB] Exhibit 5 A(4) (51 percent at 90 percent) and the [DST]
@@ -360,7 +395,9 @@ def validate_election(election: PRFElection,
                       max_percent_of_value: float | Mapping[str, float] | None = None,
                       min_percent_of_value: float | Mapping[str, float] = MIN_PERCENT_OF_VALUE,
                       available_intervals: Iterable | None = None,
-                      raise_on_error: bool = True) -> list[str]:
+                      raise_on_error: bool = True,
+                      state_fips: str | None = None,
+                      crop_year: int | None = None) -> list[str]:
     """Check a PRF election against the policy rules; return (or raise) the list of violations.
 
     Rules checked:
@@ -376,8 +413,12 @@ def validate_election(election: PRFElection,
       * selected intervals are offered for the grid/county ([HB] para 32 B, "See the AD");
       * insured acres > 0, share in (0, 1], county base value > 0.
     `max_percent_of_value` and `min_percent_of_value` may be a scalar or a dict keyed by interval.
+    If `max_percent_of_value` is None and `state_fips` and `crop_year` are given, the state caps
+    from max_percent_of_value_for() are used (including the 2027 Jan-Feb cap).
     """
     e = election
+    if max_percent_of_value is None and state_fips is not None and crop_year is not None:
+        max_percent_of_value = max_percent_of_value_for(state_fips, crop_year)
     errors: list[str] = []
     if e.coverage_level not in COVERAGE_LEVELS:
         errors.append(f"coverage level {e.coverage_level:.2f} not in {COVERAGE_LEVELS}")

@@ -318,3 +318,32 @@ def test_forage_loss_proxy_and_weighted_index():
     sens = pd.DataFrame({"row_key": ["hay_tx"], "yield_elasticity_precip": [0.8]})
     assert rs.elasticity_for("hay_tx", sens)[0] == 0.8
     assert rs.elasticity_for("other", sens)[0] == 1.0
+
+
+# ---------------------------------------------------------------------------------------------
+# State and crop-year allocation caps (2027 ADM A00810; see data/processed/prf_rules.yaml)
+# ---------------------------------------------------------------------------------------------
+
+def test_state_caps_texas_is_fifty_percent():
+    from agri_hedge.prf import max_percent_of_value_for
+    caps = max_percent_of_value_for("48", 2026)
+    assert caps["Apr-May"] == 0.50
+    e = _valid(allocation={"Apr-May": 0.6, "Jul-Aug": 0.4})
+    errs = validate_election(e, raise_on_error=False, state_fips="48", crop_year=2026)
+    assert any("above maximum 50%" in m for m in errs)
+
+
+def test_2027_jan_feb_cap_and_california_exception():
+    from agri_hedge.prf import max_percent_of_value_for
+    assert max_percent_of_value_for("40", 2027)["Jan-Feb"] == 0.25
+    assert max_percent_of_value_for("40", 2027)["Mar-Apr"] == 0.60
+    assert max_percent_of_value_for("06", 2027)["Jan-Feb"] == 0.50
+    assert max_percent_of_value_for("27", 2027)["Jun-Jul"] == 0.70
+    e = _valid(allocation={"Jan-Feb": 0.3, "Jul-Aug": 0.7})
+    errs = validate_election(e, raise_on_error=False, state_fips="27", crop_year=2027)
+    assert any(m.startswith("Jan-Feb") for m in errs)
+    assert not any(m.startswith("Jul-Aug") for m in errs)
+
+
+def test_without_state_the_old_default_still_applies():
+    assert validate_election(_valid(allocation={"Apr-May": 0.6, "Jul-Aug": 0.4})) == []

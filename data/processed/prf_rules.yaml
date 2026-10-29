@@ -372,7 +372,13 @@ rounding:
     source: ["DST"]
     status: CONFIRMED
   handbook_exhibit5_quirks: "Handbook subsidy is taken on the total premium (1,114 x 0.51 = 568), not per unit (sum would be 566). One indemnity (588) uses unrounded unit protection (2,116.80)."
-  recommended_for_our_calculator: "Use the 'official' 3-decimal pcf for indemnities and the DST rules for protection, premium and subsidy. Expose a flag that switches pcf to unrounded so results can be checked against the DST."
+  recommended_for_our_calculator: "Use the 'official' 3-decimal pcf for indemnities (from unrounded unit protection, as the handbook does) and round subsidy once on the policy total. Keep a 'dst' mode (cents ppa, whole-dollar unit protection/premium/subsidy, unrounded pcf) to check against the DST."
+  per_unit_subsidy_in_vectors: "worked_examples list per-unit subsidy rounded per unit (DST style: 501, 611). agri_hedge.prf 'official' mode keeps unit subsidy unrounded (500.82, 610.98) and rounds once on the total; the totals are identical in every vector here."
+  cross_check_agri_hedge_prf:
+    date: "2026-10-29"
+    module: src/agri_hedge/prf.py (policy_table / policy_totals, read-only)
+    result: "0 disagreements: all indemnities (official and dst modes), all dst-mode protection/premium/subsidy values, all official totals, and handbook Exhibit 5 (subsidy 568, producer 546, scenario-3 indemnity 1,705) reproduced."
+    note_for_module_owner: "prf.py documents 2025-2026 caps. For 2027 the Jan-Feb (625) cap is 0.25 (0.50 in California) and 17 states allow 0.70; its fallback DEFAULT_MAX_PERCENT_OF_VALUE = 0.60 is too loose for TX/NM/FL (0.50) and too strict for 0.70 states."
 
 limitations:
   - "Area/index plan: no loss adjustment and no measurement of the producer's actual forage loss (HB26 para 20; BP27 sec. 13)."
@@ -406,17 +412,17 @@ reference_offers_2027:
       0.85: {"625": 0.2242, "626": 0.1946, "627": 0.1544, "628": 0.1342, "629": 0.1394, "630": 0.2084, "631": 0.1772, "632": 0.1833, "633": 0.1961, "634": 0.2150, "635": 0.1907}
       0.90: {"625": 0.2396, "626": 0.2127, "627": 0.1740, "628": 0.1581, "629": 0.1590, "630": 0.2244, "631": 0.1929, "632": 0.1997, "633": 0.2191, "634": 0.2335, "635": 0.2094}
   study_sites_90pct:
-    note: "County base values (grazing; non-irrigated conventional haying) and 90%-coverage premium rates for intervals 625..635 in order. Jan-Feb (625) max is 0.25 at every site. Station grids are priced in the county that contains the station."
+    note: "County base values (grazing; non-irrigated conventional haying) and 90%-coverage premium rates for intervals 625..635 in order. Jan-Feb (625) max is 0.25 at every site. Station grids are priced in the county containing the station (rates are per grid and identical across the grid's counties; CBVs were also equal for the neighboring counties we checked)."
     DFW_farm:    {grid: "15429", county: "48367", cbv_grazing: 27.6, cbv_hay_nonirr: 181.0, max_pct: 0.50, rates_90: [0.2396, 0.2127, 0.1740, 0.1581, 0.1590, 0.2244, 0.1929, 0.1997, 0.2191, 0.2335, 0.2094]}
     DFW_station: {grid: "15432", county: "48113", cbv_grazing: 26.8, cbv_hay_nonirr: 198.0, max_pct: 0.50, rates_90: [0.2014, 0.1868, 0.1600, 0.1540, 0.1690, 0.2151, 0.2033, 0.2003, 0.2042, 0.2229, 0.1940]}
     SAT_farm:    {grid: "10626", county: "48013", cbv_grazing: 18.2, cbv_hay_nonirr: 113.0, max_pct: 0.50, rates_90: [0.2778, 0.2423, 0.2477, 0.2155, 0.2004, 0.2769, 0.2808, 0.2237, 0.2250, 0.2629, 0.2670]}
     SAT_station: {grid: "11527", county: "48029", cbv_grazing: 27.2, cbv_hay_nonirr: 199.0, max_pct: 0.50, rates_90: [0.2371, 0.2201, 0.1971, 0.2024, 0.1925, 0.2468, 0.2740, 0.2235, 0.2253, 0.2552, 0.2582]}
     OKC_farm:    {grid: "18129", county: "40051", cbv_grazing: 31.6, cbv_hay_nonirr: 172.0, max_pct: 0.60, rates_90: [0.2286, 0.1604, 0.1769, 0.1382, 0.1561, 0.1822, 0.1890, 0.1827, 0.1844, 0.2234, 0.2360]}
-    OKC_station: {grid: "18430", county: "40017", cbv_grazing: 31.6, cbv_hay_nonirr: 172.0, max_pct: 0.60, rates_90: [0.2223, 0.1598, 0.1722, 0.1368, 0.1596, 0.1937, 0.1795, 0.1775, 0.1851, 0.2183, 0.2325]}
+    OKC_station: {grid: "18430", county: "40109", cbv_grazing: 31.6, cbv_hay_nonirr: 172.0, max_pct: 0.60, rates_90: [0.2223, 0.1598, 0.1722, 0.1368, 0.1596, 0.1937, 0.1795, 0.1775, 0.1851, 0.2183, 0.2325]}
     SGF_farm:    {grid: "20845", county: "29057", cbv_grazing: 41.4, cbv_hay_nonirr: 184.0, max_pct: 0.60, rates_90: [0.1756, 0.1591, 0.1422, 0.1290, 0.1281, 0.1282, 0.1363, 0.1470, 0.1699, 0.1811, 0.1960]}
-    SGF_station: {grid: "20547", county: "29043", cbv_grazing: 41.4, cbv_hay_nonirr: 184.0, max_pct: 0.60, rates_90: [0.1828, 0.1575, 0.1251, 0.1238, 0.1226, 0.1428, 0.1270, 0.1596, 0.1696, 0.1656, 0.1999]}
+    SGF_station: {grid: "20547", county: "29077", cbv_grazing: 41.4, cbv_hay_nonirr: 184.0, max_pct: 0.60, rates_90: [0.1828, 0.1575, 0.1251, 0.1238, 0.1226, 0.1428, 0.1270, 0.1596, 0.1696, 0.1656, 0.1999]}
     DEN_farm:    {grid: "23204", county: "08039", cbv_grazing: 13.5, cbv_hay_nonirr: 171.0, max_pct: 0.60, rates_90: [0.1799, 0.1846, 0.1661, 0.1694, 0.1562, 0.1126, 0.0837, 0.1210, 0.2091, 0.2361, 0.2151]}
-    DEN_station: {grid: "23802", county: "08001", cbv_grazing: 13.5, cbv_hay_nonirr: 171.0, max_pct: 0.60, rates_90: [0.1755, 0.1840, 0.1645, 0.1657, 0.1714, 0.1710, 0.1472, 0.1801, 0.2143, 0.2118, 0.2135]}
+    DEN_station: {grid: "23802", county: "08031", cbv_grazing: 13.5, cbv_hay_nonirr: 171.0, max_pct: 0.60, rates_90: [0.1755, 0.1840, 0.1645, 0.1657, 0.1714, 0.1710, 0.1472, 0.1801, 0.2143, 0.2118, 0.2135]}
     ABQ_farm:    {grid: "17497", county: "35057", cbv_grazing: 11.5, cbv_hay_nonirr: 200.0, max_pct: 0.50, rates_90: [0.2348, 0.2378, 0.2727, 0.2985, 0.2604, 0.1333, 0.0798, 0.1225, 0.2201, 0.2930, 0.2673]}
     ABQ_station: {grid: "18094", county: "35001", cbv_grazing: 10.1, cbv_hay_nonirr: 146.0, max_pct: 0.50, rates_90: [0.2426, 0.2446, 0.2705, 0.2979, 0.2784, 0.1675, 0.1167, 0.1369, 0.2130, 0.2683, 0.2666]}
     TPA_farm:    {grid: "8893", county: "12049", cbv_grazing: 50.3, cbv_hay_nonirr: 333.0, max_pct: 0.50, rates_90: [0.2068, 0.2151, 0.2127, 0.1584, 0.1004, 0.0648, 0.0470, 0.0779, 0.1319, 0.1990, 0.2312]}
@@ -521,7 +527,7 @@ worked_examples:
     expected_official: {pcf: [0.554, 0.296], indemnity: [3440, 1838], total_indemnity: 5278}
 
   - id: dst_oracle_b_odd_inputs
-    note: "Non-round inputs that pin down DST rounding (ppa 26.979 -> 26.98, so unit protection 5390.604 -> 5391)."
+    note: "Non-round inputs that pin down DST rounding (ppa 26.979 -> 26.98, so unit protection 5390.604 -> 5391). ARITHMETIC-ONLY: the 60% allocation exceeds Texas's 50% cap (the DST pricing API does not enforce caps); run the calculator with validation off. Same for oracles c and d."
     inputs:
       intended_use: grazing
       grid: "15429"
