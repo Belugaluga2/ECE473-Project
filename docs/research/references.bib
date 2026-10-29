@@ -1,0 +1,831 @@
+% references.bib -- annotated bibliography for docs/research/10_literature_review.md
+% Compiled 2026-10-29 (R7, literature review). Every entry was located on Crossref, a publisher
+% page, SSRN/Crossref metadata, arXiv, RePEc/AgEcon Search, or an institutional repository.
+% The `note` field records how each entry was verified:
+%   FULLTEXT  = PDF obtained and read (copy in data/raw/lit/)
+%   ABSTRACT  = official abstract read (publisher/Crossref/arXiv/repository); full text not read
+%   METADATA  = bibliographic record confirmed (DOI resolves, title/authors/volume/pages match); content
+%               described from standard knowledge of the paper, no numbers cited from it
+%   UNVERIFIED = only a secondary citation was found; details may be wrong
+% Volume/issue/pages are as printed in the Crossref record unless noted.
+% VERIFIED 2026-10-29 by an independent fact-checker: every DOI was resolved through the Crossref API
+% (or the DataCite API for 10.22004 AgEcon Search DOIs) and author, year, title, venue, volume and pages
+% were compared with this file. Entries without DOIs were checked on their repository/arXiv pages.
+% See the Verification log at the end of 10_literature_review.md.
+
+% ---------------------------------------------------------------------------
+% Closest prior art (Kalshi weather contracts as hedges)
+% ---------------------------------------------------------------------------
+
+@techreport{luo2026,
+  author      = {Luo, Ziye},
+  title       = {Prediction Markets as Weather Hedges: Geographic Basis Risk, Settlement Constraints, and Contract Replication},
+  institution = {SSRN working paper 7138562 (Duke University per OpenAlex affiliation)},
+  year        = {2026},
+  doi         = {10.2139/ssrn.7138562},
+  url         = {https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7138562},
+  note        = {ABSTRACT. Crossref record created 2026-08-03. SSRN PDF and abstract page returned HTTP 403 (Cloudflare bot check) on 2026-10-29, so only the author abstract deposited with Crossref was read. No other copy found (verifier re-searched web, arXiv, Semantic Scholar, GitHub on 2026-10-29). Numbers in the review are labeled UNVERIFIED (abstract only).}
+}
+
+@techreport{iturbide2026,
+  author      = {Iturbide, Paul},
+  title       = {Basis Risk in Prediction Markets: Can a Rain Contract Hedge New York Rooftop Bars?},
+  institution = {SSRN working paper 7552699 (Ecole Polytechnique / HEC Paris per OpenAlex affiliation)},
+  year        = {2026},
+  doi         = {10.2139/ssrn.7552699},
+  url         = {https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7552699},
+  note        = {ABSTRACT plus replication repository. SSRN PDF blocked (HTTP 403). Abstract read from Crossref. Public replication files read in full: https://github.com/pauliturbide21-blip/kalshi-rain-basis-risk (README, preregistration, deviations, results CSVs, scripts); copies in data/raw/lit/iturbide_repo/.}
+}
+
+% ---------------------------------------------------------------------------
+% A. State-contingent claims, spanning, static replication, hedge metrics
+% ---------------------------------------------------------------------------
+
+@article{arrow1964,
+  author  = {Arrow, Kenneth J.},
+  title   = {The Role of Securities in the Optimal Allocation of Risk-bearing},
+  journal = {The Review of Economic Studies},
+  year    = {1964},
+  volume  = {31},
+  number  = {2},
+  pages   = {91--96},
+  doi     = {10.2307/2296188},
+  note    = {METADATA}
+}
+
+@article{ross1976,
+  author  = {Ross, Stephen A.},
+  title   = {Options and Efficiency},
+  journal = {The Quarterly Journal of Economics},
+  year    = {1976},
+  volume  = {90},
+  number  = {1},
+  pages   = {75--89},
+  doi     = {10.2307/1886087},
+  note    = {ABSTRACT. Note the DOI is 10.2307/1886087 (Crossref); Crossref lists first page 75.}
+}
+
+@article{breeden1978,
+  author  = {Breeden, Douglas T. and Litzenberger, Robert H.},
+  title   = {Prices of State-Contingent Claims Implicit in Option Prices},
+  journal = {The Journal of Business},
+  year    = {1978},
+  volume  = {51},
+  number  = {4},
+  pages   = {621--651},
+  doi     = {10.1086/296025},
+  note    = {ABSTRACT. Crossref lists first page 621.}
+}
+
+@article{jackwerth1996,
+  author  = {Jackwerth, Jens Carsten and Rubinstein, Mark},
+  title   = {Recovering Probability Distributions from Option Prices},
+  journal = {The Journal of Finance},
+  year    = {1996},
+  volume  = {51},
+  number  = {5},
+  pages   = {1611--1631},
+  doi     = {10.1111/j.1540-6261.1996.tb05219.x},
+  note    = {METADATA}
+}
+
+@article{derman1995,
+  author  = {Derman, Emanuel and Ergener, Deniz and Kani, Iraj},
+  title   = {Static Options Replication},
+  journal = {The Journal of Derivatives},
+  year    = {1995},
+  volume  = {2},
+  number  = {4},
+  pages   = {78--95},
+  doi     = {10.3905/jod.1995.407927},
+  note    = {METADATA}
+}
+
+@article{carr1998,
+  author  = {Carr, Peter and Ellis, Katrina and Gupta, Vishal},
+  title   = {Static Hedging of Exotic Options},
+  journal = {The Journal of Finance},
+  year    = {1998},
+  volume  = {53},
+  number  = {3},
+  pages   = {1165--1190},
+  doi     = {10.1111/0022-1082.00048},
+  note    = {METADATA}
+}
+
+@article{bakshi2000,
+  author  = {Bakshi, Gurdip and Madan, Dilip},
+  title   = {Spanning and Derivative-Security Valuation},
+  journal = {Journal of Financial Economics},
+  year    = {2000},
+  volume  = {55},
+  number  = {2},
+  pages   = {205--238},
+  doi     = {10.1016/S0304-405X(99)00050-1},
+  note    = {METADATA}
+}
+
+@article{carr2001,
+  author  = {Carr, Peter and Madan, Dilip},
+  title   = {Optimal Positioning in Derivative Securities},
+  journal = {Quantitative Finance},
+  year    = {2001},
+  volume  = {1},
+  number  = {1},
+  pages   = {19--37},
+  doi     = {10.1080/713665549},
+  note    = {ABSTRACT (OpenAlex). The strike-by-strike spanning formula the review attributes to this paper is in its body (standard knowledge), not in the abstract.}
+}
+
+@article{ederington1979,
+  author  = {Ederington, Louis H.},
+  title   = {The Hedging Performance of the New Futures Markets},
+  journal = {The Journal of Finance},
+  year    = {1979},
+  volume  = {34},
+  number  = {1},
+  pages   = {157--170},
+  doi     = {10.1111/j.1540-6261.1979.tb02077.x},
+  note    = {METADATA}
+}
+
+@article{rockafellar2000,
+  author  = {Rockafellar, R. Tyrrell and Uryasev, Stanislav},
+  title   = {Optimization of Conditional Value-at-Risk},
+  journal = {The Journal of Risk},
+  year    = {2000},
+  volume  = {2},
+  number  = {3},
+  pages   = {21--41},
+  doi     = {10.21314/JOR.2000.038},
+  note    = {METADATA}
+}
+
+% ---------------------------------------------------------------------------
+% B. Weather-index insurance and basis risk
+% ---------------------------------------------------------------------------
+
+@article{turvey2001,
+  author  = {Turvey, Calum G.},
+  title   = {Weather Derivatives for Specific Event Risks in Agriculture},
+  journal = {Review of Agricultural Economics},
+  year    = {2001},
+  volume  = {23},
+  number  = {2},
+  pages   = {333--351},
+  doi     = {10.1111/1467-9353.00065},
+  note    = {ABSTRACT (via Semantic Scholar)}
+}
+
+@article{martin2001,
+  author  = {Martin, Steven W. and Barnett, Barry J. and Coble, Keith H.},
+  title   = {Developing and Pricing Precipitation Insurance},
+  journal = {Journal of Agricultural and Resource Economics},
+  year    = {2001},
+  volume  = {26},
+  number  = {1},
+  pages   = {261--274},
+  doi     = {10.22004/ag.econ.31155},
+  url     = {https://ageconsearch.umn.edu/record/31155},
+  note    = {ABSTRACT (verifier, 2026-10-29: DataCite record for the DOI and RePEc page https://ideas.repec.org/a/ags/jlaare/31155.html). Pages 261-274 as cited by Vedenov and Barnett (2004) and Woodard and Garcia (2007); RePEc lists the AgEcon PDF pagination 1-14. Full text not read.}
+}
+
+@article{vedenov2004,
+  author  = {Vedenov, Dmitry V. and Barnett, Barry J.},
+  title   = {Efficiency of Weather Derivatives as Primary Crop Insurance Instruments},
+  journal = {Journal of Agricultural and Resource Economics},
+  year    = {2004},
+  volume  = {29},
+  number  = {3},
+  pages   = {387--403},
+  doi     = {10.22004/ag.econ.30916},
+  url     = {https://ageconsearch.umn.edu/record/30916},
+  note    = {FULLTEXT (data/raw/lit/vedenov_barnett_2004_jare.pdf; first page header reads 29(3):387-403). DOI is a DataCite (AgEcon Search) DOI, not in Crossref.}
+}
+
+@article{barnett2007,
+  author  = {Barnett, Barry J. and Mahul, Olivier},
+  title   = {Weather Index Insurance for Agriculture and Rural Areas in Lower-Income Countries},
+  journal = {American Journal of Agricultural Economics},
+  year    = {2007},
+  volume  = {89},
+  number  = {5},
+  pages   = {1241--1247},
+  doi     = {10.1111/j.1467-8276.2007.01091.x},
+  note    = {ABSTRACT (first paragraph via Semantic Scholar)}
+}
+
+@article{woodard2008,
+  author  = {Woodard, Joshua D. and Garcia, Philip},
+  title   = {Basis Risk and Weather Hedging Effectiveness},
+  journal = {Agricultural Finance Review},
+  year    = {2008},
+  volume  = {68},
+  number  = {1},
+  pages   = {99--117},
+  doi     = {10.1108/00214660880001221},
+  note    = {ABSTRACT of journal version (Crossref) + FULLTEXT of the same-titled 2007 EAAE 101st Seminar conference version (Berlin, July 5-6, 2007), doi:10.22004/ag.econ.9254, https://ageconsearch.umn.edu/record/9254 (data/raw/lit/woodard_garcia_2007_wp.pdf). Definitions quoted in the review, and the statement that precipitation hedges add product basis risk, come from the conference version.}
+}
+
+@article{manfredo2009,
+  author  = {Manfredo, Mark R. and Richards, Timothy J.},
+  title   = {Hedging with Weather Derivatives: A Role for Options in Reducing Basis Risk},
+  journal = {Applied Financial Economics},
+  year    = {2009},
+  volume  = {19},
+  number  = {2},
+  pages   = {87--97},
+  doi     = {10.1080/09603100701765166},
+  note    = {ABSTRACT (via Semantic Scholar)}
+}
+
+@article{musshoff2011,
+  author  = {Musshoff, Oliver and Odening, Martin and Xu, Wei},
+  title   = {Management of Climate Risks in Agriculture--Will Weather Derivatives Permeate?},
+  journal = {Applied Economics},
+  year    = {2011},
+  volume  = {43},
+  number  = {9},
+  pages   = {1067--1077},
+  doi     = {10.1080/00036840802600210},
+  note    = {ABSTRACT (via Semantic Scholar). Published online 2009, in print 2011.}
+}
+
+@article{miranda2012,
+  author  = {Miranda, Mario J. and Farrin, Katie},
+  title   = {Index Insurance for Developing Countries},
+  journal = {Applied Economic Perspectives and Policy},
+  year    = {2012},
+  volume  = {34},
+  number  = {3},
+  pages   = {391--427},
+  doi     = {10.1093/aepp/pps031},
+  note    = {ABSTRACT}
+}
+
+@article{norton2013,
+  author  = {Norton, Michael T. and Turvey, Calum and Osgood, Daniel},
+  title   = {Quantifying Spatial Basis Risk for Weather Index Insurance},
+  journal = {The Journal of Risk Finance},
+  year    = {2013},
+  volume  = {14},
+  number  = {1},
+  pages   = {20--34},
+  doi     = {10.1108/15265941311288086},
+  note    = {ABSTRACT (via Semantic Scholar). Crossref print date 2012-12-28; volume 14(1) is usually cited as 2013.}
+}
+
+@article{elabed2013,
+  author  = {Elabed, Ghada and Bellemare, Marc F. and Carter, Michael R. and Guirkinger, Catherine},
+  title   = {Managing Basis Risk with Multiscale Index Insurance},
+  journal = {Agricultural Economics},
+  year    = {2013},
+  volume  = {44},
+  number  = {4-5},
+  pages   = {419--431},
+  doi     = {10.1111/agec.12025},
+  note    = {ABSTRACT. The false-negative-probability definition is as reproduced in Yu et al. (2019), footnote 14, p. 189.}
+}
+
+@article{ritter2014,
+  author  = {Ritter, Matthias and Mu{\ss}hoff, Oliver and Odening, Martin},
+  title   = {Minimizing Geographical Basis Risk of Weather Derivatives Using a Multi-Site Rainfall Model},
+  journal = {Computational Economics},
+  year    = {2014},
+  volume  = {44},
+  number  = {1},
+  pages   = {67--86},
+  doi     = {10.1007/s10614-013-9410-y},
+  note    = {ABSTRACT (Springer page). Online 2013, print 2014.}
+}
+
+@article{dalhaus2016,
+  author  = {Dalhaus, Tobias and Finger, Robert},
+  title   = {Can Gridded Precipitation Data and Phenological Observations Reduce Basis Risk of Weather Index-Based Insurance?},
+  journal = {Weather, Climate, and Society},
+  year    = {2016},
+  volume  = {8},
+  number  = {4},
+  pages   = {409--419},
+  doi     = {10.1175/WCAS-D-16-0020.1},
+  note    = {ABSTRACT}
+}
+
+@article{jensen2016,
+  author  = {Jensen, Nathaniel D. and Barrett, Christopher B. and Mude, Andrew G.},
+  title   = {Index Insurance Quality and Basis Risk: Evidence from Northern Kenya},
+  journal = {American Journal of Agricultural Economics},
+  year    = {2016},
+  volume  = {98},
+  number  = {5},
+  pages   = {1450--1469},
+  doi     = {10.1093/ajae/aaw046},
+  note    = {ABSTRACT}
+}
+
+@article{clarke2016,
+  author  = {Clarke, Daniel J.},
+  title   = {A Theory of Rational Demand for Index Insurance},
+  journal = {American Economic Journal: Microeconomics},
+  year    = {2016},
+  volume  = {8},
+  number  = {1},
+  pages   = {283--306},
+  doi     = {10.1257/mic.20140103},
+  note    = {ABSTRACT}
+}
+
+@article{jensen2017,
+  author  = {Jensen, Nathaniel and Barrett, Christopher},
+  title   = {Agricultural Index Insurance for Development},
+  journal = {Applied Economic Perspectives and Policy},
+  year    = {2017},
+  volume  = {39},
+  number  = {2},
+  pages   = {199--219},
+  doi     = {10.1093/aepp/ppw022},
+  note    = {ABSTRACT. Online 2016, print 2017.}
+}
+
+@article{carter2017,
+  author  = {Carter, Michael and de Janvry, Alain and Sadoulet, Elisabeth and Sarris, Alexandros},
+  title   = {Index Insurance for Developing Country Agriculture: A Reassessment},
+  journal = {Annual Review of Resource Economics},
+  year    = {2017},
+  volume  = {9},
+  number  = {1},
+  pages   = {421--438},
+  doi     = {10.1146/annurev-resource-100516-053352},
+  note    = {METADATA}
+}
+
+@article{clement2018,
+  author  = {Clement, Kristina Yuzva and Botzen, W. J. Wouter and Brouwer, Roy and Aerts, Jeroen C. J. H.},
+  title   = {A Global Review of the Impact of Basis Risk on the Functioning of and Demand for Index Insurance},
+  journal = {International Journal of Disaster Risk Reduction},
+  year    = {2018},
+  volume  = {28},
+  pages   = {845--853},
+  doi     = {10.1016/j.ijdrr.2018.01.001},
+  note    = {ABSTRACT (via Semantic Scholar)}
+}
+
+@article{leppert2021,
+  author  = {Leppert, Daniel and Dalhaus, Tobias and Lagerkvist, Carl-Johan},
+  title   = {Accounting for Geographic Basis Risk in Heat Index Insurance: How Spatial Interpolation Can Reduce the Cost of Risk},
+  journal = {Weather, Climate, and Society},
+  year    = {2021},
+  volume  = {13},
+  number  = {2},
+  pages   = {273--286},
+  doi     = {10.1175/WCAS-D-20-0070.1},
+  note    = {ABSTRACT}
+}
+
+% ---------------------------------------------------------------------------
+% C. Weather-derivative pricing
+% ---------------------------------------------------------------------------
+
+@book{jewson2005,
+  author    = {Jewson, Stephen and Brix, Anders and Ziehmann, Christine},
+  title     = {Weather Derivative Valuation: The Meteorological, Statistical, Financial and Mathematical Foundations},
+  publisher = {Cambridge University Press},
+  address   = {Cambridge},
+  year      = {2005},
+  doi       = {10.1017/CBO9780511493348},
+  note      = {METADATA (Crossref lists Ziehmann as third author; the book is usually cited as Jewson and Brix 2005)}
+}
+
+@article{richards2004,
+  author  = {Richards, Timothy J. and Manfredo, Mark R. and Sanders, Dwight R.},
+  title   = {Pricing Weather Derivatives},
+  journal = {American Journal of Agricultural Economics},
+  year    = {2004},
+  volume  = {86},
+  number  = {4},
+  pages   = {1005--1017},
+  doi     = {10.1111/j.0002-9092.2004.00649.x},
+  note    = {ABSTRACT}
+}
+
+@article{campbell2005,
+  author  = {Campbell, Sean D. and Diebold, Francis X.},
+  title   = {Weather Forecasting for Weather Derivatives},
+  journal = {Journal of the American Statistical Association},
+  year    = {2005},
+  volume  = {100},
+  number  = {469},
+  pages   = {6--16},
+  doi     = {10.1198/016214504000001051},
+  note    = {ABSTRACT (via Semantic Scholar)}
+}
+
+@article{carmona2005,
+  author  = {Carmona, Ren{\'e} and Diko, Pavel},
+  title   = {Pricing Precipitation Based Derivatives},
+  journal = {International Journal of Theoretical and Applied Finance},
+  year    = {2005},
+  volume  = {8},
+  number  = {7},
+  pages   = {959--988},
+  doi     = {10.1142/S0219024905003311},
+  note    = {ABSTRACT (via Semantic Scholar)}
+}
+
+@article{xu2008,
+  author  = {Xu, Wei and Odening, Martin and Musshoff, Oliver},
+  title   = {Indifference Pricing of Weather Derivatives},
+  journal = {American Journal of Agricultural Economics},
+  year    = {2008},
+  volume  = {90},
+  number  = {4},
+  pages   = {979--993},
+  doi     = {10.1111/j.1467-8276.2008.01154.x},
+  note    = {ABSTRACT}
+}
+
+@article{cabrera2013,
+  author  = {L{\'o}pez Cabrera, Brenda and Odening, Martin and Ritter, Matthias},
+  title   = {Pricing Rainfall Futures at the {CME}},
+  journal = {Journal of Banking \& Finance},
+  year    = {2013},
+  volume  = {37},
+  number  = {11},
+  pages   = {4286--4298},
+  doi     = {10.1016/j.jbankfin.2013.07.042},
+  note    = {ABSTRACT (RePEc page)}
+}
+
+% ---------------------------------------------------------------------------
+% D. Pasture, Rangeland, Forage (PRF) and Annual Forage rainfall-index literature
+% ---------------------------------------------------------------------------
+
+@phdthesis{maisashvili2011,
+  author = {Maisashvili, Aleksandre},
+  title  = {The Value of Pasture, Rangeland, Forage Rainfall Index Insurance to Texas Ranchers},
+  school = {Texas A\&M University},
+  year   = {2011},
+  type   = {Graduate thesis (degree type not stated on repository page)},
+  url    = {https://tdl-ir.tdl.org/handle/1969.1/ETD-TAMU-2010-05-7991},
+  note   = {ABSTRACT (repository page; publication date 2011-08-08)}
+}
+
+@article{nadolnyak2013,
+  author  = {Nadolnyak, Denis and Vedenov, Dmitry},
+  title   = {Information Value of Climate Forecasts for Rainfall Index Insurance for Pasture, Rangeland, and Forage in the Southeast United States},
+  journal = {Journal of Agricultural and Applied Economics},
+  year    = {2013},
+  volume  = {45},
+  number  = {1},
+  pages   = {109--124},
+  doi     = {10.1017/S1074070800004612},
+  note    = {ABSTRACT}
+}
+
+@article{ifft2014,
+  author  = {Ifft, Jennifer and Wu, Shang and Kuethe, Todd},
+  title   = {The Impact of Pasture Insurance on Farmland Values},
+  journal = {Agricultural and Resource Economics Review},
+  year    = {2014},
+  volume  = {43},
+  number  = {3},
+  pages   = {390--405},
+  doi     = {10.1017/S1068280500005505},
+  note    = {ABSTRACT}
+}
+
+@inproceedings{diersen2015,
+  author    = {Diersen, Matthew and Gurung, Pratik and Fausti, Scott},
+  title     = {Optimal Allocation of Index Insurance Intervals for Commodities},
+  booktitle = {Southern Agricultural Economics Association Annual Meeting, Atlanta, Georgia, January 31--February 3, 2015},
+  year      = {2015},
+  doi       = {10.22004/ag.econ.196793},
+  url       = {https://ideas.repec.org/p/ags/saea15/196793.html},
+  note      = {ABSTRACT (RePEc page and DataCite record; the DOI is a DataCite AgEcon Search DOI, not in Crossref)}
+}
+
+@article{maples2016,
+  author  = {Maples, Joshua G. and Brorsen, B. Wade and Biermacher, Jon T.},
+  title   = {The Rainfall Index Annual Forage Pilot Program as a Risk Management Tool for Cool-Season Forage},
+  journal = {Journal of Agricultural and Applied Economics},
+  year    = {2016},
+  volume  = {48},
+  number  = {1},
+  pages   = {29--51},
+  doi     = {10.1017/aae.2016.3},
+  note    = {FULLTEXT (data/raw/lit/maples_etal_2016_jaae.pdf, from AgEcon Search record 349127)}
+}
+
+@article{westerhold2018,
+  author  = {Westerhold, Ashlee and Walters, Cory and Brooks, Kathleen and Vandeveer, Monte and Volesky, Jerry and Schacht, Walter},
+  title   = {Risk Implications from the Selection of Rainfall Index Insurance Intervals},
+  journal = {Agricultural Finance Review},
+  year    = {2018},
+  volume  = {78},
+  number  = {5},
+  pages   = {514--531},
+  doi     = {10.1108/AFR-10-2017-0097},
+  note    = {ABSTRACT}
+}
+
+@article{yu2019,
+  author  = {Yu, Jisang and Vandeveer, Monte and Volesky, Jerry D. and Harmoney, Keith},
+  title   = {Estimating the Basis Risk of Rainfall Index Insurance for Pasture, Rangeland, and Forage},
+  journal = {Journal of Agricultural and Resource Economics},
+  year    = {2019},
+  volume  = {44},
+  number  = {1},
+  pages   = {179--193},
+  doi     = {10.22004/ag.econ.281319},
+  url     = {https://ageconsearch.umn.edu/record/281319},
+  note    = {FULLTEXT (data/raw/lit/yu_etal_2019_jare.pdf; first page header reads 44(1):179-193). DOI is a DataCite (AgEcon Search) DOI, not in Crossref.}
+}
+
+@article{goodrich2020,
+  author  = {Goodrich, Brittney and Yu, Jisang and Vandeveer, Monte},
+  title   = {Participation Patterns of the Rainfall Index Insurance for Pasture, Rangeland and Forage Programme},
+  journal = {The Geneva Papers on Risk and Insurance - Issues and Practice},
+  year    = {2020},
+  volume  = {45},
+  number  = {1},
+  pages   = {29--51},
+  doi     = {10.1057/s41288-019-00149-3},
+  note    = {ABSTRACT. Online 2019-11-20, print 2020.}
+}
+
+@article{shalekbriski2021,
+  author  = {ShalekBriski, Abby and Brorsen, Wade and Rogers, James K. and Biermacher, Jon T. and Marburger, David and Edwards, Jeff},
+  title   = {Design of the Rainfall Index Annual Forage Program},
+  journal = {Agricultural Finance Review},
+  year    = {2021},
+  volume  = {81},
+  number  = {1},
+  pages   = {114--131},
+  doi     = {10.1108/AFR-11-2019-0120},
+  note    = {ABSTRACT. Online 2020, print 2021.}
+}
+
+@article{keller2022,
+  author  = {Keller, James B. and Saitone, Tina L.},
+  title   = {Basis Risk in the Pasture, Rangeland, and Forage Insurance Program: Evidence from {California}},
+  journal = {American Journal of Agricultural Economics},
+  year    = {2022},
+  volume  = {104},
+  number  = {4},
+  pages   = {1203--1223},
+  doi     = {10.1111/ajae.12282},
+  note    = {ABSTRACT}
+}
+
+@article{zapata2022,
+  author  = {Zapata, Samuel D. and Garc{\'i}a, Jos{\'e} Mar{\'i}a},
+  title   = {Risk-Efficient Coverage Selection Strategies for the Pasture, Rangeland, Forage ({PRF}) Insurance Program},
+  journal = {Journal of Agricultural and Applied Economics},
+  year    = {2022},
+  volume  = {54},
+  number  = {2},
+  pages   = {286--305},
+  doi     = {10.1017/aae.2022.7},
+  note    = {ABSTRACT}
+}
+
+@article{shrum2022,
+  author  = {Shrum, Trisha R. and Travis, William R.},
+  title   = {Experiments in Ranching: Rain-Index Insurance and Investment in Production and Drought Risk Management},
+  journal = {Applied Economic Perspectives and Policy},
+  year    = {2022},
+  volume  = {44},
+  number  = {3},
+  pages   = {1513--1533},
+  doi     = {10.1002/aepp.13304},
+  note    = {ABSTRACT}
+}
+
+@article{davidson2023,
+  author  = {Davidson, Kelly A. and Goodrich, Brittney K.},
+  title   = {Nudge to Insure: Can Informational Nudges Change Enrollment Decisions in Pasture, Rangeland, and Forage Rainfall Index Insurance?},
+  journal = {Applied Economic Perspectives and Policy},
+  year    = {2023},
+  volume  = {45},
+  number  = {1},
+  pages   = {534--554},
+  doi     = {10.1002/aepp.13215},
+  note    = {ABSTRACT. Online 2021-11-25, print 2023.}
+}
+
+@article{zapata2024,
+  author  = {Zapata, Samuel D. and Villavicencio, Xavier and Xicay, Anderson},
+  title   = {A Statistical Learning Approach to Pasture, Rangeland, Forage ({PRF}) Insurance Coverage Selection},
+  journal = {Applied Economic Perspectives and Policy},
+  year    = {2024},
+  volume  = {46},
+  number  = {4},
+  pages   = {1429--1449},
+  doi     = {10.1002/aepp.13447},
+  note    = {ABSTRACT}
+}
+
+@phdthesis{belgacem2025,
+  author = {Belgacem, Wajdi},
+  title  = {Two Essays on Index-based Risk Management in {U.S.} Rangeland and Livestock Production},
+  school = {University of Nebraska-Lincoln},
+  year   = {2025},
+  month  = aug,
+  url    = {https://digitalcommons.unl.edu/dissunl/368},
+  note   = {ABSTRACT (repository page). PhD, Agricultural Economics. Advisor: Jay Parsons. No DOI.}
+}
+
+@article{davis2025,
+  author  = {Davis, Walker and Connor, Lawson and Popp, Michael and Rider, Shelby},
+  title   = {Is {PRF} Profitable in a Wetter State? Evidence from {Arkansas}},
+  journal = {Journal of the American Society of Farm Managers and Rural Appraisers},
+  year    = {2025},
+  volume  = {2025},
+  pages   = {132--146},
+  doi     = {10.22004/ag.econ.410248},
+  url     = {https://ideas.repec.org/a/ags/jasfmr/410248.html},
+  note    = {ABSTRACT. Located by the verifier on 2026-10-29 (DataCite record for the DOI; RePEc lists journal "Journal of the ASFMRA", volume 2025). Corrections vs the earlier draft: full title adds "Evidence from Arkansas"; fourth author is Rider (DataCite/RePEc), spelled Ryder in the citing column. Pages 132-146 only from the reference list of davis2025sat, not verified. The 0.79/0.83 loss ratios cited in the review are from davis2025sat, not from this article.}
+}
+
+@misc{davis2025sat,
+  author       = {Davis, Walker},
+  title        = {Understanding Interval-Based Enrollment Risk in {PRF}: How Interval Selection Strategies Can Impact Protection Across the South},
+  howpublished = {Southern Ag Today 5(46.1)},
+  year         = {2025},
+  month        = nov,
+  url          = {https://sat-wp.afpc.tamu.edu/2025/11/10/understanding-interval-based-enrollment-risk-in-prf-how-interval-selection-strategies-can-impact-protection-across-the-south/},
+  note         = {FULLTEXT (web column read by the verifier 2026-10-29; reprinted at https://www.oklahomafarmreport.com/?p=154049). Extension column, not peer reviewed. Source of the mean grid-level PRF loss ratios 0.79 (SD 0.20) and 0.83 (SD 0.33), US South, 2017-2024. Added by the verifier.}
+}
+
+@article{cho2026aepp,
+  author  = {Cho, Whoi and Diersen, Matthew},
+  title   = {Effectiveness of the Pasture, Rangeland, and Forage Rainfall Index ({PRF-RI}) Program: Interval Selections With Uniform Premium Subsidy Rates},
+  journal = {Applied Economic Perspectives and Policy},
+  year    = {2026},
+  doi     = {10.1002/aepp.70130},
+  note    = {ABSTRACT. Early view, published online 2026-09-21; volume/pages not yet assigned in Crossref.}
+}
+
+@article{cho2026afr,
+  author  = {Cho, Whoi and ShalekBriski, Abby},
+  title   = {Linking Rainfall Index Variability and Program Performance: Implications for Pasture, Rangeland and Forage-Rainfall Index Program},
+  journal = {Agricultural Finance Review},
+  year    = {2026},
+  volume  = {86},
+  number  = {5},
+  pages   = {763--773},
+  doi     = {10.1108/AFR-02-2026-0042},
+  note    = {ABSTRACT}
+}
+
+% ---------------------------------------------------------------------------
+% E. Prediction markets: accuracy, favorite-longshot bias, Kalshi
+% ---------------------------------------------------------------------------
+
+@article{griffith1949,
+  author  = {Griffith, R. M.},
+  title   = {Odds Adjustments by American Horse-Race Bettors},
+  journal = {The American Journal of Psychology},
+  year    = {1949},
+  volume  = {62},
+  number  = {2},
+  pages   = {290--294},
+  doi     = {10.2307/1418469},
+  note    = {METADATA}
+}
+
+@article{thaler1988,
+  author  = {Thaler, Richard H. and Ziemba, William T.},
+  title   = {Anomalies: Parimutuel Betting Markets: Racetracks and Lotteries},
+  journal = {Journal of Economic Perspectives},
+  year    = {1988},
+  volume  = {2},
+  number  = {2},
+  pages   = {161--174},
+  doi     = {10.1257/jep.2.2.161},
+  note    = {ABSTRACT}
+}
+
+@article{wolfers2004,
+  author  = {Wolfers, Justin and Zitzewitz, Eric},
+  title   = {Prediction Markets},
+  journal = {Journal of Economic Perspectives},
+  year    = {2004},
+  volume  = {18},
+  number  = {2},
+  pages   = {107--126},
+  doi     = {10.1257/0895330041371321},
+  note    = {ABSTRACT}
+}
+
+@techreport{wolfers2006,
+  author      = {Wolfers, Justin and Zitzewitz, Eric},
+  title       = {Interpreting Prediction Market Prices as Probabilities},
+  institution = {National Bureau of Economic Research},
+  type        = {NBER Working Paper},
+  number      = {12200},
+  year        = {2006},
+  doi         = {10.3386/w12200},
+  note        = {ABSTRACT}
+}
+
+@article{manski2006,
+  author  = {Manski, Charles F.},
+  title   = {Interpreting the Predictions of Prediction Markets},
+  journal = {Economics Letters},
+  year    = {2006},
+  volume  = {91},
+  number  = {3},
+  pages   = {425--429},
+  doi     = {10.1016/j.econlet.2006.01.004},
+  note    = {METADATA}
+}
+
+@incollection{ottaviani2008,
+  author    = {Ottaviani, Marco and S{\o}rensen, Peter Norman},
+  title     = {The Favorite-Longshot Bias: An Overview of the Main Explanations},
+  booktitle = {Handbook of Sports and Lottery Markets},
+  editor    = {Hausch, Donald B. and Ziemba, William T.},
+  publisher = {Elsevier},
+  year      = {2008},
+  pages     = {83--101},
+  doi       = {10.1016/B978-044450744-0.50009-3},
+  note      = {METADATA}
+}
+
+@article{snowberg2010,
+  author  = {Snowberg, Erik and Wolfers, Justin},
+  title   = {Explaining the Favorite-Long Shot Bias: Is it Risk-Love or Misperceptions?},
+  journal = {Journal of Political Economy},
+  year    = {2010},
+  volume  = {118},
+  number  = {4},
+  pages   = {723--746},
+  doi     = {10.1086/655844},
+  note    = {ABSTRACT}
+}
+
+@article{page2013,
+  author  = {Page, Lionel and Clemen, Robert T.},
+  title   = {Do Prediction Markets Produce Well-Calibrated Probability Forecasts?},
+  journal = {The Economic Journal},
+  year    = {2013},
+  volume  = {123},
+  number  = {568},
+  pages   = {491--513},
+  doi     = {10.1111/j.1468-0297.2012.02561.x},
+  note    = {ABSTRACT. Online 2012, print 2013.}
+}
+
+@techreport{burgi2026,
+  author      = {B{\"u}rgi, Constantin and Deng, Wanying and Whelan, Karl},
+  title       = {Makers and Takers: The Economics of the {Kalshi} Prediction Market},
+  institution = {CESifo},
+  type        = {CESifo Working Paper},
+  number      = {12122},
+  year        = {2026},
+  doi         = {10.65864/s9kc4p0b7t},
+  url         = {https://www.ifo.de/DocDL/cesifo1_wp12122.pdf},
+  note        = {FULLTEXT (January 2026 version; data/raw/lit/burgi_deng_whelan_cesifo12122.pdf). Page numbers cited in the review are the printed page numbers (printed page = PDF page - 2). Original version September 2025. Also circulated as UCD Centre for Economic Research WP2025_19 (https://www.ucd.ie/economics/t4media/WP2025_19.pdf, HTTP 403 on 2026-10-29, not opened) and SSRN 5502658 (doi:10.2139/ssrn.5502658).}
+}
+
+@techreport{diercks2026,
+  author      = {Diercks, Anthony M. and Katz, Jared Dean and Wright, Jonathan H.},
+  title       = {Kalshi and the Rise of Macro Markets},
+  institution = {Board of Governors of the Federal Reserve System},
+  type        = {Finance and Economics Discussion Series},
+  number      = {2026-010},
+  year        = {2026},
+  doi         = {10.17016/FEDS.2026.010},
+  url         = {https://www.federalreserve.gov/econres/feds/files/2026010pap.pdf},
+  note        = {FULLTEXT (data/raw/lit/feds_2026010.pdf), dated February 12, 2026. Page numbers cited are printed page numbers (printed page = PDF page - 1).}
+}
+
+@techreport{krause2026,
+  author      = {Krause, David},
+  title       = {Market Efficiency and the Favorite-Longshot Bias in Unemployment Prediction Markets},
+  institution = {SSRN working paper 7110758},
+  year        = {2026},
+  doi         = {10.2139/ssrn.7110758},
+  note        = {ABSTRACT (Crossref) only; SSRN full text blocked. Numbers in the review are labeled UNVERIFIED (abstract only).}
+}
+
+@techreport{shah2026,
+  author      = {Shah, Darsh},
+  title       = {Why the Last Trade Is the Wrong Price: Measuring Favorite-Longshot Bias on {Kalshi}},
+  institution = {SSRN working paper 7658058},
+  year        = {2026},
+  doi         = {10.2139/ssrn.7658058},
+  note        = {ABSTRACT (Crossref; record created 2026-10-23) only; SSRN full text blocked. Numbers in the review are labeled UNVERIFIED (abstract only).}
+}
+
+@misc{crosier2026,
+  author       = {Crosier, Alexander W.},
+  title        = {Prediction Markets Beat the Weather Forecast on Tomorrow's High Temperature},
+  year         = {2026},
+  eprint       = {2609.23969},
+  archivePrefix= {arXiv},
+  primaryClass = {q-fin.GN},
+  url          = {https://arxiv.org/abs/2609.23969},
+  note         = {ABSTRACT (arXiv API), v1 submitted 2026-09-21; record re-checked by the verifier 2026-10-29}
+}

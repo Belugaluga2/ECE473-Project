@@ -1,0 +1,134 @@
+section,metric,value,units,detail
+dst_formula,DST rows checked,794436.0,grid-interval-years,956 grids
+dst_formula,max |expected recomputed - DST expected|,9.731593308970332e-11,mm,"expected = mean(1951..2025) for years<=2025, mean(1951..2024) for 2026"
+dst_formula,share of DST index values reproduced to 0.1,0.9999987412453615,share,
+cpc_base_vs_adm,"MAE: Handbook as-settled, 1948 to Y-2",0.002107728337236464,index points,"n=854, r=1.0000, exact to 0.1 0.979, trigger disagreement 0.000"
+cpc_base_vs_adm,MAE: 1951 to Y-2,1.0514051522248247,index points,"n=854, r=0.9996, exact to 0.1 0.052, trigger disagreement 0.007"
+cpc_base_vs_adm,MAE: Fixed 1948-2025 (2026: 1948-2024),1.0180327868852457,index points,"n=854, r=0.9996, exact to 0.1 0.124, trigger disagreement 0.005"
+cpc_base_vs_adm,"MAE: Fixed 1951-2025 (2026: 1951-2024), DST rule",1.4388758782201407,index points,"n=854, r=0.9992, exact to 0.1 0.044, trigger disagreement 0.008"
+cpc_base_vs_adm,MAE: Fixed 1981-2010 normal,7.393676814988291,index points,"n=854, r=0.9847, exact to 0.1 0.005, trigger disagreement 0.063"
+cpc_base_vs_adm,MAE: Fixed 1991-2020 normal,5.903629976580797,index points,"n=854, r=0.9884, exact to 0.1 0.014, trigger disagreement 0.041"
+cpc_base_vs_dst,"MAE: Handbook as-settled, 1948 to Y-2",11.756177083333334,index points,"n=9600, r=0.9546, exact to 0.1 0.004, trigger disagreement 0.078"
+cpc_base_vs_dst,MAE: 1951 to Y-2,11.721395833333332,index points,"n=9600, r=0.9547, exact to 0.1 0.004, trigger disagreement 0.079"
+cpc_base_vs_dst,MAE: Fixed 1948-2025 (2026: 1948-2024),9.040052083333334,index points,"n=9600, r=0.9667, exact to 0.1 0.005, trigger disagreement 0.067"
+cpc_base_vs_dst,"MAE: Fixed 1951-2025 (2026: 1951-2024), DST rule",8.894031250000001,index points,"n=9600, r=0.9673, exact to 0.1 0.004, trigger disagreement 0.067"
+cpc_base_vs_dst,MAE: Fixed 1981-2010 normal,11.8623125,index points,"n=9600, r=0.9535, exact to 0.1 0.004, trigger disagreement 0.092"
+cpc_base_vs_dst,MAE: Fixed 1991-2020 normal,10.717437499999999,index points,"n=9600, r=0.9588, exact to 0.1 0.003, trigger disagreement 0.084"
+adm_vs_cpc_settled,all,0.002107728337236464,index points MAE,"n=854, r=1.0000, exact 0.979, max 0.10, trigger disagreements 0"
+adm_vs_cpc_settled,2021,0.0025974025974026343,index points MAE,"n=154, r=1.0000, exact 0.974, max 0.10, trigger disagreements 0"
+adm_vs_cpc_settled,2022,0.0019480519480518372,index points MAE,"n=154, r=1.0000, exact 0.981, max 0.10, trigger disagreements 0"
+adm_vs_cpc_settled,2023,0.0019480519480519296,index points MAE,"n=154, r=1.0000, exact 0.981, max 0.10, trigger disagreements 0"
+adm_vs_cpc_settled,2024,0.00259740259740245,index points MAE,"n=154, r=1.0000, exact 0.974, max 0.10, trigger disagreements 0"
+adm_vs_cpc_settled,2025,0.001298701298701225,index points MAE,"n=154, r=1.0000, exact 0.987, max 0.10, trigger disagreements 0"
+adm_vs_cpc_settled,2026,0.0023809523809522454,index points MAE,"n=84, r=1.0000, exact 0.976, max 0.10, trigger disagreements 0"
+adm_vs_index_value,all,12.608313817330211,index points MAE,"n=854, r=0.9300, exact 0.001, max 96.90, trigger disagreements 91"
+adm_vs_index_value,2021,12.154545454545456,index points MAE,"n=154, r=0.9318, exact 0.006, max 78.80, trigger disagreements 20"
+adm_vs_index_value,2022,11.803246753246752,index points MAE,"n=154, r=0.9310, exact 0.000, max 96.90, trigger disagreements 21"
+adm_vs_index_value,2023,11.998051948051947,index points MAE,"n=154, r=0.9386, exact 0.000, max 84.90, trigger disagreements 15"
+adm_vs_index_value,2024,14.977272727272727,index points MAE,"n=154, r=0.9189, exact 0.000, max 89.60, trigger disagreements 13"
+adm_vs_index_value,2025,12.438961038961036,index points MAE,"n=154, r=0.9326, exact 0.000, max 81.10, trigger disagreements 14"
+adm_vs_index_value,2026,12.002380952380953,index points MAE,"n=84, r=0.9297, exact 0.000, max 54.60, trigger disagreements 8"
+adm_vs_ncei,all,12.511241217798593,index points MAE,"n=854, r=0.9308, exact 0.002, max 96.90, trigger disagreements 91"
+adm_vs_ncei,2021,12.155844155844159,index points MAE,"n=154, r=0.9318, exact 0.006, max 78.80, trigger disagreements 20"
+adm_vs_ncei,2022,11.805844155844156,index points MAE,"n=154, r=0.9309, exact 0.000, max 96.90, trigger disagreements 21"
+adm_vs_ncei,2023,11.998701298701297,index points MAE,"n=154, r=0.9386, exact 0.000, max 84.90, trigger disagreements 15"
+adm_vs_ncei,2024,14.97792207792208,index points MAE,"n=154, r=0.9189, exact 0.000, max 89.60, trigger disagreements 14"
+adm_vs_ncei,2025,12.420779220779218,index points MAE,"n=154, r=0.9327, exact 0.000, max 81.10, trigger disagreements 14"
+adm_vs_ncei,2026,11.039285714285713,index points MAE,"n=84, r=0.9421, exact 0.012, max 39.80, trigger disagreements 7"
+dst_vs_ncei_study,n,13296.0,,
+dst_vs_ncei_study,r,0.9999296554853667,,
+dst_vs_ncei_study,mae,0.02746690734055355,index points,
+dst_vs_ncei_study,bias,-0.002346570397111921,index points,
+dst_vs_ncei_study,trigger_disagree,0.00015042117930204573,,
+dst_vs_ncei_study,official_trigger_rate,0.4706678700361011,,
+dst_vs_ncei_study,ours_trigger_rate,0.4706678700361011,,
+dst_vs_ncei_by_era,MAE 1951-2006,0.003632305194805209,index points,"n=9856, r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_era,MAE 2007-2025,0.005263157894736811,index points,"n=3344, r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_era,MAE 2026,3.2479166666666663,index points,"n=96, r=0.987, trigger disagreement 0.010"
+dst_vs_ncei_by_grid,MAE grid 8893 (TPA farm),0.05234657039711196,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 9490 (TPA station),0.006859205776173237,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 10626 (SAT farm),0.08784596871239467,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 11527 (SAT station),0.04488567990373042,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 15429 (DFW farm),0.013959085439229876,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 15432 (DFW station),0.013477737665463368,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 17497 (ABQ farm),0.04368231046931405,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 18094 (ABQ station),0.019253910950661896,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 18129 (OKC farm),0.002767749699157659,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 18430 (OKC station),0.004091456077015599,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 20547 (SGF station),0.06317689530685923,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 20845 (SGF farm),0.009025270758122726,index points,"r=1.000, trigger disagreement 0.001"
+dst_vs_ncei_by_grid,MAE grid 23204 (DEN farm),0.02815884476534296,index points,"r=1.000, trigger disagreement 0.001"
+dst_vs_ncei_by_grid,MAE grid 23802 (DEN station),0.01155234657039712,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 26267 (ORD farm),0.009145607701564373,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_by_grid,MAE grid 26269 (ORD station),0.029241877256317703,index points,"r=1.000, trigger disagreement 0.000"
+dst_vs_ncei_ring,n,794436.0,,956 grids
+dst_vs_ncei_ring,r,0.9998951514181144,,956 grids
+dst_vs_ncei_ring,mae,0.033093414699233166,index points,956 grids
+dst_vs_ncei_ring,bias,0.0032946643908382785,index points,956 grids
+dst_vs_ncei_ring,trigger_disagree,0.00032853496065133,,956 grids
+dst_vs_cpc_fixed_study,n,13296.0,,
+dst_vs_cpc_fixed_study,r,0.970310593294645,,
+dst_vs_cpc_fixed_study,mae,8.253429602888087,index points,
+dst_vs_cpc_fixed_study,bias,0.4077617328519856,index points,
+dst_vs_cpc_fixed_study,trigger_disagree,0.062123947051744885,,
+dst_vs_cpc_fixed_study,official_trigger_rate,0.4706678700361011,,
+dst_vs_cpc_fixed_study,ours_trigger_rate,0.4753309265944645,,
+dst_vs_cpc_fixed_by_era,MAE 1951-2006,7.389600243506495,index points,"n=9856, r=0.976, trigger disagreement 0.055"
+dst_vs_cpc_fixed_by_era,MAE 2007-2025,10.713127990430621,index points,"n=3344, r=0.955, trigger disagreement 0.083"
+dst_vs_cpc_fixed_by_era,MAE 2026,11.26041666666667,index points,"n=96, r=0.938, trigger disagreement 0.083"
+dst_vs_cpc_fixed_by_grid,MAE grid 8893 (TPA farm),11.381227436823103,index points,"r=0.934, trigger disagreement 0.113"
+dst_vs_cpc_fixed_by_grid,MAE grid 9490 (TPA station),7.216606498194946,index points,"r=0.977, trigger disagreement 0.088"
+dst_vs_cpc_fixed_by_grid,MAE grid 10626 (SAT farm),8.309747292418773,index points,"r=0.980, trigger disagreement 0.040"
+dst_vs_cpc_fixed_by_grid,MAE grid 11527 (SAT station),9.522262334536702,index points,"r=0.973, trigger disagreement 0.053"
+dst_vs_cpc_fixed_by_grid,MAE grid 15429 (DFW farm),8.095186522262335,index points,"r=0.978, trigger disagreement 0.054"
+dst_vs_cpc_fixed_by_grid,MAE grid 15432 (DFW station),6.762575210589651,index points,"r=0.984, trigger disagreement 0.043"
+dst_vs_cpc_fixed_by_grid,MAE grid 17497 (ABQ farm),11.488206979542719,index points,"r=0.961, trigger disagreement 0.073"
+dst_vs_cpc_fixed_by_grid,MAE grid 18094 (ABQ station),9.8942238267148,index points,"r=0.971, trigger disagreement 0.059"
+dst_vs_cpc_fixed_by_grid,MAE grid 18129 (OKC farm),5.90878459687124,index points,"r=0.985, trigger disagreement 0.042"
+dst_vs_cpc_fixed_by_grid,MAE grid 18430 (OKC station),5.330084235860408,index points,"r=0.988, trigger disagreement 0.032"
+dst_vs_cpc_fixed_by_grid,MAE grid 20547 (SGF station),6.141756919374248,index points,"r=0.973, trigger disagreement 0.041"
+dst_vs_cpc_fixed_by_grid,MAE grid 20845 (SGF farm),6.559085439229844,index points,"r=0.979, trigger disagreement 0.071"
+dst_vs_cpc_fixed_by_grid,MAE grid 23204 (DEN farm),14.473044524669072,index points,"r=0.924, trigger disagreement 0.134"
+dst_vs_cpc_fixed_by_grid,MAE grid 23802 (DEN station),9.949097472924189,index points,"r=0.960, trigger disagreement 0.058"
+dst_vs_cpc_fixed_by_grid,MAE grid 26267 (ORD farm),4.802767749699157,index points,"r=0.982, trigger disagreement 0.042"
+dst_vs_cpc_fixed_by_grid,MAE grid 26269 (ORD station),6.2202166064981945,index points,"r=0.974, trigger disagreement 0.051"
+dst_vs_cpc_fixed_ring,n,794436.0,,956 grids
+dst_vs_cpc_fixed_ring,r,0.9480769181398032,,956 grids
+dst_vs_cpc_fixed_ring,mae,10.233648399619351,index points,956 grids
+dst_vs_cpc_fixed_ring,bias,0.3359627458977187,index points,956 grids
+dst_vs_cpc_fixed_ring,trigger_disagree,0.08064085716155864,,956 grids
+cpc_precip_vs_dst,"MAE interval precipitation, study grids",10.95994650431084,mm,
+cpc_precip_vs_dst,"median |relative difference|, study grids",0.06257990610951715,share,
+cpc_precip_vs_dst,"share within 0.05 mm, study grids",0.005189530685920578,share,
+ncei_precip_vs_dst,"MAE interval precipitation, study grids",0.0465650736642564,mm,
+ncei_precip_vs_dst,"median |relative difference|, study grids",2.4208025473809916e-05,share,
+ncei_precip_vs_dst,"share within 0.05 mm, study grids",0.9951865222623345,share,
+ncei_precip_by_year,mean |diff| 2026,5.946935549896828,mm,max 72.67 mm
+ncei_precip_by_year,mean |diff| 2025,0.027826986245130313,mm,max 1.64 mm
+ncei_precip_by_year,mean |diff| 1995,0.003781547320041134,mm,max 0.01 mm
+ncei_precip_by_year,mean |diff| 2006,0.0037641355695887915,mm,max 0.01 mm
+dst_2026_vintage,Jan-Feb current-nClimGrid MAE,0.11249999999999938,index points,0.09 mm
+dst_2026_vintage,Feb-Mar current-nClimGrid MAE,0.043750000000001066,index points,0.05 mm
+dst_2026_vintage,Mar-Apr current-nClimGrid MAE,0.24375000000000013,index points,0.24 mm
+dst_2026_vintage,Apr-May current-nClimGrid MAE,4.40625,index points,7.21 mm
+dst_2026_vintage,May-Jun current-nClimGrid MAE,8.206249999999999,index points,14.76 mm
+dst_2026_vintage,Jun-Jul current-nClimGrid MAE,6.475000000000001,index points,13.33 mm
+payment_factor_study,"mean payment factor at 90%, DST (NCEI)",0.15850063511164594,share of protection,"16 study grids, all intervals, 1951-2026"
+payment_factor_study,"mean payment factor at 90%, CPC fixed base",0.16515476668003748,share of protection,16 study grids
+payment_factor_study,ratio CPC / NCEI,1.041981734418316,,16 study grids
+payment_factor_study,mean |difference|,0.031755248027811205,share of protection,16 study grids
+payment_factor_ring,"mean payment factor at 90%, DST (NCEI)",0.15665395184620143,share of protection,"956 grids, all intervals, 1951-2026"
+payment_factor_ring,"mean payment factor at 90%, CPC fixed base",0.1647422112458818,share of protection,956 grids
+payment_factor_ring,ratio CPC / NCEI,1.0516313779790323,,956 grids
+payment_factor_ring,mean |difference|,0.03848081462124632,share of protection,956 grids
+cpc_rt_vs_updated_2025,"monthly MAE, |RT - UPDATED|",1.110379917156086,mm,2070 cells x 12 months of 2025
+cpc_rt_vs_updated_2025,share of cell-months within 1 mm,0.8173913043478261,share,
+cpc_rt_vs_updated_2025,max |RT - UPDATED|,122.7072925567627,mm,
+adm_2025_by_cpc_vintage,MAE using CPC UPDATED for 2025 months,0.001298701298701225,index points,"n=154, exact 0.987, max 0.10"
+adm_2025_by_cpc_vintage,MAE using CPC RT for 2025 months,0.6805194805194802,index points,"n=154, exact 0.481, max 9.60"
+index_spread,"std of index, DST (NCEI)",50.03658620930615,index points,"956 grids, 1951-2026"
+index_spread,"std of index, CPC fixed base",52.813046394957006,index points,
+index_spread,"mean shortfall below 90 when triggered, DST",30.106734385037807,index points,
+index_spread,"mean shortfall below 90 when triggered, CPC",31.25208715285977,index points,
+dst_vs_cpc_fixed_by_era,MAE 1951-1989,6.277578671328672,index points,16 study grids
+dst_vs_cpc_fixed_by_era,MAE 1990-2025,10.348374368686867,index points,16 study grids

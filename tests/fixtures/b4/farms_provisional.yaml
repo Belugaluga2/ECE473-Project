@@ -1,0 +1,141 @@
+# PROVISIONAL TEST INPUT - NOT THE PROJECT'S REPRESENTATIVE FARMS.
+# Written by the B4 (PRF calculator) workstream only to smoke-test scripts/run_scenarios.py before
+# the real data/scenarios/farms.yaml exists. Elections are illustrative but legal under the 2026
+# PRF rules (2+ non-overlapping intervals, 10% minimum, state maximum 50% TX/NM/FL, 60% OK/MO/CO).
+# County base values are the crop-year 2026 ADM values for each county. expected_value_usd_per_acre
+# is set equal to county base value x productivity factor (a placeholder, not researched).
+# Do not cite any number produced from this file.
+farms:
+  - farm_id: PROV-DFW-HAY
+    site: DFW
+    county: Parker County, TX
+    fips: "48367"
+    lat: 32.777096
+    lon: -97.805905
+    intended_use: haying
+    irrigation_practice: non-irrigated
+    organic: false
+    insured_acres: 300
+    productivity_factor: 1.00
+    coverage_level: 0.90
+    interval_allocation: {Apr-May: 0.50, Jul-Aug: 0.25, Sep-Oct: 0.25}
+    county_base_value_usd_per_acre: 181.00
+    expected_production: {value: null, units: tons/acre}
+    expected_value_usd_per_acre: 181.00
+    rain_sensitivity_ref: null
+    rationale: provisional smoke-test farm
+    sources: []
+  - farm_id: PROV-SAT-GRAZE
+    site: SAT
+    county: Atascosa County, TX
+    fips: "48013"
+    lat: 28.891478
+    lon: -98.535381
+    intended_use: grazing
+    irrigation_practice: null
+    organic: false
+    insured_acres: 2000
+    productivity_factor: 1.00
+    coverage_level: 0.85
+    interval_allocation: {Apr-May: 0.50, Sep-Oct: 0.50}
+    county_base_value_usd_per_acre: 18.20
+    expected_production: {value: null, units: AUM/acre}
+    expected_value_usd_per_acre: 18.20
+    rain_sensitivity_ref: null
+    rationale: provisional smoke-test farm
+    sources: []
+  - farm_id: PROV-OKC-GRAZE
+    site: OKC
+    county: Grady County, OK
+    fips: "40051"
+    lat: 35.021058
+    lon: -97.88689
+    intended_use: grazing
+    irrigation_practice: null
+    organic: false
+    insured_acres: 1000
+    productivity_factor: 1.10
+    coverage_level: 0.90
+    interval_allocation: {Mar-Apr: 0.40, May-Jun: 0.40, Jul-Aug: 0.20}
+    county_base_value_usd_per_acre: 31.60
+    expected_production: {value: null, units: AUM/acre}
+    expected_value_usd_per_acre: 34.76
+    rain_sensitivity_ref: null
+    rationale: provisional smoke-test farm
+    sources: []
+  - farm_id: PROV-SGF-HAY
+    site: SGF
+    county: Dade County, MO
+    fips: "29057"
+    lat: 37.43235
+    lon: -93.854878
+    intended_use: haying
+    irrigation_practice: non-irrigated
+    organic: false
+    insured_acres: 200
+    productivity_factor: 1.00
+    coverage_level: 0.90
+    interval_allocation: {Apr-May: 0.60, Jul-Aug: 0.40}
+    county_base_value_usd_per_acre: 184.00
+    expected_production: {value: null, units: tons/acre}
+    expected_value_usd_per_acre: 184.00
+    rain_sensitivity_ref: null
+    rationale: provisional smoke-test farm
+    sources: []
+  - farm_id: PROV-DEN-GRAZE
+    site: DEN
+    county: Elbert County, CO
+    fips: "08039"
+    lat: 39.315157
+    lon: -104.114076
+    intended_use: grazing
+    irrigation_practice: null
+    organic: false
+    insured_acres: 3000
+    productivity_factor: 0.90
+    coverage_level: 0.90
+    interval_allocation: {Apr-May: 0.60, Jun-Jul: 0.40}
+    county_base_value_usd_per_acre: 13.50
+    expected_production: {value: null, units: AUM/acre}
+    expected_value_usd_per_acre: 12.15
+    rain_sensitivity_ref: null
+    rationale: provisional smoke-test farm
+    sources: []
+  - farm_id: PROV-ABQ-GRAZE
+    site: ABQ
+    county: Torrance County, NM
+    fips: "35057"
+    lat: 34.554998
+    lon: -105.890577
+    intended_use: grazing
+    irrigation_practice: null
+    organic: false
+    insured_acres: 5000
+    productivity_factor: 1.00
+    coverage_level: 0.80
+    interval_allocation: {Jul-Aug: 0.50, Sep-Oct: 0.50}
+    county_base_value_usd_per_acre: 11.50
+    expected_production: {value: null, units: AUM/acre}
+    expected_value_usd_per_acre: 11.50
+    rain_sensitivity_ref: null
+    rationale: provisional smoke-test farm
+    sources: []
+  - farm_id: PROV-TPA-GRAZE
+    site: TPA
+    county: Hardee County, FL
+    fips: "12049"
+    lat: 27.492846
+    lon: -81.82158
+    intended_use: grazing
+    irrigation_practice: null
+    organic: false
+    insured_acres: 800
+    productivity_factor: 1.20
+    coverage_level: 0.90
+    interval_allocation: {Mar-Apr: 0.50, May-Jun: 0.50}
+    county_base_value_usd_per_acre: 50.30
+    expected_production: {value: null, units: AUM/acre}
+    expected_value_usd_per_acre: 60.36
+    rain_sensitivity_ref: null
+    rationale: provisional smoke-test farm
+    sources: []

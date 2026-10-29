@@ -1,0 +1,418 @@
+# Representative farm exposures for the PRF study sites (R8, Week 1, Jack).
+# Full explanation, sources, and verification status: docs/research/04_representative_farms.md
+# Built 2026-10-29. Rebuild inputs with: python scripts/r8_pull_county_data.py
+# Validate against PRF rules with:      python scripts/r8_pull_county_data.py --steps validate
+#
+# Conventions
+# - Crop year 2026 actuarial terms (RMA Actuarial Data Master 2026, Price table A00810).
+#   County base values are identical in the 2027 Decision Support Tool (checked 2026-10-29).
+# - Policy protection ($) = insured_acres x county_base_value x productivity_factor x coverage_level.
+#   Each interval's share of protection = protection x interval_allocation[interval].
+# - PRF allocation rules checked (26-RI-PRF Crop Provisions sec. 2 and 5; ADM 2026 Price table):
+#   >= 2 intervals; each interval >= 10%; each interval <= county max (50% in TX, NM, FL;
+#   60% in OK, MO, CO); no calendar month in two selected intervals; shares sum to 100%;
+#   coverage 70-90% (5-point steps); productivity factor 60-150%. All allocations also keep
+#   Jan-Feb at or below 25% (new 2027 cap seen in the Decision Support Tool) by not using it.
+# - expected_production: haying = tons/acre (NASS state 2016-2025 mean, "other hay");
+#   grazing = normal-year air-dry forage lb/acre (NRCS SSURGO area-weighted, or a hay-yield
+#   proxy for improved pasture) and aum_per_acre = lb x 0.25 harvest efficiency / 912.5 lb per AUM.
+# - expected_value_usd_per_acre: haying = expected yield x NASS 2025 marketing-year state price
+#   (other hay); grazing = NASS pasture cash rent for the county (latest year published).
+# - productivity_factor follows the county's observed choice: liability-weighted average
+#   implied by RMA Summary of Business 2026 (1.28-1.50), rounded to 0.05.
+# - coverage_level = the most common coverage level (by insured acres) in the county, 2021-2025.
+# - irrigation_practice: PRF grazing has no irrigation practice (ADM code 997 = "not specified").
+# - lat/lon = county internal point from agri_hedge.locations (farm point). PRF grid for that
+#   point is in data/processed/study_grids.csv (role = farm).
+
+farms:
+  - farm_id: DFW_hay
+    site: DFW
+    county: Parker County, TX
+    fips: "48367"
+    lat: 32.777096
+    lon: -97.805905
+    intended_use: haying
+    irrigation_practice: non-irrigated
+    organic: false
+    insured_acres: 150
+    productivity_factor: 1.50
+    coverage_level: 0.90
+    interval_allocation:
+      "Apr-May": 0.40
+      "Jun-Jul": 0.35
+      "Aug-Sep": 0.25
+    county_base_value_usd_per_acre: 181.0
+    expected_production: {value: 1.92, units: "tons/acre"}
+    expected_value_usd_per_acre: 249.6
+    rain_sensitivity_ref: ""
+    rationale: >-
+      Dryland improved bermudagrass hay producer in the West Cross Timbers. 150 acres is a
+      commercial hay enterprise (county average is 33 harvested acres per hay operation, Census
+      2022; Parker PRF haying totals 1,477 insured acres in 2026). Bermudagrass is a warm-season
+      grass, so we assume rain from April to September sets tonnage; farm-grid rainfall peaks in
+      May-June (1991-2020 CPC). Intervals Apr-May, Jun-Jul, Aug-Sep cover the
+      whole cutting season without sharing a month. 90% coverage is the county's modal level (70%
+      of 2021-2025 insured acres); PF 1.50 matches Parker haying buyers (implied 1.50 in 2026).
+      Yield = Texas other-hay mean 2016-2025 (1.50 in 2022 drought to 2.45); value at the Texas
+      2025 other-hay price of $130/ton.
+    sources:
+      - "RMA ADM 2026 Price table A00810 (County Base Value), 2026_ADM_YTD.zip: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
+      - "RMA Summary of Business sobcov/sobtpu 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
+      - "PRF Crop Provisions 26-RI-PRF: https://www.rma.usda.gov/sites/default/files/2025-08/Rainfall-Index-Pasture-Rangeland-Forage-Crop-Provisions-26-RI-PRF.pdf"
+      - "NASS Quick Stats, HAY (EXCL ALFALFA) yield and price received, Texas, 2016-2025: https://quickstats.nass.usda.gov/"
+      - "NASS 2022 Census of Agriculture county data (Quick Stats) and profile: https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/County_Profiles/Texas/cp48367.pdf"
+
+  - farm_id: DFW_graze
+    site: DFW
+    county: Parker County, TX
+    fips: "48367"
+    lat: 32.777096
+    lon: -97.805905
+    intended_use: grazing
+    irrigation_practice: not specified
+    organic: false
+    insured_acres: 800
+    productivity_factor: 1.35
+    coverage_level: 0.90
+    interval_allocation:
+      "Feb-Mar": 0.15
+      "Apr-May": 0.35
+      "Jun-Jul": 0.25
+      "Sep-Oct": 0.25
+    county_base_value_usd_per_acre: 27.6
+    expected_production: {value: 3943, units: "lb air-dry forage/acre/yr (normal year)", aum_per_acre: 1.08}
+    expected_value_usd_per_acre: 13.5
+    rain_sensitivity_ref: ""
+    rationale: >-
+      Cow-calf operation of about 75-80 beef cows on 800 acres of native and introduced pasture
+      (county-wide 10.3 pasture acres per beef cow, Census 2022; NRCS normal-year production of
+      3,943 lb/acre gives about 1.08 AUM/acre). Larger than the county's median herd (20-49 cows;
+      Parker is dominated by small rural-residential farms) but typical of a commercial unit; the
+      2026 PRF average is 603 insured acres per policy. Grass grows from late winter (cool-season
+      grasses) through fall, with rain peaks in May and October, so the allocation spreads value
+      across spring, early summer and fall. PF 1.35 = Parker grazing buyers' implied 2026 average
+      (1.36). Value = Parker pasture cash rent ($13.50/acre, 2024; no 2025 county estimate).
+    sources:
+      - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
+      - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
+      - "NRCS SSURGO component.rsprod_r via Soil Data Access (laoverlap TX367): https://sdmdataaccess.sc.egov.usda.gov/"
+      - "NRCS ESD R067BY002CO stocking formula (25% harvest efficiency, 912.5 lb/AUM): https://edit.sc.egov.usda.gov/services/descriptions/esd/067B/R067BY002CO.json"
+      - "NASS Quick Stats, RENT, CASH, PASTURELAND, Parker County 2024; Census 2022: https://quickstats.nass.usda.gov/"
+
+  - farm_id: SAT_graze
+    site: SAT
+    county: Atascosa County, TX
+    fips: "48013"
+    lat: 28.891478
+    lon: -98.535381
+    intended_use: grazing
+    irrigation_practice: not specified
+    organic: false
+    insured_acres: 1500
+    productivity_factor: 1.45
+    coverage_level: 0.85
+    interval_allocation:
+      "Mar-Apr": 0.20
+      "May-Jun": 0.40
+      "Sep-Oct": 0.40
+    county_base_value_usd_per_acre: 18.2
+    expected_production: {value: 3379, units: "lb air-dry forage/acre/yr (normal year)", aum_per_acre: 0.93}
+    expected_value_usd_per_acre: 15.5
+    rain_sensitivity_ref: ""
+    rationale: >-
+      South Texas Plains brush-rangeland cow-calf ranch, about 80 cows on 1,500 acres
+      (county-wide about 19 pasture acres per beef cow; the median beef cow is in a 50-99 head
+      herd, Census 2022; 2026 PRF average 1,235 insured acres per policy). NRCS describes peak
+      rain in late spring and a second peak in early fall with hot, dry July-August; the farm grid
+      shows May-Jun and Sep wettest. The allocation therefore puts 40% each on May-Jun and Sep-Oct
+      and 20% on Mar-Apr green-up (50% county maximum). 85% coverage is Atascosa's modal level (68%
+      of insured acres 2021-2025, 55% subsidy). PF 1.45 = implied 2026 average (1.44). Value =
+      Atascosa pasture cash rent $15.50/acre (2025).
+    sources:
+      - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
+      - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
+      - "NRCS SSURGO rsprod_r via Soil Data Access (TX013): https://sdmdataaccess.sc.egov.usda.gov/"
+      - "NRCS ESD R083AY024TX Tight Sandy Loam, climate narrative: https://edit.sc.egov.usda.gov/services/descriptions/esd/083A/R083AY024TX.json"
+      - "NASS Quick Stats, pasture cash rent Atascosa 2025; Census 2022: https://quickstats.nass.usda.gov/"
+
+  - farm_id: OKC_hay
+    site: OKC
+    county: Grady County, OK
+    fips: "40051"
+    lat: 35.021058
+    lon: -97.88689
+    intended_use: haying
+    irrigation_practice: non-irrigated
+    organic: false
+    insured_acres: 200
+    productivity_factor: 1.40
+    coverage_level: 0.90
+    interval_allocation:
+      "Apr-May": 0.35
+      "Jun-Jul": 0.40
+      "Aug-Sep": 0.25
+    county_base_value_usd_per_acre: 172.0
+    expected_production: {value: 1.69, units: "tons/acre"}
+    expected_value_usd_per_acre: 148.7
+    rain_sensitivity_ref: ""
+    rationale: >-
+      Dryland bermudagrass and native-prairie hay meadow in central Oklahoma. 200 acres is
+      slightly above the county average of 178 harvested acres per hay operation (Census 2022).
+      Rain peaks in May-June on the farm grid; first cutting depends on April-May rain and regrowth
+      on June-September rain (our assumption for a warm-season hay crop). Allocation Apr-May 35%, Jun-Jul 40%, Aug-Sep 25% (60% maximum in
+      Oklahoma). 90% coverage is Grady's modal level (73% of acres). PF 1.40 = implied 2026 haying
+      average (1.39). Yield = Oklahoma other-hay mean 2016-2025 (1.25 in 2022 to 1.95); Grady's own
+      2010-2018 mean was about 1.7. Value at Oklahoma's 2025 other-hay price of $88/ton.
+    sources:
+      - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
+      - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
+      - "NASS Quick Stats, HAY (EXCL ALFALFA) yield and price, Oklahoma 2016-2025 and Grady County 2010-2018: https://quickstats.nass.usda.gov/"
+      - "NASS 2022 Census county profile: https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/County_Profiles/Oklahoma/cp40051.pdf"
+
+  - farm_id: OKC_graze
+    site: OKC
+    county: Grady County, OK
+    fips: "40051"
+    lat: 35.021058
+    lon: -97.88689
+    intended_use: grazing
+    irrigation_practice: not specified
+    organic: false
+    insured_acres: 1000
+    productivity_factor: 1.30
+    coverage_level: 0.90
+    interval_allocation:
+      "Mar-Apr": 0.30
+      "May-Jun": 0.40
+      "Jul-Aug": 0.20
+      "Sep-Oct": 0.10
+    county_base_value_usd_per_acre: 31.6
+    expected_production: {value: 4645, units: "lb air-dry forage/acre/yr (normal year)", aum_per_acre: 1.27}
+    expected_value_usd_per_acre: 24.5
+    rain_sensitivity_ref: ""
+    rationale: >-
+      Cow-calf operation of about 120 cows on 1,000 acres of native mixed-grass prairie and
+      bermudagrass pasture (county-wide about 8 pasture acres per beef cow; median beef cow is in a
+      200-499 head herd, Census 2022). The dominant NRCS site (Loamy Upland, MLRA 80A) grows mostly
+      in spring and early summer; farm-grid rain peaks in May (4.8 in) and June. Allocation mirrors
+      that, with smaller summer and fall shares for regrowth. 90% coverage is the modal level; PF 1.30
+      = Grady grazing buyers' implied 2026 average (1.28), the lowest of the study counties. Value =
+      Grady pasture cash rent $24.50/acre (2025).
+    sources:
+      - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
+      - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
+      - "NRCS SSURGO rsprod_r via Soil Data Access (OK051): https://sdmdataaccess.sc.egov.usda.gov/"
+      - "NASS Quick Stats, pasture cash rent Grady 2025; Census 2022: https://quickstats.nass.usda.gov/"
+
+  - farm_id: SGF_hay
+    site: SGF
+    county: Dade County, MO
+    fips: "29057"
+    lat: 37.43235
+    lon: -93.854878
+    intended_use: haying
+    irrigation_practice: non-irrigated
+    organic: false
+    insured_acres: 150
+    productivity_factor: 1.45
+    coverage_level: 0.90
+    interval_allocation:
+      "Mar-Apr": 0.40
+      "May-Jun": 0.40
+      "Sep-Oct": 0.20
+    county_base_value_usd_per_acre: 184.0
+    expected_production: {value: 1.90, units: "tons/acre"}
+    expected_value_usd_per_acre: 214.7
+    rain_sensitivity_ref: ""
+    rationale: >-
+      Tall fescue (cool-season) hay producer in southwest Missouri, 150 acres (county average 128
+      harvested acres per hay operation, Census 2022). Fescue is a cool-season grass; we assume
+      the main spring cutting depends on March-June rain and fall regrowth on September-October rain. Farm-grid rain
+      peaks April-June (5.0-6.1 in per month). Allocation 40% Mar-Apr, 40% May-Jun, 20% Sep-Oct
+      for fall regrowth (60% maximum in Missouri). 90% coverage is modal (55% of acres); PF 1.45 =
+      implied 2026 haying average (1.45). Yield = Missouri other-hay mean 2016-2025 (1.20 in the
+      2023 drought); Dade's own 2010-2018 mean was about 1.9. Value at Missouri's 2025 other-hay
+      price of $113/ton.
+    sources:
+      - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
+      - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
+      - "NASS Quick Stats, HAY (EXCL ALFALFA) yield and price, Missouri 2016-2025 and Dade County 2010-2018: https://quickstats.nass.usda.gov/"
+      - "NRCS ESD R116BY021MO climate narrative: https://edit.sc.egov.usda.gov/services/descriptions/esd/116B/R116BY021MO.json"
+
+  - farm_id: SGF_graze
+    site: SGF
+    county: Dade County, MO
+    fips: "29057"
+    lat: 37.43235
+    lon: -93.854878
+    intended_use: grazing
+    irrigation_practice: not specified
+    organic: false
+    insured_acres: 500
+    productivity_factor: 1.50
+    coverage_level: 0.90
+    interval_allocation:
+      "Mar-Apr": 0.30
+      "May-Jun": 0.30
+      "Aug-Sep": 0.20
+      "Oct-Nov": 0.20
+    county_base_value_usd_per_acre: 41.4
+    expected_production: {value: 3800, units: "lb air-dry forage/acre/yr (proxy: 1.9 t/ac fescue hay yield)", aum_per_acre: 1.04}
+    expected_value_usd_per_acre: 35.0
+    rain_sensitivity_ref: ""
+    rationale: >-
+      Fescue-pasture cow-calf operation of about 135 cows on 500 acres (county-wide 3.7 pasture
+      acres per beef cow and 101 cows per beef operation, Census 2022; 2026 PRF average 533 insured
+      acres per policy). Realized county stocking (about 3.3 AUM/acre) is well above the 1.04 AUM/acre from the
+      25%-harvest rangeland formula, consistent with fertilized improved pasture. As a cool-season
+      grass, fescue is assumed to grow mainly in spring with a fall flush, so the allocation splits
+      spring (60%) and late summer-fall (40%). PF 1.50 = implied 2026 grazing average (1.48). Value
+      = Dade pasture cash rent $35/acre (2025).
+    sources:
+      - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
+      - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
+      - "NASS Quick Stats, pasture cash rent Dade 2025; Census 2022; Missouri hay yields: https://quickstats.nass.usda.gov/"
+      - "NRCS ESD R067BY002CO stocking formula: https://edit.sc.egov.usda.gov/services/descriptions/esd/067B/R067BY002CO.json"
+
+  - farm_id: DEN_graze
+    site: DEN
+    county: Elbert County, CO
+    fips: "08039"
+    lat: 39.315157
+    lon: -104.114076
+    intended_use: grazing
+    irrigation_practice: not specified
+    organic: false
+    insured_acres: 7000
+    productivity_factor: 1.45
+    coverage_level: 0.90
+    interval_allocation:
+      "Apr-May": 0.45
+      "Jun-Jul": 0.35
+      "Aug-Sep": 0.20
+    county_base_value_usd_per_acre: 13.5
+    expected_production: {value: 1364, units: "lb air-dry forage/acre/yr (normal year)", aum_per_acre: 0.37}
+    expected_value_usd_per_acre: 6.1
+    rain_sensitivity_ref: ""
+    rationale: >-
+      Shortgrass and foothill rangeland cow-calf ranch, about 200 cows on 7,000 acres
+      (county-wide 35 pasture acres per beef cow; median beef cow in a 200-499 head herd, Census
+      2022; 2026 PRF average 8,281 insured acres per policy). NRCS ESDs for the dominant sites
+      (Sandy Foothill, Sandy Plains, Loamy Plains) say cool-season plants start growth about April 1
+      and warm-season plants about May 1, and about 75% of precipitation falls March-September.
+      Allocation front-loads spring (Apr-May 45%) and keeps summer coverage (60% maximum in
+      Colorado). 90% coverage is modal (78% of acres); PF 1.45 = implied 2026 average (1.47). Value =
+      Elbert pasture cash rent $6.10/acre (2025).
+    sources:
+      - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
+      - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
+      - "NRCS SSURGO rsprod_r via Soil Data Access (CO039): https://sdmdataaccess.sc.egov.usda.gov/"
+      - "NRCS ESD R049XB210CO and R067BY002CO: https://edit.sc.egov.usda.gov/services/descriptions/esd/049X/R049XB210CO.json"
+      - "NASS Quick Stats, pasture cash rent Elbert 2025; Census 2022: https://quickstats.nass.usda.gov/"
+
+  - farm_id: ABQ_graze
+    site: ABQ
+    county: Torrance County, NM
+    fips: "35057"
+    lat: 34.554998
+    lon: -105.890577
+    intended_use: grazing
+    irrigation_practice: not specified
+    organic: false
+    insured_acres: 12000
+    productivity_factor: 1.50
+    coverage_level: 0.85
+    interval_allocation:
+      "Apr-May": 0.20
+      "Jun-Jul": 0.30
+      "Aug-Sep": 0.50
+    county_base_value_usd_per_acre: 11.5
+    expected_production: {value: 1192, units: "lb air-dry forage/acre/yr (normal year)", aum_per_acre: 0.33}
+    expected_value_usd_per_acre: 1.7
+    rain_sensitivity_ref: ""
+    rationale: >-
+      Arid blue-grama rangeland cow-calf ranch, about 125 cows on 12,000 acres (county-wide about
+      95 pasture acres per beef cow, far more land per cow than the NRCS formula implies; 2026 PRF
+      average 15,230 insured acres per policy; median beef cow in a 200-499 head herd). NRCS
+      (Loamy site, MLRA 42C) says 75% of precipitation falls April-October, mostly July-September as
+      monsoon thunderstorms; the farm grid gets 5.0 of its 13.9 in during Jul-Aug. Allocation puts
+      the 50% maximum (New Mexico) on Aug-Sep and 30% on Jun-Jul, with 20% on Apr-May for
+      cool-season growth. 85% coverage: Torrance splits between 85% (42% of acres) and 90% (37%).
+      PF 1.50 = implied 2026 average (1.49). Value = Torrance pasture cash rent $1.70/acre (2025),
+      far below the $11.50 base value.
+    sources:
+      - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
+      - "RMA Summary of Business 2016-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
+      - "NRCS SSURGO rsprod_r via Soil Data Access (NM057): https://sdmdataaccess.sc.egov.usda.gov/"
+      - "NRCS ESD R042CY109NM Loamy, climate narrative: https://edit.sc.egov.usda.gov/services/descriptions/esd/042C/R042CY109NM.json"
+      - "NASS Quick Stats, pasture cash rent Torrance 2025; Census 2022: https://quickstats.nass.usda.gov/"
+
+  - farm_id: TPA_graze
+    site: TPA
+    county: Hardee County, FL
+    fips: "12049"
+    lat: 27.492846
+    lon: -81.82158
+    intended_use: grazing
+    irrigation_practice: not specified
+    organic: false
+    insured_acres: 1000
+    productivity_factor: 1.45
+    coverage_level: 0.90
+    interval_allocation:
+      "Mar-Apr": 0.40
+      "May-Jun": 0.40
+      "Oct-Nov": 0.20
+    county_base_value_usd_per_acre: 50.3
+    expected_production: {value: 5440, units: "lb air-dry forage/acre/yr (proxy: 2.72 t/ac Florida hay yield)", aum_per_acre: 1.49}
+    expected_value_usd_per_acre: 11.0
+    rain_sensitivity_ref: ""
+    rationale: >-
+      Bahiagrass improved-pasture cow-calf operation, about 220 cows on 1,000 acres (county-wide
+      4.5 pasture acres per beef cow; median beef cow in a 200-499 head herd, Census 2022; 2026 PRF
+      average 641 insured acres per policy). The June-September rainy season (about 60% of annual
+      rain, NRCS) is usually reliable; the forage risk is the dry spring (March-May) and the early
+      end of the rainy season, which is also where farm-grid rain is most variable. Allocation:
+      Mar-Apr 40%, May-Jun 40%, Oct-Nov 20% (50% maximum in Florida). 90% coverage is chosen on 99% of
+      Hardee acres; PF 1.45 = implied 2026 average (1.46). Value = Hardee pasture cash rent
+      $11/acre (2024; no 2025 county estimate; Florida 2025 = $20).
+    sources:
+      - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
+      - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
+      - "NRCS ESD F155XY120FL Sandy Flatwoods and Hammocks, climate narrative: https://edit.sc.egov.usda.gov/services/descriptions/esd/155X/F155XY120FL.json"
+      - "NASS Quick Stats, pasture cash rent Hardee 2024; Florida hay yield 2016-2025; Census 2022: https://quickstats.nass.usda.gov/"
+
+  - farm_id: TPA_hay
+    site: TPA
+    county: Hardee County, FL
+    fips: "12049"
+    lat: 27.492846
+    lon: -81.82158
+    intended_use: haying
+    irrigation_practice: non-irrigated
+    organic: false
+    insured_acres: 200
+    productivity_factor: 1.50
+    coverage_level: 0.90
+    interval_allocation:
+      "Mar-Apr": 0.30
+      "May-Jun": 0.40
+      "Sep-Oct": 0.30
+    county_base_value_usd_per_acre: 333.0
+    expected_production: {value: 2.72, units: "tons/acre"}
+    expected_value_usd_per_acre: 326.4
+    rain_sensitivity_ref: ""
+    rationale: >-
+      Bahiagrass/bermudagrass hay producer, 200 acres (county average 134 harvested acres per hay
+      operation, Census 2022). Haying dominates PRF in Hardee: 79% of 2026 county liability and
+      59,897 insured acres, about 7 times the 8,070 acres the 2022 Census counted as harvested for
+      hay. Hay is cut from late spring through fall, so the allocation covers the spring dry season
+      (Mar-Apr), the start of the rains (May-Jun) and the end of the season (Sep-Oct). PF 1.50 =
+      implied 2026 haying average (1.49). Yield = Florida other-hay mean 2016-2025 (Census 2022 Hardee
+      figure is higher, 3.75 t/ac); value at Florida's 2025 hay price of $120/ton.
+    sources:
+      - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
+      - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
+      - "NASS Quick Stats, HAY (EXCL ALFALFA) yield and price, Florida 2016-2025; Census 2022 Hardee: https://quickstats.nass.usda.gov/"
+      - "NASS 2022 Census county profile: https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/County_Profiles/Florida/cp12049.pdf"

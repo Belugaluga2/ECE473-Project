@@ -1,0 +1,316 @@
+{
+ "HistoricalIndexRows": [
+  {
+   "Year": 1950,
+   "HistoricalIndexDataColumns": [
+    {
+     "Year": 1950,
+     "IntervalCode": "625",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 1950,
+     "IntervalCode": "626",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 1950,
+     "IntervalCode": "627",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 1950,
+     "IntervalCode": "628",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 1950,
+     "IntervalCode": "629",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 1950,
+     "IntervalCode": "630",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 1950,
+     "IntervalCode": "631",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 1950,
+     "IntervalCode": "632",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 1950,
+     "IntervalCode": "633",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 1950,
+     "IntervalCode": "634",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 1950,
+     "IntervalCode": "635",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    }
+   ]
+  },
+  {
+   "Year": 2025,
+   "HistoricalIndexDataColumns": [
+    {
+     "Year": 2025,
+     "IntervalCode": "625",
+     "PercentOfNormal": 1.265,
+     "IntervalMeasurement": 137.59,
+     "AverageIntervalMeasurement": 108.77,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2025,
+     "IntervalCode": "626",
+     "PercentOfNormal": 0.547,
+     "IntervalMeasurement": 73.78,
+     "AverageIntervalMeasurement": 134.97,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2025,
+     "IntervalCode": "627",
+     "PercentOfNormal": 1.05,
+     "IntervalMeasurement": 177.29,
+     "AverageIntervalMeasurement": 168.8710666666,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2025,
+     "IntervalCode": "628",
+     "PercentOfNormal": 1.243,
+     "IntervalMeasurement": 264.77,
+     "AverageIntervalMeasurement": 213.0134666666,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2025,
+     "IntervalCode": "629",
+     "PercentOfNormal": 0.938,
+     "IntervalMeasurement": 195.04,
+     "AverageIntervalMeasurement": 208.0372,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2025,
+     "IntervalCode": "630",
+     "PercentOfNormal": 0.87,
+     "IntervalMeasurement": 121.51,
+     "AverageIntervalMeasurement": 139.6904,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2025,
+     "IntervalCode": "631",
+     "PercentOfNormal": 1.257,
+     "IntervalMeasurement": 136.56,
+     "AverageIntervalMeasurement": 108.6132,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2025,
+     "IntervalCode": "632",
+     "PercentOfNormal": 1.08,
+     "IntervalMeasurement": 147.19,
+     "AverageIntervalMeasurement": 136.2373333333,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2025,
+     "IntervalCode": "633",
+     "PercentOfNormal": 0.843,
+     "IntervalMeasurement": 149.27,
+     "AverageIntervalMeasurement": 177.0718666666,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2025,
+     "IntervalCode": "634",
+     "PercentOfNormal": 1.219,
+     "IntervalMeasurement": 198.43,
+     "AverageIntervalMeasurement": 162.8430666666,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2025,
+     "IntervalCode": "635",
+     "PercentOfNormal": 0.954,
+     "IntervalMeasurement": 116.04,
+     "AverageIntervalMeasurement": 121.6469333333,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    }
+   ]
+  },
+  {
+   "Year": 2026,
+   "HistoricalIndexDataColumns": [
+    {
+     "Year": 2026,
+     "IntervalCode": "625",
+     "PercentOfNormal": 0.629,
+     "IntervalMeasurement": 68.12,
+     "AverageIntervalMeasurement": 108.3805405405,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2026,
+     "IntervalCode": "626",
+     "PercentOfNormal": 0.794,
+     "IntervalMeasurement": 107.81,
+     "AverageIntervalMeasurement": 135.7968918918,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2026,
+     "IntervalCode": "627",
+     "PercentOfNormal": 1.313,
+     "IntervalMeasurement": 221.64,
+     "AverageIntervalMeasurement": 168.7572972972,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2026,
+     "IntervalCode": "628",
+     "PercentOfNormal": 1.136,
+     "IntervalMeasurement": 241.1,
+     "AverageIntervalMeasurement": 212.314054054,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2026,
+     "IntervalCode": "629",
+     "PercentOfNormal": 0.96,
+     "IntervalMeasurement": 199.83,
+     "AverageIntervalMeasurement": 208.2128378378,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2026,
+     "IntervalCode": "630",
+     "PercentOfNormal": 1.11,
+     "IntervalMeasurement": 155.27,
+     "AverageIntervalMeasurement": 139.936081081,
+     "GridId": 15432,
+     "FilingStatusId": 6
+    },
+    {
+     "Year": 2026,
+     "IntervalCode": "631",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 2026,
+     "IntervalCode": "632",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 2026,
+     "IntervalCode": "633",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 2026,
+     "IntervalCode": "634",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    },
+    {
+     "Year": 2026,
+     "IntervalCode": "635",
+     "PercentOfNormal": null,
+     "IntervalMeasurement": null,
+     "AverageIntervalMeasurement": null,
+     "GridId": 0,
+     "FilingStatusId": 0
+    }
+   ]
+  }
+ ]
+}

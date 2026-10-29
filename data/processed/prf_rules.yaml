@@ -1,0 +1,596 @@
+# PRF (Pasture, Rangeland, Forage) Rainfall Index insurance: machine-readable rule set.
+#
+# Owner: R3 / Maya (Week 1). Companion doc: docs/research/01_usda_prf_mechanics.md (plain-language
+# explanations, verification status of every number, and the worked examples step by step).
+# Compiled 2026-10-29. Rules are for the 2027 crop year (the year now on sale; sales closing
+# 2026-12-01) unless a field says otherwise. Differences for the 2026 crop year are noted.
+#
+# Conventions used in this file:
+#   * Fractions, not percents: coverage 0.90, productivity 1.00, subsidy 0.51, percent of value 0.50.
+#   * Index values are in "percent of normal" points (100 = average rain; trigger 90 at 90% coverage).
+#   * Dollar amounts in US dollars. Dates ISO (YYYY-MM-DD); recurring dates as MM-DD.
+#   * Codes (interval, state, county, grid, practice) are strings so leading zeros survive.
+#   * `source:` lists keys into `sources` below, with a pinpoint (page, section, table, record type).
+#     `status:` CONFIRMED = read in the primary document or primary RMA data/tool;
+#     DERIVED = computed by us from confirmed inputs; INFERRED = our reading, not stated outright.
+
+meta:
+  schema_version: 1
+  compiled_on: "2026-10-29"
+  crop_year_basis: 2027
+  product: "Pasture, Rangeland, Forage (PRF), Rainfall Index plan of insurance"
+  doc: docs/research/01_usda_prf_mechanics.md
+
+sources:
+  BP27:
+    title: "Rainfall Index Plan Common Policy, Basic Provisions (27.1-RI), released August 2026"
+    url: https://www.rma.usda.gov/sites/default/files/2026-08/Rainfall%20Index%20Plan%20Common%20Policy%2027.1-Ri.pdf
+    local: data/raw/rma_docs/27.1-RI-basic-provisions.pdf
+  CP27:
+    title: "Rainfall Index Pasture, Rangeland, Forage Crop Provisions (27-RI-PRF), released August 2026"
+    url: https://www.rma.usda.gov/sites/default/files/2026-09/rainfall-index-pasture-rangeland-forage-crop-provisions-27-ri-prf.pdf
+    local: data/raw/rma_docs/27-RI-PRF-crop-provisions.pdf
+  HB26:
+    title: "Rainfall Index Insurance Standards Handbook FCIC-18150 (08-2025), 2026 and succeeding crop years"
+    url: https://www.rma.usda.gov/sites/default/files/2025-08/2026-18150-Rainfall-Index-Handbook.pdf
+    local: data/raw/rma_docs/2026-18150-Rainfall-Index-Handbook.pdf
+  HB27:
+    title: "Rainfall Index Insurance Standards Handbook FCIC-18150-1 (08-2026), 2027 and succeeding crop years"
+    url: https://www.rma.usda.gov/sites/default/files/2026-08/Rainfall%20Index%20Insurance%20Standards%20Handbook%202027-18150.pdf
+    local: data/raw/rma_docs/2027-18150-Rainfall-Index-Handbook.pdf
+  PM26053:
+    title: "RMA PM-26-053, Rainfall Index Crop Insurance Policy Changes Effective for the 2027 and Succeeding Crop Years (2026-09-08)"
+    url: https://www.rma.usda.gov/policy-procedure/bulletins-memos/product-management-bulletin/pm-26-053-rainfall-index-crop
+    local: data/raw/rma_docs/PM-26-053.html
+  PM_FINALS:
+    title: "RMA final-grid-index bulletins PM-26-015 (2026-03-05), PM-26-039 (2026-07-07), PM-26-044 (2026-08-03), PM-26-050 (2026-09-01), PM-26-063 (2026-10-01)"
+    url: https://www.rma.usda.gov/policy-procedure/bulletins-memos/product-management-bulletin/pm-26-039-2026-crop-year-rainfall
+  RIDATA27:
+    title: "RMA, Rainfall Index Data - 2027 and Beyond Rainfall Index Processing (posted 2026-06)"
+    url: https://www.rma.usda.gov/sites/default/files/2026-06/Rainfall%20Indexa%20Data%202027%20and%20Beyond%20Rainfall%20Index%20Processing.pdf
+    local: data/raw/rma_docs/RI-data-2027-processing.pdf
+  NEWS0430:
+    title: "RMA news release, USDA Risk Management Agency Upgrades Rainfall Data Source (2026-04-30)"
+    url: https://www.rma.usda.gov/news-events/news/2026/washington-dc/usda-risk-management-agency-upgrades-rainfall-data-source
+  NCEI_GUIDE:
+    title: "NOAA NCEI, USDA Gridded Data - Consumer Guide (last updated 2026-03-26)"
+    url: https://www.ncei.noaa.gov/pub/data/cirs/usda/
+    local: data/raw/rma_docs/ncei/Readme.docx
+  ADM27:
+    title: "RMA Actuarial Data Master 2027 (2027_ADM_Filing_0831.zip and 2027_ADM_YTD.zip, as posted 2026-10-16)"
+    url: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2027/
+    local: data/raw/rma_docs/adm/
+  ADM_LAYOUT:
+    title: "ADM Record Layout for 2027 (AdmLayout.pdf, as of 2026-05-31)"
+    url: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2027/AdmLayout.zip
+    local: data/raw/rma_docs/adm/AdmLayout.pdf
+  ADM26D:
+    title: "RMA ADM 2026 daily file 2026_ADM_Daily_261001.zip, record A01130 (official Jun-Jul 2026 payment factors)"
+    url: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/
+    local: data/raw/rma_docs/adm/daily_261001/
+  DST:
+    title: "RMA PRF Decision Support Tool and its public web API (commodity year 2027), queried 2026-10-29"
+    url: https://public-rma.fpac.usda.gov/apps/PRF
+    api_base: https://public-rma.fpac.usda.gov/apps/PrfWebApi
+  GRID_LAYER:
+    title: "RMA PRF grid feature layer (PRF_GRID MapServer layer 0) via the grid-locator proxy, queried 2026-10-29"
+    url: https://public-rma.fpac.usda.gov/apps/prf/proxy/proxy.ashx?https://pdgis.rm.usda.net/arcgis/rest/services/PRF/PRF_GRID/MapServer/0
+  OBBA:
+    title: "FCIC 25-OBBA One Big Beautiful Amendment (released August 2025)"
+    url: https://www.rma.usda.gov/sites/default/files/2025-09/25-OBBA-One-Big-Beautiful-Amendment.pdf
+    local: data/raw/rma_docs/25-OBBA-amendment.pdf
+  MGR25006:
+    title: "RMA Manager's Bulletin MGR-25-006, One Big Beautiful Bill Act Amendment (2025-08-20)"
+    url: https://www.rma.usda.gov/policy-procedure/bulletins-memos/managers-bulletin/mgr-25-006-one-big-beautiful-bill-act-amendment
+  USC1508:
+    title: "7 U.S.C. 1508 (Federal Crop Insurance Act sec. 508)"
+    url: https://www.law.cornell.edu/uscode/text/7/1508
+  FACTSHEET:
+    title: "RMA Pasture, Rangeland, Forage Pilot Insurance Program fact sheet (September 2025)"
+    url: https://www.rma.usda.gov/sites/default/files/2024-02/Pasture-Rangeland-Forage-Pilot-Insurance-Program-Fact-Sheet.pdf
+    local: data/raw/rma_docs/PRF-fact-sheet-2024.pdf
+
+identifiers:
+  commodity_code: {value: "0088", name: "Pasture,Rangeland,Forage", source: ["ADM27 A00420"], status: CONFIRMED}
+  insurance_plan_code: {value: "13", name: "Rainfall Index (RI)", source: ["ADM27 A00460"], status: CONFIRMED}
+  unit_of_measure: {value: "DOL", note: "insured in dollars of protection, not tons of forage", source: ["ADM27 A00030"], status: CONFIRMED}
+  states_offered: {value: 49, note: "48 contiguous states plus Hawaii (Hawaii has its own crop provisions and uses HCDP data)", source: ["ADM27 A00030 distinct State Code"], status: CONFIRMED}
+
+intended_uses:
+  source: ["CP27 sec. 1 definitions and sec. 3(a)(2), p.1", "HB26 para 16, p.6", "ADM27 A00470, A00490, A00500, A00030", "DST API validation message"]
+  status: CONFIRMED
+  rule: "Each acre is insured as EITHER grazing OR haying in a crop year, never both."
+  grazing:
+    intended_use_code: "007"
+    type_code: "007"
+    definition: "Used solely as pasture for livestock to roam and feed on."
+    irrigation_practice_codes: {"997": "No irrigation practice specified (grazing has no irrigated/non-irrigated split)"}
+    organic_practice_codes: {"997": "No organic practice specified"}
+    practice_code_rule: "practice_code = interval_code (625..635)"
+    stocking_rate_rule:
+      value: "Insured must have an insurable interest in livestock equal to at least 25% of the stocking rate for the insured acres (new for 2027)."
+      min_fraction_of_stocking_rate: 0.25
+      source: ["CP27 sec. 4(j), p.2", "PM26053", "HB27 Exhibit 4 item 8, p.49", "HB27 Exhibit 6, p.58"]
+      status: CONFIRMED
+  haying:
+    intended_use_code: "030"
+    type_code: "030"
+    definition: "Severance of the plant from its root by mechanical equipment and cured."
+    irrigation_practice_codes: {"002": "Irrigated", "003": "Non-Irrigated"}
+    organic_practice_codes: {"997": "No organic practice (conventional)", "001": "Organic (certified)", "002": "Organic (transitional)"}
+    practice_code_rule:
+      irrigated_conventional: "interval_code - 200 (425..435)"
+      irrigated_certified_organic: "interval_code - 160 (465..475)"
+      irrigated_transitional: "interval_code - 140 (485..495)"
+      nonirrigated_conventional: "interval_code - 100 (525..535)"
+      nonirrigated_certified_organic: "interval_code - 60 (565..575)"
+      nonirrigated_transitional: "interval_code - 40 (585..595)"
+      status: DERIVED
+      evidence: "Observed in every 2027 ADM A00030 PRF record; not a published RMA rule."
+
+insurable_acreage:
+  source: ["CP27 secs. 3-4, pp.1-2", "BP27 sec. 6"]
+  status: CONFIRMED
+  rules:
+    - "Insure all or part of the insurable acres in the county; insured acres cannot exceed 100% of insurable acres."
+    - "Perennial forage only: planted before July 1 of the previous crop year, naturally present (native grass), or self-seeding annuals kept by grazing. Annually planted acreage is not insurable (over-seeding is allowed)."
+    - "Grazing: acreage too steep, too far from water, or otherwise unsuitable for grazing is not insurable for grazing."
+    - "Haying: acreage too steep, wooded, cactus-covered or under water for normal haying equipment is not insurable for haying."
+    - "Public land with no crop-year use authorization (or zero use acres) is not insurable (new for 2027)."
+    - "Native sod in IA, MN, MT, NE, ND, SD: liability uses a 65% protection factor and subsidy is 50 percentage points lower, for 4 of the first 10 years after tillage (if tilled after 2018-12-20); exempt if 5 acres or less per grid."
+  native_sod_protection_factor: {value: 0.65, source: ["CP27 sec. 4(g)(1), p.2"], status: CONFIRMED}
+  native_sod_subsidy_reduction: {value: 0.50, units: "subsidy fraction points", source: ["CP27 sec. 4(g)(2), p.2"], status: CONFIRMED}
+  leases: {value: "Leases (or a signed Lease Certification Form) must be submitted by the acreage reporting date.", source: ["HB26 para 21, pp.8-10", "BP27 sec. 9(d)(1)"], status: CONFIRMED}
+
+unit_structure:
+  value: "One unit = insured acres by crop, intended use, index interval, share, irrigated practice, organic practice, and county, within or assigned to one grid."
+  source: ["BP27 sec. 1 definition of Unit, p.4", "HB26 para 12 (optional, enterprise and whole-farm units not applicable), p.5"]
+  status: CONFIRMED
+  note: "Premium and indemnity are computed separately for every (grid, interval, intended use, practice, share) unit."
+
+grid:
+  size_degrees: {value: 0.25, source: ["BP27 sec. 1 definition of Grid, p.3", "HB27 para 32A, p.12"], status: CONFIRMED}
+  cell_edges:
+    value: "Cells span lat/lon multiples of 0.25 (grid 15429 = 32.75-33.00 N, 98.00-97.75 W). NCEI data points are the cell centers (.125/.375/.625/.875)."
+    source: ["GRID_LAYER", "RIDATA27 p.1 (lat/lon are cell centers)"]
+    status: CONFIRMED
+  grid_id_from_lat_lon:
+    formula: "grid_id = 300 * floor((lat - 20.0) / 0.25) + floor((lon + 130.0) / 0.25) + 1"
+    status: DERIVED
+    evidence: "Matches all 16 study-site lookups against GRID_LAYER on 2026-10-29 and the handbook's McLouth, KS example (grids 22939/22940, HB26 paras 75-76). Use GRID_LAYER as the authority for points on a cell edge."
+  grid_center_from_id:
+    formula: "row = (grid_id - 1) // 300; col = (grid_id - 1) % 300; lat_c = 20.125 + 0.25 * row; lon_c = -129.875 + 0.25 * col"
+    status: DERIVED
+  approx_dimensions_miles:
+    north_south: {value: 17.27, status: DERIVED}
+    east_west_at_32.875N: {value: 14.51, status: DERIVED}
+    area_sq_mi_at_32.875N: {value: 250.6, status: DERIVED}
+    note: "RMA fact sheet says 'approximately 17 by 17 miles at the equator' (FACTSHEET); east-west width shrinks with cos(latitude)."
+  how_producer_picks:
+    value: "Producer drops a point of reference inside the field on RMA's Grid Locator map (or AIP software); the point fixes the grid ID and county. Noncontiguous fields need one point each; contiguous acreage spanning grids may be combined into one grid or split in any proportion (total cannot exceed the field's acres)."
+    source: ["HB26 paras 15 and 71-76, pp.6 and 15-38", "BP27 sec. 6(f)"]
+    status: CONFIRMED
+  rainfall_data_source:
+    crop_year_2026_and_earlier:
+      value: "NOAA CPC gridded interpolated daily precipitation, 0.25 degree; history from 1948"
+      source: ["HB26 paras 31, 32B, 33A, pp.11-13"]
+      status: CONFIRMED
+    crop_year_2027_onward:
+      value: "NOAA NCEI nClimGrid-Monthly (1/24 degree) averaged to the same 0.25 degree grid; history from 1951"
+      source: ["BP27 summary of changes and definitions", "HB27 paras 31-33, pp.12-15", "RIDATA27 p.1", "NCEI_GUIDE", "PM26053"]
+      status: CONFIRMED
+    switch_effective:
+      value: "2027 crop year for PRF (contract change date 2026-08-31); Annual Forage switches for 2028"
+      source: ["PM26053", "NEWS0430", "BP27 summary of changes"]
+      status: CONFIRMED
+
+intervals:
+  source: ["ADM27 A00480 Interval reference table", "HB26 para 32B, pp.11-12", "HB26 Exhibit 5 (628 = April-May, 631 = July-August), p.52", "DST Home.DecisionSupportTab.js: IntervalCodeStart = 625, IntervalCodeEnd = 635"]
+  status: CONFIRMED
+  list:
+    - {code: "625", name: "Jan-Feb", months: [1, 2], adm_name: "JAN - FEB INDEX INTERVAL"}
+    - {code: "626", name: "Feb-Mar", months: [2, 3], adm_name: "FEB - MAR INDEX INTERVAL"}
+    - {code: "627", name: "Mar-Apr", months: [3, 4], adm_name: "MAR - APR INDEX INTERVAL"}
+    - {code: "628", name: "Apr-May", months: [4, 5], adm_name: "APR - MAY INDEX INTERVAL"}
+    - {code: "629", name: "May-Jun", months: [5, 6], adm_name: "MAY - JUN INDEX INTERVAL"}
+    - {code: "630", name: "Jun-Jul", months: [6, 7], adm_name: "JUN - JUL INDEX INTERVAL"}
+    - {code: "631", name: "Jul-Aug", months: [7, 8], adm_name: "JUL - AUG INDEX INTERVAL"}
+    - {code: "632", name: "Aug-Sep", months: [8, 9], adm_name: "AUG - SEP INDEX INTERVAL"}
+    - {code: "633", name: "Sep-Oct", months: [9, 10], adm_name: "SEP - OCT INDEX INTERVAL"}
+    - {code: "634", name: "Oct-Nov", months: [10, 11], adm_name: "OCT - NOV INDEX INTERVAL"}
+    - {code: "635", name: "Nov-Dec", months: [11, 12], adm_name: "NOV - DEC INDEX INTERVAL"}
+  note: "Codes 636-639 (Dec-Jan, Sep-Mar, Mar-Sep, Dec-Jun) exist in A00480 for other Rainfall Index products; PRF offers (A00030) use only 625-635."
+
+allocation_rules:
+  min_intervals: {value: 2, source: ["HB26 para 32C, p.12", "CP27 sec. 2(a) ('more than one index interval'), p.1"], status: CONFIRMED}
+  min_percent_per_selected_interval: {value: 0.10, source: ["CP27 sec. 2(a), p.1", "ADM27 A00810 Minimum Acre Percent = 0.10 in every PRF record"], status: CONFIRMED}
+  max_percent_per_interval:
+    rule: "Set in the Special Provisions / actuarial documents (ADM A00810 'Maximum Acre Percent'). In 2027 it is uniform within each state."
+    jan_feb_625:
+      value: 0.25
+      exception: {state_fips: "06", state: "California", value: 0.50}
+      note: "25% Jan-Feb cap is new for 2027"
+      source: ["PM26053", "ADM27 A00810 Maximum Acre Percent, interval 625"]
+      status: CONFIRMED
+    other_intervals_by_state_fips:
+      "0.50": ["01", "04", "06", "12", "13", "22", "28", "35", "37", "45", "48"]
+      "0.60": ["05", "08", "10", "15", "17", "18", "19", "20", "21", "24", "29", "31", "32", "34", "39", "40", "42", "47", "49", "51", "54"]
+      "0.70": ["09", "16", "23", "25", "26", "27", "30", "33", "36", "38", "41", "44", "46", "50", "53", "55", "56"]
+      source: ["ADM27 2027 A00810 Price, Maximum Acre Percent, intervals 626-635"]
+      status: CONFIRMED
+    study_sites: {TX: 0.50, NM: 0.50, FL: 0.50, OK: 0.60, MO: 0.60, CO: 0.60, source: ["ADM27 A00810", "DST GetMaxAcrePercentage"], status: CONFIRMED}
+  percents_are_whole_numbers: {value: true, source: ["BP27 definition of Percent of value, p.3"], status: CONFIRMED}
+  percents_sum_to_one: {value: true, scope: "by grid ID, share, irrigated practice, organic practice and intended use", source: ["HB26 para 14, p.6"], status: CONFIRMED}
+  no_overlapping_months:
+    value: true
+    rule: "The same month cannot be in more than one selected interval for the same county, grid, intended use, irrigated practice, organic practice and share (Apr-May excludes Mar-Apr and May-Jun)."
+    source: ["CP27 sec. 2(b), p.1"]
+    status: CONFIRMED
+  max_intervals_implied: {value: 6, note: "Non-overlap allows at most 6 two-month intervals (e.g. Jan-Feb, Mar-Apr, ..., Nov-Dec).", status: DERIVED}
+  differences_by_intended_use: {value: "None observed: same min/max limits for grazing and haying at all study grids.", source: ["DST GetMaxAcrePercentage", "ADM27 A00810"], status: CONFIRMED}
+  insurance_period:
+    value: "January 1 - December 31 of the crop year; attaches for all 12 months, but indemnity is paid only for the selected intervals."
+    source: ["BP27 sec. 12, p.15", "CP27 sec. 1 (crop year)"]
+    status: CONFIRMED
+
+coverage:
+  coverage_levels_allowed: {value: [0.70, 0.75, 0.80, 0.85, 0.90], source: ["CP27 sec. 5(a)(1), p.2", "ADM27 A00070", "DST coverage-level validation"], status: CONFIRMED}
+  one_coverage_level_per: "county, crop, intended use, irrigated practice, organic practice"
+  cat_available: {value: false, note: "CAT (65% coverage x 45% productivity) is defined in BP27 but the PRF crop provisions exclude it.", source: ["CP27 sec. 5, p.2"], status: CONFIRMED}
+  productivity_factor:
+    min: 0.60
+    max: 1.50
+    step: 0.01
+    one_per: "county, crop, intended use (and practice)"
+    source: ["CP27 sec. 5(a)(2), p.2", "HB26 para 13, p.5", "DST validation: 'Productivity Factor must be between 60% and 150%'"]
+    status: CONFIRMED
+  county_base_value:
+    definition: "FCIC's determined value per acre of the crop in the county, by intended use and practice, published in the actuarial documents (ADM A00810 'County Base Value')."
+    source: ["BP27 sec. 1 definition, p.2", "ADM27 A00810"]
+    status: CONFIRMED
+  defaults_if_no_change: {value: "Same coverage level and productivity factor as the previous year (changes are due by the sales closing date).", source: ["BP27 sec. 7(d), p.12"], status: CONFIRMED}
+
+index:
+  expected_grid_index:
+    value: 100
+    note: "Normalized so the long-run mean is 100; ADM A00810 Expected Index Value = 1.0000 in every 2027 PRF record."
+    source: ["BP27 definition, p.2", "ADM27 A00810"]
+    status: CONFIRMED
+  final_grid_index_formula:
+    value: "final_index[g, i, Y] = 100 * P[g, i, Y] / mean(P[g, i, y] for y in base_years(Y)), where P is the sum of the interval's two monthly precipitation totals (mm) for grid g"
+    source: ["RIDATA27 p.1", "HB27 para 33D, pp.14-15"]
+    status: CONFIRMED
+  base_years:
+    crop_year_2027_onward: {first: 1951, last: "Y - 2", example: "2027 -> 1951-2025", source: ["RIDATA27 p.1", "HB27 para 33D, p.14"], status: CONFIRMED}
+    crop_year_2026_and_earlier: {first: 1948, last: "Y - 2", example: "2025 -> 1948-2023", source: ["HB26 para 33D, p.13"], status: CONFIRMED}
+  rounding: {value: "Ratio rounded to 3 decimals (index to 0.1 point), e.g. 1.611 -> 161.1", source: ["RIDATA27 p.1: 'Final grid indexes are rounded to 3 decimals'"], status: CONFIRMED}
+  intervals_independent: {value: true, note: "Rain in one interval has no effect on another interval's index.", source: ["HB26 para 33D, p.14"], status: CONFIRMED}
+  trigger_grid_index: {formula: "trigger = expected_grid_index * coverage_level = 100 * coverage_level", source: ["BP27 definition, p.4"], status: CONFIRMED}
+  final_index_corrections:
+    value: "A published final index changes only if NCEI reports an error in writing, the RMA Administrator approves, and less than 1 year has passed."
+    source: ["BP27 sec. 8(e), p.13"]
+    status: CONFIRMED
+  data_publication:
+    ncei_monthly_files:
+      value: "Posted on the 4th business day of each month; 'initial' = previous month (preliminary), 'final' = all months through 2 months ago."
+      source: ["NCEI_GUIDE"]
+      status: CONFIRMED
+    ncei_final_url: "https://www.ncei.noaa.gov/pub/data/cirs/usda/monthly/final/YYYYMM.usda.csv (header latitude,longitude,precipitation; mm; 13,533 cells)"
+    rma_final_index_release:
+      value: "RMA PM bulletin + ADM daily file + Actuarial Information Browser, about 2 months after the interval ends."
+      observed_2026_cpc_era: {"Nov-Dec 2025": "2026-03-05", "Mar-Apr 2026": "2026-07-07", "Apr-May 2026": "2026-08-03", "May-Jun 2026": "2026-09-01", "Jun-Jul 2026": "2026-10-01"}
+      source: ["PM_FINALS"]
+      status: CONFIRMED
+    definitive_source_for_paid_indices:
+      value: "Actuarial Information Browser / ADM payment factors. Bulk historical files and the DST use one historical period and cannot reproduce indices that paid in earlier years."
+      source: ["RIDATA27 p.4"]
+      status: CONFIRMED
+
+premium:
+  premium_rate:
+    definition: "Total premium rate per $1 of policy protection, by grid, interval and coverage level (county/practice record) in the actuarial documents."
+    varies_by: ["grid", "interval", "coverage level"]
+    same_for_grazing_and_haying_at_study_grids: true
+    source: ["BP27 sec. 11(c)-(d), p.14", "DST"]
+    status: CONFIRMED
+  subsidy_by_coverage_level:
+    value: {0.70: 0.59, 0.75: 0.59, 0.80: 0.55, 0.85: 0.55, 0.90: 0.51}
+    crop_years: [2025, 2026, 2027]
+    source: ["ADM27 A00070 record category 04, plan 13", "ADM 2026 and 2025 A00070 (identical)", "DST SubsidyLevel", "USC1508 (e)(7) area yield plans: 59/55/51"]
+    status: CONFIRMED
+    obbba_effect: "None on these base rates (2026 A00070 re-released 2025-08-21 unchanged). For RI, OBBBA changed only the beginning-farmer definition and extra subsidy."
+  beginning_farmer_extra:
+    value: {years_1_2: 0.15, year_3: 0.13, year_4: 0.11, years_5_10: 0.10}
+    eligibility: "Has not actively operated a farm/ranch for more than 10 crop years."
+    source: ["BP27 sec. 11(g), p.15", "OBBA", "MGR25006"]
+    status: CONFIRMED
+  veteran_extra: {value: 0.10, note: "If both BFR and VFR, the higher (BFR) applies.", source: ["BP27 sec. 11(g)(2)-(3), p.15"], status: CONFIRMED}
+  administrative_fee:
+    value: 30
+    units: "USD per crop per county per year"
+    waived_for: ["beginning farmer/rancher", "veteran farmer/rancher", "limited resource farmer"]
+    not_owed_if: "a zero acreage report is filed by the acreage reporting date"
+    source: ["USC1508 (c)(10)(A)", "BP27 sec. 11(e), pp.14-15"]
+    status: CONFIRMED
+  premium_earned:
+    value: "Earned and payable when acreage is reported; billed no earlier than the premium billing date; offset from any indemnity."
+    source: ["CP27 sec. 7, p.2", "BP27 secs. 3(f) and 11(a)-(b)"]
+    status: CONFIRMED
+  late_interest: {value: 0.0125, units: "simple interest per calendar month on unpaid amounts", source: ["BP27 sec. 20(a), p.18"], status: CONFIRMED}
+  premium_exceeds_liability: {value: "If premium + administrative fee exceed liability for any acreage, those acres are not insured.", source: ["BP27 sec. 11(f), p.15"], status: CONFIRMED}
+  premium_funding_prohibited: {value: "Third-party premium funding or rebates in return for part of the indemnity: full premium owed and no indemnity.", source: ["BP27 sec. 11(i), p.15"], status: CONFIRMED}
+
+dates_2027_crop_year:
+  source: ["ADM27 A00200 Date, plan 13 (all 232,184 PRF records identical)", "CP27 sec. 9, p.3", "BP27 sec. 12, p.15"]
+  status: CONFIRMED
+  sales_closing: "2026-12-01"
+  acreage_reporting: "2026-12-01"
+  cancellation: "2026-12-01"
+  premium_billing: "2027-09-01"
+  termination: "2027-12-01"
+  insurance_period: ["2027-01-01", "2027-12-31"]
+  contract_change: "08-31 each year (2027 rules were published by 2026-08-31; the ADM field for crop year 2027 shows 2027-08-31, the next change date)"
+  recurring: {sales_closing: "12-01 of prior year", acreage_reporting: "12-01 of prior year", premium_billing: "09-01", termination: "12-01", contract_change: "08-31 of prior year"}
+  indemnity_payment: {value: "Within 60 days after RMA publishes the final grid index; interest accrues from day 61.", source: ["BP27 sec. 8(d), p.13", "BP27 sec. 21(a), p.19", "PM_FINALS"], status: CONFIRMED}
+
+formulas:
+  source: ["BP27 secs. 7, 8, 11, pp.12-14", "HB26 Exhibit 5, pp.50-57"]
+  status: CONFIRMED
+  dollar_protection_per_acre: "ppa = county_base_value * coverage_level * productivity_factor"
+  unit_policy_protection: "pp_unit = ppa * insured_acres * percent_of_value * share"
+  total_policy_protection: "sum(pp_unit over units), which equals ppa * acres * share when the percents sum to 1"
+  trigger: "T = 100 * coverage_level"
+  payment_calculation_factor: "pcf = (T - final_index) / T if final_index < T else 0"
+  indemnity_unit: "indemnity = pcf * pp_unit"
+  total_premium_unit: "premium = pp_unit * premium_rate[grid, interval, coverage_level]"
+  subsidy_unit: "subsidy = premium * subsidy_rate[coverage_level] (+ BFR/VFR points if eligible)"
+  producer_premium_unit: "producer_premium = premium - subsidy"
+  producer_cost: "sum(producer_premium) + administrative_fee"
+  net_to_producer: "sum(indemnity) - sum(producer_premium) - administrative_fee"
+  max_indemnity_per_unit: "pp_unit (reached only if final_index = 0)"
+
+rounding:
+  official:
+    payment_calculation_factor:
+      value: "Round half up to 3 decimals."
+      evidence: "3,000 of 3,000 sampled 2026 Jun-Jul PRF grid offers in ADM A01130 are reproduced exactly by round_half_up((T - I) / T, 3) with I to 0.1 point; round-half-even fits only 2,648."
+      source: ["ADM26D", "ADM_LAYOUT A01130 Payment Factor"]
+      status: CONFIRMED
+    final_index: {value: "0.1 index point (ratio to 3 decimals)", source: ["RIDATA27 p.1"], status: CONFIRMED}
+    dollar_amounts: {value: "Whole dollars for unit protection, premium, subsidy and indemnity.", source: ["HB26 Exhibit 5, p.50: 'Some of the calculations in the example are rounded to the nearest whole dollar.'"], status: CONFIRMED}
+    indemnity_uses_published_pcf:
+      value: true
+      note: "Indemnity = published 3-decimal factor x unit protection, as in HB26 Exhibit 5 (0.111, 0.333, 0.056 ...). We have not seen an actual AIP indemnity statement."
+      status: INFERRED
+  dst_estimator:
+    description: "Rules that reproduce RMA's Decision Support Tool exactly (4 test cases, 8 units)."
+    ppa: "round to cents"
+    pp_unit: "round to whole dollars (nearest)"
+    premium: "round(pp_unit * rate) to whole dollars"
+    subsidy: "round(premium * subsidy_rate) to whole dollars, per unit, half up"
+    indemnity: "round(unrounded_pcf * pp_unit) to whole dollars (the DST does NOT round pcf to 3 decimals)"
+    source: ["DST"]
+    status: CONFIRMED
+  handbook_exhibit5_quirks: "Handbook subsidy is taken on the total premium (1,114 x 0.51 = 568), not per unit (sum would be 566). One indemnity (588) uses unrounded unit protection (2,116.80)."
+  recommended_for_our_calculator: "Use the 'official' 3-decimal pcf for indemnities and the DST rules for protection, premium and subsidy. Expose a flag that switches pcf to unrounded so results can be checked against the DST."
+
+limitations:
+  - "Area/index plan: no loss adjustment and no measurement of the producer's actual forage loss (HB26 para 20; BP27 sec. 13)."
+  - "Single peril: below-normal interpolated rainfall in the chosen two-month intervals. Not drought, heat, wind, fire, flood or hail insurance (HB26 paras 31 and 34A)."
+  - "Basis risk: grid index vs rain on the ranch, and rain vs forage growth (timing, temperature, soil-moisture carry-over)."
+  - "Interval allocation is itself the hedge decision: protection put on a low-risk interval is unavailable for a high-risk one; caps (25% Jan-Feb, 50-70% otherwise) and the non-overlap rule limit concentration."
+  - "Data-source basis: from 2027 the indices come from NCEI, not CPC; per-grid values can differ a lot from CPC (see doc)."
+
+reference_offers_2027:
+  description: "2027 crop-year offer data for our study grids (DST API, cross-checked against ADM A00810 for county base values and limits). Rates are total premium rates per $1 of protection."
+  source: ["DST", "ADM27 A00810"]
+  status: CONFIRMED
+  parker_tx_grid_15429:
+    state_fips: "48"
+    county_fips: "367"
+    grid_id: "15429"
+    also_in_county: "Wise County TX (48-497)"
+    county_base_value:
+      grazing: 27.60
+      haying_irrigated: 118.00
+      haying_irrigated_organic: 118.00
+      haying_nonirrigated: 181.00
+      haying_nonirrigated_certified_organic: 218.00
+      haying_nonirrigated_transitional: 181.00
+    max_percent: {"625": 0.25, other: 0.50}
+    min_percent: 0.10
+    premium_rates_by_coverage:   # identical for grazing and every haying practice in this grid
+      0.70: {"625": 0.1764, "626": 0.1407, "627": 0.0920, "628": 0.0725, "629": 0.0779, "630": 0.1611, "631": 0.1341, "632": 0.1408, "633": 0.1290, "634": 0.1668, "635": 0.1436}
+      0.75: {"625": 0.1921, "626": 0.1578, "627": 0.1138, "628": 0.0912, "629": 0.0991, "630": 0.1764, "631": 0.1476, "632": 0.1542, "633": 0.1512, "634": 0.1821, "635": 0.1592}
+      0.80: {"625": 0.2083, "626": 0.1762, "627": 0.1351, "628": 0.1113, "629": 0.1202, "630": 0.1917, "631": 0.1620, "632": 0.1685, "633": 0.1731, "634": 0.1971, "635": 0.1743}
+      0.85: {"625": 0.2242, "626": 0.1946, "627": 0.1544, "628": 0.1342, "629": 0.1394, "630": 0.2084, "631": 0.1772, "632": 0.1833, "633": 0.1961, "634": 0.2150, "635": 0.1907}
+      0.90: {"625": 0.2396, "626": 0.2127, "627": 0.1740, "628": 0.1581, "629": 0.1590, "630": 0.2244, "631": 0.1929, "632": 0.1997, "633": 0.2191, "634": 0.2335, "635": 0.2094}
+  study_sites_90pct:
+    note: "County base values (grazing; non-irrigated conventional haying) and 90%-coverage premium rates for intervals 625..635 in order. Jan-Feb (625) max is 0.25 at every site. Station grids are priced in the county that contains the station."
+    DFW_farm:    {grid: "15429", county: "48367", cbv_grazing: 27.6, cbv_hay_nonirr: 181.0, max_pct: 0.50, rates_90: [0.2396, 0.2127, 0.1740, 0.1581, 0.1590, 0.2244, 0.1929, 0.1997, 0.2191, 0.2335, 0.2094]}
+    DFW_station: {grid: "15432", county: "48113", cbv_grazing: 26.8, cbv_hay_nonirr: 198.0, max_pct: 0.50, rates_90: [0.2014, 0.1868, 0.1600, 0.1540, 0.1690, 0.2151, 0.2033, 0.2003, 0.2042, 0.2229, 0.1940]}
+    SAT_farm:    {grid: "10626", county: "48013", cbv_grazing: 18.2, cbv_hay_nonirr: 113.0, max_pct: 0.50, rates_90: [0.2778, 0.2423, 0.2477, 0.2155, 0.2004, 0.2769, 0.2808, 0.2237, 0.2250, 0.2629, 0.2670]}
+    SAT_station: {grid: "11527", county: "48029", cbv_grazing: 27.2, cbv_hay_nonirr: 199.0, max_pct: 0.50, rates_90: [0.2371, 0.2201, 0.1971, 0.2024, 0.1925, 0.2468, 0.2740, 0.2235, 0.2253, 0.2552, 0.2582]}
+    OKC_farm:    {grid: "18129", county: "40051", cbv_grazing: 31.6, cbv_hay_nonirr: 172.0, max_pct: 0.60, rates_90: [0.2286, 0.1604, 0.1769, 0.1382, 0.1561, 0.1822, 0.1890, 0.1827, 0.1844, 0.2234, 0.2360]}
+    OKC_station: {grid: "18430", county: "40017", cbv_grazing: 31.6, cbv_hay_nonirr: 172.0, max_pct: 0.60, rates_90: [0.2223, 0.1598, 0.1722, 0.1368, 0.1596, 0.1937, 0.1795, 0.1775, 0.1851, 0.2183, 0.2325]}
+    SGF_farm:    {grid: "20845", county: "29057", cbv_grazing: 41.4, cbv_hay_nonirr: 184.0, max_pct: 0.60, rates_90: [0.1756, 0.1591, 0.1422, 0.1290, 0.1281, 0.1282, 0.1363, 0.1470, 0.1699, 0.1811, 0.1960]}
+    SGF_station: {grid: "20547", county: "29043", cbv_grazing: 41.4, cbv_hay_nonirr: 184.0, max_pct: 0.60, rates_90: [0.1828, 0.1575, 0.1251, 0.1238, 0.1226, 0.1428, 0.1270, 0.1596, 0.1696, 0.1656, 0.1999]}
+    DEN_farm:    {grid: "23204", county: "08039", cbv_grazing: 13.5, cbv_hay_nonirr: 171.0, max_pct: 0.60, rates_90: [0.1799, 0.1846, 0.1661, 0.1694, 0.1562, 0.1126, 0.0837, 0.1210, 0.2091, 0.2361, 0.2151]}
+    DEN_station: {grid: "23802", county: "08001", cbv_grazing: 13.5, cbv_hay_nonirr: 171.0, max_pct: 0.60, rates_90: [0.1755, 0.1840, 0.1645, 0.1657, 0.1714, 0.1710, 0.1472, 0.1801, 0.2143, 0.2118, 0.2135]}
+    ABQ_farm:    {grid: "17497", county: "35057", cbv_grazing: 11.5, cbv_hay_nonirr: 200.0, max_pct: 0.50, rates_90: [0.2348, 0.2378, 0.2727, 0.2985, 0.2604, 0.1333, 0.0798, 0.1225, 0.2201, 0.2930, 0.2673]}
+    ABQ_station: {grid: "18094", county: "35001", cbv_grazing: 10.1, cbv_hay_nonirr: 146.0, max_pct: 0.50, rates_90: [0.2426, 0.2446, 0.2705, 0.2979, 0.2784, 0.1675, 0.1167, 0.1369, 0.2130, 0.2683, 0.2666]}
+    TPA_farm:    {grid: "8893", county: "12049", cbv_grazing: 50.3, cbv_hay_nonirr: 333.0, max_pct: 0.50, rates_90: [0.2068, 0.2151, 0.2127, 0.1584, 0.1004, 0.0648, 0.0470, 0.0779, 0.1319, 0.1990, 0.2312]}
+    TPA_station: {grid: "9490", county: "12057", cbv_grazing: 41.7, cbv_hay_nonirr: 397.0, max_pct: 0.50, rates_90: [0.1698, 0.2196, 0.2358, 0.2016, 0.1206, 0.0750, 0.0549, 0.0774, 0.1395, 0.2052, 0.2530]}
+
+# ---------------------------------------------------------------------------------------------
+# Worked examples = unit-test vectors. Inputs are real 2027 Parker County TX values (grid 15429);
+# final indices 62 and 105 in ex1/ex2 are hypothetical. `expected_official` uses the 3-decimal
+# payment factor; `expected_dst` reproduces RMA's Decision Support Tool. Dollars are whole dollars.
+# Per-unit list fields are in the same order as `inputs.units`.
+# ---------------------------------------------------------------------------------------------
+worked_examples:
+  - id: ex1_grazing_parker_15429
+    inputs:
+      crop_year: 2027
+      intended_use: grazing
+      state: "48"
+      county: "367"
+      grid: "15429"
+      county_base_value: 27.60
+      coverage_level: 0.90
+      productivity_factor: 1.00
+      insured_acres: 500
+      share: 1.00
+      subsidy_rate: 0.51
+      admin_fee: 30
+      units:
+        - {interval: "628", percent_of_value: 0.50, premium_rate: 0.1581, final_index: 62.0}
+        - {interval: "631", percent_of_value: 0.50, premium_rate: 0.1929, final_index: 105.0}
+    expected_official:
+      protection_per_acre: 24.84
+      trigger: 90.0
+      units:
+        - {interval: "628", policy_protection: 6210, premium: 982, subsidy: 501, producer_premium: 481, pcf: 0.311, indemnity: 1931}
+        - {interval: "631", policy_protection: 6210, premium: 1198, subsidy: 611, producer_premium: 587, pcf: 0.000, indemnity: 0}
+      total_policy_protection: 12420
+      total_premium: 2180
+      total_subsidy: 1112
+      total_producer_premium: 1068
+      producer_cost_incl_admin_fee: 1098
+      total_indemnity: 1931
+      net_to_producer: 833
+    expected_dst:
+      indemnity: [1932, 0]
+      total_indemnity: 1932
+      net_to_producer: 834
+      verified_against_dst: "Protection 6210/6210, premium 982/1198, subsidy 501/611 and producer premium 481/587 were returned by DST GetPricingRates on 2026-10-29."
+
+  - id: ex2_haying_nonirrigated_parker_15429
+    inputs:
+      crop_year: 2027
+      intended_use: haying
+      irrigation_practice: "003"
+      organic_practice: "997"
+      state: "48"
+      county: "367"
+      grid: "15429"
+      county_base_value: 181.00
+      coverage_level: 0.90
+      productivity_factor: 1.00
+      insured_acres: 500
+      share: 1.00
+      subsidy_rate: 0.51
+      admin_fee: 30
+      units:
+        - {interval: "627", percent_of_value: 0.50, premium_rate: 0.1740, final_index: 105.0}
+        - {interval: "629", percent_of_value: 0.50, premium_rate: 0.1590, final_index: 62.0}
+    expected_official:
+      protection_per_acre: 162.90
+      trigger: 90.0
+      units:
+        - {interval: "627", policy_protection: 40725, premium: 7086, subsidy: 3614, producer_premium: 3472, pcf: 0.000, indemnity: 0}
+        - {interval: "629", policy_protection: 40725, premium: 6475, subsidy: 3302, producer_premium: 3173, pcf: 0.311, indemnity: 12665}
+      total_policy_protection: 81450
+      total_premium: 13561
+      total_subsidy: 6916
+      total_producer_premium: 6645
+      producer_cost_incl_admin_fee: 6675
+      total_indemnity: 12665
+      net_to_producer: 5990
+    expected_dst:
+      indemnity: [0, 12670]
+      total_indemnity: 12670
+      net_to_producer: 5995
+      verified_against_dst: "Protection 40725/40725, premium 7086/6475, subsidy 3614/3302 and producer premium 3472/3173 were returned by DST on 2026-10-29."
+
+  - id: dst_oracle_a_real_2025_ncei_indices
+    note: "DST sample year 2025 (NCEI-basis indices 40.1 Feb-Mar, 63.4 Sep-Oct). Every expected_dst value was returned by the DST itself."
+    inputs:
+      intended_use: grazing
+      grid: "15429"
+      county_base_value: 27.60
+      coverage_level: 0.90
+      productivity_factor: 1.00
+      insured_acres: 500
+      share: 1.00
+      subsidy_rate: 0.51
+      units:
+        - {interval: "626", percent_of_value: 0.50, premium_rate: 0.2127, final_index: 40.1}
+        - {interval: "633", percent_of_value: 0.50, premium_rate: 0.2191, final_index: 63.4}
+    expected_dst: {policy_protection: [6210, 6210], premium: [1321, 1361], subsidy: [674, 694], producer_premium: [647, 667], indemnity: [3443, 1835], total_indemnity: 5278}
+    expected_official: {pcf: [0.554, 0.296], indemnity: [3440, 1838], total_indemnity: 5278}
+
+  - id: dst_oracle_b_odd_inputs
+    note: "Non-round inputs that pin down DST rounding (ppa 26.979 -> 26.98, so unit protection 5390.604 -> 5391)."
+    inputs:
+      intended_use: grazing
+      grid: "15429"
+      county_base_value: 27.60
+      coverage_level: 0.85
+      productivity_factor: 1.15
+      insured_acres: 333
+      share: 1.00
+      subsidy_rate: 0.55
+      units:
+        - {interval: "626", percent_of_value: 0.60, premium_rate: 0.1946, final_index: 40.1}
+        - {interval: "633", percent_of_value: 0.40, premium_rate: 0.1961, final_index: 63.4}
+    expected_dst: {policy_protection: [5391, 3594], premium: [1049, 705], subsidy: [577, 388], producer_premium: [472, 317], indemnity: [2848, 913], total_indemnity: 3761}
+    expected_official: {pcf: [0.528, 0.254], indemnity: [2846, 913], total_indemnity: 3759}
+
+  - id: dst_oracle_c_rounding_nearest
+    note: "Shows unit protection is rounded to the nearest dollar (4687.308 -> 4687), not up."
+    inputs:
+      intended_use: grazing
+      grid: "15429"
+      county_base_value: 27.60
+      coverage_level: 0.85
+      productivity_factor: 1.00
+      insured_acres: 333
+      share: 1.00
+      subsidy_rate: 0.55
+      units:
+        - {interval: "626", percent_of_value: 0.60, premium_rate: 0.1946, final_index: 40.1}
+        - {interval: "633", percent_of_value: 0.40, premium_rate: 0.1961, final_index: 63.4}
+    expected_dst: {policy_protection: [4687, 3125], premium: [912, 613], subsidy: [502, 337], producer_premium: [410, 276], indemnity: [2476, 794], total_indemnity: 3270}
+    expected_official: {pcf: [0.528, 0.254], indemnity: [2475, 794], total_indemnity: 3269}
+
+  - id: dst_oracle_d_unrounded_pcf
+    note: "pcf is exactly 0.2075: the official 3-decimal factor 0.208 gives 380; the DST gives 379 (unrounded factor)."
+    inputs:
+      intended_use: grazing
+      grid: "15429"
+      county_base_value: 27.60
+      coverage_level: 0.80
+      productivity_factor: 1.17
+      insured_acres: 101
+      share: 1.00
+      subsidy_rate: 0.55
+      units:
+        - {interval: "626", percent_of_value: 0.30, premium_rate: 0.1762, final_index: 40.1}
+        - {interval: "633", percent_of_value: 0.70, premium_rate: 0.1731, final_index: 63.4}
+    expected_dst: {policy_protection: [783, 1826], premium: [138, 316], subsidy: [76, 174], producer_premium: [62, 142], indemnity: [391, 379], total_indemnity: 770}
+    expected_official: {pcf: [0.499, 0.208], indemnity: [391, 380], total_indemnity: 771}
+
+  - id: handbook_exhibit5
+    note: "FCIC's own example (HB26 Exhibit 5, pp.50-57; illustrative, not real county values). Grazing, CBV 20.00, coverage 0.90, PF 1.20, rates 0.1000 (628) and 0.1100 (631), subsidy 0.51, 60%/40% split over four grids."
+    inputs:
+      county_base_value: 20.00
+      coverage_level: 0.90
+      productivity_factor: 1.20
+      share: 1.00
+      subsidy_rate: 0.51
+      percent_of_value: {"628": 0.60, "631": 0.40}
+      premium_rate: {"628": 0.1000, "631": 0.1100}
+      acres_by_grid: {"1": 100.0, "2": 50.0, "3": 100.0, "4": 245.0}
+    expected_handbook:
+      protection_per_acre: 21.60
+      policy_protection: {"1": {"628": 1296, "631": 864}, "2": {"628": 648, "631": 432}, "3": {"628": 1296, "631": 864}, "4": {"628": 3175, "631": 2117}}
+      total_policy_protection: 10692
+      premium: {"1": {"628": 130, "631": 95}, "2": {"628": 65, "631": 48}, "3": {"628": 130, "631": 95}, "4": {"628": 318, "631": 233}}
+      total_premium: 1114
+      subsidy_on_total: 568
+      producer_premium: 546
+      scenario_1: {final_628: {"1": 120, "2": 120, "3": 120, "4": 120}, final_631: {"1": 90, "2": 90, "3": 85, "4": 85}, indemnity: {"631": {"3": 48, "4": 119}}, total: 167}
+      scenario_2: {final_628: {"1": 80, "2": 80, "3": 95, "4": 95}, final_631: {"1": 70, "2": 70, "3": 65, "4": 65}, indemnity: {"628": {"1": 144, "2": 72}, "631": {"1": 192, "2": 96, "3": 240, "4": 588}}, total: 1332}
+      scenario_3: {final_628: {"1": 80, "2": 80, "3": 60, "4": 60}, final_631: {"1": 120, "2": 120, "3": 120, "4": 120}, indemnity: {"628": {"1": 144, "2": 72, "3": 432, "4": 1057}}, total: 1705}
+    quirks: "Subsidy is computed on the total (per-unit rounding gives 566). Grid 4 / 631 / scenario 2 indemnity 588 = 0.278 x 2116.80 (unrounded protection); with rounded 2117 it would be 589."

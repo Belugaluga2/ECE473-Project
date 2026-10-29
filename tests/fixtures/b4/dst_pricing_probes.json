@@ -1,0 +1,430 @@
+{
+ "meta": {
+  "source": "https://public-rma.fpac.usda.gov/apps/PrfWebApi/PrfExternalPricingRates/GetPricingRates",
+  "retrieved": "2026-10-29",
+  "note": "DST insurance data year 2027 at retrieval; PercentOfNormal is the sample-year final index as a fraction"
+ },
+ "probes": [
+  {
+   "params": {
+    "intervalType": "BiMonthly",
+    "irrigationPracticeCode": "997",
+    "organicPracticeCode": "997",
+    "intendedUseCode": "007",
+    "stateCode": "48",
+    "countyCode": "367",
+    "productivityFactor": 113,
+    "insurableInterest": 100,
+    "insuredAcres": 333.3,
+    "sampleYear": 2020,
+    "intervalPercentOfValues": "[0, 0, 0, 37, 0, 0, 63, 0, 0, 0, 0]",
+    "coverageLevelPercent": 85,
+    "gridId": "15429",
+    "gridName": "15429"
+   },
+   "PricingRateSummary": {
+    "CountyBaseValue": 27.6,
+    "ProtectionPerAcre": 26.5098,
+    "TotalPolicyProtection": 8836.0,
+    "TotalInsuredAcres": 333.3,
+    "SubsidyLevel": 0.55
+   },
+   "PricingRateRowTotalSummary": {
+    "TotalInsuredAcres": 333.3,
+    "PolicyProtection": 8836.0,
+    "TotalPremium": 1425.0,
+    "PremiumSubsidy": 783.0,
+    "ProducerPremium": 642.0,
+    "Indemnity": 3604.0
+   },
+   "PricingRateRows": [
+    {
+     "IntervalCode": "628",
+     "PercentOfValue": 0.37,
+     "PolicyProtection": 3269.0,
+     "PremiumRate": 0.1342,
+     "TotalPremium": 439.0,
+     "PremiumSubsidy": 241.0,
+     "ProducerPremium": 198.0,
+     "PercentOfNormal": 0.756,
+     "Indemnity": 362.0
+    },
+    {
+     "IntervalCode": "631",
+     "PercentOfValue": 0.63,
+     "PolicyProtection": 5567.0,
+     "PremiumRate": 0.1772,
+     "TotalPremium": 986.0,
+     "PremiumSubsidy": 542.0,
+     "ProducerPremium": 444.0,
+     "PercentOfNormal": 0.355,
+     "Indemnity": 3242.0
+    }
+   ]
+  },
+  {
+   "params": {
+    "intervalType": "BiMonthly",
+    "irrigationPracticeCode": "997",
+    "organicPracticeCode": "997",
+    "intendedUseCode": "007",
+    "stateCode": "48",
+    "countyCode": "367",
+    "productivityFactor": 100,
+    "insurableInterest": 100,
+    "insuredAcres": 1000,
+    "sampleYear": 2020,
+    "intervalPercentOfValues": "[0, 0, 0, 50, 0, 0, 50, 0, 0, 0, 0]",
+    "coverageLevelPercent": 90,
+    "gridId": "15429",
+    "gridName": "15429"
+   },
+   "PricingRateSummary": {
+    "CountyBaseValue": 27.6,
+    "ProtectionPerAcre": 24.84,
+    "TotalPolicyProtection": 24840.0,
+    "TotalInsuredAcres": 1000.0,
+    "SubsidyLevel": 0.51
+   },
+   "PricingRateRowTotalSummary": {
+    "TotalInsuredAcres": 1000.0,
+    "PolicyProtection": 24840.0,
+    "TotalPremium": 4360.0,
+    "PremiumSubsidy": 2224.0,
+    "ProducerPremium": 2136.0,
+    "Indemnity": 9508.0
+   },
+   "PricingRateRows": [
+    {
+     "IntervalCode": "628",
+     "PercentOfValue": 0.5,
+     "PolicyProtection": 12420.0,
+     "PremiumRate": 0.1581,
+     "TotalPremium": 1964.0,
+     "PremiumSubsidy": 1002.0,
+     "ProducerPremium": 962.0,
+     "PercentOfNormal": 0.756,
+     "Indemnity": 1987.0
+    },
+    {
+     "IntervalCode": "631",
+     "PercentOfValue": 0.5,
+     "PolicyProtection": 12420.0,
+     "PremiumRate": 0.1929,
+     "TotalPremium": 2396.0,
+     "PremiumSubsidy": 1222.0,
+     "ProducerPremium": 1174.0,
+     "PercentOfNormal": 0.355,
+     "Indemnity": 7521.0
+    }
+   ]
+  },
+  {
+   "params": {
+    "intervalType": "BiMonthly",
+    "irrigationPracticeCode": "997",
+    "organicPracticeCode": "997",
+    "intendedUseCode": "007",
+    "stateCode": "48",
+    "countyCode": "367",
+    "productivityFactor": 147,
+    "insurableInterest": 100,
+    "insuredAcres": 777.7,
+    "sampleYear": 2022,
+    "intervalPercentOfValues": "[0, 0, 0, 0, 30, 0, 40, 0, 30, 0, 0]",
+    "coverageLevelPercent": 75,
+    "gridId": "15429",
+    "gridName": "15429"
+   },
+   "PricingRateSummary": {
+    "CountyBaseValue": 27.6,
+    "ProtectionPerAcre": 30.429,
+    "TotalPolicyProtection": 23666.0,
+    "TotalInsuredAcres": 777.7,
+    "SubsidyLevel": 0.59
+   },
+   "PricingRateRowTotalSummary": {
+    "TotalInsuredAcres": 777.7,
+    "PolicyProtection": 23666.0,
+    "TotalPremium": 3175.0,
+    "PremiumSubsidy": 1873.0,
+    "ProducerPremium": 1302.0,
+    "Indemnity": 3077.0
+   },
+   "PricingRateRows": [
+    {
+     "IntervalCode": "629",
+     "PercentOfValue": 0.3,
+     "PolicyProtection": 7100.0,
+     "PremiumRate": 0.0991,
+     "TotalPremium": 704.0,
+     "PremiumSubsidy": 415.0,
+     "ProducerPremium": 289.0,
+     "PercentOfNormal": 0.484,
+     "Indemnity": 2518.0
+    },
+    {
+     "IntervalCode": "631",
+     "PercentOfValue": 0.4,
+     "PolicyProtection": 9466.0,
+     "PremiumRate": 0.1476,
+     "TotalPremium": 1397.0,
+     "PremiumSubsidy": 824.0,
+     "ProducerPremium": 573.0,
+     "PercentOfNormal": 0.872,
+     "Indemnity": 0.0
+    },
+    {
+     "IntervalCode": "633",
+     "PercentOfValue": 0.3,
+     "PolicyProtection": 7100.0,
+     "PremiumRate": 0.1512,
+     "TotalPremium": 1074.0,
+     "PremiumSubsidy": 634.0,
+     "ProducerPremium": 440.0,
+     "PercentOfNormal": 0.691,
+     "Indemnity": 559.0
+    }
+   ]
+  },
+  {
+   "params": {
+    "intervalType": "BiMonthly",
+    "irrigationPracticeCode": "997",
+    "organicPracticeCode": "997",
+    "intendedUseCode": "007",
+    "stateCode": "48",
+    "countyCode": "367",
+    "productivityFactor": 61,
+    "insurableInterest": 100,
+    "insuredAcres": 51.5,
+    "sampleYear": 2011,
+    "intervalPercentOfValues": "[0, 0, 23, 0, 27, 0, 0, 0, 0, 0, 50]",
+    "coverageLevelPercent": 70,
+    "gridId": "15429",
+    "gridName": "15429"
+   },
+   "PricingRateSummary": {
+    "CountyBaseValue": 27.6,
+    "ProtectionPerAcre": 11.7852,
+    "TotalPolicyProtection": 608.0,
+    "TotalInsuredAcres": 51.5,
+    "SubsidyLevel": 0.59
+   },
+   "PricingRateRowTotalSummary": {
+    "TotalInsuredAcres": 51.5,
+    "PolicyProtection": 608.0,
+    "TotalPremium": 70.0,
+    "PremiumSubsidy": 42.0,
+    "ProducerPremium": 28.0,
+    "Indemnity": 54.0
+   },
+   "PricingRateRows": [
+    {
+     "IntervalCode": "627",
+     "PercentOfValue": 0.23,
+     "PolicyProtection": 140.0,
+     "PremiumRate": 0.092,
+     "TotalPremium": 13.0,
+     "PremiumSubsidy": 8.0,
+     "ProducerPremium": 5.0,
+     "PercentOfNormal": 0.503,
+     "Indemnity": 39.0
+    },
+    {
+     "IntervalCode": "629",
+     "PercentOfValue": 0.27,
+     "PolicyProtection": 164.0,
+     "PremiumRate": 0.0779,
+     "TotalPremium": 13.0,
+     "PremiumSubsidy": 8.0,
+     "ProducerPremium": 5.0,
+     "PercentOfNormal": 0.636,
+     "Indemnity": 15.0
+    },
+    {
+     "IntervalCode": "635",
+     "PercentOfValue": 0.5,
+     "PolicyProtection": 304.0,
+     "PremiumRate": 0.1436,
+     "TotalPremium": 44.0,
+     "PremiumSubsidy": 26.0,
+     "ProducerPremium": 18.0,
+     "PercentOfNormal": 1.188,
+     "Indemnity": 0.0
+    }
+   ]
+  },
+  {
+   "params": {
+    "intervalType": "BiMonthly",
+    "irrigationPracticeCode": "997",
+    "organicPracticeCode": "997",
+    "intendedUseCode": "007",
+    "stateCode": "48",
+    "countyCode": "367",
+    "productivityFactor": 150,
+    "insurableInterest": 100,
+    "insuredAcres": 245,
+    "sampleYear": 2011,
+    "intervalPercentOfValues": "[0, 0, 0, 60, 0, 0, 40, 0, 0, 0, 0]",
+    "coverageLevelPercent": 90,
+    "gridId": "15429",
+    "gridName": "15429"
+   },
+   "PricingRateSummary": {
+    "CountyBaseValue": 27.6,
+    "ProtectionPerAcre": 37.26,
+    "TotalPolicyProtection": 9128.0,
+    "TotalInsuredAcres": 245.0,
+    "SubsidyLevel": 0.51
+   },
+   "PricingRateRowTotalSummary": {
+    "TotalInsuredAcres": 245.0,
+    "PolicyProtection": 9128.0,
+    "TotalPremium": 1570.0,
+    "PremiumSubsidy": 801.0,
+    "ProducerPremium": 769.0,
+    "Indemnity": 2515.0
+   },
+   "PricingRateRows": [
+    {
+     "IntervalCode": "628",
+     "PercentOfValue": 0.6,
+     "PolicyProtection": 5477.0,
+     "PremiumRate": 0.1581,
+     "TotalPremium": 866.0,
+     "PremiumSubsidy": 442.0,
+     "ProducerPremium": 424.0,
+     "PercentOfNormal": 0.878,
+     "Indemnity": 134.0
+    },
+    {
+     "IntervalCode": "631",
+     "PercentOfValue": 0.4,
+     "PolicyProtection": 3651.0,
+     "PremiumRate": 0.1929,
+     "TotalPremium": 704.0,
+     "PremiumSubsidy": 359.0,
+     "ProducerPremium": 345.0,
+     "PercentOfNormal": 0.313,
+     "Indemnity": 2381.0
+    }
+   ]
+  },
+  {
+   "params": {
+    "intervalType": "BiMonthly",
+    "irrigationPracticeCode": "997",
+    "organicPracticeCode": "997",
+    "intendedUseCode": "007",
+    "stateCode": "48",
+    "countyCode": "497",
+    "productivityFactor": 100,
+    "insurableInterest": 100,
+    "insuredAcres": 100,
+    "sampleYear": 2011,
+    "intervalPercentOfValues": "[0, 0, 0, 0, 0, 0, 50, 0, 50, 0, 0]",
+    "coverageLevelPercent": 80,
+    "gridId": "15429",
+    "gridName": "15429"
+   },
+   "PricingRateSummary": {
+    "CountyBaseValue": 27.6,
+    "ProtectionPerAcre": 22.08,
+    "TotalPolicyProtection": 2208.0,
+    "TotalInsuredAcres": 100.0,
+    "SubsidyLevel": 0.55
+   },
+   "PricingRateRowTotalSummary": {
+    "TotalInsuredAcres": 100.0,
+    "PolicyProtection": 2208.0,
+    "TotalPremium": 370.0,
+    "PremiumSubsidy": 203.0,
+    "ProducerPremium": 167.0,
+    "Indemnity": 672.0
+   },
+   "PricingRateRows": [
+    {
+     "IntervalCode": "631",
+     "PercentOfValue": 0.5,
+     "PolicyProtection": 1104.0,
+     "PremiumRate": 0.162,
+     "TotalPremium": 179.0,
+     "PremiumSubsidy": 98.0,
+     "ProducerPremium": 81.0,
+     "PercentOfNormal": 0.313,
+     "Indemnity": 672.0
+    },
+    {
+     "IntervalCode": "633",
+     "PercentOfValue": 0.5,
+     "PolicyProtection": 1104.0,
+     "PremiumRate": 0.1731,
+     "TotalPremium": 191.0,
+     "PremiumSubsidy": 105.0,
+     "ProducerPremium": 86.0,
+     "PercentOfNormal": 1.126,
+     "Indemnity": 0.0
+    }
+   ]
+  },
+  {
+   "params": {
+    "intervalType": "BiMonthly",
+    "irrigationPracticeCode": "003",
+    "organicPracticeCode": "997",
+    "intendedUseCode": "030",
+    "stateCode": "48",
+    "countyCode": "367",
+    "productivityFactor": 125,
+    "insurableInterest": 100,
+    "insuredAcres": 640,
+    "sampleYear": 2018,
+    "intervalPercentOfValues": "[0, 0, 0, 0, 50, 0, 50, 0, 0, 0, 0]",
+    "coverageLevelPercent": 85,
+    "gridId": "15429",
+    "gridName": "15429"
+   },
+   "PricingRateSummary": {
+    "CountyBaseValue": 181.0,
+    "ProtectionPerAcre": 192.3125,
+    "TotalPolicyProtection": 123078.0,
+    "TotalInsuredAcres": 640.0,
+    "SubsidyLevel": 0.55
+   },
+   "PricingRateRowTotalSummary": {
+    "TotalInsuredAcres": 640.0,
+    "PolicyProtection": 123078.0,
+    "TotalPremium": 19484.0,
+    "PremiumSubsidy": 10716.0,
+    "ProducerPremium": 8768.0,
+    "Indemnity": 27874.0
+   },
+   "PricingRateRows": [
+    {
+     "IntervalCode": "629",
+     "PercentOfValue": 0.5,
+     "PolicyProtection": 61539.0,
+     "PremiumRate": 0.1394,
+     "TotalPremium": 8579.0,
+     "PremiumSubsidy": 4718.0,
+     "ProducerPremium": 3861.0,
+     "PercentOfNormal": 0.465,
+     "Indemnity": 27874.0
+    },
+    {
+     "IntervalCode": "631",
+     "PercentOfValue": 0.5,
+     "PolicyProtection": 61539.0,
+     "PremiumRate": 0.1772,
+     "TotalPremium": 10905.0,
+     "PremiumSubsidy": 5998.0,
+     "ProducerPremium": 4907.0,
+     "PercentOfNormal": 1.358,
+     "Indemnity": 0.0
+    }
+   ]
+  }
+ ]
+}
