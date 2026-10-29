@@ -1,0 +1,65 @@
+{
+ "cursor": "EhIKEIesDxEuXlX1lGsS7jjtQ4EaDAjGu9jSBhD4wPDUAg",
+ "trades": [
+  {
+   "count_fp": "66.66",
+   "created_time": "2026-07-29T21:03:23.76882Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.9900",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXRAINDALM-26JUL-7",
+   "trade_id": "7b54d116-cb94-5182-0788-125e2c5e8aaf",
+   "yes_price_dollars": "0.0100"
+  },
+  {
+   "count_fp": "3.00",
+   "created_time": "2026-07-22T05:27:26.035926Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.9700",
+   "taker_book_side": "ask",
+   "taker_outcome_side": "no",
+   "taker_side": "no",
+   "ticker": "KXRAINDALM-26JUL-7",
+   "trade_id": "08f55b6d-03b1-5b91-2b74-6b0f32d84055",
+   "yes_price_dollars": "0.0300"
+  },
+  {
+   "count_fp": "53.74",
+   "created_time": "2026-07-20T19:17:53.118934Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.9900",
+   "taker_book_side": "ask",
+   "taker_outcome_side": "no",
+   "taker_side": "no",
+   "ticker": "KXRAINDALM-26JUL-7",
+   "trade_id": "e8d3d1eb-3e35-469e-7198-c8209528118b",
+   "yes_price_dollars": "0.0100"
+  },
+  {
+   "count_fp": "8.00",
+   "created_time": "2026-07-15T13:30:13.123533Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.9400",
+   "taker_book_side": "bid",
+   "taker_outcome_side": "yes",
+   "taker_side": "yes",
+   "ticker": "KXRAINDALM-26JUL-7",
+   "trade_id": "c41015eb-3965-6e1a-88f9-7c2e46ee8beb",
+   "yes_price_dollars": "0.0600"
+  },
+  {
+   "count_fp": "16.00",
+   "created_time": "2026-07-14T11:30:14.714875Z",
+   "is_block_trade": false,
+   "no_price_dollars": "0.9500",
+   "taker_book_side": "ask",
+   "taker_outcome_side": "no",
+   "taker_side": "no",
+   "ticker": "KXRAINDALM-26JUL-7",
+   "trade_id": "87ac0f11-2e5e-55f5-946b-12ee38ed4381",
+   "yes_price_dollars": "0.0500"
+  }
+ ]
+}
