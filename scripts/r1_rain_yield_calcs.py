@@ -8,7 +8,7 @@ Outputs
 -------
 * data/processed/crop_rain_sensitivity_corn_soy.csv  (one row per crop x region x window x source)
 * docs/figures/r1_*.png                               (response curves, slopes by month, 2012)
-* Auxiliary tables, regenerated every run and not committed, in data/raw/r1_rain_yield/derived/:
+* Auxiliary tables, regenerated every run and committed, in data/processed/crop_yield_aux/:
   r1_reestimate_coefficients.csv (own regression coefficients), r1_drought_2012.csv (2012 yields
   vs trend and June-July rain vs normal), r1_irrigation_share_2022.csv (2022 Census irrigated
   share), r1_season_quadratic_panel.csv (season-rain quadratic panel).
@@ -48,7 +48,7 @@ from agri_hedge.config import FIGURES, PROCESSED, RAW
 
 RAW_DIR = RAW / "r1_rain_yield"
 RAW_DIR.mkdir(parents=True, exist_ok=True)
-DERIVED = RAW_DIR / "derived"  # auxiliary tables (regenerated on every run, gitignored)
+DERIVED = PROCESSED / "crop_yield_aux"  # auxiliary tables (regenerated on every run, committed)
 DERIVED.mkdir(parents=True, exist_ok=True)
 HEADERS = {"User-Agent": "Mozilla/5.0 (ECE473 agri-hedge research; contact via Princeton)"}
 
@@ -354,9 +354,12 @@ def literature_rows() -> list[dict]:
         delta_yield_plus2in="", price_usd_per_unit=PRICES["corn"][PRICE_KEY], price_basis=PRICE_BASIS,
         usd_per_acre_per_inch=round(-s * PRICES["corn"][PRICE_KEY], 2),
         valid_range_note=("Applies ONLY when June rain is at least 1.82 in below the 4.33-in "
-                          "average (lowest 10% tail, e.g. 1988, 2012); then each inch of further "
-                          "shortfall costs 9.54 bu/ac (sign here = yield gained per inch less "
-                          "shortfall). Zero effect for normal Junes. t = -5.7"),
+                          "average (lowest 10% tail, e.g. 1988, 2012); once triggered the model "
+                          "subtracts 9.54 bu/ac for every inch of the WHOLE shortfall from the "
+                          "average (about 17.4 bu/ac at the 1.82-in trigger, 19.1 for a 2-in "
+                          "shortfall, 18.7 for 2012's 1.96 in; Westcott & Jewison pp.17, 22), so it "
+                          "acts as an on/off step, not a slope (sign here = yield gained per inch "
+                          "less shortfall). Zero effect for normal Junes. t = -5.7"),
         model_type="national time-series OLS 1988-2012 (USDA WAOB crop-weather model)",
         source_short="Westcott & Jewison 2013, USDA ERS FDS-13g-01, Table 6",
         source_url=WESTCOTT_URL, verification="CONFIRMED (Table 6, p.17 text)"))
@@ -428,8 +431,9 @@ def westcott_soy_rows(weather: dict, acres_soy: pd.DataFrame) -> tuple[list[dict
         delta_yield_plus2in="", price_usd_per_unit=price, price_basis=PRICE_BASIS,
         usd_per_acre_per_inch=round(-s * price, 2),
         valid_range_note=("Applies ONLY when June rain is at least 1.91 in below the 4.41-in "
-                          "average; then each inch of further shortfall costs 1.28 bu/ac. "
-                          "t = -1.8"),
+                          "average; once triggered the model subtracts 1.28 bu/ac for every inch "
+                          "of the WHOLE shortfall from the average (about 2.4 bu/ac at the trigger, "
+                          "2.56 for a 2-in shortfall; Westcott & Jewison p.20). t = -1.8"),
         model_type="national time-series OLS 1988-2012 (USDA WAOB crop-weather model)",
         source_short="Westcott & Jewison 2013, USDA ERS FDS-13g-01, Table 7",
         source_url=WESTCOTT_URL, verification="CONFIRMED (Table 7, p.20 text)"))
