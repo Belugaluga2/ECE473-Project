@@ -2,7 +2,7 @@
 
 **Project:** Agricultural Risk Management & Weather Derivative Replicating Platform (ECE473, Maya / Evan / Jack)
 **Goal of Milestone 1:** understand current USDA rainfall insurance, understand Kalshi weather markets, gather the weather data, and measure the gaps between them.
-**Status (2026-10-29):** 8 of 9 proposal cells done, plus both extra research questions. The PRF-vs-Kalshi dollar and cost comparison (Week 3, Evan) is not yet run; its plan is at the bottom of this page.
+**Status (2026-10-29):** all 9 proposal cells are done, plus both extra research questions.
 
 Every research document has a numbers table that gives a source for each number. Documents marked **VERIFIED** were re-checked line by line by an independent fact-checking pass. The others were not fact-checked because the run was trimmed to save usage, so check their key numbers before presenting.
 
@@ -18,7 +18,7 @@ Every research document has a numbers table that gives a source for each number.
 | W2 Settlement: what proof each side uses | Evan | [research/06_settlement_and_data_sources.md](research/06_settlement_and_data_sources.md), [analysis/06c_station_vs_kalshi_settlement_check.md](analysis/06c_station_vs_kalshi_settlement_check.md) | done, not fact-checked |
 | W3 Geographic basis risk | Jack | [analysis/07_geographic_basis_risk.md](analysis/07_geographic_basis_risk.md) | done |
 | W3 Replication quality across locations | Maya | [analysis/08_replication_quality.md](analysis/08_replication_quality.md) | done |
-| W3 PRF payouts vs Kalshi payouts | Evan | analysis/09_payout_comparison.md | **not run** (plan below; cost headline available from 02 and 08) |
+| W3 PRF payouts vs Kalshi payouts | Evan | [analysis/09_payout_comparison.md](analysis/09_payout_comparison.md) | done |
 | Extra: how rainfall moves crop yields ($ per inch) | team | [research/03a_rain_yield_corn_soybean.md](research/03a_rain_yield_corn_soybean.md), [research/03b_rain_yield_forage_and_other_crops.md](research/03b_rain_yield_forage_and_other_crops.md) | corn/soy VERIFIED; forage and other crops done, not fact-checked |
 | Extra: how farmers buy weather insurance today | team | [research/02_how_farmers_buy_weather_insurance.md](research/02_how_farmers_buy_weather_insurance.md) | done, not fact-checked |
 | Literature review and prior art | team | [research/10_literature_review.md](research/10_literature_review.md), [references.bib](research/references.bib) | VERIFIED |
@@ -73,9 +73,15 @@ Seven PRF sites pair a Kalshi monthly-rain settlement station with a PRF-heavy c
 - **Replication:** the best mix of today's Kalshi contracts captures about 43% of the variance of PRF payouts (hedge effectiveness 0.43). An ideal contract on the station's own two-month index would reach 0.73.
 - **Error breakdown:** effectiveness falls from 1.0 to 0.73 from geography and gauge-versus-grid, then to 0.54 because Kalshi contracts are monthly while PRF intervals are two months, then to 0.43 from whole-inch strikes. Arid sites lose most to strike binning.
 - **Tails:** the Kalshi ladder rarely misses a PRF payout (1%). But it often pays in years PRF does not, and it pays only 62% of PRF's payout in deep droughts.
-- **Cost:** at fair odds the Kalshi ladder costs about $0.179 per $1 of protection per interval. A PRF rancher pays about $0.098 after subsidy. Real Kalshi prices add fees, spreads, and the longshot markup, so a rancher pays 2-3 times more per dollar of expected payout on Kalshi.
+### 6. What farmers get paid and what it costs: PRF vs Kalshi (doc 09)
+- **Payouts, 2015-2025:** across the 11 farms, PRF as actually paid totaled $1.10 million and the matching Kalshi hedges would have paid $1.20 million. Only 70% of PRF's dollars were matched in the same year.
+- **Timing:** the median correlation between the two yearly payout streams is 0.40 per farm. In 39 farm-years Kalshi paid without PRF, and in 13 PRF paid without Kalshi. The largest single miss was the Hardee hay farm in 2021, $37,300 short.
+- **Cost per $1 of expected payout:** PRF costs the rancher about $0.61 after subsidy, while the Kalshi hedge costs about $1.09 (range $0.89 to $1.31 across pricing assumptions). For all 11 farms together, the hedges cost $107,500 a year against $56,000 of PRF premiums, or 1.9 times more.
+- **Subsidy:** before subsidy PRF costs $1.28 per $1 of expected payout, which is more than Kalshi. Matching PRF's net benefit would take a Kalshi subsidy of about $44,600 a year, 41% of the hedge cost.
+- **Pricing:** drought (NO) contracts traded slightly below fair value, not above it. The longshot overpricing applies to the YES side. The bid-ask spread is the largest trading cost, and fees add only 1.6 to 4.2% of the premium.
+- **Depth:** Dallas farms could fill only 10 to 17% of their hedge from today's order book, and Denver 46%. The new cities look deeper only because of liquidity rewards that ended 2026-11-01.
 
-### 6. How rain moves crop yields (doc 03a VERIFIED, doc 03b)
+### 7. How rain moves crop yields (doc 03a VERIFIED, doc 03b)
 - **Hay and pasture:** one extra inch of spring rain (April to June) adds about 2 to 4% to hay yield in Texas, Oklahoma, and Missouri, or about $5 to $10 per acre. Florida hay barely responds (+0.5%).
 - **Dry rangeland:** dry places respond more in percentage terms. Elbert County, Colorado gains about 6 to 8% per inch of April-July rain, and Torrance County, New Mexico about 7 to 10%.
 - **Timing:** spring rain drives forage almost everywhere. Late-summer intervals matter in New Mexico, and fall rain barely helps.
@@ -87,7 +93,7 @@ Seven PRF sites pair a Kalshi monthly-rain settlement station with a PRF-heavy c
 - **Excess rain:** too much rain also hurts. May rain lowers corn yields, and extreme wet seasons cut maize yields about as much as extreme droughts.
 - **Irrigation:** irrigated acres barely respond to rain. That covers 13.6% of US corn but 52.7% of Nebraska corn.
 
-### 7. Prior art (doc 10, VERIFIED)
+### 8. Prior art (doc 10, VERIFIED)
 - Luo studies Kalshi temperature contracts and finds basis risk rises with distance. Iturbide studies New York City daily rain and finds the contract is well calibrated, but 69% of payouts land on days with no loss.
 - Neither study covers monthly rain ladders, agriculture, or a PRF benchmark. That is our gap.
 
@@ -97,10 +103,10 @@ Seven PRF sites pair a Kalshi monthly-rain settlement station with a PRF-heavy c
 - **Liquidity:** today's books cannot fill even one small ranch's hedge. The platform needs a liquidity plan, such as market-maker partners or pooled orders.
 
 ## Next steps (left open by this run)
-1. **Payout comparison (doc 09, Evan W3):** for each farm, compare PRF payouts (CPC as-paid for history, NCEI going forward) with the Kalshi ladder payouts from `data/processed/replication_weights.csv`. Use cost under fair value, fair value plus the longshot markup, and real prices (Dallas and Denver candles, current order books), plus fees and capital lock-up.
-2. **Hay prices:** farms.yaml uses slightly different hay prices from the NASS Crop Values 2025 summary (TX $130 vs $136, OK $88 vs $90, MO $113 vs $114 per ton). Align them.
-3. **Fact-check** docs 01, 02, 03b, 04, 05, and 06 before presenting their numbers. Luo's numbers rest only on his SSRN abstract; download the PDF in a browser.
-4. **Re-pull order books** after 2026-11-01 (`python scripts/pull_kalshi.py`) to see whether depth at the new cities survives the end of the liquidity rewards.
+1. **Hay prices:** farms.yaml uses slightly different hay prices from the NASS Crop Values 2025 summary (TX $130 vs $136, OK $88 vs $90, MO $113 vs $114 per ton). Align them.
+2. **Fact-check** docs 01, 02, 03b, 04, 05, and 06 before presenting their numbers. Luo's numbers rest only on his SSRN abstract; download the PDF in a browser.
+3. **Re-pull order books** after 2026-11-01 (`python scripts/pull_kalshi.py`), then rerun `python scripts/run_payout_comparison.py`. This shows whether depth at the new cities survived the end of the liquidity rewards. Capacity in doc 09 comes from one November 2026 snapshot.
+4. **Note for doc 04b:** its farm scenarios use the NCEI index from the USDA tool, not what RMA actually paid. Doc 09 has the as-paid CPC payouts in the `prf_cpc_as_paid_usd` column.
 
 ## Repository map
 - `docs/research/` sourced research documents, one topic each
@@ -113,10 +119,11 @@ Seven PRF sites pair a Kalshi monthly-rain settlement station with a PRF-heavy c
   - `stations.py`: station rain
   - `basis.py`: basis-risk metrics
   - `replicate.py`: hedge fitting
+  - `pricing.py`: hedge pricing and order-book fills
   - `locations.py`: study sites
 - `scripts/` runnable entry points that pull data and regenerate every result
 - `data/processed/` small derived datasets (committed); `data/raw/` downloads (gitignored, recreated by scripts)
-- `tests/` pytest checks (208 passing)
+- `tests/` pytest checks (222 passing)
 
 ## How to reproduce
 
@@ -126,4 +133,5 @@ python -m pytest
 python scripts/run_basis_risk.py      # doc 07
 python scripts/run_replication.py     # doc 08
 python scripts/run_scenarios.py       # doc 04b
+python scripts/run_payout_comparison.py  # doc 09
 ```
