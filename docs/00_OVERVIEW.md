@@ -12,14 +12,14 @@ Every research document has a numbers table that gives a source for each number.
 |---|---|---|---|
 | W1 Farm exposures | Jack | [research/04_representative_farms.md](research/04_representative_farms.md), [farms.yaml](../data/scenarios/farms.yaml) | done, not fact-checked |
 | W1 PRF rules and payout math | Maya | [research/01_usda_prf_mechanics.md](research/01_usda_prf_mechanics.md), [prf_rules.yaml](../data/processed/prf_rules.yaml) | done, not fact-checked (74 worked values match the calculator) |
-| W1 Farmer scenarios: premiums, payouts, uncovered loss | Evan | [analysis/04b_farm_scenario_results.md](analysis/04b_farm_scenario_results.md) | done (forage elasticity set to 1.0; see next steps) |
+| W1 Farmer scenarios: premiums, payouts, uncovered loss | Evan | [analysis/04b_farm_scenario_results.md](analysis/04b_farm_scenario_results.md) | done (uses per-farm forage elasticities from doc 03b) |
 | W2 Weather data and the CPC-to-NCEI change | Jack | [analysis/06b_index_validation.md](analysis/06b_index_validation.md) | done |
 | W2 Kalshi weather markets: cost and trading | Maya | [research/05_kalshi_weather_markets.md](research/05_kalshi_weather_markets.md), [analysis/05b_kalshi_liquidity_stats.md](analysis/05b_kalshi_liquidity_stats.md) | done, not fact-checked |
 | W2 Settlement: what proof each side uses | Evan | [research/06_settlement_and_data_sources.md](research/06_settlement_and_data_sources.md), [analysis/06c_station_vs_kalshi_settlement_check.md](analysis/06c_station_vs_kalshi_settlement_check.md) | done, not fact-checked |
 | W3 Geographic basis risk | Jack | [analysis/07_geographic_basis_risk.md](analysis/07_geographic_basis_risk.md) | done |
 | W3 Replication quality across locations | Maya | [analysis/08_replication_quality.md](analysis/08_replication_quality.md) | done |
 | W3 PRF payouts vs Kalshi payouts | Evan | analysis/09_payout_comparison.md | **not run** (plan below; cost headline available from 02 and 08) |
-| Extra: how rainfall moves crop yields ($ per inch) | team | [research/03a_rain_yield_corn_soybean.md](research/03a_rain_yield_corn_soybean.md) (VERIFIED), research/03b_rain_yield_forage_and_other_crops.md | corn/soy VERIFIED; forage and other crops in progress |
+| Extra: how rainfall moves crop yields ($ per inch) | team | [research/03a_rain_yield_corn_soybean.md](research/03a_rain_yield_corn_soybean.md), [research/03b_rain_yield_forage_and_other_crops.md](research/03b_rain_yield_forage_and_other_crops.md) | corn/soy VERIFIED; forage and other crops done, not fact-checked |
 | Extra: how farmers buy weather insurance today | team | [research/02_how_farmers_buy_weather_insurance.md](research/02_how_farmers_buy_weather_insurance.md) | done, not fact-checked |
 | Literature review and prior art | team | [research/10_literature_review.md](research/10_literature_review.md), [references.bib](research/references.bib) | VERIFIED |
 
@@ -75,7 +75,12 @@ Seven PRF sites pair a Kalshi monthly-rain settlement station with a PRF-heavy c
 - **Tails:** the Kalshi ladder rarely misses a PRF payout (1%). But it often pays in years PRF does not, and it pays only 62% of PRF's payout in deep droughts.
 - **Cost:** at fair odds the Kalshi ladder costs about $0.179 per $1 of protection per interval. A PRF rancher pays about $0.098 after subsidy. Real Kalshi prices add fees, spreads, and the longshot markup, so a rancher pays 2-3 times more per dollar of expected payout on Kalshi.
 
-### 6. How rain moves crop yields (doc 03a, VERIFIED; 03b in progress)
+### 6. How rain moves crop yields (doc 03a VERIFIED, doc 03b)
+- **Hay and pasture:** one extra inch of spring rain (April to June) adds about 2 to 4% to hay yield in Texas, Oklahoma, and Missouri, or about $5 to $10 per acre. Florida hay barely responds (+0.5%).
+- **Dry rangeland:** dry places respond more in percentage terms. Elbert County, Colorado gains about 6 to 8% per inch of April-July rain, and Torrance County, New Mexico about 7 to 10%.
+- **Timing:** spring rain drives forage almost everywhere. Late-summer intervals matter in New Mexico, and fall rain barely helps.
+- **PRF vs actual loss:** valued at grazing cash rent, PRF pays 2 to 43 times the forage loss per index point. Valued at the cost of replacement hay, it roughly matches the loss on Plains and Southwest grazing farms.
+- **Other crops:** about 0.7 of an extra inch of in-season rain is used by the crop. That makes an inch worth about 3.2 bushels of Kansas wheat (about $20 per acre) and 6.6 bushels of sorghum (about $30). Rice is fully irrigated and does not respond.
 - **Corn:** one extra inch of July rain near normal adds about 3 to 7 bushels per acre, or 2 to 3.5% of yield. That is about $24 to $33 per acre at $4.70 corn.
 - **Asymmetry:** dry hurts more than wet helps. In Illinois, 2 inches below normal in July costs about 17.5 to 22.6 bushels per acre depending on the model, while 2 inches above gains about 6.
 - **Soybeans:** August rain matters most, at about 1 to 2 bushels per acre per inch, or roughly $13 to $23 per acre at $12 soybeans.
@@ -93,8 +98,8 @@ Seven PRF sites pair a Kalshi monthly-rain settlement station with a PRF-heavy c
 
 ## Next steps (left open by this run)
 1. **Payout comparison (doc 09, Evan W3):** for each farm, compare PRF payouts (CPC as-paid for history, NCEI going forward) with the Kalshi ladder payouts from `data/processed/replication_weights.csv`. Use cost under fair value, fair value plus the longshot markup, and real prices (Dallas and Denver candles, current order books), plus fees and capital lock-up.
-2. **Forage elasticities:** when doc 03b and `data/processed/crop_rain_sensitivity_other.csv` exist, fill `rain_sensitivity_ref` in farms.yaml and rerun `python scripts/run_scenarios.py` to update the uncovered-loss numbers in doc 04b.
-3. **Fact-check** docs 01, 02, 04, 05, and 06 before presenting their numbers. Luo's numbers rest only on his SSRN abstract; download the PDF in a browser.
+2. **Hay prices:** farms.yaml uses slightly different hay prices from the NASS Crop Values 2025 summary (TX $130 vs $136, OK $88 vs $90, MO $113 vs $114 per ton). Align them.
+3. **Fact-check** docs 01, 02, 03b, 04, 05, and 06 before presenting their numbers. Luo's numbers rest only on his SSRN abstract; download the PDF in a browser.
 4. **Re-pull order books** after 2026-11-01 (`python scripts/pull_kalshi.py`) to see whether depth at the new cities survives the end of the liquidity rewards.
 
 ## Repository map

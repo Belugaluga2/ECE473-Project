@@ -45,7 +45,7 @@ farms:
     county_base_value_usd_per_acre: 181.0
     expected_production: {value: 1.92, units: "tons/acre"}
     expected_value_usd_per_acre: 249.6
-    rain_sensitivity_ref: ""
+    rain_sensitivity_ref: "scen_DFW_hay"
     rationale: >-
       Dryland improved bermudagrass hay producer in the West Cross Timbers. 150 acres is a
       commercial hay enterprise (county average is 33 harvested acres per hay operation, Census
@@ -83,7 +83,7 @@ farms:
     county_base_value_usd_per_acre: 27.6
     expected_production: {value: 3943, units: "lb air-dry forage/acre/yr (normal year)", aum_per_acre: 1.08}
     expected_value_usd_per_acre: 13.5
-    rain_sensitivity_ref: ""
+    rain_sensitivity_ref: "scen_DFW_graze"
     rationale: >-
       Cow-calf operation of about 75-80 beef cows on 800 acres of native and introduced pasture
       (county-wide 10.3 pasture acres per beef cow, Census 2022; NRCS normal-year production of
@@ -119,7 +119,7 @@ farms:
     county_base_value_usd_per_acre: 18.2
     expected_production: {value: 3379, units: "lb air-dry forage/acre/yr (normal year)", aum_per_acre: 0.93}
     expected_value_usd_per_acre: 15.5
-    rain_sensitivity_ref: ""
+    rain_sensitivity_ref: "scen_SAT_graze"
     rationale: >-
       South Texas Plains brush-rangeland cow-calf ranch, about 80 cows on 1,500 acres
       (county-wide about 19 pasture acres per beef cow; the median beef cow is in a 50-99 head
@@ -155,7 +155,7 @@ farms:
     county_base_value_usd_per_acre: 172.0
     expected_production: {value: 1.69, units: "tons/acre"}
     expected_value_usd_per_acre: 148.7
-    rain_sensitivity_ref: ""
+    rain_sensitivity_ref: "scen_OKC_hay"
     rationale: >-
       Dryland bermudagrass and native-prairie hay meadow in central Oklahoma. 200 acres is
       slightly above the county average of 178 harvested acres per hay operation (Census 2022).
@@ -190,7 +190,7 @@ farms:
     county_base_value_usd_per_acre: 31.6
     expected_production: {value: 4645, units: "lb air-dry forage/acre/yr (normal year)", aum_per_acre: 1.27}
     expected_value_usd_per_acre: 24.5
-    rain_sensitivity_ref: ""
+    rain_sensitivity_ref: "scen_OKC_graze"
     rationale: >-
       Cow-calf operation of about 120 cows on 1,000 acres of native mixed-grass prairie and
       bermudagrass pasture (county-wide about 8 pasture acres per beef cow; median beef cow is in a
@@ -224,7 +224,7 @@ farms:
     county_base_value_usd_per_acre: 184.0
     expected_production: {value: 1.90, units: "tons/acre"}
     expected_value_usd_per_acre: 214.7
-    rain_sensitivity_ref: ""
+    rain_sensitivity_ref: "scen_SGF_hay"
     rationale: >-
       Tall fescue (cool-season) hay producer in southwest Missouri, 150 acres (county average 128
       harvested acres per hay operation, Census 2022). Fescue is a cool-season grass; we assume
@@ -260,7 +260,7 @@ farms:
     county_base_value_usd_per_acre: 41.4
     expected_production: {value: 3800, units: "lb air-dry forage/acre/yr (proxy: 1.9 t/ac fescue hay yield)", aum_per_acre: 1.04}
     expected_value_usd_per_acre: 35.0
-    rain_sensitivity_ref: ""
+    rain_sensitivity_ref: "scen_SGF_graze"
     rationale: >-
       Fescue-pasture cow-calf operation of about 135 cows on 500 acres (county-wide 3.7 pasture
       acres per beef cow and 101 cows per beef operation, Census 2022; 2026 PRF average 533 insured
@@ -294,7 +294,7 @@ farms:
     county_base_value_usd_per_acre: 13.5
     expected_production: {value: 1364, units: "lb air-dry forage/acre/yr (normal year)", aum_per_acre: 0.37}
     expected_value_usd_per_acre: 6.1
-    rain_sensitivity_ref: ""
+    rain_sensitivity_ref: "scen_DEN_graze"
     rationale: >-
       Shortgrass and foothill rangeland cow-calf ranch, about 200 cows on 7,000 acres
       (county-wide 35 pasture acres per beef cow; median beef cow in a 200-499 head herd, Census
@@ -330,7 +330,7 @@ farms:
     county_base_value_usd_per_acre: 11.5
     expected_production: {value: 1192, units: "lb air-dry forage/acre/yr (normal year)", aum_per_acre: 0.33}
     expected_value_usd_per_acre: 1.7
-    rain_sensitivity_ref: ""
+    rain_sensitivity_ref: "scen_ABQ_graze"
     rationale: >-
       Arid blue-grama rangeland cow-calf ranch, about 125 cows on 12,000 acres (county-wide about
       95 pasture acres per beef cow, far more land per cow than the NRCS formula implies; 2026 PRF
@@ -367,7 +367,7 @@ farms:
     county_base_value_usd_per_acre: 50.3
     expected_production: {value: 5440, units: "lb air-dry forage/acre/yr (proxy: 2.72 t/ac Florida hay yield)", aum_per_acre: 1.49}
     expected_value_usd_per_acre: 11.0
-    rain_sensitivity_ref: ""
+    rain_sensitivity_ref: "scen_TPA_graze"
     rationale: >-
       Bahiagrass improved-pasture cow-calf operation, about 220 cows on 1,000 acres (county-wide
       4.5 pasture acres per beef cow; median beef cow in a 200-499 head herd, Census 2022; 2026 PRF
@@ -402,7 +402,7 @@ farms:
     county_base_value_usd_per_acre: 333.0
     expected_production: {value: 2.72, units: "tons/acre"}
     expected_value_usd_per_acre: 326.4
-    rain_sensitivity_ref: ""
+    rain_sensitivity_ref: "scen_TPA_hay"
     rationale: >-
       Bahiagrass/bermudagrass hay producer, 200 acres (county average 134 harvested acres per hay
       operation, Census 2022). Haying dominates PRF in Hardee: 79% of 2026 county liability and
