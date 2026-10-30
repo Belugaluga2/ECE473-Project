@@ -25,52 +25,54 @@
 \end{center}
 \vspace{-8pt}
 
-\textbf{Summary.} All nine Milestone I tasks in our one-pager are done. Today's
-Kalshi monthly rain contracts capture 43\% of the variation in USDA Pasture,
-Rangeland, Forage (PRF) insurance payouts at our seven study counties, at about
-1.8 times PRF's cost to a rancher per dollar of expected payout.
+\textbf{Summary.} We finished all nine Milestone I tasks. So far, Kalshi's
+monthly rain contracts track about 43\% of the swings in USDA rainfall
+insurance (PRF) payouts at our seven test counties, at 1.8 times the cost.
 
 % ---------------------------------------------------------------------------
 \head{1. Planned vs.\ actual progress}
 
-\person{Jack}{farm exposures; weather data and the CPC-to-NCEI change;
-geographic basis risk}
+\person{Jack}{example farms; weather data and USDA's data switch; how distance
+to the station hurts the hedge}
 \begin{itemize}
-  \item \textbf{W1:} built 11 hay and grazing farms in 7 PRF counties, each 29
-    to 55 miles from a Kalshi station.
-  \item \textbf{W2:} rebuilt the NOAA CPC index PRF paid on through 2026,
-    matching 854 published finals within 0.002 points. \emph{Challenge:}
-    USDA's tool now shows only a recomputed NCEI history, 12.6 points off on
-    average.
-  \item \textbf{W3:} station rain correlates only 0.74 to 0.89 with the farm
-    grid. Only 7.4\% of PRF grids are within 50 miles of a station.
+  \item \textbf{W1:} set up 11 example hay and grazing farms in 7 ranching
+    counties, each 29 to 55 miles from a Kalshi station.
+  \item \textbf{W2:} rebuilt the rainfall index USDA paid on through 2026,
+    matching all 854 published values. \emph{Challenge:} USDA's site now only
+    shows history recomputed from new data, off by 12.6 points on average.
+  \item \textbf{W3:} station rain and farm rain line up only moderately
+    (correlation 0.74 to 0.89), and only 7.4\% of USDA grid squares are
+    within 50 miles of a station.
 \end{itemize}
 
-\person{Maya}{PRF rules and payout math; Kalshi markets, cost, and trading;
-replication quality}
+\person{Maya}{PRF payout rules; how Kalshi rain markets work and cost; how
+well Kalshi copies PRF by location}
 \begin{itemize}
-  \item \textbf{W1:} built a PRF calculator that reproduces the USDA handbook
-    example and 73 published payment factors. \emph{Challenge:} the 2027 rules
-    changed allocation caps mid-project.
-  \item \textbf{W2:} documented rain ladders for about 35 cities, the fee
-    schedule, and a longshot bias. \emph{Challenge:} five of our seven cities first
-    listed on 10/25/2026, so only Dallas and Denver have price history.
-  \item \textbf{W3:} hedge effectiveness falls from 1.00 to 0.73 (station
-    gauge), 0.54 (monthly), and 0.43 (whole-inch strikes).
+  \item \textbf{W1:} coded a PRF payout calculator that matches USDA's worked
+    example and 73 published payout rates. \emph{Challenge:} USDA changed some
+    rules for 2027 partway through, so we updated it.
+  \item \textbf{W2:} Kalshi has monthly rain contracts in about 35 cities, one
+    per whole inch, and cheap long shots are often overpriced.
+    \emph{Challenge:} five of our cities only listed on 10/25/2026, so only
+    Dallas and Denver have past prices.
+  \item \textbf{W3:} a perfect contract would track PRF 100\%. Station rain
+    drops that to 73\%, monthly contracts to 54\%, and whole-inch
+    contracts to 43\%.
 \end{itemize}
 
-\person{Evan}{farmer scenarios; settlement proof on each side; PRF vs.\ Kalshi
-payouts}. We also added rain-yield effects by crop and how farmers buy
-insurance.
+\person{Evan}{example farmer scenarios; how each side decides how much it
+rained; PRF vs.\ Kalshi payouts}. We also researched how rain affects crop
+yields and how farmers buy insurance.
 \begin{itemize}
-  \item \textbf{W1:} modeled premiums, payouts, and uncovered losses for 11
-    farms. The 90th-percentile uncovered loss is \$1,800 to \$24,700 a year.
-  \item \textbf{W2:} PRF pays on gridded data, Kalshi on one NWS airport
-    report. Our station data reproduces all 922 settled Kalshi outcomes.
-  \item \textbf{W3:} Kalshi matched only 70\% of PRF dollars in the same year
-    (2015--2025) and costs \$1.09 per \$1 of expected payout, versus \$0.61 for
-    subsidized PRF. \emph{Challenge:} order books fill only 10 to 17\% of a
-    Dallas hedge.
+  \item \textbf{W1:} worked out premiums, payouts, and uncovered losses for the
+    11 farms. One year in ten, uncovered losses top \$1,800 to \$24,700.
+  \item \textbf{W2:} USDA uses many gauges per grid square, Kalshi one airport
+    gauge. Its records match all 922 past Kalshi results.
+  \item \textbf{W3:} over 2015--2025, Kalshi would have paid about the same
+    total but matched only 70\% of PRF's dollars in the same year. It costs
+    \$1.09 per expected \$1 of payout, versus \$0.61 for subsidized PRF.
+    \emph{Challenge:} so few contracts are for sale that a Dallas farm could
+    fill only 10 to 17\% of its hedge.
 \end{itemize}
 
 % ---------------------------------------------------------------------------
@@ -81,35 +83,37 @@ insurance.
 \toprule
 Owner & Week 4: designing better options & Week 5: building the app \\
 \midrule
-Jack & Optimizer for the lowest-error, lowest-cost portfolio, with fees,
-  capital lock-up, and depth limits & Live-price backend that quotes a
-  farmer's custom plan \\
-Maya & Split the remaining error into binning, geography, settlement,
-  liquidity, and capital & Farmer screen: location to PRF grid and nearest
-  station, plus months to cover \\
-Evan & Find exposures current contracts replicate poorly and propose contracts
-  that fix them & Test the app on the 11 farms against the PRF benchmark \\
+Jack & Code that picks the cheapest, closest-matching contracts, counting fees
+  and what is for sale & Pull live Kalshi prices so farmers see what a plan
+  costs \\
+Maya & Break down the remaining mismatch: whole-inch contracts, distance, data
+  source, thin markets, cash tied up & Screen where a farmer enters a location
+  and months to cover \\
+Evan & List risks today's contracts cover poorly and suggest new ones & Run
+  the 11 farms through the app and compare with PRF \\
 \bottomrule
 \end{tabularx}
 }
 \par\vspace{1pt}
-All three of us will also fact-check six research notes and re-pull order books
-after 11/1.
+All three of us will also fact-check six research notes and re-pull Kalshi
+prices after 11/1.
 
 % ---------------------------------------------------------------------------
 \head{3. Refinements to our plan}
 \begin{itemize}
-  \item \textbf{Scope:} complement PRF instead of replacing it. The subsidy is
-    the whole cost gap, so we will target coverage above PRF's 90\% cap,
-    uncovered intervals, and excess-rain risk.
-  \item \textbf{Approach:} the optimizer will cap each contract at order-book
-    depth, which binds before price. Backtests use the as-paid CPC index, and
-    forward results use NCEI.
-  \item \textbf{App:} the farmer screen will show station distance and expected
-    hedge effectiveness, so basis risk is visible before buying.
-  \item \textbf{Timeline:} the fact-check and order-book re-pull move to the
-    start of Week 4, since our depth snapshot came during Kalshi's liquidity
-    rewards. \textbf{Responsibilities:} no changes.
+  \item \textbf{Scope:} treat Kalshi as an add-on to PRF, not a replacement.
+    PRF is cheaper only because the government pays over half the premium.
+    We will cover its gaps: coverage above 90\%, uninsured months, and
+    too much rain.
+  \item \textbf{Approach:} the contract picker will only buy what is for sale,
+    since supply runs out before price matters. Past results use the index
+    USDA actually paid on, and future ones use the new data.
+  \item \textbf{App:} the farmer screen will show the distance to the Kalshi
+    station and how well the hedge should track.
+  \item \textbf{Timeline:} the fact-check and price re-pull move to the start
+    of Week 4, since our snapshot of available contracts was taken while
+    Kalshi was paying traders to post orders. \textbf{Responsibilities:} no
+    changes.
 \end{itemize}
 
 \end{document}
