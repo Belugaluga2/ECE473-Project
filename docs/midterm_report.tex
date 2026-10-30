@@ -25,12 +25,8 @@
 \end{center}
 \vspace{-8pt}
 
-\textbf{Summary.} We finished all nine Milestone I tasks. USDA's rainfall
-insurance (PRF) pays ranchers a different amount each year depending on how dry
-it was. The closest copy we could build from Kalshi's monthly rain contracts
-matches only about 43\% of those year-to-year changes in payout at our seven
-test counties, where a perfect copy would match 100\%. It also costs a rancher
-1.8 times as much as PRF.
+\textbf{Summary.} We finished all nine Milestone I tasks. So far, we've devised Kalshi
+monthly rain insurance contracts that can track some farmland that is situated near the rain stations the markets use. However, these contracts cost about 1.8x the price of USDA rainfall insurance (PRF) for equivalent coverage, which means we may need to devise new forms of contracts that can cover this gap.
 
 % ---------------------------------------------------------------------------
 \head{1. Planned vs.\ actual progress}
@@ -38,38 +34,52 @@ test counties, where a perfect copy would match 100\%. It also costs a rancher
 \person{Jack}{example farms; weather data and USDA's data switch; how distance
 to the station hurts the hedge}
 \begin{itemize}
-  \item Set up 11 example hay and grazing farms in 7 ranching counties, each
-    29 to 55 miles from a Kalshi station.
-  \item Rebuilt the rainfall index USDA paid on through 2026, matching all 854
-    published values.
-  \item Measured how well station rain lines up with farm rain (correlation
-    0.74 to 0.89). Only 7.4\% of USDA grid squares are within 50 miles of a
-    station.
+  \item \textbf{W1:} set up 11 example hay and grazing farms in 7 ranching
+    counties, each 29 to 55 miles from a Kalshi station.
+  \item \textbf{W2:} rebuilt the rainfall index USDA paid on through 2026,
+    matching all 854 published values.
+    \begin{itemize}
+      \item \emph{Challenge:} USDA's current historical-index tools use the new NCEI methodology even for historical dates, so those reconstructed values differ from the CPC-based indices actually used for prior payouts by 12.6 index points on average in our sample.
+    \end{itemize}
+  \item \textbf{W3:} station rain and farm rain line up only moderately
+    (correlation 0.74 to 0.89), and only 7.4\% of USDA grid squares are
+    within 50 miles of a station.
 \end{itemize}
 
 \person{Maya}{PRF payout rules; how Kalshi rain markets work and cost; how
 well Kalshi copies PRF by location}
 \begin{itemize}
-  \item Coded a PRF payout calculator that matches USDA's worked example and
-    73 published payout rates.
-  \item Studied Kalshi's rain markets: monthly contracts in about 35 cities,
-    one per whole inch, with cheap long shots often overpriced.
-  \item Tested how well Kalshi can copy PRF. A perfect contract would track PRF
-    100\%. Station rain drops that to 73\%, monthly contracts to 54\%, and
-    whole-inch contracts to 43\%.
+  \item \textbf{W1:} coded a PRF payout calculator that matches USDA's worked
+    example and 73 published payout rates.
+    \begin{itemize}
+      \item \emph{Challenge:} USDA changed some
+        rules for 2027 so prior and future rules are different.
+    \end{itemize}
+  \item \textbf{W2:} Kalshi has monthly rain contracts in about 35 cities, one
+    per whole inch, and cheap long shots are often overpriced.
+    \begin{itemize}
+      \item \emph{Challenge:} five of our cities only listed on 10/25/2026, so
+        only Dallas and Denver have past prices.
+    \end{itemize}
+  \item \textbf{W3:} a perfect contract would track PRF 100\%. Station rain
+    drops that to 73\%, monthly contracts to 54\%, and whole-inch
+    contracts to 43\%.
 \end{itemize}
 
 \person{Evan}{example farmer scenarios; how each side decides how much it
-rained; PRF vs.\ Kalshi payouts}
+rained; PRF vs.\ Kalshi payouts}. We also researched how rain affects crop
+yields and how farmers buy insurance.
 \begin{itemize}
-  \item Worked out premiums, payouts, and uncovered losses for the 11 farms.
-  \item Compared how each side measures rain. USDA uses many gauges per grid
-    square and Kalshi uses one airport gauge, whose records match all 922 past
-    Kalshi results.
-  \item Compared payouts over 2015--2025. Kalshi would have paid about the
-    same total but matched only 70\% of PRF's dollars in the same year. It
-    costs \$1.09 per expected \$1 of payout, versus \$0.61 for subsidized PRF.
-  \item Researched how rain affects crop yields and how farmers buy insurance.
+  \item \textbf{W1:} worked out premiums, payouts, and uncovered losses for the
+    11 farms. One year in ten, uncovered losses top \$1,800 to \$24,700.
+  \item \textbf{W2:} USDA uses gridded rainfall estimates interpolated from many reporting stations, while Kalshi typically uses one designated airport/weather station. Our reconstructed records match all 922 past Kalshi results.
+  \item \textbf{W3:} over 2015--2025, Kalshi would have paid about the same
+    total but matched only 70\% of PRF's dollars in the same year. It costs
+    \$1.09 per expected \$1 of payout, versus \$0.61 for subsidized PRF.
+    \begin{itemize}
+      \item \emph{Challenge:} so few contracts are for sale that a Dallas farm
+        could fill only 10 to 17\% of its hedge.
+    \end{itemize}
 \end{itemize}
 
 % ---------------------------------------------------------------------------
@@ -98,10 +108,7 @@ prices after 11/1.
 % ---------------------------------------------------------------------------
 \head{3. Refinements to our plan}
 \begin{itemize}
-  \item \textbf{Scope:} treat Kalshi as an add-on to PRF, not a replacement.
-    PRF is cheaper only because the government pays over half the premium.
-    We will cover its gaps: coverage above 90\%, uninsured months, and
-    too much rain.
+  \item \textbf{Scope:} treat Kalshi as an add-on to PRF, not a replacement. PRF is cheaper because the government pays over half the premium. We’ll focus on identifying gaps that event contracts could help cover, such as too much rain or uncovered months, and explore other weather risks like temperature if time permits.
   \item \textbf{Approach:} the contract picker will only buy what is for sale,
     since supply runs out before price matters. Past results use the index
     USDA actually paid on, and future ones use the new data.
