@@ -5,6 +5,8 @@
 **Status (2026-10-29):** all 9 proposal cells are done, plus both extra research questions.
 **Update (2026-11-02):** Milestone 2 prep added: fact-check of docs 01-06 (doc 11), post-rewards Kalshi liquidity (doc 12), a rain-to-loss model (doc 13), and a row-crop exploration (doc 14). See [Milestone 2 prep](#milestone-2-prep-2026-11-02).
 
+> **Project pivot (2026-11-02):** the team agreed to move away from replicating PRF with Kalshi rain contracts. A subsidized, US-backed rainfall insurance (PRF) already exists, and the findings below show Kalshi cannot beat it on cost, today's books are too thin to hedge a single ranch, and rain hedges did not help row crops. The new direction is not chosen yet. Everything in this overview (docs 01-14) is kept as **background** for that decision, not as work in progress.
+
 Every research document has a numbers table that gives a source for each number. Documents marked **VERIFIED** were re-checked line by line by an independent fact-checking pass. The others were not fact-checked because the run was trimmed to save usage, so check their key numbers before presenting.
 
 ## Where everything lives
@@ -113,10 +115,12 @@ Each item below was done by two independent agent runs and then checked by a sep
 - **Row crops (doc 14):** against actual Kane County yields, Chicago July/August rain hedges remove no variance (leave-one-year-out effectiveness about -0.06). In 2012, O'Hare got near-normal July rain while Kane corn fell 37.5 bu/ac. The excess-rain side does not help either. Only 7.1% of corn and soy acres lie within 50 miles of a Kalshi rain station, and none of Iowa, Nebraska or the Dakotas within 100. Verdict: not a main Milestone 2 direction with today's contracts; defensible only as a contract-design study (area index, heat or multi-month windows, Corn Belt stations).
 
 ## Next steps
+Items 1-3 only matter if the rain work is picked up again.
+
 1. **Luo SSRN numbers:** still unverified; download the PDF in a browser.
 2. **Second post-rewards order-book snapshot** in a week or two, to confirm doc 12's one-day result.
 3. **Note for doc 04b:** its farm scenarios use the NCEI index from the USDA tool, not what RMA actually paid. Doc 09 has the as-paid CPC payouts in the `prf_cpc_as_paid_usd` column.
-4. **Milestone 2 direction:** waiting on TA guidance. The loss model (doc 13) is the base for a hedge optimizer or a contract-design study.
+4. **New project direction:** not chosen yet (see the pivot note at the top). Reusable pieces for any Kalshi weather work: the market data client (`kalshi.py`), station data (`stations.py`), and the settlement checks (doc 06c).
 
 ## Repository map
 - `docs/research/` sourced research documents, one topic each
