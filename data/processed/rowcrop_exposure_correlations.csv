@@ -1,0 +1,17 @@
+crop,pair,n,corr
+corn,model loss (ORD) vs obs loss,45,0.21498131622149616
+corn,rain-only model (ORD) vs obs loss,45,0.21339991806363662
+corn,May-Aug model (ORD) vs obs loss,44,0.36208333930873865
+corn,model loss (division) vs obs loss,45,0.40097555374186167
+corn,model loss ORD vs division,46,0.6178468648452726
+corn,ORD vs division jul rain,46,0.7128753188684205
+corn,ORD jul rain vs Kane yield dev,45,0.26912255160577214
+corn,division jul rain vs Kane yield dev,45,0.3691965473314479
+soy,model loss (ORD) vs obs loss,46,0.09506291839285615
+soy,rain-only model (ORD) vs obs loss,46,0.09525903804603057
+soy,May-Aug model (ORD) vs obs loss,45,0.19774854920065
+soy,model loss (division) vs obs loss,46,0.3662666709459384
+soy,model loss ORD vs division,46,0.5887772911656036
+soy,ORD vs division aug rain,46,0.7829641136562487
+soy,ORD aug rain vs Kane yield dev,46,0.17784313557101877
+soy,division aug rain vs Kane yield dev,46,0.33862739846284934
