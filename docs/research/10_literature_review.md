@@ -869,3 +869,9 @@ reviewed).
   PRF basis risk is large (false negative probability 12%-46% depending on study and definition);
   Kalshi longshots lose money on average (over 60% for contracts at 10 cents or less); and liquidity is
   thin in the one rain market measured.
+
+### Fact-check log, Luo SSRN numbers (2026-11-01)
+
+| Claim | Source checked (2026-11-01) | Verdict |
+|---|---|---|
+| Luo (2026) abstract numbers (287,909 price observations; 15,994 contracts; 30 station pairs; residual basis risk 0.386; 43% out-of-sample; 17% of days outside the ladder; ~1% binarization cost; +0.007; ~0 bias) | SSRN abstract page https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7138562 returned HTTP 403 to the fetch tool; a web search for the title found no other copy (only unrelated news on Kalshi weather hedging) | Unverifiable in this pass. The rows stay UNVERIFIED (abstract only); download the PDF in a browser before quoting them |
