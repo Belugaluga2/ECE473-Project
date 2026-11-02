@@ -1,12 +1,14 @@
 # ECE473 Project: Agricultural Risk Management & Weather Derivative Replicating Platform
 
+[![tests](https://github.com/Belugaluga2/ECE473-Project/actions/workflows/tests.yml/badge.svg)](https://github.com/Belugaluga2/ECE473-Project/actions/workflows/tests.yml)
+
 Team: Maya, Evan, Jack.
 
 We are building a platform that lets a farmer approximate USDA rainfall-index insurance
 (Pasture, Rangeland, Forage, or PRF) with a portfolio of Kalshi weather event contracts, and
 measuring where the remaining coverage error comes from.
 
-**Start here:** [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) is the index of all Milestone 1 research and results.
+**Start here:** [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) is the index of all research and results, with status and next steps.
 
 ## Layout
 
@@ -25,9 +27,20 @@ measuring where the remaining coverage error comes from.
 
 ## Setup
 
+Requires Python 3.11+. Use a project virtual environment so the shared one stays untouched:
+
 ```bash
-python -m pip install -e .
-pytest
+python3 -m venv .venv
+.venv/bin/python -m pip install -e .
+.venv/bin/python -m pytest
 ```
 
 Raw downloads default to `data/raw/`. Set `AGRI_HEDGE_RAW_DIR` to keep them outside OneDrive.
+
+## Workflow
+
+- `main` is the shared branch. Don't commit to it directly.
+- Do each piece of work on its own branch (e.g. `maya/hedge-optimizer`), then open a pull request into `main`.
+- GitHub Actions runs the test suite on every pull request; merge only when it passes and a teammate has looked at it.
+- Every number in a doc needs a source in that doc's numbers table, or a note that it is unverified.
+- Update `docs/00_OVERVIEW.md` when you add a doc or change a headline finding.

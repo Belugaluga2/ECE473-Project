@@ -16,3 +16,6 @@ dist/
 .idea/
 .DS_Store
 Thumbs.db
+# claude code (local agent worktrees and per-user settings)
+.claude/worktrees/
+.claude/settings.local.json
