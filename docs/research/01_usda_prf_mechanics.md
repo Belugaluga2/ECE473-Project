@@ -122,7 +122,7 @@ Status labels used here:
 
 ### 1. What PRF is, in one paragraph
 
-PRF (Pasture, Rangeland, Forage) is the USDA Risk Management Agency's (RMA) only rainfall-index insurance. It is sold by private "approved insurance providers" (AIPs), which must offer it to everyone in the offer area (HB26 ¶1E, p.2).
+PRF (Pasture, Rangeland, Forage) is by far the largest product under the USDA Risk Management Agency's (RMA) Rainfall Index plan (plan code 13). It is not the only one: the same plan also insures Annual Forage and Apiculture ($1,222.1 million and $461.8 million of 2025 liability, against $6,547.0 million for PRF; RMA Summary of Business `sobcov_2025`). *[Corrected 2026-11-01: earlier text said PRF was RMA's "only rainfall-index insurance".]* It is sold by private "approved insurance providers" (AIPs), which must offer it to everyone in the offer area (HB26 ¶1E, p.2).
 
 It is an **area index plan**. The rancher is not paid for their own loss. They are paid when an official rainfall index for the surrounding grid cell falls below a trigger.
 
@@ -558,6 +558,7 @@ Independent fact-check run 2026-11-01 (branch `run/factcheck-2`) against primary
 
 | Claim in this doc | Source checked (2026-11-01) | Verdict |
 |---|---|---|
+| PRF is RMA's "only rainfall-index insurance" (§1) | RMA Summary of Business `sobcov_2025.zip`, plan 13 (Rainfall Index) liability by commodity: PRF 0088 $6,547.0M, Annual Forage 0332 $1,222.1M, Apiculture 1191 $461.8M, masked 9999 $432.7M (found by `run/factcheck-1`; re-summed by the reviewer on 2026-11-01) | **corrected** in §1: PRF is the largest Rainfall Index product, not the only one. The overview repeats the error ("USDA's only rainfall-index policy") |
 | Premium subsidy 59% (70-75% coverage), 55% (80-85%), 51% (90%) | 7 U.S.C. 1508(e)(7), Cornell LII text: tiers 70-<80% = 59%, 80-<90% = 55%, ≥90% = 51% | confirmed |
 | Administrative fee $30 per crop per county; CAT fee $655 | 7 U.S.C. 1508(c)(10)(A) and (b)(5)(A) | confirmed |
 | Beginning farmer extra subsidy +15 / +13 / +11 / +10 points | 7 U.S.C. 1508(e)(8) (+10 points) plus (e)(9)(B)(i) (+5 in years 1-2, +3 in year 3, +1 in year 4) | confirmed |
@@ -570,4 +571,4 @@ Independent fact-check run 2026-11-01 (branch `run/factcheck-2`) against primary
 | Handbook Exhibit 5 inputs and outputs (protection 10,692; premium 1,114; indemnities 167 / 1,332 / 1,705) | HB26 PDF downloaded; Exhibit 5 tables could not be extracted (no PDF renderer available). The repo's unit tests reproduce these values from `prf_rules.yaml`, but that is not an independent read | unverifiable |
 | State caps (11 states at 50%, 21 at 60%, 17 at 70%), study-grid premium rates, county base values, 3,000/3,000 payment-factor fit, CPC vs NCEI gap on 49 grids | ADM27 / ADM26 daily files and the DST API were not re-pulled (DST API returned empty bodies to a plain request) | unverifiable (not re-checked) |
 
-No number in this doc was changed. No change to `prf_rules.yaml`.
+No number in this doc was changed; one sentence in §1 was corrected (PRF is not RMA's only rainfall-index product). No change to `prf_rules.yaml`.

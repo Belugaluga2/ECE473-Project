@@ -52,7 +52,7 @@ Jargon used throughout:
   Hardee County FL (our Tampa farm county) returned $3.20 per producer dollar. Grady County OK (our Oklahoma City farm county) returned $1.04.
 - **USDA's Farm Service Agency (FSA) adds drought protection that costs ranchers nothing.**
   - The Livestock Forage Disaster Program (LFP) pays 60% of a monthly feed cost per head, times 1 to 5 payments, set by U.S. Drought Monitor ratings. From 2026 the first payment triggers after only 4 weeks of D2 drought (was 8).
-  - LFP paid $1.78 billion in FY2023 (CRS figure in inflation-adjusted 2022 dollars), more than PRF's 2023 indemnities of $1.07 billion (nominal). It stacks with PRF with no offset.
+  - LFP paid $1.78 billion in FY2023 (CRS figure in inflation-adjusted dollars; CRS does not state the base year for this FY series), more than PRF's 2023 indemnities of $1.07 billion (nominal). It stacks with PRF with no offset.
   - Ad hoc aid is large: $30.78 billion in the American Relief Act 2025, then the $11 billion Farmer Bridge Assistance program. That aid pays more to farmers who carried federal insurance or NAP, and often requires buying it for the next two years.
 - **The private market is small and mostly not for farmers.**
   - Crop-hail: $1.30 billion premium in 2025, state-regulated, unsubsidized.
@@ -180,7 +180,7 @@ Every number used in this doc appears here, with its source. "SOB" means the RMA
 | LFP monthly feed cost, adult beef cow; payment per head per month | 58.12 and 34.87 (2023); 52.56 and 31.54 (2024) | $ | 2023, 2024 | 90 FR 22614, https://www.federalregister.gov/d/2025-09581 | CONFIRMED |
 | LFP payment limit | 125,000 | $ per person per program year | current | 7 USC 9081(f)(2); 7 CFR 1400.1(f) | CONFIRMED |
 | LFP and crop insurance or NAP not "the same loss" | no offset | | FY2014+ | statutory note to 7 USC 1508 (§733 of P.L. 113-235), https://www.law.cornell.edu/uscode/text/7/1508 | CONFIRMED |
-| LFP payments | 338 / 186 / 615 / 1,287 / 1,777 | $ million (2022 dollars) | FY2019 / 2020 / 2021 / 2022 / 2023 | CRS R48082, https://www.everycrsreport.com/reports/R48082.html | CONFIRMED |
+| LFP payments | 338 / 186 / 615 / 1,287 / 1,777 | $ million (inflation-adjusted, base year not stated; **corrected** 2026-11-01, was "2022 dollars") | FY2019 / 2020 / 2021 / 2022 / 2023 | CRS R48082, https://www.everycrsreport.com/reports/R48082.html | CONFIRMED |
 | LFP obligations | 1,252 / 1,510 | $ million (nominal) | FY2024 / FY2025 | OMB Federal Program Inventory, https://fpi.omb.gov/program/10.109.html | CONFIRMED (page data) |
 | LFP improper-payment rate | 13.7 | percent | FY2023 | CRS R48082 | CONFIRMED |
 | Worked LFP example | 9,462 | $ (100 cows × $31.54 × 3 payments) | 2024 rates | computed | DERIVED |
@@ -516,7 +516,7 @@ Fire on federal land: 0.50 x monthly_feed_cost prorated per day x days grazing w
 - **Published rates.** FSA's adult beef cow feed cost was $58.12 per month in 2023 and $52.56 in 2024. The payments were 60% of that: $34.87 and $31.54 per head per month.
 - **Worked example (DERIVED).** 100 cows in a county that hit D3 in 2024 get 100 × $31.54 × 3 = **$9,462**, for no premium.
 - **No offset with crop insurance.** By statute, LFP losses are "not considered the same loss" as crop insurance or NAP losses, so a rancher can collect PRF and LFP for the same drought.
-- **Outlays.** LFP payments were $615 million, $1.29 billion and $1.78 billion in FY2021-FY2023 (2022 dollars), and obligations were $1.25 billion (FY2024) and $1.51 billion (FY2025). For scale, PRF paid $1.07 billion of indemnities in crop year 2023 (Table 5.1). Fiscal and crop years differ, so this is an order-of-magnitude comparison.
+- **Outlays.** LFP payments were $615 million, $1.29 billion and $1.78 billion in FY2021-FY2023 (inflation-adjusted; CRS does not state the base year), and obligations were $1.25 billion (FY2024) and $1.51 billion (FY2025). For scale, PRF paid $1.07 billion of indemnities in crop year 2023 (Table 5.1). Fiscal and crop years differ, so this is an order-of-magnitude comparison.
 - **OBBBA change.** The cut from 8 to 4 weeks was retroactive to 2026-01-01 and is estimated to cost $343 million a year. FY2023's improper-payment rate was 13.7%.
 
 #### 3.3 Emergency Assistance for Livestock, Honeybees and Farm-Raised Fish (ELAP)
@@ -999,7 +999,7 @@ Independent fact-check run 2026-11-01 (branch `run/factcheck-2`). Summary and do
 | 12 Approved Insurance Providers (RY2025-2027) | RMA AIP API (CurrentReinsuranceYear/SRA, RY2027): 12 companies; 2026 D00100 file: 13 codes of which one is "AA: Test Insurance Provider" | confirmed |
 | 2025 crop book: liability 159.37, premium 16.83, subsidy 10.59, indemnity 11.59 $B; taxpayers paid 62.9% | RMA national report sobrpt2023-2026.pdf (as of 2026-11-02), and our independent sobcov_2025 sum (159.368 / 16.835 / 10.590 / 11.588; 62.90%) | confirmed |
 | 2024 crop book 158.68 / 15.88 / 9.88 / 15.17 / 0.96 | same report and sobcov_2024 sum | confirmed |
-| 2023 crop book 208.04 / 19.19 / 11.75 / 19.03 / 0.99; subsidy share 61.2% | sobrpt2023-2026.pdf shows 2023 = 181.62 / 18.11 / 11.33 / 17.80 / 0.98, matching our sobcov_2023 sum. The old figures match sobrpt2014-2023.pdf, whose 2022 and 2023 columns are about $21-26B of liability larger than the crop-only files (cause not established; possibly a different scope) | **corrected** to 181.62 / 18.11 / 11.33 / 17.80 / 0.98; share 62.6% |
+| 2023 crop book 208.04 / 19.19 / 11.75 / 19.03 / 0.99; subsidy share 61.2% | sobrpt2023-2026.pdf shows 2023 = 181.62 / 18.11 / 11.33 / 17.80 / 0.98, matching our sobcov_2023 sum. The old figures match sobrpt2014-2023.pdf, whose 2022 and 2023 columns are about $21-26B of liability larger than the crop-only files (cause not established; reviewer note: both reports show identical 2023 net acres, 538,601 thousand, and the newer report is footnoted "Includes all non livestock business", which is consistent with the older report also counting livestock policies that insure no acres; not confirmed) | **corrected** to 181.62 / 18.11 / 11.33 / 17.80 / 0.98; share 62.6% |
 | All RMA business incl. livestock, 2025: 199.55 / 18.55 / 11.24 $B | sobrpt2023-2026.pdf p.3 "Total RMA Business" | confirmed |
 | PRF 2025: liability $6,547.0M, 298.3M acres, 67,872 policies earning premium, 53.2% of insured acres, 4.1% of liability, 95.4% of policies indemnified | independent sobcov_2025 sum (6,546.98; 298.33; 67,872; 53.16%; 4.11%; 95.42%) | confirmed |
 | PRF 2015-2025 pooled: premium 7,933.6, subsidy 4,216.6 (53.1%), indemnity 7,836.3 $M; loss ratio 0.99; $2.11 back per producer $; liability ×7.5 | independent sum (7,933.57; 4,216.58; 7,836.32; 0.988; 2.108; 53.1%; ×7.46) | confirmed |
@@ -1007,7 +1007,7 @@ Independent fact-check run 2026-11-01 (branch `run/factcheck-2`). Summary and do
 | Study states pooled loss ratio / return: FL 1.38/2.81, NM 1.00/2.19, TX 0.94/2.07, CO 0.87/1.82, OK 0.78/1.64, MO 0.72/1.48 | independent state sums | confirmed (all 12 values) |
 | PRF 2023 indemnities $1.07B | independent sobcov_2023 sum: $1,066.4M | confirmed |
 | "20 of 20" states above 1% of liability; county returns (Hardee 3.20, Grady 1.04) | not re-computed | unverifiable (not re-checked) |
-| LFP payments 338 / 186 / 615 / 1,287 / 1,777 $M, FY2019-2023, in 2022 dollars; improper-payment rate 13.7% (FY2023) | CRS R48082 text and Figure 2 note ("Adjusted for inflation to 2022 dollars") | confirmed; key-findings bullet now says the $1.78B is in 2022 dollars while PRF's $1.07B is nominal |
+| LFP payments 338 / 186 / 615 / 1,287 / 1,777 $M, FY2019-2023, in 2022 dollars; improper-payment rate 13.7% (FY2023) | CRS R48082 text: "LFP payments, in inflation-adjusted dollars, increased in FY2021, FY2022, and FY2023 ..." with no base year. The Figure 2 note ("Adjusted for inflation to 2022 dollars") covers calendar years 2008-2022, not the FY series, and footnote 42 uses 2023 dollars for calendar-year values (reviewer re-read, 2026-11-01) | values confirmed; units **corrected** to "inflation-adjusted, base year not stated". Key-findings bullet now says the $1.78B is inflation-adjusted while PRF's $1.07B is nominal |
 | Jan-Feb 25% cap and 25% stocking rule from 2027 | PM-26-053 | confirmed (California 50% exception not stated in PM-26-053; see doc 01 log) |
 | PRF subsidy 59/55/51; $30 fee; $655 CAT fee; beginning farmer +5/+3/+1 on top of +10 | 7 U.S.C. 1508 (b)(5)(A), (c)(10)(A), (e)(7)-(9) | confirmed |
 | Kalshi DCM order 2020-11-03, announced 2020-11-04 | CFTC release 8302-20 and order PDF file name `orgkexkalshidesignation201103.pdf` | confirmed |

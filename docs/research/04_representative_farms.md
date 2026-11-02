@@ -51,6 +51,11 @@ Jargon used throughout:
   1.57 (2.50 in 2025), Atascosa 1.01, Parker 0.90, Kane 0.82, Dade 0.80, Elbert 0.70, Torrance 0.69,
   Grady 0.50. Because about 52% of premium is subsidized, farmers got back 1.0 (Grady) to 3.2 (Hardee)
   dollars per dollar of premium they paid.
+
+  *Fact-check note (2026-11-01): Parker 0.90 and Torrance 0.69 include RMA's masked "All Other Crops"
+  (commodity 9999) Rainfall Index rows (Parker 2015-2021 and 2025; Torrance 2016 and 2019-2021), which
+  may contain non-PRF commodities. PRF-only rows (commodity 0088) give Parker 1.08 (2022-2025 only) and
+  Torrance 0.71 (2017-2025), the figures doc 02 uses. Both versions reproduce from the RMA files.*
 - **Hardee FL haying is an outlier:** 59,897 acres were insured as haying in 2026 (79% of county
   liability), 7.4 times the 8,070 acres the 2022 Census counted as harvested for hay. The haying
   base value ($333) is 6.6 times the grazing value ($50.30).
@@ -704,7 +709,7 @@ Independent fact-check run 2026-11-01 (branch `run/factcheck-2`). Summary: [11_f
 | Hay price received, MY2025, other hay: TX 130, OK 88, MO 113, CO 153, NM 185, FL 120, IL 106; alfalfa TX 232, OK 164, MO 170, CO 164, NM 246, IL 161 | NASS Quick Stats re-queried (same public endpoints as `r8_pull_county_data.py`), period "MARKETING YEAR" | confirmed (all 13 state values) |
 | Same prices vs NASS Crop Values 2025 Summary (TX 136, OK 90, MO 114) | Crop Values 2025 Summary (2026-02-26) marks 2025 as "Preliminary". The hay marketing year ends April 30, 2026, so the February figure cannot be the final full-year average | not an error. Quick Stats holds the current value, so **no change to `farms.yaml`**. This settles overview next step 1: keep 130/88/113, or switch doc 03b to the Quick Stats values for consistency |
 | Subsidy 59/55/51; at least 2 intervals; at least 10% each; Jan-Feb 25% cap for 2027 | 7 U.S.C. 1508(e)(7); PM-26-053 | confirmed |
-| SOB pooled county loss ratios and returns (Hardee 1.57 / 3.20 ... Grady 0.50 / 1.04) | not re-computed (only state and national totals were re-derived; see doc 02 log) | unverifiable (not re-checked) |
+| SOB pooled county loss ratios and returns (Hardee 1.57 / 3.20 ... Grady 0.50 / 1.04) | Parker and Torrance re-summed by the reviewer from `sobcov_2015..2025` (finding from `run/factcheck-1`): Parker 0.90 with masked 9999 rows, 1.08 PRF-only (2022-2025); Torrance PRF-only 0.71. Other counties not re-computed | Parker 0.90 confirmed with a **clarification** (includes masked rows; note added under Key findings). Others unverifiable (not re-checked) |
 | 2026 county base values, max-percent caps, implied productivity factors, Census 2022 county data, NRCS SSURGO production, cash rents | ADM 2026, the DST API (empty response to a plain request), Census and SSURGO not re-pulled | unverifiable (not re-checked) |
 | Station-to-farm distance and grid IDs | internal (repo `locations.py`, `study_grids.csv`) | out of scope (internal) |
 

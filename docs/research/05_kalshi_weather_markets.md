@@ -108,6 +108,9 @@ agree; see section 5.
     makers.
   - B2 finds the same in monthly rain. Seven days out, YES contracts under $0.20 averaged 4.7
     cents but resolved YES only 1.6% of the time, while favorites were roughly fair.
+    *Fact-check note (2026-11-01): this is on last-trade prices (505 contract-days in
+    `kalshi_rain_calibration.csv`). On mid-quotes the same bins average 6.6 cents and resolve YES
+    4.7% of the time (253 contract-days), so the size of the longshot gap depends on the price measure.*
 - **Comparison venues.**
   - Polymarket lists 5 monthly-precipitation markets: NYC, London, Seattle, Hong Kong and Seoul.
     Each traded about $47k-61k for Oct 2026, with zero fees.
@@ -1043,5 +1046,6 @@ Independent fact-check run 2026-11-01 (branch `run/factcheck-2`). Summary: [11_f
 | New cohort uses the "first complete NWS Daily Climate Report" text and no close-on-occurrence; older cohort names TWC and closes early when the event occurs | API `rules_secondary` and `early_close_condition` for KXRAINOKCM-26NOV and KXRAINDALM-26NOV. Both report `can_close_early = true`, but the conditions differ as the doc says | confirmed |
 | TWC partnership 2026-08-27; weather volume "grown 500% year over year", "pacing toward $1.1 billion in annualized volume"; TWC added as Source Agency effective September 4 | Kalshi news post 2026-08-27; API `/series/KXRAINDALM` product_metadata | confirmed (company claims) |
 | Bürgi et al.: 313,972 contract prices, 2021-April 2025; contracts under 10c lose over 60%; maker / taker returns −9.64% / −31.46%; 1.77% fee at 50c with 100-lot rounding; Climate & Weather regression slope 0.031 (0.005), constant −0.997 (0.243), N = 29,924; all markets 0.034 / −1.736 / 156,986 | paper PDF, pp.3, 6, 9-10, 17, 24, 27 | confirmed (all values). The first author's name is spelled Bürgi |
+| Monthly rain, 7 days out, YES < $0.20: 4.7 cents mean price, 1.6% YES | `data/processed/kalshi_rain_calibration.csv`, horizon 7, bins below 0.20, n-weighted (finding from `run/factcheck-1`, recomputed by the reviewer) | confirmed on last-trade prices (505 contract-days); **clarification**: mid-quotes give 6.6 cents and 4.7% YES (253 contract-days). Note added under Key findings |
 | Order-book, liquidity, calibration and settlement-lag statistics (12-event sample, Nov 2026 snapshot, 05b figures) | internal computations from API pulls; not re-run | out of scope (internal; not re-checked) |
 | Polymarket markets and fees; CME rainfall launch/delisting; help-center fees (ACH, card, APY) | not re-checked in this pass | unverifiable (not re-checked) |
