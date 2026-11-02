@@ -5,6 +5,9 @@ Run from the repo root:
     python scripts/pull_kalshi.py              # everything (cached raw JSON is reused)
     python scripts/pull_kalshi.py --refresh    # re-download market lists / open-market data
     python scripts/pull_kalshi.py --skip-catalog --skip-trades
+    python scripts/pull_kalshi.py --orderbooks-only   # fresh books + incentive list only; leaves
+                                                      # markets/candles/trades/outcomes untouched
+    python scripts/pull_kalshi.py --stats [--orderbook data/processed/kalshi_rain_orderbook_summary_20261029.csv]
 
 Raw JSON goes to data/raw/kalshi/ (settled-market candles and trades are cached forever, lists of
 markets for 6 hours, the catalog for 24 hours). Processed outputs go to data/processed/:
@@ -13,10 +16,13 @@ markets for 6 hours, the catalog for 24 hours). Processed outputs go to data/pro
     kalshi_rain_daily_candles.parquet
     kalshi_rain_trades.parquet
     kalshi_rain_monthly_outcomes.csv
-    kalshi_rain_orderbook_summary.csv   (parsed from data/raw/kalshi/orderbooks_<UTC>.json)
+    kalshi_rain_orderbook_summary_<YYYYMMDD>.csv  one per snapshot day, never overwritten by a
+                                        later day (parsed from data/raw/kalshi/orderbooks_<UTC>.json)
+    kalshi_rain_orderbook_summary.csv   copy of the LATEST snapshot (what other scripts read)
     kalshi_rain_incentive_programs.csv  (liquidity rewards on monthly-rain markets)
     with --stats: kalshi_rain_liquidity_by_series.csv, kalshi_rain_calibration.csv,
-                  kalshi_rain_hedge_capacity_nov2026.csv, docs/figures/b2_*.png
+                  kalshi_rain_hedge_capacity_nov2026_<YYYYMMDD>.csv (date of the order-book
+                  snapshot used), docs/figures/b2_*.png
 Liquidity statistics and figures for docs/analysis/05b are produced by
 ``python scripts/pull_kalshi.py --stats`` (see ``make_stats``), which needs no network.
 """
@@ -112,7 +118,9 @@ def rain_series_list(client, refresh=False):
                   if K.series_family(s["ticker"], s.get("title"), s.get("frequency")) == "rain_monthly")
 
 
-def pull_rain_markets(client, refresh=False):
+def pull_rain_markets(client, refresh=False, write=True):
+    """All monthly-rain markets (live + historical). write=False returns the table without
+    rewriting kalshi_rain_markets.parquet / _summary.csv (used by --orderbooks-only)."""
     rows, raw_events = [], {}
     for t in rain_series_list(client, refresh):
         d = RAW_K / "markets"
@@ -148,6 +156,9 @@ def pull_rain_markets(client, refresh=False):
     for c in ("open_time", "close_time", "settlement_ts", "created_time"):
         df[c + "_utc"] = pd.to_datetime(df[c], utc=True, errors="coerce", format="ISO8601")
     df = df.sort_values(["series_ticker", "contract_month", "strike"]).reset_index(drop=True)
+    if not write:
+        log(f"markets: {len(df)} markets ({int((df['status'] == 'active').sum())} active); not written")
+        return df
     df.to_parquet(PROCESSED / "kalshi_rain_markets.parquet", index=False)
 
     g = df.groupby("series_ticker")
@@ -256,9 +267,29 @@ def snapshot_orderbooks(client, markets):
     with open(path, "w", encoding="utf-8") as f:
         json.dump({"snapshot_utc": stamp, "books": books}, f)
     df = pd.DataFrame(rows)
+    dated = orderbook_summary_path(stamp)
+    df.to_csv(dated, index=False)
     df.to_csv(PROCESSED / "kalshi_rain_orderbook_summary.csv", index=False)
-    log(f"wrote {path.name} and kalshi_rain_orderbook_summary.csv ({len(df)} books)")
+    log(f"wrote {path.name}, {dated.name} and kalshi_rain_orderbook_summary.csv (latest; {len(df)} books)")
     return df
+
+
+def snapshot_day(stamp):
+    """'20261102T013000Z' -> '20261102' (the date tag used in dated output names)."""
+    s = str(stamp)
+    if len(s) < 8 or not s[:8].isdigit():
+        raise ValueError(f"not a UTC snapshot stamp: {stamp!r}")
+    return s[:8]
+
+
+def orderbook_summary_path(stamp):
+    """Dated order-book summary for one snapshot day; earlier days are never overwritten."""
+    return PROCESSED / f"kalshi_rain_orderbook_summary_{snapshot_day(stamp)}.csv"
+
+
+def capacity_path(stamp):
+    """Per-city Nov 2026 hedge-capacity table for the order-book snapshot taken on that day."""
+    return PROCESSED / f"kalshi_rain_hedge_capacity_nov2026_{snapshot_day(stamp)}.csv"
 
 
 # ---------------------------------------------------------------------------------------------
@@ -481,8 +512,10 @@ def _take(bids, within=None, max_price=None):
     return q, cost, fees
 
 
-def make_stats():
-    """Compute the liquidity statistics, calibration tables, and figures for doc 05b."""
+def make_stats(orderbook_csv=None):
+    """Compute the liquidity statistics, calibration tables, and figures for doc 05b.
+    orderbook_csv: order-book summary to use (default: the latest, kalshi_rain_orderbook_summary.csv).
+    Only the hedge-capacity table and the depth figure depend on it."""
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -490,7 +523,7 @@ def make_stats():
     mk_all = pd.read_parquet(PROCESSED / "kalshi_rain_markets.parquet")
     cd = pd.read_parquet(PROCESSED / "kalshi_rain_daily_candles.parquet")
     oc = pd.read_csv(PROCESSED / "kalshi_rain_monthly_outcomes.csv")
-    ob = pd.read_csv(PROCESSED / "kalshi_rain_orderbook_summary.csv")
+    ob = pd.read_csv(orderbook_csv or PROCESSED / "kalshi_rain_orderbook_summary.csv")
     trp = PROCESSED / "kalshi_rain_trades.parquet"
     tr = pd.read_parquet(trp) if trp.exists() else pd.DataFrame()
     mk = mk_all[mk_all["is_single_month"]].copy()
@@ -710,7 +743,8 @@ def make_stats():
         no_payout_5c=("no_payout_5c", "sum"),
         yes_payout_useful=("yes_payout_useful", "sum")).reset_index()
     per_city.insert(1, "snapshot_utc", snap)
-    per_city.to_csv(PROCESSED / "kalshi_rain_hedge_capacity_nov2026.csv", index=False)
+    per_city.to_csv(capacity_path(snap), index=False)
+    log(f"wrote {capacity_path(snap).name}")
     study = per_city[per_city["site"] != ""].drop(columns="snapshot_utc")
     others = per_city[per_city["site"] == ""]
     fmt0 = {c: ",.0f" for c in per_city.columns if c.startswith(("no_", "yes_", "max_"))}
@@ -745,7 +779,7 @@ def make_stats():
     fig.suptitle(f"Resting depth at prices <= ${USEFUL_MAX_PRICE:.2f}, Nov 2026 monthly-rain "
                  f"events (order books {snap}; symlog scale)", fontsize=10.5, x=0.01, ha="left")
     fig.tight_layout()
-    fig.savefig(FIGURES / "b2_orderbook_depth_study_sites.png")
+    fig.savefig(FIGURES / f"b2_orderbook_depth_study_sites_{snapshot_day(snap)}.png")
     plt.close(fig)
 
     # ---- liquidity incentive programs ------------------------------------------------------
@@ -805,16 +839,27 @@ def main(argv=None):
     ap.add_argument("--stats", action="store_true", help="only compute stats/figures (offline)")
     ap.add_argument("--acis-check", action="store_true",
                     help="compare settled ladders with ACIS station monthly totals")
+    ap.add_argument("--orderbooks-only", action="store_true",
+                    help="refresh live market lists (not written), the incentive-program list and "
+                         "a new dated order-book snapshot; leaves markets/candles/trades/outcomes as they are")
+    ap.add_argument("--orderbook", default=None,
+                    help="with --stats: order-book summary CSV to use (default: latest)")
     args = ap.parse_args(argv)
 
     if args.acis_check:
         acis_check(args.refresh)
         return 0
     if args.stats:
-        make_stats()
+        make_stats(args.orderbook)
         return 0
 
     client = K.KalshiClient()
+    if args.orderbooks_only:
+        markets = pull_rain_markets(client, refresh=True, write=False)
+        pull_incentives(client, refresh=True)
+        snapshot_orderbooks(client, markets)
+        log(f"done; {client.n_requests} HTTP requests this run")
+        return 0
     cutoff = K.load_or_fetch_json(RAW_K / "historical_cutoff.json", client.historical_cutoff,
                                   LIST_TTL, args.refresh)
     log("historical cutoff:", cutoff)

@@ -12,7 +12,7 @@ For each of the 11 representative farms in data/scenarios/farms.yaml this script
    under two index regimes: CPC "as paid" (what RMA actually paid on, 1969-2025) and NCEI (what
    PRF pays on from 2026-08-31, 1951-2025);
 3. prices the hedge under fair value, a calibrated market price, and observed Kalshi prices
-   (DFW/DEN candles at listing, and the 2026-10-29 order books for every site), with taker
+   (DFW/DEN candles at listing, and the latest dated order-book snapshot for every site), with taker
    fees and the cost of prepaying contracts;
 4. compares the farmer's cost per $1 of expected payout for PRF and for the hedge.
 
@@ -60,6 +60,17 @@ EXAMPLE_FARMS = ("DFW_hay", "OKC_graze", "ABQ_graze")
 DOC = DOCS / "analysis" / "09_payout_comparison.md"
 AUTO_BEGIN = "<!-- BEGIN AUTO: payout comparison tables (scripts/run_payout_comparison.py) -->"
 AUTO_END = "<!-- END AUTO: payout comparison tables -->"
+ORDERBOOK_CSV = PROCESSED / "kalshi_rain_orderbook_summary.csv"   # latest snapshot (pull_kalshi.py)
+BOOK_DATE = "2026-10-29"   # reset from the order-book file's snapshot_utc in load_inputs()
+
+
+def book_date(ob: pd.DataFrame) -> str:
+    """'20261102T013456Z' in the snapshot_utc column -> '2026-11-02'."""
+    stamps = sorted(set(ob["snapshot_utc"].astype(str)))
+    if len(stamps) != 1 or len(stamps[0]) < 8:
+        raise ValueError(f"expected one snapshot per order-book file, got {stamps[:3]}")
+    s = stamps[0]
+    return f"{s[:4]}-{s[4:6]}-{s[6:8]}"
 OUT_FARM_YEAR = PROCESSED / "payout_comparison_farm_year.csv"
 OUT_SUMMARY = PROCESSED / "payout_comparison_summary.csv"
 
@@ -87,7 +98,8 @@ CENTRAL = "a1_fair_taker_spread4.5c"
 # Loading
 # ---------------------------------------------------------------------------------------------
 
-def load_inputs() -> dict:
+def load_inputs(orderbook_csv=None) -> dict:
+    global BOOK_DATE
     farms = yaml.safe_load((SCENARIOS / "farms.yaml").read_text(encoding="utf-8"))["farms"]
     W = pd.read_csv(PROCESSED / "replication_weights.csv")
     W = W[W["role"] == "farm"]
@@ -110,7 +122,8 @@ def load_inputs() -> dict:
     cal = pd.read_csv(PROCESSED / "kalshi_rain_calibration.csv")
     mk = pd.read_parquet(PROCESSED / "kalshi_rain_markets.parquet")
     cd = pd.read_parquet(PROCESSED / "kalshi_rain_daily_candles.parquet")
-    ob = pd.read_csv(PROCESSED / "kalshi_rain_orderbook_summary.csv")
+    ob = pd.read_csv(orderbook_csv or ORDERBOOK_CSV)
+    BOOK_DATE = book_date(ob)
     return dict(farms=farms, W=W, st=st, scen=scen, act=act, cpc=cpc, ncei_dst=ncei_dst,
                 ncei_reb=ncei_reb, bt=bt, cal=cal, mk=mk, cd=cd, ob=ob)
 
@@ -619,7 +632,7 @@ def fig_market_vs_fair(obs: pd.DataFrame, nov: pd.DataFrame, cal_ab: tuple, curv
         ax.scatter(d["q"], d["no_ask"], marker=mkr, s=22, facecolor="white", edgecolor="0.15",
                    label=f"{site} 2025-26, NO ask at listing (n={len(d)})")
     ax.scatter(nov["q"], nov["no_ask"], marker="x", s=22, color="0.45",
-               label=f"7 PRF sites, Nov 2026 best NO ask, 2026-10-29 (n={len(nov)})")
+               label=f"7 PRF sites, Nov 2026 best NO ask, {BOOK_DATE} (n={len(nov)})")
     qq = np.linspace(0.005, 0.995, 200)
     ax.plot(qq, qq, color="0.2", lw=1, label="fair value (price = probability)")
     ax.plot(qq, pr.calibrated_no_price(qq, *cal_ab), color="0.2", ls="--", lw=1.2,
@@ -651,10 +664,10 @@ def fig_capacity(summ: pd.DataFrame, path):
     new_sites = {"SAT", "OKC", "SGF", "ABQ", "TPA"}
     ax.set_xticklabels([f"{i}\n({s.loc[i, 'site']}{'*' if s.loc[i, 'site'] in new_sites else ''})" for i in s.index],
                        fontsize=7.5)
-    ax.text(0.99, -0.2, "* listed 2026-10-25; depth supported by liquidity rewards ending 2026-11-01",
+    ax.text(0.99, -0.2, "* listed 2026-10-25; liquidity rewards on these books ended 2026-11-01 04:00 UTC",
             transform=ax.transAxes, ha="right", fontsize=7)
     ax.set_ylabel("$1 contracts (log scale)")
-    ax.set_title("Can today's order books fill a farm's hedge? Busiest month vs Nov 2026 book depth (2026-10-29)",
+    ax.set_title(f"Can today's order books fill a farm's hedge? Busiest month vs Nov 2026 book depth ({BOOK_DATE})",
                  fontsize=10)
     ax.legend(fontsize=7.5, frameon=False, loc="upper left", ncol=3)
     _style(ax)
@@ -689,7 +702,7 @@ def doc_tables(summ, comp, fy_all, curve, obs, nov, cal_fits, live, checks) -> s
              "NCEI index 1951-2025 (the data PRF now pays on) and, in brackets, as actually paid on CPC 2015-2025. "
              "Kalshi payout = mean payout of the hedge under 1991-2025 climatology (its fair value) and, in brackets, the out-of-sample hedge's mean payout in 2015-2025 (CPC weights). Correlation = "
              "out-of-sample hedge vs PRF as paid, 2015-2025 (fit 1951-2009). Fill today = share of the hedge's "
-             "contracts that November-2026-sized order books (2026-10-29) could fill at all (same strike, any price) / "
+             f"contracts that November-2026-sized order books ({BOOK_DATE}) could fill at all (same strike, any price) / "
              "at a sensible price (same chance of paying, at most 10 cents above fair value); see Table 9.\n")
     L.append("| Farm | PRF premium farmer pays | PRF full premium | PRF avg payout (as paid 2015-25) | Kalshi central cost | "
              "Kalshi avg payout (2015-25 out of sample) | Correlation | Fill today: at all / sensible price |")
@@ -843,13 +856,13 @@ def doc_tables(summ, comp, fy_all, curve, obs, nov, cal_fits, live, checks) -> s
              f"climatological probability {st_['q'].mean():.3f}, and NO actually paid in {st_['no_paid'].mean():.3f} "
              "of them.\n")
     if len(nov):
-        L.append("Nov 2026 books (2026-10-29), best NO ask minus November climatology, by site (mean over the strikes "
+        L.append(f"Nov 2026 books ({BOOK_DATE}), best NO ask minus November climatology, by site (mean over the strikes "
                  "with a YES bid): " + "; ".join(f"{st} {d['markup'].mean():+.3f} ({len(d)} strikes)"
                                                  for st, d in nov.groupby("site")) + ".\n")
     # Table 9 capacity
-    L.append("**Table 9. Fill capacity in the 2026-10-29 order books.** 'At all' = each leg walks the same site's "
-             "November 2026 book at the same strike, any price up to 99 cents (an upper bound: much of the new-site "
-             "depth is NO offered at 98-99 cents). 'Sensible price' = each leg uses the November strike with the "
+    L.append(f"**Table 9. Fill capacity in the {BOOK_DATE} order books.** 'At all' = each leg walks the same site's "
+             "November 2026 book at the same strike, any price up to 99 cents (an upper bound: much of the depth "
+             "is NO offered at 98-99 cents, which is not insurance). 'Sensible price' = each leg uses the November strike with the "
              "closest chance of paying and counts only offers at most 10 cents above that strike's fair value; legs "
              "of one month that map to the same strike share its depth. Both assume every month's book looks like "
              "November's. Payout-weighted = share of the hedge's expected payout that could be filled. Nov legs = "
@@ -903,9 +916,23 @@ def write_doc_block(block: str):
 # Main
 # ---------------------------------------------------------------------------------------------
 
+def parse_args(argv=None):
+    import argparse
+    ap = argparse.ArgumentParser(description="PRF vs Kalshi payout and cost comparison (doc 09).")
+    ap.add_argument("--orderbook", default=None,
+                    help="order-book summary CSV (default: data/processed/kalshi_rain_orderbook_summary.csv, "
+                         "the latest snapshot); e.g. kalshi_rain_orderbook_summary_20261029.csv")
+    ap.add_argument("--summary-out", default=None,
+                    help="write ONLY the per-farm summary to this CSV (no doc, figures or farm-year file); "
+                         "used to keep results for an earlier order-book snapshot")
+    return ap.parse_args(argv)
+
+
 def main(argv=None) -> int:
+    args = parse_args(argv)
     t0 = time.time()
-    D = load_inputs()
+    D = load_inputs(args.orderbook)
+    print(f"order books: {args.orderbook or ORDERBOOK_CSV} (snapshot {BOOK_DATE})")
     sites = sorted({f["site"] for f in D["farms"]})
     rain = {s: pr.rain_wide(D["st"], s) for s in sites}
     # calibration fits
@@ -956,6 +983,11 @@ def main(argv=None) -> int:
             tot += pr.cost_totals(pr.price_legs(lg, pr.calibrated_no_price(lg["q"], *ab), pr.SPREAD_LOW / 2, True))["cost_usd"]
         cal_rows.append(((h, kind), ab, tot))
     live = [x for x in (live_2026(r, D, obs, rain) for r in results if r["fid"] in LIVE_FARMS) if x]
+    summ.insert(1, "orderbook_snapshot", BOOK_DATE)
+    if args.summary_out:
+        summ.to_csv(args.summary_out, index=False, float_format="%.4f")
+        print(f"wrote {args.summary_out} only (order books {BOOK_DATE}) in {time.time() - t0:.0f} s")
+        return 0
     # outputs
     fy_all.round(2).to_csv(OUT_FARM_YEAR, index=False)
     summ.to_csv(OUT_SUMMARY, index=False, float_format="%.4f")
