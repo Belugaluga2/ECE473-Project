@@ -52,7 +52,7 @@ Jargon used throughout:
   Hardee County FL (our Tampa farm county) returned $3.20 per producer dollar. Grady County OK (our Oklahoma City farm county) returned $1.04.
 - **USDA's Farm Service Agency (FSA) adds drought protection that costs ranchers nothing.**
   - The Livestock Forage Disaster Program (LFP) pays 60% of a monthly feed cost per head, times 1 to 5 payments, set by U.S. Drought Monitor ratings. From 2026 the first payment triggers after only 4 weeks of D2 drought (was 8).
-  - LFP paid $1.78 billion in FY2023, more than PRF's 2023 indemnities of $1.07 billion. It stacks with PRF with no offset.
+  - LFP paid $1.78 billion in FY2023 (CRS figure in inflation-adjusted 2022 dollars), more than PRF's 2023 indemnities of $1.07 billion (nominal). It stacks with PRF with no offset.
   - Ad hoc aid is large: $30.78 billion in the American Relief Act 2025, then the $11 billion Farmer Bridge Assistance program. That aid pays more to farmers who carried federal insurance or NAP, and often requires buying it for the next two years.
 - **The private market is small and mostly not for farmers.**
   - Crop-hail: $1.30 billion premium in 2025, state-regulated, unsubsidized.
@@ -98,11 +98,11 @@ Every number used in this doc appears here, with its source. "SOB" means the RMA
 | CBO score of the A&O snapback | 1.275 | $ billion | FY2025-2034 | same farmdoc piece, citing CBO | UNVERIFIED |
 | Agent compensation cap | 80% of A&O + CAT LAE per state; up to 100% only out of underwriting gains | percent | RY2027 | SRA 2027 §III(a)(4)(B)-(C), pp.26-27 | CONFIRMED |
 | Average agent commission | 17.3 (US); 20.3 (5 Corn Belt states); 14.2 (other 45 states) | percent of premium | 2007 | GAO-09-445, https://www.gao.gov/assets/a289076.html | CONFIRMED (page read via fetch tool) |
-| Crop-book liability / total premium / subsidy / indemnity / loss ratio, all plans | 208.04 / 19.19 / 11.75 / 19.03 / 0.99 | $ billion | 2023 | RMA SOB national report sobrpt2014-2023.pdf, https://pubfs-rma.fpac.usda.gov/pub/sob/current_week/ | CONFIRMED |
+| Crop-book liability / total premium / subsidy / indemnity / loss ratio, all plans | 181.62 / 18.11 / 11.33 / 17.80 / 0.98 (**corrected** 2026-11-01; was 208.04 / 19.19 / 11.75 / 19.03 / 0.99) | $ billion | 2023 | RMA SOB national report sobrpt2023-2026.pdf p.1 "Combined Business" (as of 2026-11-02), https://pubfs-rma.fpac.usda.gov/pub/sob/current_week/ ; matches our sum of sobcov_2023. The old values came from sobrpt2014-2023.pdf, whose 2022-2023 columns are on a different basis from the 2024-2026 rows (see Fact-check log) | CONFIRMED (fact-check) |
 | same | 158.68 / 15.88 / 9.88 / 15.17 / 0.96 | $ billion | 2024 | sobrpt2024-2027.pdf p.1, same folder | CONFIRMED |
 | same | 159.37 / 16.83 / 10.59 / 11.59 / 0.69 | $ billion | 2025 | sobrpt2024-2027.pdf p.1; reproduced exactly by our sum of sobcov_2025 | CONFIRMED |
 | same (incomplete year) | 168.05 / 18.92 / 13.15 / 5.81 / n.a. | $ billion | 2026 | sobrpt2024-2027.pdf p.1 | CONFIRMED |
-| Subsidy share of crop-book premium | 61.2 / 62.2 / 62.9 / 69.5 | percent | 2023 / 2024 / 2025 / 2026 (incomplete) | computed from rows above | DERIVED |
+| Subsidy share of crop-book premium | 62.6 (**corrected**, was 61.2) / 62.2 / 62.9 / 69.5 | percent | 2023 / 2024 / 2025 / 2026 (incomplete) | computed from rows above | DERIVED |
 | All RMA business incl. livestock: liability / premium / subsidy | 199.55 / 18.55 / 11.24 | $ billion | 2025 | sobrpt2024-2027.pdf p.3 | CONFIRMED |
 | Policies earning premium, crop book | 1,218,348 / 1,326,536 | policies | 2024 / 2025 | sobrpt2024-2027.pdf; 2025 also our sobcov sum | CONFIRMED |
 | Premium subsidies; share of premium | about 15; about 66 | $ billion; percent | 2026 | CRS IF12201, p.1, https://www.everycrsreport.com/files/2026-10-19_IF12201_a0e8c99608de21e2ab8795ba94ba1ebcd2f0baee.pdf | CONFIRMED |
@@ -366,11 +366,11 @@ The SRA is a single-year contract between FCIC and each AIP. The 2027 SRA took e
 
 #### 1.4 What taxpayers pay
 
-RMA national Summary of Business, crop book (excludes livestock price plans), in $ billion:
+RMA national Summary of Business, crop book (excludes livestock price plans), in $ billion. The 2023 row was corrected in the 2026-11-01 fact-check: it now comes from the same report as 2024-2026 (sobrpt2023-2026.pdf), and it matches our sum of `sobcov_2023`. The 2026 row is a 2026-10-26 snapshot of an incomplete year; the 2026-11-02 report shows $168.10B liability and $6.11B indemnity.
 
 | Crop year | Liability | Total premium | Premium subsidy | Subsidy share | Indemnity | Loss ratio |
 |---|---|---|---|---|---|---|
-| 2023 | 208.04 | 19.19 | 11.75 | 61.2% | 19.03 | 0.99 |
+| 2023 | 181.62 | 18.11 | 11.33 | 62.6% | 17.80 | 0.98 |
 | 2024 | 158.68 | 15.88 | 9.88 | 62.2% | 15.17 | 0.96 |
 | 2025 | 159.37 | 16.83 | 10.59 | 62.9% | 11.59 | 0.69 |
 | 2026 (incomplete) | 168.05 | 18.92 | 13.15 | 69.5% | 5.81 | n.a. |
@@ -989,3 +989,31 @@ For a rancher, the relevant price is dollars out of pocket per dollar of expecte
 - [05_kalshi_weather_markets.md](05_kalshi_weather_markets.md) (R5: Kalshi fees, spreads, position accountability, listing windows)
 - [../analysis/05b_kalshi_liquidity_stats.md](../analysis/05b_kalshi_liquidity_stats.md) (B2: liquidity, depth, spreads, favorite-longshot bias)
 - [03a_rain_yield_corn_soybean.md](03a_rain_yield_corn_soybean.md) (row-crop rain sensitivity)
+
+## Fact-check log
+
+Independent fact-check run 2026-11-01 (branch `run/factcheck-2`). Summary and downstream impact: [11_fact_check_summary.md](../analysis/11_fact_check_summary.md). The PRF market numbers were re-derived from scratch: the checker downloaded `sobcov_2015.zip` to `sobcov_2025.zip` again (files dated 2026-10-26) and summed them with a separately written script (`scripts/factcheck_sob.py`), without reusing `scripts/pull_rma_sob.py`.
+
+| Claim in this doc | Source checked (2026-11-01) | Verdict |
+|---|---|---|
+| 12 Approved Insurance Providers (RY2025-2027) | RMA AIP API (CurrentReinsuranceYear/SRA, RY2027): 12 companies; 2026 D00100 file: 13 codes of which one is "AA: Test Insurance Provider" | confirmed |
+| 2025 crop book: liability 159.37, premium 16.83, subsidy 10.59, indemnity 11.59 $B; taxpayers paid 62.9% | RMA national report sobrpt2023-2026.pdf (as of 2026-11-02), and our independent sobcov_2025 sum (159.368 / 16.835 / 10.590 / 11.588; 62.90%) | confirmed |
+| 2024 crop book 158.68 / 15.88 / 9.88 / 15.17 / 0.96 | same report and sobcov_2024 sum | confirmed |
+| 2023 crop book 208.04 / 19.19 / 11.75 / 19.03 / 0.99; subsidy share 61.2% | sobrpt2023-2026.pdf shows 2023 = 181.62 / 18.11 / 11.33 / 17.80 / 0.98, matching our sobcov_2023 sum. The old figures match sobrpt2014-2023.pdf, whose 2022 and 2023 columns are about $21-26B of liability larger than the crop-only files (cause not established; possibly a different scope) | **corrected** to 181.62 / 18.11 / 11.33 / 17.80 / 0.98; share 62.6% |
+| All RMA business incl. livestock, 2025: 199.55 / 18.55 / 11.24 $B | sobrpt2023-2026.pdf p.3 "Total RMA Business" | confirmed |
+| PRF 2025: liability $6,547.0M, 298.3M acres, 67,872 policies earning premium, 53.2% of insured acres, 4.1% of liability, 95.4% of policies indemnified | independent sobcov_2025 sum (6,546.98; 298.33; 67,872; 53.16%; 4.11%; 95.42%) | confirmed |
+| PRF 2015-2025 pooled: premium 7,933.6, subsidy 4,216.6 (53.1%), indemnity 7,836.3 $M; loss ratio 0.99; $2.11 back per producer $; liability ×7.5 | independent sum (7,933.57; 4,216.58; 7,836.32; 0.988; 2.108; 53.1%; ×7.46) | confirmed |
+| Pooled return above $1 in 43 of 44 states; pooled loss ratio above 1 in 12 of 44 | independent state sums: 44 states, 43 with return > 1 (only NJ below), 12 with loss ratio > 1 | confirmed |
+| Study states pooled loss ratio / return: FL 1.38/2.81, NM 1.00/2.19, TX 0.94/2.07, CO 0.87/1.82, OK 0.78/1.64, MO 0.72/1.48 | independent state sums | confirmed (all 12 values) |
+| PRF 2023 indemnities $1.07B | independent sobcov_2023 sum: $1,066.4M | confirmed |
+| "20 of 20" states above 1% of liability; county returns (Hardee 3.20, Grady 1.04) | not re-computed | unverifiable (not re-checked) |
+| LFP payments 338 / 186 / 615 / 1,287 / 1,777 $M, FY2019-2023, in 2022 dollars; improper-payment rate 13.7% (FY2023) | CRS R48082 text and Figure 2 note ("Adjusted for inflation to 2022 dollars") | confirmed; key-findings bullet now says the $1.78B is in 2022 dollars while PRF's $1.07B is nominal |
+| Jan-Feb 25% cap and 25% stocking rule from 2027 | PM-26-053 | confirmed (California 50% exception not stated in PM-26-053; see doc 01 log) |
+| PRF subsidy 59/55/51; $30 fee; $655 CAT fee; beginning farmer +5/+3/+1 on top of +10 | 7 U.S.C. 1508 (b)(5)(A), (c)(10)(A), (e)(7)-(9) | confirmed |
+| Kalshi DCM order 2020-11-03, announced 2020-11-04 | CFTC release 8302-20 and order PDF file name `orgkexkalshidesignation201103.pdf` | confirmed |
+| Kalshi accountability level $25,000 per strike per member (2026) | RAINM contract terms PDF (created 2026-10-15) | confirmed |
+| American Relief Act 2025: $30.78B for agriculture, $10B economic aid | Iowa State CALT summary and other secondary reports (statute not re-read) | confirmed (secondary) |
+| Kalshi taker fee formula and "no maker fee on weather series" | Kalshi API 2026-11-01: all 500 Climate and Weather series returned report `fee_type = quadratic`, `fee_multiplier = 1`; formula per Bürgi et al. (2026) p.6 | confirmed |
+| Crop-hail premium, CME delisting, GAO/CBO figures, SRA terms, NAP/ELAP/ERP/SDRP/Bridge amounts, literature numbers in section 6 | not re-checked in this pass | unverifiable (not re-checked) |
+
+Consistency note (not an error): this doc's cost of PRF per $1 of expected payout ($0.47 = 1/2.11, national pooled 2015-2025) differs from doc 09's $0.61 (modelled for our 11 farms). The two use different denominators. Say which one you mean when you quote it.

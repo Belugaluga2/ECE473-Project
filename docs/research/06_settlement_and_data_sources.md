@@ -932,3 +932,20 @@ All accessed 2026-10-29. Raw copies of every page, PDF and API response are cach
     PRF rainfall index." [docs/analysis/06b_index_validation.md](../analysis/06b_index_validation.md)
 41. B3 settlement-station workstream (2026-10-29). "Do settlement-station records reproduce Kalshi's
     monthly-rain settlements?" [docs/analysis/06c_station_vs_kalshi_settlement_check.md](../analysis/06c_station_vs_kalshi_settlement_check.md)
+
+## Fact-check log
+
+Independent fact-check run 2026-11-01 (branch `run/factcheck-2`). Summary: [11_fact_check_summary.md](../analysis/11_fact_check_summary.md).
+
+| Claim in this doc | Source checked (2026-11-01) | Verdict |
+|---|---|---|
+| CPC native grid 0.125°, released at 0.25°; 8,000-9,000 daily station reports over CONUS; about 30 km mean spacing; 4-10 stations per estimate (search radius set for 7 on average); 5 SD QC limit (10 for hurricanes); manual QC from January 2019; RT files available one day after the stamped date | CPC "A Conceptual Description of the CPC Gauge Analysis Procedure" (2021-03-16), secs. 1-5 | confirmed (all values) |
+| NCEI switch dates: 2026-04-30 Tropical Storm Option; 2026-08-31 PRF, Apiculture, Shellfish; 2027-04-30 Annual Forage | RMA news release 2026-04-30 | confirmed |
+| NCEI-era normal 1951 to CY−2; final index rounded to 3 decimals; CPC era started 1948 | RMA "Rainfall Index Data - 2027 and Beyond" PDF | confirmed |
+| 2027 Jan-Feb cap 25%; grazing stocking minimum 25%; PM-26-053 dated 2026-09-08 | PM-26-053 | confirmed (FCIC Board approval date 2026-08-20 not seen on the page) |
+| Kalshi RAINM: underlying = first NWS Daily Climate Report containing all days of the month; latest expiration 15 days after month end at 10:00 AM ET; last trading 11:59 PM ET; strikes 0.00-100.00 by 0.01 | RAINM contract terms PDF (2026-10-15) | confirmed |
+| TWC added as Source Agency effective September 4; partnership announced 2026-08-27 | API `/series/KXRAINDALM`; Kalshi news post | confirmed |
+| nClimGrid resolution and posting schedule, NWS Instruction 10-1004 timings, ASOS/AWPAG gauge specs and 2002-03 test results, TWC portal station count | not re-opened in this pass | unverifiable (not re-checked) |
+| Spot checks in section 5 (922 of 922 markets, CPC vs NCEI gaps, station totals) | internal computations; not re-run | out of scope (internal) |
+
+No number in this doc was changed.

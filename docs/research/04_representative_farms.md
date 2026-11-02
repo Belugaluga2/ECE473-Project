@@ -106,7 +106,7 @@ Grouped rows cover every cell of the named table.
 | Pasture acres per beef cow (Table A3) | 3.7 (Dade) to 95.1 (Torrance) | acres/cow | 2022 | Census "AG LAND, PASTURELAND - ACRES" / beef cows (size-class sum where total withheld) | DERIVED |
 | Hay acres per hay operation | Parker 33, Atascosa 63, Grady 178, Dade 128, Elbert 108, Torrance 98, Hardee 134, Kane 37 | acres | 2022 | Census hay acres / "HAY - OPERATIONS WITH AREA HARVESTED" | DERIVED |
 | Census county hay yield | Parker 1.49 ... Hardee 3.75 (Table B) | tons/acre | 2022 | Census hay tons / hay acres | DERIVED |
-| Hay price received, marketing year 2025: other hay / alfalfa (Table B) | TX 130/232, OK 88/164, MO 113/170, CO 153/164, NM 185/246, FL 120/-, IL 106/161; US 137/172 | $/ton | state, MY 2025 | NASS Quick Stats, SURVEY, HAY, PRICE RECEIVED, period MARKETING YEAR | CONFIRMED |
+| Hay price received, marketing year 2025: other hay / alfalfa (Table B) | TX 130/232, OK 88/164, MO 113/170, CO 153/164, NM 185/246, FL 120/-, IL 106/161; US 137/172 | $/ton | state, MY 2025 | NASS Quick Stats, SURVEY, HAY, PRICE RECEIVED, period MARKETING YEAR (state values re-queried 2026-11-01 and identical). Note: NASS Crop Values 2025 Summary (2026-02-26, p.33, values marked "Preliminary") gives other hay TX 136, OK 90, MO 114, CO 151, NM 184, FL 120, IL 107, US 138; the hay marketing year runs May 2025-April 2026, so the February figure is preliminary | CONFIRMED (Quick Stats); differs from the preliminary Crop Values figures used in doc 03b |
 | Other-hay yield 2016-2025 (Table B) | TX 1.92, OK 1.69, MO 1.90, FL 2.72 mean (min-max in table) | tons/acre | state | NASS Quick Stats, SURVEY, "HAY, (EXCL ALFALFA) - YIELD" | CONFIRMED (means DERIVED) |
 | County other-hay yield | Grady 0.9-2.15 (2010-2018), Dade 1.5-2.6 (2010-2018) | tons/acre | county | NASS Quick Stats county survey (no TX or FL county estimates in 2010-2025; OK, MO, CO county series end in 2018) | CONFIRMED |
 | Pasture cash rent (Table B) | county: Parker 13.5 (2024), Atascosa 15.5, Grady 24.5, Dade 35, Elbert 6.1, Torrance 1.7 (2025), Hardee 11 (2024); state 2025: TX 7.7, OK 18, MO 38.5, CO 7.0, NM 4.1, FL 20, IL 49 | $/acre/yr | as listed | NASS Quick Stats, SURVEY, "RENT, CASH, PASTURELAND - EXPENSE, MEASURED IN $ / ACRE" | CONFIRMED |
@@ -694,3 +694,18 @@ Project files from other workstreams (read, not modified)
 - `data/processed/study_grids.csv` (farm and station PRF grid IDs).
 - `data/processed/prf_actuarial_study_grids.csv` (ADM 2025/2026 premium rates, base values, limits).
 - `data/processed/cpc_monthly_precip_grids.parquet` (CPC monthly precipitation by grid).
+
+## Fact-check log
+
+Independent fact-check run 2026-11-01 (branch `run/factcheck-2`). Summary: [11_fact_check_summary.md](../analysis/11_fact_check_summary.md).
+
+| Claim in this doc | Source checked (2026-11-01) | Verdict |
+|---|---|---|
+| Hay price received, MY2025, other hay: TX 130, OK 88, MO 113, CO 153, NM 185, FL 120, IL 106; alfalfa TX 232, OK 164, MO 170, CO 164, NM 246, IL 161 | NASS Quick Stats re-queried (same public endpoints as `r8_pull_county_data.py`), period "MARKETING YEAR" | confirmed (all 13 state values) |
+| Same prices vs NASS Crop Values 2025 Summary (TX 136, OK 90, MO 114) | Crop Values 2025 Summary (2026-02-26) marks 2025 as "Preliminary". The hay marketing year ends April 30, 2026, so the February figure cannot be the final full-year average | not an error. Quick Stats holds the current value, so **no change to `farms.yaml`**. This settles overview next step 1: keep 130/88/113, or switch doc 03b to the Quick Stats values for consistency |
+| Subsidy 59/55/51; at least 2 intervals; at least 10% each; Jan-Feb 25% cap for 2027 | 7 U.S.C. 1508(e)(7); PM-26-053 | confirmed |
+| SOB pooled county loss ratios and returns (Hardee 1.57 / 3.20 ... Grady 0.50 / 1.04) | not re-computed (only state and national totals were re-derived; see doc 02 log) | unverifiable (not re-checked) |
+| 2026 county base values, max-percent caps, implied productivity factors, Census 2022 county data, NRCS SSURGO production, cash rents | ADM 2026, the DST API (empty response to a plain request), Census and SSURGO not re-pulled | unverifiable (not re-checked) |
+| Station-to-farm distance and grid IDs | internal (repo `locations.py`, `study_grids.csv`) | out of scope (internal) |
+
+No number in this doc or in `farms.yaml` was changed.

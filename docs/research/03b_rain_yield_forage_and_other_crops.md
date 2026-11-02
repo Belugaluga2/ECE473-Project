@@ -650,3 +650,19 @@ Prices
 - USDA WAOB, WASDE-676 (Oct 9 2026). https://www.usda.gov/oce/commodity/wasde/wasde1026.pdf
 
 Repo inputs (other workstreams, read only): `data/processed/ncei_monthly_precip_grids.parquet`, `data/processed/prf_official_index.csv`, `data/processed/study_grids.csv`, `data/scenarios/farms.yaml`.
+
+## Fact-check log
+
+Independent fact-check run 2026-11-01 (branch `run/factcheck-2`). Summary: [11_fact_check_summary.md](../analysis/11_fact_check_summary.md). The county and state regressions (rows marked COMPUTED) were not re-run. This pass checked the published inputs that feed them.
+
+| Claim in this doc | Source checked (2026-11-01) | Verdict |
+|---|---|---|
+| Sala et al. 1988: ANPP = −34 + 0.6 × MAP, r² = 0.90, 100 MLRAs; 9,498 SCS sites; favorable/unfavorable = wettest/driest 10% of years; average-year ANPP 150 (west) to 600 g/m² (southeast); variability above 80% from N New Mexico to SW Kansas; WUE 0.6 and ineffective precipitation 56 mm | Sala, Parton, Joyce & Lauenroth (1988), *Ecology* 69:40-45, pp.41-43 and Fig. 2 (scanned PDF from Colorado State's repository) | confirmed (all values) |
+| 136 lb/ac per inch spatial slope | 0.6 g m⁻² mm⁻¹ × 8.92 × 25.4 = 135.9 | confirmed (arithmetic) |
+| All other hay 2025 marketing-year price (preliminary): TX 136, OK 90, MO 114, FL 120, CO 151, NM 184, US 138 $/ton | NASS Crop Values 2025 Summary (cpvl0226.txt), "All Other Hay Price per Ton" table, footnote 2/ "Preliminary" | confirmed |
+| Alfalfa 2025: TX 233, OK 165, MO 169, CO 164, NM 245, US 170 $/ton | same report, alfalfa table | confirmed |
+| WASDE 2026/27 season-average prices: corn 4.70, wheat 6.30, soybeans 12.00 $/bu; all rice 15.20, long-grain 14.00 $/cwt; upland cotton 77 cents/lb; 2025/26 cotton 62.2 cents | WASDE-676 text (Oct 2026) | confirmed (sorghum 4.50 not found in the extracted text; unverifiable) |
+| Hay price basis differs from doc 04 / `farms.yaml` | Doc 04 and `farms.yaml` use NASS Quick Stats marketing-year prices (TX 130, OK 88, MO 113), re-queried 2026-11-01 and unchanged. This doc uses the February 2026 preliminary Crop Values figures. The gap is 1-6 $/ton | note: the two docs use different NASS releases. Neither is wrong, but pick one release for both docs |
+| Lauenroth & Sala 1992, Smart et al. 2021, Yu et al. 2019, Hartman et al. 2020, Stone & Schlegel 2006, Moberly 2017, Census 2022 irrigated shares, NASS yields, cash rents, grazing fees, NRCS AUM definitions | not re-opened in this pass | unverifiable (not re-checked) |
+
+No number in this doc was changed.
