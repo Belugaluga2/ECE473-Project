@@ -32,7 +32,7 @@ agree; see section 5.
 ## Key findings
 
 - **Regulation.** Kalshi (KalshiEX LLC) has been a CFTC-designated contract market since the order
-  of 2020-11-04.
+  dated 2020-11-03, announced 2020-11-04 (date corrected in the 2026-11-01 fact-check).
   - Weather contracts are self-certified to the CFTC under Regulation 40.2(a) and amended under
     40.6. No CFTC approval vote is needed.
   - The monthly-rain contract ("RAINM", 35 cities) was last re-filed on 2026-02-04. It carries a
@@ -108,6 +108,9 @@ agree; see section 5.
     makers.
   - B2 finds the same in monthly rain. Seven days out, YES contracts under $0.20 averaged 4.7
     cents but resolved YES only 1.6% of the time, while favorites were roughly fair.
+    *Fact-check note (2026-11-01): this is on last-trade prices (505 contract-days in
+    `kalshi_rain_calibration.csv`). On mid-quotes the same bins average 6.6 cents and resolve YES
+    4.7% of the time (253 contract-days), so the size of the longshot gap depends on the price measure.*
 - **Comparison venues.**
   - Polymarket lists 5 monthly-precipitation markets: NYC, London, Seattle, Hong Kong and Seoul.
     Each traded about $47k-61k for Oct 2026, with zero fees.
@@ -126,7 +129,7 @@ https://api.elections.kalshi.com/trade-api/v2. Derived outputs are in `data/raw/
 
 | Quantity | Value | Units | Region / period | Source (URL + page/table) | Verification |
 |---|---|---|---|---|---|
-| Kalshi DCM designation date | 2020-11-04 | date | KalshiEX LLC | CFTC press release 8302-20, https://www.cftc.gov/PressRoom/PressReleases/8302-20 | CONFIRMED |
+| Kalshi DCM designation date | order dated 2020-11-03 (**corrected**; 2020-11-04 is the press-release date) | date | KalshiEX LLC | CFTC press release 8302-20 (2020-11-04, "today announced that it has issued an Order of Designation"), https://www.cftc.gov/PressRoom/PressReleases/8302-20 ; order PDF https://www.cftc.gov/filings/documents/2020/orgkexkalshidesignation201103.pdf | CONFIRMED (fact-check) |
 | NYC monthly-rain initial self-certification | 2024-02-07 | date | RAINNYCM | https://assets.kalshi.com/regulatory/product-certifications/RAINNYCM.pdf p.1 | CONFIRMED |
 | RAINM amendment (CFTC Reg. 40.6) | 2026-02-04 | date | RAINM, 35 cities | https://assets.kalshi.com/regulatory/product-certifications/RAINM.pdf p.1 | CONFIRMED |
 | Temperature contract initial listing | 2025-12-09 (filed 2025-12-08) | date | GLOBALTEMPERATURE | https://assets.kalshi.com/regulatory/product-certifications/GLOBALTEMPERATURE.pdf p.1 | CONFIRMED |
@@ -157,7 +160,7 @@ https://api.elections.kalshi.com/trade-api/v2. Derived outputs are in `data/raw/
 | Bank withdrawal fee in 2022 schedule / today | 2 / 0 | dollars | | same filing p.2; Bank Withdrawals help page (2026-08-24) | CONFIRMED (fee since removed) |
 | Maker fees begin (exchange, some series) | after April 2025; rollout 2026-08-20 5:00 AM ET | date | exchange | Burgi et al. p.6; https://docs.kalshi.com/changelog (entries 2026-08-20/22) | CONFIRMED |
 | Fee, 100 contracts at 0.20 | 1.12 | dollars (5.6% of $20 premium) | worked example | computed with the formula above | CONFIRMED (arithmetic) |
-| Fee, 1 contract at 0.20, rounded to cent | 0.02 | dollars (10% of premium) | worked example | computed; rounding rule in Burgi et al. p.17 and docs fee_rounding | CONFIRMED (arithmetic) |
+| Fee, 1 contract at 0.20, rounded to cent | 0.02 under the 2022 "next cent" rule (10% of premium); **qualified**: under the current fee_rounding page the fee is rounded up to $0.000001 and balances settle to $0.0001 for direct members, so a direct member pays about 0.0112 (5.6%); FCM-cleared members (precision $0.01) still pay 0.02 | dollars | worked example | computed; 2022 rule in Burgi et al. p.6 and p.17; current rule https://docs.kalshi.com/getting_started/fee_rounding (read 2026-11-01) | CONFIRMED (arithmetic; rule qualified in fact-check) |
 | Fee at 0.50 | 1.75 | cents per contract (3.5% of premium) | formula | computed | CONFIRMED (arithmetic) |
 | Fee at 0.05 / 0.10 / 0.90 | 0.33 / 0.63 / 0.63 | cents per contract | formula | computed | CONFIRMED (arithmetic) |
 | Balance precision for fee rounding | 0.0001 (direct members), 0.01 (FCM-cleared) | dollars | exchange | https://docs.kalshi.com/getting_started/fee_rounding | CONFIRMED |
@@ -232,7 +235,7 @@ https://api.elections.kalshi.com/trade-api/v2. Derived outputs are in `data/raw/
 ### 1. Regulatory status
 
 **Kalshi is a CFTC-regulated futures exchange.** The CFTC issued an Order of Designation "granting
-[KalshiEX LLC] status as a designated contract market (DCM)" on 2020-11-04
+[KalshiEX LLC] status as a designated contract market (DCM)", announced 2020-11-04 (the order itself is dated 2020-11-03)
 ([CFTC 8302-20](https://www.cftc.gov/PressRoom/PressReleases/8302-20)).
 
 Kalshi's help center repeats that it is "regulated as a Designated Contract Market (DCM)". It also
@@ -1026,3 +1029,23 @@ Three points:
   (ACIS station records, built by the station workstream).
 - `data/processed/kalshi_rain_incentive_programs.csv` (B2, from Kalshi `/incentive_programs`).
 - [R6: settlement and data sources](06_settlement_and_data_sources.md).
+
+## Fact-check log
+
+Independent fact-check run 2026-11-01 (branch `run/factcheck-2`). Summary: [11_fact_check_summary.md](../analysis/11_fact_check_summary.md). The Kalshi API reads were made on 2026-11-01, three days after this doc's pull, so counts can move.
+
+| Claim in this doc | Source checked (2026-11-01) | Verdict |
+|---|---|---|
+| DCM "since the order of 2020-11-04" | CFTC release 8302-20 is dated 2020-11-04 and says the order had been issued; the order PDF is `orgkexkalshidesignation201103.pdf` (2020-11-03) | **corrected** to: order dated 2020-11-03, announced 2020-11-04 |
+| RAINM terms: accountability level $25,000 per strike per member; strikes 0.00-100.00 in 0.01 steps; tick $0.01; last trading 11:59 PM ET on the month's last day; expiration 10:00 AM ET, at latest 15 days after month end; settlement no later than the day after expiration; underlying = first NWS Daily Climate Report covering the whole month | `assets.kalshi.com/contract_terms/RAINM.pdf` (PDF created 2026-10-15) | confirmed |
+| All Climate and Weather series are `fee_type = quadratic`, `fee_multiplier = 1` (458 of 458 on 2026-10-29) | Kalshi API `/series?category=Climate and Weather` on 2026-11-01: 500 of 500 returned series are quadratic with multiplier 1 | confirmed (count has grown) |
+| Taker fee round up(0.07 × C × P × (1 − P)); takers only before 2025; maker fees began after April 2025 | Bürgi, Deng & Whelan (Jan 2026) p.6 and p.17 | confirmed |
+| 1 contract at $0.20 costs $0.02 (10%) | Correct under the 2022 "next cent" rule. Kalshi's current fee-rounding page rounds the model fee up to $0.000001 and settles balances to $0.0001 (direct members) or $0.01 (FCM-cleared) | **qualified**: about $0.0112 for a direct member and $0.02 for FCM-cleared. The 100-lot example ($1.12) is unaffected |
+| Monthly-rain markets in about 35 cities (+ Napa) | API 2026-11-01: 37 `KXRAIN*M` monthly series (35 cities plus NYC and Napa) | confirmed |
+| OKC, SGF, ABQ, TPA, SAT have only the Nov 2026 event; DFW and DEN have about a year of history | API events per series on 2026-11-01: 1 event each (`-26NOV`) for the five new sites; 13 each for DFW and DEN | confirmed |
+| New cohort uses the "first complete NWS Daily Climate Report" text and no close-on-occurrence; older cohort names TWC and closes early when the event occurs | API `rules_secondary` and `early_close_condition` for KXRAINOKCM-26NOV and KXRAINDALM-26NOV. Both report `can_close_early = true`, but the conditions differ as the doc says | confirmed |
+| TWC partnership 2026-08-27; weather volume "grown 500% year over year", "pacing toward $1.1 billion in annualized volume"; TWC added as Source Agency effective September 4 | Kalshi news post 2026-08-27; API `/series/KXRAINDALM` product_metadata | confirmed (company claims) |
+| Bürgi et al.: 313,972 contract prices, 2021-April 2025; contracts under 10c lose over 60%; maker / taker returns −9.64% / −31.46%; 1.77% fee at 50c with 100-lot rounding; Climate & Weather regression slope 0.031 (0.005), constant −0.997 (0.243), N = 29,924; all markets 0.034 / −1.736 / 156,986 | paper PDF, pp.3, 6, 9-10, 17, 24, 27 | confirmed (all values). The first author's name is spelled Bürgi |
+| Monthly rain, 7 days out, YES < $0.20: 4.7 cents mean price, 1.6% YES | `data/processed/kalshi_rain_calibration.csv`, horizon 7, bins below 0.20, n-weighted (finding from `run/factcheck-1`, recomputed by the reviewer) | confirmed on last-trade prices (505 contract-days); **clarification**: mid-quotes give 6.6 cents and 4.7% YES (253 contract-days). Note added under Key findings |
+| Order-book, liquidity, calibration and settlement-lag statistics (12-event sample, Nov 2026 snapshot, 05b figures) | internal computations from API pulls; not re-run | out of scope (internal; not re-checked) |
+| Polymarket markets and fees; CME rainfall launch/delisting; help-center fees (ACH, card, APY) | not re-checked in this pass | unverifiable (not re-checked) |
