@@ -4,9 +4,12 @@
 
 Team: Maya, Evan, Jack.
 
-We are building a platform that lets a farmer approximate USDA rainfall-index insurance
+We set out to build a platform that lets a farmer approximate USDA rainfall-index insurance
 (Pasture, Rangeland, Forage, or PRF) with a portfolio of Kalshi weather event contracts, and
-measuring where the remaining coverage error comes from.
+to measure where the remaining coverage error comes from.
+
+**Status (2026-11-02):** the team has pivoted away from the rain/PRF replication. The new direction
+is not chosen yet; the existing research is kept as background. See the pivot note in the overview.
 
 **Start here:** [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) is the index of all research and results, with status and next steps.
 
