@@ -100,7 +100,7 @@ FARM_CURVATURE_ROW: dict[str, str | None] = {
     "DFW_hay": "hay_other_TX_state_AprSep",          # same data and window as scen_DFW_hay
     "DFW_graze": "forage_rangeland_TX_Parker_AprJun",  # Grass-Cast, same county
     "SAT_graze": None,                               # no Atascosa series: pooled median
-    "OKC_hay": "hay_other_OK_state_AprJun",          # same data as scen_OKC_hay
+    "OKC_hay": "hay_other_OK_state_AprSep",          # same data and window as scen_OKC_hay (22.0 in)
     "OKC_graze": "hay_other_OK_Grady_AprJun",        # observed Grady hay (Grass-Cast too smooth in OK, 03b)
     "SGF_hay": "hay_other_MO_state_AprJun",          # same data as scen_SGF_hay
     "SGF_graze": "hay_other_MO_state_AprJun",        # same data as scen_SGF_graze
@@ -110,8 +110,10 @@ FARM_CURVATURE_ROW: dict[str, str | None] = {
     "TPA_hay": "hay_other_FL_state_MarMay",
 }
 
-#: Rows pooled for the default curvature (every forage/hay quadratic in the CSV except Florida,
-#: whose fit is not significant, t = 1.2).
+#: Rows pooled for the default curvature: the farm-grid / statewide forage and hay quadratics in
+#: the CSV, excluding Florida (fit not significant, t = 1.2), the Grass-Cast-weather duplicates
+#: (``*_grasscastppt``) and the Oklahoma Apr-Sep window (kept as in run/lossmodel-1, so the pooled
+#: value used for SAT_graze is unchanged).
 POOLED_CURVATURE_ROWS = (
     "hay_other_TX_state_AprSep", "hay_other_TX_state_AprJun", "hay_other_OK_state_AprJun",
     "hay_other_MO_state_AprJun", "hay_other_OK_Grady_AprJun", "hay_other_TX_Parker_AprJun",
@@ -450,6 +452,34 @@ class FarmLossModel:
         """Same as ``loss_usd`` from monthly rain (year x month 1..12) and monthly normals."""
         idx = interval_index_from_monthly(monthly, normals, intervals=list(self.timing_weights))
         return self.loss_usd(idx, gains=gains)
+
+    def marginal_loss_per_point(self, interval_index: Mapping[str, float], gains: bool = True) -> dict[str, float]:
+        """$ of extra loss per index point that each weighted interval falls (local derivative).
+
+        One year's {interval: index}. Uses the same pieces as ``production_response``: slope
+        e (1 + 2 g x) on the curve, 0 on the wet plateau (unless ``excess_penalty``) and at the
+        -100% floor, and 0 for x >= 0 when ``gains=False``. Idea grafted from run/lossmodel-2's
+        ``marginal_loss_per_point`` (a hedge optimizer needs $ per point by interval).
+        """
+        if not isinstance(interval_index, Mapping):
+            raise TypeError("marginal_loss_per_point takes one year's {interval: index} mapping")
+        x = self.season_index(interval_index) / 100.0 - 1.0
+        e, g = self.elasticity, self.curvature
+        slope = e * (1.0 + 2.0 * g * x)
+        if g < 0 and not self.excess_penalty and x > -1.0 / (2.0 * g):
+            slope = 0.0
+        if production_response(x, e, g, self.excess_penalty) <= -1.0:
+            slope = 0.0
+        if not gains and x >= 0:
+            slope = 0.0
+        per_point = self.normal_value_usd * slope / 100.0
+        return {k: per_point * w for k, w in self.timing_weights.items()}
+
+    def marginal_loss_per_inch(self, interval_index: Mapping[str, float],
+                               interval_normals_in: Mapping[str, float], gains: bool = True) -> dict[str, float]:
+        """$ of extra loss per inch less rain in each weighted interval (1 point = 1% of its normal)."""
+        per_point = self.marginal_loss_per_point(interval_index, gains=gains)
+        return {k: v * 100.0 / float(interval_normals_in[k]) for k, v in per_point.items()}
 
     def table(self, interval_index: pd.DataFrame, gains: bool = True) -> pd.DataFrame:
         s = self.season_index(interval_index)

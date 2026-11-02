@@ -295,3 +295,60 @@ def test_coverage_metrics_hand_example():
     assert m["capped_coverage"] == pytest.approx(100 / 400)
     assert m["n_loss_years"] == 2 and m["n_loss_years_unpaid"] == 1 and m["n_paid_no_loss"] == 1
     assert m["mean_net_outcome_usd"] == pytest.approx((170 - 350) / 4 - 10)
+
+
+# ---------------------------------------------------------------------------------------------
+# Review fixes (final/lossmodel): curvature window matching and marginal $ per point / inch
+# ---------------------------------------------------------------------------------------------
+
+@pytest.mark.parametrize("fid", ["DFW_hay", "OKC_hay"])
+def test_hay_curvature_window_matches_elasticity_window(sens, fid):
+    """DFW_hay and OKC_hay elasticities use rain over the insured Apr-Sep months (scen rows'
+    baseline 16.55 / 22.0 in), so their curvature must come from the Apr-Sep quadratic."""
+    key = lm.FARM_CURVATURE_ROW[fid]
+    scen = sens[sens["row_key"] == f"scen_{fid}"].iloc[0]
+    row = sens[sens["row_key"] == key].iloc[0]
+    assert key.endswith("AprSep")
+    assert row["baseline_precip_in"] == pytest.approx(scen["baseline_precip_in"])
+
+
+def test_okc_hay_curvature_hand_value(sens):
+    # OK Apr-Sep: +0.035 / -0.038 t, normal 22.0 in -> a = -0.0015, b = 0.0365, g = a/b*22
+    g, src = lm.curvature_for_farm("OKC_hay", sens)
+    assert g == pytest.approx(-0.0015 / 0.0365 * 22.0)
+    c = lm.curvature_for_row(sens, "hay_other_OK_state_AprSep")
+    assert c["minus2_implied"] == pytest.approx(c["minus2"], abs=0.003)
+
+
+@pytest.mark.parametrize("fid", ["DFW_hay", "SGF_hay", "DEN_graze", "TPA_hay"])
+@pytest.mark.parametrize("level", [45.0, 80.0, 97.0, 110.0])
+def test_marginal_loss_per_point_matches_finite_difference(farms, sens, fid, level):
+    m = lm.build_farm_model(farms[fid], sens)
+    base = {k: level for k in m.timing_weights}
+    marg = m.marginal_loss_per_point(base)
+    h = 1e-4
+    for k in m.timing_weights:
+        lo = dict(base, **{k: level - h})
+        hi = dict(base, **{k: level + h})
+        fd = (m.loss_usd(lo) - m.loss_usd(hi)) / (2 * h)   # extra loss per point of LESS rain
+        assert marg[k] == pytest.approx(fd, rel=1e-4, abs=1e-6)
+
+
+def test_marginal_loss_zero_on_plateau_and_when_gains_off(farms, sens):
+    m = lm.build_farm_model(farms["SGF_hay"], sens)        # saturates at season index ~126
+    wet = {k: 200.0 for k in m.timing_weights}
+    assert all(v == 0.0 for v in m.marginal_loss_per_point(wet).values())
+    mild_wet = {k: 110.0 for k in m.timing_weights}
+    assert all(v > 0 for v in m.marginal_loss_per_point(mild_wet).values())
+    assert all(v == 0.0 for v in m.marginal_loss_per_point(mild_wet, gains=False).values())
+    with pytest.raises(TypeError):
+        m.marginal_loss_per_point(_flat_index())
+
+
+def test_marginal_loss_per_inch_scales_by_interval_normal(farms, sens):
+    m = lm.build_farm_model(farms["DEN_graze"], sens)
+    idx = {k: 70.0 for k in m.timing_weights}
+    normals = {k: 2.0 + i for i, k in enumerate(m.timing_weights)}
+    pp, pi = m.marginal_loss_per_point(idx), m.marginal_loss_per_inch(idx, normals)
+    for k in m.timing_weights:
+        assert pi[k] == pytest.approx(pp[k] * 100.0 / normals[k])
