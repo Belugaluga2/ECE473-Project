@@ -3,6 +3,8 @@
 Run from the repo root:
 
     python scripts/r2_rain_yield_calcs.py
+    python scripts/r2_rain_yield_calcs.py --reprice-csv   # only re-price the hay rows of the CSV at
+                                                         # the price constants below (no downloads)
 
 Outputs
 -------
@@ -47,7 +49,7 @@ Method summary
    (or trend) on W/100, where W = sum over the farm's insured intervals of
    allocation x PRF index (the same weighted index scripts/run_scenarios.py uses). The slope is
    the elasticity "fraction of production lost per unit of fractional shortfall in W".
-6. Dollars: hay at NASS 2025 marketing-year prices ($/ton, Crop Values 2025 Summary); grazing at
+6. Dollars: hay at NASS final 2025 marketing-year prices ($/ton, Agricultural Prices Aug 2026); grazing at
    the county pasture cash rent per pound of normal-year forage (the same value basis as
    farms.yaml); crops at WASDE-676 (Oct 9 2026) 2026/27 season-average farm prices.
 """
@@ -93,11 +95,21 @@ SHORT_TON_AC_PER_T_HA = 0.446090
 # Prices (all CONFIRMED in the primary report; page/table in the basis text)
 # ---------------------------------------------------------------------------------------------
 CROP_VALUES_URL = "https://usda.library.cornell.edu/sites/default/release-files/795791/cpvl0226.pdf"
-HAY_PRICE_2025 = {  # All Other Hay, $/ton, 2025 preliminary marketing-year average, Crop Values
+AG_PRICES_URL = "https://release.nass.usda.gov/reports/agpr0826.pdf"
+# Hay prices: FINAL 2025 marketing-year averages, NASS Agricultural Prices (Aug 31 2026), table
+# "Hay Market Year Average Prices Received - States and United States: Marketing Years 2024 and
+# 2025", p.33 (columns Other / Alfalfa, 2025). Crop Values 2025 Summary (Feb 2026) printed
+# PRELIMINARY 2025 prices and lists the August 2026 Agricultural Prices as the release of the final
+# hay prices (its p.45). These match Quick Stats "HAY, (EXCL ALFALFA) - PRICE RECEIVED, MARKETING
+# YEAR" 2025 and the hay prices in data/scenarios/farms.yaml.
+HAY_PRICE_2025 = {  # Other hay, $/ton, final 2025 MYA
+    "TX": 130.0, "OK": 88.0, "MO": 113.0, "FL": 120.0, "CO": 153.0, "NM": 185.0, "US": 137.0}
+HAY_PRICE_2025_PRELIM = {  # superseded: Crop Values 2025 Summary p.33, preliminary (kept for the record)
     "TX": 136.0, "OK": 90.0, "MO": 114.0, "FL": 120.0, "CO": 151.0, "NM": 184.0, "US": 138.0}
-HAY_PRICE_BASIS = ("NASS Crop Values 2025 Summary (Feb 26 2026), All Other Hay price per ton, "
-                   "2025 preliminary marketing-year average, p.33")
-ALFALFA_PRICE_US_2025 = 170.0  # Crop Values 2025 Summary p.32, US alfalfa hay $/ton
+HAY_PRICE_BASIS = ("NASS Agricultural Prices (Aug 31 2026), Other hay, final 2025 marketing-year "
+                   "average price received, p.33")
+ALFALFA_PRICE_US_2025 = 172.0  # same table, US alfalfa hay $/ton, final 2025 (Crop Values prelim: 170)
+ALFALFA_PRICE_BASIS = "NASS Agricultural Prices (Aug 31 2026), US alfalfa hay, final 2025 MYA, p.33"
 WASDE_URL = "https://www.usda.gov/oce/commodity/wasde/wasde1026.pdf"
 WASDE_BASIS = "USDA WASDE-676 (Oct 9 2026), 2026/27 projected season-average farm price"
 CROP_PRICES = {  # (price, unit, page)
@@ -734,7 +746,7 @@ def literature_hay_rows() -> list[dict]:
         row_key="hay_alfalfa_CA_ET_lit", crop="hay, alfalfa (irrigated)", region="San Joaquin Valley, CA",
         month_or_window="per inch of seasonal ET", delta_yield_per_inch=0.2, yield_units="tons/acre per inch ET",
         delta_yield_plus2in=0.4, price_usd_per_unit=ALFALFA_PRICE_US_2025,
-        price_basis="NASS Crop Values 2025 Summary, US alfalfa hay $/ton, 2025 preliminary, p.32",
+        price_basis=ALFALFA_PRICE_BASIS,
         usd_per_acre_per_inch=_r(0.2 * ALFALFA_PRICE_US_2025),
         valid_range_note="yield (t/ac) = 0.2 x ET (in) - 0.6; about 5 in of ET per ton; per inch of ET, not rain",
         model_type="water production function (field observation)",
@@ -746,7 +758,7 @@ def literature_hay_rows() -> list[dict]:
         row_key="hay_alfalfa_NM_ET_lit", crop="hay, alfalfa (irrigated)", region="New Mexico",
         month_or_window="per inch of seasonal ET", delta_yield_per_inch=_r(s, 3), yield_units="tons/acre per inch ET",
         delta_yield_plus2in=_r(2 * s, 3), price_usd_per_unit=ALFALFA_PRICE_US_2025,
-        price_basis="NASS Crop Values 2025 Summary, US alfalfa hay $/ton, p.32", usd_per_acre_per_inch=_r(s * ALFALFA_PRICE_US_2025),
+        price_basis=ALFALFA_PRICE_BASIS, usd_per_acre_per_inch=_r(s * ALFALFA_PRICE_US_2025),
         valid_range_note="y = 0.14 + 0.12 ET (t/ha, cm), R2 = 0.78 (Sammis 1981, Agron. J. 73:323); converted to short tons/acre per inch",
         model_type="water production function (published)", source_short="NMSU Irrigation Management, alfalfa WPF (Sammis 1981)",
         source_url="https://irrigationmanagement.nmsu.edu/crop/alfalfa.html",
@@ -1244,7 +1256,61 @@ def grasscast_validation() -> pd.DataFrame:
 # =============================================================================================
 # 10. Main
 # =============================================================================================
+def hay_row_price(row_key: str) -> tuple[float, str] | None:
+    """Current price and basis for a hay row of the CSV, from its row_key; None for other rows.
+    hay_other_<ST>_* -> state other-hay $/ton; hay_bermuda_TXOK_* -> Texas other hay in $/lb;
+    hay_alfalfa_* -> US alfalfa $/ton."""
+    parts = str(row_key).split("_")
+    if row_key.startswith("hay_other_") and len(parts) > 2 and parts[2] in HAY_PRICE_2025:
+        return HAY_PRICE_2025[parts[2]], HAY_PRICE_BASIS
+    if row_key.startswith("hay_bermuda_TXOK_"):
+        return HAY_PRICE_2025["TX"] / 2000, HAY_PRICE_BASIS + " (TX, converted to $/lb)"
+    if row_key.startswith("hay_alfalfa_"):
+        return ALFALFA_PRICE_US_2025, ALFALFA_PRICE_BASIS
+    return None
+
+
+def reprice_hay_rows(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
+    """Re-price the hay rows of crop_rain_sensitivity_other.csv at the current constants without
+    re-running the regressions (which need the Grass-Cast workbooks and openpyxl).
+
+    usd_per_acre_per_inch scales with the price: new = old x new_price / old_price, rounded to cents.
+    Because 'old' is already rounded to cents, the result can differ from a full rerun by 1 cent
+    (e.g. hay_alfalfa_NM_ET_lit: 23.38 here vs 23.39 = 0.13597 t/ac x $172). Rows already at the
+    current price and basis are left alone (idempotent).
+    Returns the new frame and the row_keys that changed."""
+    out = df.copy()
+    changed = []
+    for i, r in out.iterrows():
+        cur = hay_row_price(r["row_key"])
+        if cur is None:
+            continue
+        new_p, basis = cur
+        old_p = float(r["price_usd_per_unit"])
+        if abs(old_p - new_p) < 1e-12 and r["price_basis"] == basis:
+            continue
+        out.at[i, "usd_per_acre_per_inch"] = round(float(r["usd_per_acre_per_inch"]) * new_p / old_p, 2)
+        out.at[i, "price_usd_per_unit"] = new_p
+        out.at[i, "price_basis"] = basis
+        changed.append(r["row_key"])
+    return out, changed
+
+
 def main() -> None:
+    import sys
+    if "--reprice-csv" in sys.argv[1:]:
+        old = pd.read_csv(OUT_CSV)
+        df, changed = reprice_hay_rows(old)
+        # rewrite only the changed lines so untouched rows keep their exact text
+        orig = OUT_CSV.read_text(encoding="utf-8").splitlines(keepends=True)
+        new = df.to_csv(index=False).splitlines(keepends=True)
+        if len(orig) != len(new) or len(orig) != len(df) + 1:
+            raise ValueError("CSV has embedded newlines; cannot rewrite line by line")
+        keep = set(changed)
+        lines = [orig[0]] + [new[i + 1] if df["row_key"].iat[i] in keep else orig[i + 1] for i in range(len(df))]
+        OUT_CSV.write_text("".join(lines), encoding="utf-8")
+        print(f"re-priced {len(changed)} hay rows in {OUT_CSV.relative_to(ROOT)}: {changed}")
+        return
     farms = load_farms()
     values = county_value_basis(farms)
     clim = climatology()

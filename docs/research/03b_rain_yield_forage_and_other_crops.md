@@ -1,6 +1,6 @@
 # Rain and Forage, Hay, Wheat, Sorghum, Cotton and Rice: What Is One Inch Worth?
 
-**Proposal cell:** Extra (how rainfall moves yields, $ per inch), R2 / team  |  **Status:** DRAFT (all sources opened; per-county slopes are our computations)  |  **Last updated:** 2026-10-29
+**Proposal cell:** Extra (how rainfall moves yields, $ per inch), R2 / team  |  **Status:** DRAFT (all sources opened; per-county slopes are our computations)  |  **Last updated:** 2026-11-01 (hay prices moved to final 2025 NASS values)
 
 Companion to [03a_rain_yield_corn_soybean.md](03a_rain_yield_corn_soybean.md) (corn and soybeans). Data: [`data/processed/crop_rain_sensitivity_other.csv`](../../data/processed/crop_rain_sensitivity_other.csv) (74 rows, keyed by `row_key`). Code: [`scripts/r2_rain_yield_calcs.py`](../../scripts/r2_rain_yield_calcs.py) (reruns offline from cached downloads in `data/raw/r2_rain_yield/`).
 
@@ -80,19 +80,19 @@ How to read this:
 - Dollars are gross value before any extra harvest cost.
 - Grazing dollars are the lb change times a $/lb value, in two versions:
   - Rent: forage valued at the county pasture cash rent per pound of normal production, as in `farms.yaml`.
-  - Replacement: the grazed 25% of the extra forage valued at the state's 2025 hay price, the cost of buying hay instead.
+  - Replacement: the grazed 25% of the extra forage valued at the state's final 2025 hay price, the cost of buying hay instead.
 - Ranges in brackets are other credible estimates from this doc.
 
 | Crop, place | Window (normal rain) | **+1 in ≈ X** | **≈ Y%** | **≈ $Z/ac** | Basis and confidence |
 |---|---|---|---|---|---|
-| Shortgrass range, Elbert Co., CO | Apr-Jul (9.8 in) | **+69 lb forage** [48-101] | **+6.1%** [4.8-8.1] | **$0.31 rent; $1.30 replacement** | Grass-Cast 1982-2019, r = 0.81; Lauenroth-Sala clipped data at the nearby CPER: +48 lb per Apr-Sep inch (+8.1%). Medium-high |
-| Arid range, Torrance Co., NM | annual (13.3 in), mostly Jun-Sep | **+60 lb** [35-93] | **+6.7%** [3.0-10.3] | **$0.09 rent; $1.38 replacement** | NRCS ESD range × 0.65 adjustment; Grass-Cast (model) gives +35 lb per Jul-Sep inch. Medium-low |
-| Mixed-grass range, Grady Co., OK | Apr-Jun (13.0 in) | **+58 lb** [58-147] | **+1.8%** [1.8-3.1] | **$0.30 rent; $0.65 replacement** | Grass-Cast r = 0.87 (it understates droughts, so this is a lower end); ESD-implied 2.3-3.1% per inch of annual rain. Medium |
-| Hay, Oklahoma (statewide) | Apr-Jun (12.9 in) | **+0.037 t** | **+2.3%** | **$3.37** | NASS 1975-2025, t = 5.1; Grady Co. alone: +0.032 t (+1.8%), 1960-2018. High |
-| Hay (bermudagrass), Texas statewide | Apr-Jun (8.8 in) | **+0.071 t** | **+3.8%** | **$9.59** | NASS 1975-2025, t = 5.9; Parker Co. 1972-1986: +0.10 t (+5.7%). High |
-| Cross Timbers range, Parker Co., TX | annual (32.8 in) | **+54 lb** [17-155] | **+1.7%** [0.5-2.7] | **$0.19 rent; $0.92 replacement** | ESD × 0.65; Grass-Cast is flatter (0.5%) but too smooth here. Medium-low |
-| South Texas range, Atascosa Co., TX | annual (26.2 in) | **+65 lb** [65-107] | **+1.8%** [1.8-3.0] | **$0.30 rent; $1.10 replacement** | ESD × 0.65; no direct yield series. Low |
-| Tall fescue hay, Missouri statewide | Apr-Jun (13.8 in) | **+0.042 t** | **+2.2%** | **$4.80** | NASS 1975-2025, t = 7.3, R² = 0.66. High |
+| Shortgrass range, Elbert Co., CO | Apr-Jul (9.8 in) | **+69 lb forage** [48-101] | **+6.1%** [4.8-8.1] | **$0.31 rent; $1.32 replacement** | Grass-Cast 1982-2019, r = 0.81; Lauenroth-Sala clipped data at the nearby CPER: +48 lb per Apr-Sep inch (+8.1%). Medium-high |
+| Arid range, Torrance Co., NM | annual (13.3 in), mostly Jun-Sep | **+60 lb** [35-93] | **+6.7%** [3.0-10.3] | **$0.09 rent; $1.39 replacement** | NRCS ESD range × 0.65 adjustment; Grass-Cast (model) gives +35 lb per Jul-Sep inch. Medium-low |
+| Mixed-grass range, Grady Co., OK | Apr-Jun (13.0 in) | **+58 lb** [58-147] | **+1.8%** [1.8-3.1] | **$0.30 rent; $0.63 replacement** | Grass-Cast r = 0.87 (it understates droughts, so this is a lower end); ESD-implied 2.3-3.1% per inch of annual rain. Medium |
+| Hay, Oklahoma (statewide) | Apr-Jun (12.9 in) | **+0.037 t** | **+2.3%** | **$3.30** | NASS 1975-2025, t = 5.1; Grady Co. alone: +0.032 t (+1.8%), 1960-2018. High |
+| Hay (bermudagrass), Texas statewide | Apr-Jun (8.8 in) | **+0.071 t** | **+3.8%** | **$9.17** | NASS 1975-2025, t = 5.9; Parker Co. 1972-1986: +0.10 t (+5.7%). High |
+| Cross Timbers range, Parker Co., TX | annual (32.8 in) | **+54 lb** [17-155] | **+1.7%** [0.5-2.7] | **$0.19 rent; $0.88 replacement** | ESD × 0.65; Grass-Cast is flatter (0.5%) but too smooth here. Medium-low |
+| South Texas range, Atascosa Co., TX | annual (26.2 in) | **+65 lb** [65-107] | **+1.8%** [1.8-3.0] | **$0.30 rent; $1.05 replacement** | ESD × 0.65; no direct yield series. Low |
+| Tall fescue hay, Missouri statewide | Apr-Jun (13.8 in) | **+0.042 t** | **+2.2%** | **$4.76** | NASS 1975-2025, t = 7.3, R² = 0.66. High |
 | Bahiagrass hay/pasture, Florida statewide | Mar-May (10.4 in) | **+0.013 t** | **+0.5%** (not significant) | **$1.59** | NASS 1975-2025, t = 1.2. Spring drought is the only real rain risk (UF/IFAS). Low |
 | Dryland winter wheat, Kansas | growing-season rain | **+3.2 bu** [2.5-3.9] | **+7.4%** | **$20.3** | K-State WPF 4.6 bu per inch of ET × 0.7. Medium-high |
 | Dryland grain sorghum, Kansas | growing-season rain | **+6.6 bu** [5.2-8.0] | **+10.2%** | **$29.6** | K-State WPF 9.4 bu per inch of ET × 0.7. Medium-high |
@@ -267,8 +267,10 @@ Every number used in this doc. "COMPUTED" = our regression on public data (code 
 
 | Quantity | Value | Units | Region / period | Source | Verification |
 |---|---|---|---|---|---|
-| All other hay, 2025 marketing-year average (preliminary) | TX 136; OK 90; MO 114; FL 120; CO 151; NM 184; US 138 | $/ton | 2025 | NASS Crop Values 2025 Summary (Feb 26 2026) p.33, https://usda.library.cornell.edu/sites/default/release-files/795791/cpvl0226.pdf | CONFIRMED |
-| Alfalfa hay 2025 | TX 233; OK 165; MO 169; CO 164; NM 245; US 170 | $/ton | 2025 | same, p.32 | CONFIRMED |
+| Other hay, 2025 marketing-year average, **final** (used here) | TX 130; OK 88; MO 113; FL 120; CO 153; NM 185; US 137 | $/ton | 2025 | NASS Agricultural Prices (Aug 31 2026) p.33, "Hay Market Year Average Prices Received", https://release.nass.usda.gov/reports/agpr0826.pdf (re-checked 2026-11-01) | CONFIRMED |
+| Alfalfa hay 2025, final | TX 232; OK 164; MO 170; CO 164; NM 246; US 172 | $/ton | 2025 | same table, p.33 | CONFIRMED |
+| All other hay, 2025, preliminary (superseded) | TX 136; OK 90; MO 114; FL 120; CO 151; NM 184; US 138 | $/ton | 2025 | NASS Crop Values 2025 Summary (Feb 2026) p.33, https://usda.library.cornell.edu/sites/default/release-files/795791/cpvl0226.pdf; its p.45 names the August 2026 Agricultural Prices as the release of final 2025 hay prices | CONFIRMED |
+| Alfalfa hay 2025, preliminary (superseded) | TX 233; OK 165; MO 169; CO 164; NM 245; US 170 | $/ton | 2025 | same, p.32 | CONFIRMED (as printed in the Feb 2026 report) |
 | Other hay, August 2026 | TX 120; OK 101; MO 95; CO 180; NM 220; US 152 | $/ton | Aug 2026 | NASS Agricultural Prices (Sep 29 2026) p.18 | CONFIRMED |
 | Pasture cash rent, state 2025 / 2026 | TX 7.70 / 8.60; OK 18.00 / 18.00; MO 38.50 / 39.50; CO 7.00 / 7.60; NM 4.10 / 4.20; FL 20.00 / 21.50; US 15.50 / 16.50 | $/ac | 2025-2026 | NASS Quick Stats "RENT, CASH, PASTURELAND" | CONFIRMED |
 | Pasture cash rent, county 2026 (2025) | Parker 13.0 (n/a); Atascosa 12.0 (15.5); Grady 24.5 (24.5); Dade 38.0 (35.0); Elbert 9.5, CV 37% (6.1); Torrance 2.2 (1.7); Hardee 13.5 (n/a; 2024 11.0) | $/ac | county | same | CONFIRMED |
@@ -279,8 +281,8 @@ Every number used in this doc. "COMPUTED" = our regression on public data (code 
 | Harvest efficiency | 25% of production allotted to grazing | - | ESD stocking convention | R067BY002CO | CONFIRMED |
 | WASDE season-average farm price, 2026/27 projection (Oct) | wheat 6.30; corn 4.70; sorghum 4.50; soybeans 12.00 ($/bu); all rice 15.20, long-grain 14.00 ($/cwt); upland cotton 77.0 cents/lb | - | U.S. | WASDE-676 (Oct 9 2026) pp.11-17, https://www.usda.gov/oce/commodity/wasde/wasde1026.pdf | CONFIRMED |
 | WASDE 2025/26 estimates | wheat 5.06; corn 4.16; sorghum 3.67; soybeans 10.50; rice 12.40; cotton 62.2 cents | - | U.S. | same | CONFIRMED |
-| Replacement value of grazed forage | normal production × 0.25 × state hay price: Parker 67.0; Atascosa 57.4; Grady 52.3; Dade 54.2; Elbert 25.7; Torrance 27.4; Hardee 81.6 | $/ac | 2025 prices | `derived/r2_prf_vs_loss_per_point.csv` | DERIVED |
-| Headline grazing $ per extra inch (rent / replacement) | Elbert 0.31 / 1.30; Torrance 0.09 / 1.38; Grady 0.30 / 0.65; Parker 0.19 / 0.92; Atascosa 0.30 / 1.10 | $/ac per inch | key window | lb change × (rent ÷ `farms.yaml` production) or × 0.25 × hay price ÷ 2,000. The CSV `scen_*` rows instead use % change × `farms.yaml` value, so they differ slightly where ESD RV ≠ `farms.yaml` production | DERIVED |
+| Replacement value of grazed forage | normal production × 0.25 × state hay price: Parker 64.1; Atascosa 54.9; Grady 51.1; Dade 53.7; Elbert 26.1; Torrance 27.6; Hardee 81.6 | $/ac | final 2025 prices | `derived/r2_prf_vs_loss_per_point.csv` | DERIVED |
+| Headline grazing $ per extra inch (rent / replacement) | Elbert 0.31 / 1.32; Torrance 0.09 / 1.39; Grady 0.30 / 0.63; Parker 0.19 / 0.88; Atascosa 0.30 / 1.05 | $/ac per inch | key window | lb change × (rent ÷ `farms.yaml` production) or × 0.25 × hay price ÷ 2,000. The CSV `scen_*` rows instead use % change × `farms.yaml` value, so they differ slightly where ESD RV ≠ `farms.yaml` production | DERIVED |
 | Grazing fee converted to $/lb of production | 23.50 × 0.25 / 912.5 = 0.0064 | $/lb | Colorado 2025 | from the rows above | DERIVED |
 
 ### Scenario elasticities and PRF comparison
@@ -290,7 +292,7 @@ Every number used in this doc. "COMPUTED" = our regression on public data (code 
 | Recommended `rain_elasticity` | DFW_hay 0.49; DFW_graze 0.57; SAT_graze 0.48; OKC_hay 0.49; OKC_graze 0.67; SGF_hay 0.40; SGF_graze 0.46; DEN_graze 0.74; ABQ_graze 0.89; TPA_graze 0.15; TPA_hay 0.14 | - | per farm | CSV rows `scen_*` | COMPUTED / DERIVED |
 | Alternative candidates | e.g. Grass-Cast vs W: DFW 0.18, OKC 0.35, DEN 0.64, ABQ 0.31; Grady county hay vs W 0.26 (SE 0.10); raw ESD 0.73-1.37 | - | per farm | `derived/r2_scenario_elasticities.csv` | COMPUTED |
 | PRF payment per point of W below trigger vs proxy loss per point (cash-rent value) | DFW_hay 2.72 vs 1.21 (2.2×); DFW_graze 0.37 vs 0.08 (4.8×); SAT 0.26 vs 0.07 (3.6×); OKC_hay 2.41 vs 0.74 (3.3×); OKC_graze 0.41 vs 0.17 (2.5×); SGF_hay 2.67 vs 0.85 (3.1×); SGF_graze 0.62 vs 0.16 (3.8×); DEN 0.20 vs 0.045 (4.3×); ABQ 0.17 vs 0.015 (11.4×); TPA_graze 0.73 vs 0.017 (42.8×); TPA_hay 5.00 vs 0.47 (10.6×) | $/ac per point | 2026 terms | `derived/r2_prf_vs_loss_per_point.csv` | DERIVED |
-| Same, grazing at replacement value | DFW 0.38; SAT 0.27; OKC 0.35; SGF 0.25; DEN 0.19; ABQ 0.24; TPA 0.13 $/ac per point → PRF/loss 0.97, 0.96, 1.17, 2.5, 1.03, 0.70, 5.8 | $/ac per point | same | same | DERIVED |
+| Same, grazing at replacement value | DFW 0.37; SAT 0.26; OKC 0.34; SGF 0.25; DEN 0.19; ABQ 0.24; TPA 0.13 $/ac per point → PRF/loss 1.01, 1.01, 1.20, 2.5, 1.02, 0.70, 5.8 (final 2025 hay prices; with the superseded preliminary prices: 0.97, 0.96, 1.17, 2.5, 1.03, 0.70, 5.8) | $/ac per point | same | same | DERIVED |
 
 ## Detail
 
@@ -377,14 +379,14 @@ We regressed NASS "other hay" yields on a linear time trend plus window rain: st
 
 | Series | Window | t/ac per in | % per in | t | R² | $/ac per in |
 |---|---|---|---|---|---|---|
-| Texas | Apr-Jun | 0.071 | 3.75 | 5.9 | 0.46 | 9.59 |
-| Texas | Apr-Sep | 0.062 | 3.28 | 6.0 | 0.47 | 8.37 |
-| Oklahoma | Apr-Jun | 0.037 | 2.33 | 5.1 | 0.35 | 3.37 |
-| Oklahoma | Apr-Sep | 0.035 | 2.19 | 6.8 | 0.50 | 3.11 |
-| Missouri | Apr-Jun | 0.042 | 2.21 | 7.3 | 0.66 | 4.80 |
+| Texas | Apr-Jun | 0.071 | 3.75 | 5.9 | 0.46 | 9.17 |
+| Texas | Apr-Sep | 0.062 | 3.28 | 6.0 | 0.47 | 8.00 |
+| Oklahoma | Apr-Jun | 0.037 | 2.33 | 5.1 | 0.35 | 3.30 |
+| Oklahoma | Apr-Sep | 0.035 | 2.19 | 6.8 | 0.50 | 3.04 |
+| Missouri | Apr-Jun | 0.042 | 2.21 | 7.3 | 0.66 | 4.76 |
 | Florida | Mar-May | 0.013 | 0.48 | 1.2 | 0.18 | 1.59 |
-| Grady Co., OK (1960-2018) | Apr-Jun, farm grid | 0.032 | 1.76 | 3.1 | 0.25 | 2.89 |
-| Parker Co., TX (1972-1986, n = 15) | Apr-Jun, farm grid | 0.102 | 5.70 | 3.8 | 0.57 | 13.87 |
+| Grady Co., OK (1960-2018) | Apr-Jun, farm grid | 0.032 | 1.76 | 3.1 | 0.25 | 2.83 |
+| Parker Co., TX (1972-1986, n = 15) | Apr-Jun, farm grid | 0.102 | 5.70 | 3.8 | 0.57 | 13.26 |
 
 Reading the table:
 - **Texas bermudagrass hay** is the most rain-sensitive hay in our set: about 4% per inch of spring rain.
@@ -505,7 +507,7 @@ Our ESD-implied responses fall from 10-11% per inch in Torrance and 7-8% in Elbe
 
 ### 7. Turning lb and tons into dollars
 
-**Hay:** tons × NASS 2025 marketing-year "other hay" price for the state (TX $136, OK $90, MO $114, FL $120 per ton). In August 2026 prices had moved to TX $120, OK $101 and MO $95 per ton, so dollar values move ±15% with the hay market.
+**Hay:** tons × NASS final 2025 marketing-year "other hay" price for the state (TX $130, OK $88, MO $113, FL $120 per ton; Agricultural Prices, Aug 31 2026, p.33). In August 2026 prices had moved to TX $120, OK $101 and MO $95 per ton, so dollar values move ±15% with the hay market.
 
 **Grazing land has no market price per pound**, so we give two bases:
 - **Rent basis** (used in the CSV and `farms.yaml`): county pasture cash rent ÷ normal-year production. Example: Elbert $6.10/ac ÷ 1,364 lb = $0.0045 per lb of production.
@@ -594,7 +596,7 @@ To use these, the lead or the B4 owner should set each farm's `rain_sensitivity_
 - **Statewide regressions** average many farm types. A single dryland farm is probably more sensitive. NASS stopped publishing Texas county hay yields after 1986 for Parker, and Florida county hay yields were not available.
 - **Grass-Cast Southwest (Torrance)** is model-predicted. Its spring part is an exact function of simulated ET, so the Torrance Grass-Cast slopes describe the model, not observations.
 - **No observed forage series for Atascosa, Dade or Hardee.** Their grazing elasticities rely on ESDs or hay proxies. Ona (Range Cattle REC, in Hardee County) clipping data relating bahiagrass yield to rain would be the best addition. We did not find a public series.
-- **Price discrepancy for the lead.** `farms.yaml` values hay at TX $130, OK $88 and MO $113 per ton ("NASS 2025 marketing-year"). The Crop Values 2025 Summary (Feb 26 2026, p.33) gives $136, $90 and $114, with FL $120 matching. The CSV uses the Crop Values numbers.
+- **Hay price discrepancy, resolved 2026-11-01.** `farms.yaml` values hay at TX $130, OK $88 and MO $113 per ton; this doc first used $136, $90 and $114 from the Crop Values 2025 Summary (Feb 2026, p.33). Those Crop Values numbers are *preliminary*: the same report (p.45) says final 2025 hay prices come in the August 2026 Agricultural Prices, and that report (Aug 31 2026, p.33) gives $130, $88, $113 and FL $120, matching `farms.yaml` and Quick Stats. The CSV hay rows and every hay-price number in this doc now use the final prices (re-priced with `python scripts/r2_rain_yield_calcs.py --reprice-csv`; regressions unchanged). Dollar figures fell 1-4% (TX -4.4%, OK -2.2%, MO -0.9%); CO (+1.3%) and NM (+0.5%) replacement values rose slightly. No conclusion changes.
 - **Not done (search budget):** Musick et al. (1994) and Klocke wheat WPFs; Payero corn and soybean full texts; a NASS hay-yield versus PRF-index study for the Southern Plains.
 
 ## Sources

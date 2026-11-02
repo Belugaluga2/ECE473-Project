@@ -106,7 +106,7 @@ Grouped rows cover every cell of the named table.
 | Pasture acres per beef cow (Table A3) | 3.7 (Dade) to 95.1 (Torrance) | acres/cow | 2022 | Census "AG LAND, PASTURELAND - ACRES" / beef cows (size-class sum where total withheld) | DERIVED |
 | Hay acres per hay operation | Parker 33, Atascosa 63, Grady 178, Dade 128, Elbert 108, Torrance 98, Hardee 134, Kane 37 | acres | 2022 | Census hay acres / "HAY - OPERATIONS WITH AREA HARVESTED" | DERIVED |
 | Census county hay yield | Parker 1.49 ... Hardee 3.75 (Table B) | tons/acre | 2022 | Census hay tons / hay acres | DERIVED |
-| Hay price received, marketing year 2025: other hay / alfalfa (Table B) | TX 130/232, OK 88/164, MO 113/170, CO 153/164, NM 185/246, FL 120/-, IL 106/161; US 137/172 | $/ton | state, MY 2025 | NASS Quick Stats, SURVEY, HAY, PRICE RECEIVED, period MARKETING YEAR | CONFIRMED |
+| Hay price received, marketing year 2025: other hay / alfalfa (Table B) | TX 130/232, OK 88/164, MO 113/170, CO 153/164, NM 185/246, FL 120/-, IL 106/161; US 137/172 | $/ton | state, MY 2025 | NASS Quick Stats, SURVEY, HAY, PRICE RECEIVED, period MARKETING YEAR; the same values are the final 2025 MYA prices in NASS Agricultural Prices (Aug 31 2026) p.33, https://release.nass.usda.gov/reports/agpr0826.pdf (re-checked 2026-11-01; the Crop Values 2025 Summary's TX 136 / OK 90 / MO 114 are the earlier preliminary values) | CONFIRMED |
 | Other-hay yield 2016-2025 (Table B) | TX 1.92, OK 1.69, MO 1.90, FL 2.72 mean (min-max in table) | tons/acre | state | NASS Quick Stats, SURVEY, "HAY, (EXCL ALFALFA) - YIELD" | CONFIRMED (means DERIVED) |
 | County other-hay yield | Grady 0.9-2.15 (2010-2018), Dade 1.5-2.6 (2010-2018) | tons/acre | county | NASS Quick Stats county survey (no TX or FL county estimates in 2010-2025; OK, MO, CO county series end in 2018) | CONFIRMED |
 | Pasture cash rent (Table B) | county: Parker 13.5 (2024), Atascosa 15.5, Grady 24.5, Dade 35, Elbert 6.1, Torrance 1.7 (2025), Hardee 11 (2024); state 2025: TX 7.7, OK 18, MO 38.5, CO 7.0, NM 4.1, FL 20, IL 49 | $/acre/yr | as listed | NASS Quick Stats, SURVEY, "RENT, CASH, PASTURELAND - EXPENSE, MEASURED IN $ / ACRE" | CONFIRMED |
@@ -635,7 +635,8 @@ reason buyers favor them: a two-month index far below normal is more likely ther
   (`data/processed/prf_actuarial_study_grids.csv`); we checked base values and protection against our
   own pull and the DST, but not each premium rate.
 - **Hay prices** are state averages; local Parker or Hardee prices may differ. The 2025 marketing-year
-  price is NASS's latest published value as of 2026-10-29.
+  price is NASS's final value (Agricultural Prices, Aug 31 2026, p.33; re-checked 2026-11-01). It
+  supersedes the preliminary Crop Values 2025 Summary figures (TX $136, OK $90, MO $114).
 - **Herd sizes** in the farm descriptions are acres / county pasture acres per beef cow and are
   approximate.
 

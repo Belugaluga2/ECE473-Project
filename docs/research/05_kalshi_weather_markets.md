@@ -184,7 +184,7 @@ https://api.elections.kalshi.com/trade-api/v2. Derived outputs are in `data/raw/
 | Full history: median volume per settled market / mean daily-close spread / two-sided market-days | 6,375 / 13.1 cents / 64% | | 943 settled markets, 37 series | 05b Table 1 | CONFIRMED (B2) |
 | Full history, DFW: median event OI at close / mean daily-close spread | 32,984 contracts / 9.7 cents | | KXRAINDALM | 05b Table 1 | CONFIRMED (B2) |
 | Monthly-rain calibration, 7 days out, YES < $0.20: mean price / YES rate | 0.047 / 0.016 | dollars / share | 139 settled events | 05b Table 5 | CONFIRMED (B2) |
-| Drought payout buyable at <= $0.95, Nov 2026, all strikes: DFW / DEN / ORD / SAT / OKC / SGF / ABQ / TPA | 436 / 4,017 / 428 / 18,810 / 12,836 / 39,859 / 10,456 / 7,431 | $ payout | B2 snapshot 2026-10-29 09:30 UTC | 05b Table 4, `kalshi_rain_hedge_capacity_nov2026.csv` | CONFIRMED (B2) |
+| Drought payout buyable at <= $0.95, Nov 2026, all strikes: DFW / DEN / ORD / SAT / OKC / SGF / ABQ / TPA | 436 / 4,017 / 428 / 18,810 / 12,836 / 39,859 / 10,456 / 7,431 | $ payout | B2 snapshot 2026-10-29 09:30 UTC (rewards running; after they ended, 2026-11-02: 663 / 2,878 / 497 / 859 / 416 / 1,237 / 1,585 / 1,680, see 05b Table 4b and doc 12) | 05b Table 4, `kalshi_rain_hedge_capacity_nov2026_20261029.csv` | CONFIRMED (B2) |
 | Full history: total contracts DFW / DEN / ORD; median settled-event volume, all cities | 1,115,702 / 927,552 / 1,209,879; about 77,000 (76,952) | contracts | to 2026-10-29 | 05b Table 1 | CONFIRMED (B2) |
 | Study-site trades: median size / 90th percentile | 5-7 / 60-83 | contracts | 90,269 trades, DFW, DEN, ORD | 05b Table 2 | CONFIRMED (B2) |
 | Weather contracts traded in API live window | 239.8 | million contracts | markets open or settled after 2026-08-30 | R5 API pull, `r5_family_table.csv` | CONFIRMED |
@@ -680,7 +680,7 @@ is at or below X. Offers priced above 95 cents are excluded: a 99-cent "offer" i
 bid on the other side.
 
 **Use B2 for the full hedge-capacity numbers.** B2's snapshot 22 minutes earlier (09:30 UTC; 05b
-Table 4, `kalshi_rain_hedge_capacity_nov2026.csv`) gives drought payout buyable at <= $0.95
+Table 4, `kalshi_rain_hedge_capacity_nov2026_20261029.csv`) gives drought payout buyable at <= $0.95
 across all strikes:
 
 | Site | Drought payout ($) | Note |
@@ -1021,7 +1021,7 @@ Three points:
 **Project documents and data used**
 - B2, [05b: Kalshi monthly-rain markets: data pipeline, liquidity, order-book depth, and calibration](../analysis/05b_kalshi_liquidity_stats.md),
   with `data/processed/kalshi_rain_liquidity_by_series.csv`,
-  `kalshi_rain_hedge_capacity_nov2026.csv` and `kalshi_rain_calibration.csv`.
+  `kalshi_rain_hedge_capacity_nov2026_20261029.csv` and `kalshi_rain_calibration.csv`.
 - `data/processed/station_daily_precip_study.parquet` and `data/processed/station_monthly_precip.csv`
   (ACIS station records, built by the station workstream).
 - `data/processed/kalshi_rain_incentive_programs.csv` (B2, from Kalshi `/incentive_programs`).
