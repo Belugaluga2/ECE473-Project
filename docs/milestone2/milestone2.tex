@@ -321,9 +321,24 @@ farms gain (0.37 to 0.43). Caveats: winter rain matters less for warm-season for
 for winter pasture, winter wheat and stock water. Each month is listed only about 30 days ahead, so orders are
 placed month by month.
 
+\textbf{What limits it now: liquidity (doc 22).} With every order capped at the contracts offered within
+10\,\textcent{} of fair value on the post-rewards book, the companions fall from median HE 0.67 to 0.18. A
+typical farm needs 9,000--27,000 contracts against 1,800--5,400 on offer. About 5--10$\times$ today's depth
+restores the fit (0.50 at 5$\times$, 0.66 at 10$\times$). Today the app sizes the order to the book: the
+Dallas hay farm keeps 90\% of the fit on about \$1,200 of cover a month instead of \$6,100. Cover design
+matters little; a PRF-like linear payout at 90\% stays the default. The app now also offers excess-rain cover
+where it tracks, such as Dallas Jun--Jul (0.58). For each rancher's own policy it shows what two-month contracts
+would add, for example Apr--May drought cover from 0.33 to 0.51.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{m2_improve.png}
+\caption{Left: companion fit vs.\ order-book depth (multiples of today's depth near fair value). Right: gap-cover
+design, by trigger level and payout shape.}
+\end{figure}
+
 \textbf{What the rest of the project builds on.} The companion is the platform the remaining work expands:
 \begin{itemize}
-  \item wet-side (excess-rain) cover;
+  \item a liquidity model (market maker or pooled orders) to close the 5--10$\times$ depth gap;
   \item a mock two-month market to demonstrate our contract proposal;
   \item national coverage for all 38 Kalshi rain stations;
   \item hedging modeled forage loss instead of the PRF formula;
@@ -346,9 +361,9 @@ The PRF Companion makes that concrete: in the cool-season months PRF leaves open
 station tracks the farm's rain well on years it never saw (0.61). That is the base the rest of the project
 builds on.
 
-\textbf{Reproducibility.} Code and data: \url{https://github.com/Belugaluga2/ECE473-Project} (docs 15--21; demo guide \texttt{docs/DEMO.md}).
+\textbf{Reproducibility.} Code and data: \url{https://github.com/Belugaluga2/ECE473-Project} (docs 15--22; demo guide \texttt{docs/DEMO.md}).
 \texttt{python scripts/run\_optimizer.py}, \texttt{run\_error\_budget.py}, \texttt{run\_app\_test.py
---live}, \texttt{run\_prf\_gaps.py}, \texttt{run\_companion\_study.py}, \texttt{run\_companion\_holdout.py};
-app: \texttt{python scripts/run\_app.py} (\texttt{?demo} runs the companion). 352 automated tests (19 new for Milestone II).
+--live}, \texttt{run\_prf\_gaps.py}, \texttt{run\_companion\_study.py}, \texttt{run\_companion\_holdout.py}, \texttt{run\_companion\_improve.py};
+app: \texttt{python scripts/run\_app.py} (\texttt{?demo} runs the companion). 353 automated tests (20 new for Milestone II).
 
 \end{document}

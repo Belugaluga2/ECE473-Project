@@ -34,6 +34,7 @@ Every research document has a numbers table that gives a source for each number.
 | M2 W5 Test the app against the USDA benchmark | Evan | [analysis/19_app_test.md](analysis/19_app_test.md) | done 2026-11-05 |
 | M2 refinements from the submitted M1 update: complement PRF, CPC as-paid backtest | team | [analysis/20_complementing_prf.md](analysis/20_complementing_prf.md) | done 2026-11-05 |
 | M2 showcase: PRF Companion (app tab) | team | [analysis/21_prf_companion.md](analysis/21_prf_companion.md), [DEMO.md](DEMO.md) | working prototype |
+| M2 showcase follow-up: liquidity, cover design, excess rain, two-month what-if | team | [analysis/22_making_it_better.md](analysis/22_making_it_better.md) | done 2026-11-05 |
 
 ## Study sites
 
@@ -188,7 +189,7 @@ Items 1-3 only matter if the rain work is picked up again.
   - `rowcrop.py`: corn/soy farm exposure and hedge backtest (doc 14)
 - `scripts/` runnable entry points that pull data and regenerate every result
 - `data/processed/` small derived datasets (committed); `data/raw/` downloads (gitignored, recreated by scripts)
-- `tests/` pytest checks (352 passing)
+- `tests/` pytest checks (353 passing)
 
 ## How to reproduce
 

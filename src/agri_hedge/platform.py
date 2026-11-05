@@ -333,6 +333,89 @@ def _score(X, y, q, prot, share=KNEE_SHARE):
             "target_mean_usd": round(float(y.mean()), 2), "years": int(len(y))}
 
 
+
+EXCESS_START, EXCESS_SPAN = 130.0, 100.0
+EXCESS_SHARE_OF_PROTECTION = 1.0
+
+
+def _he_quick(X, y, q, prot):
+    """Out-of-sample HE of the lowest-error hedge (no cost limit): used for what-if comparisons."""
+    ok = ~np.isnan(y) & ~np.isnan(X).any(axis=1)
+    X, y = X[ok], y[ok]
+    if len(y) < 30 or np.var(y) == 0:
+        return None
+    return round(op.hedge_effectiveness(y, op.loyo_payout(X, y, op.model_tranches(q), None, prot)), 3)
+
+
+def _wet_package(items, prot, req) -> dict:
+    """One YES-contract hedge for the excess-rain cover on the recommended intervals (estimated prices)."""
+    cols, legs, q, y = [], [], [], None
+    st = items[0][1].station
+    for w, pw, yw in items:
+        for j, (m, k) in enumerate(pw.legs):
+            cols.append(1.0 - pw.X[:, j])
+            legs.append((m, k))
+            q.append(1.0 - pw.q[j])
+        y = yw if y is None else y + yw
+    from agri_hedge.error_budget import dedupe
+    X, legs, q = dedupe(np.column_stack(cols), legs, q)   # strikes that paid in the same years are one contract
+    ok = ~np.isnan(y) & ~np.isnan(X).any(axis=1)
+    tr = op.model_tranches(q)
+    fr = op.efficient_frontier(X[ok], y[ok], tr, n_points=13, scale=prot, q=q)
+    b = op.knee_budget(fr, KNEE_SHARE)
+    sol = op.solve_budget(X[ok], y[ok], tr, b, prot)
+    he = op.hedge_effectiveness(y[ok], op.loyo_payout(X[ok], y[ok], tr, b, prot))
+    ticket = []
+    for (m, k), c, qq in zip(legs, sol.leg_contracts, q):
+        n = int(round(c))
+        if n <= 0:
+            continue
+        price = float(np.clip(qq + HALF_SPREAD, 0.01, 0.99))
+        cm = contract_month_for(m)
+        ticket.append({"ticker": f"{event_ticker(st['series_ticker'], cm)}-{int(k) if float(k).is_integer() else k}",
+                       "contract_month": cm, "side": "YES",
+                       "meaning": f"pays $1 per contract if {hb.MONTH_ABBR[m - 1]} rain at the station is above {k:g} in",
+                       "contracts": n, "limit_price": round(price, 2), "premium_usd": round(n * price, 2),
+                       "fee_usd": float(taker_fee([n], [price], tick=FEE_TICK_RETAIL)[0]),
+                       "price_source": "estimated", "fair_probability": round(float(qq), 3)})
+    ev = float(q @ sol.leg_contracts)
+    return {"intervals": [w.label for w, _, _ in items], "cost_usd": round(sol.cost, 2), "expected_payout_usd": round(ev, 2),
+            "cost_per_dollar_expected": round(sol.cost / ev, 3) if ev > 0 else None, "he_out_of_sample": round(he, 3),
+            "ticket": sorted(ticket, key=lambda r: r["contract_month"])}
+
+
+def _depth_check(req, rec: list, gap_prot: float) -> dict:
+    """Refit the recommended package with each leg capped at today's order-book depth near fair value.
+
+    Depth per strike comes from the latest saved snapshot of the station's listed ladder (contracts offered
+    within 10 cents of fair value; doc 22), taken as the depth for every month. Capping contracts at k x depth
+    is the same as buying 1/k of the cover at today's depth, so the largest cover per month that keeps 90% of
+    the uncapped fit is gap_prot / (smallest k that reaches it).
+    """
+    from agri_hedge import error_budget as eb
+    months = [hb.MONTH_ABBR.index(m) + 1 for m in rec]
+    p = hb.build_problem(hb.CoverageRequest(req.lat, req.lon, [hb.Window((m,), 1.0 / len(months)) for m in months],
+                                            req.coverage, gap_prot * len(months), station_key=req.station_key,
+                                            grid_id=req.grid_id))
+    ok = p.ok
+    X, y = p.X[ok], p.target[ok]
+    scale = gap_prot * len(months)
+    depth, snap = eb.book_depth_by_strike(p.station["series_ticker"], p.station["station_key"])
+    free = op.hedge_effectiveness(y, op.loyo_payout(X, y, op.model_tranches(p.q), None, scale))
+    rows, need = [], None
+    for k in (1, 2, 5, 10, 25):
+        tr = op.model_tranches(p.q)
+        for t, (_, s_) in zip(tr, p.legs):
+            t.capacity = k * depth.get(s_, 0.0)
+        h = op.hedge_effectiveness(y, op.loyo_payout(X, y, tr, None, scale))
+        rows.append({"depth_multiple": k, "he_out_of_sample": round(h, 3)})
+        if need is None and h >= 0.9 * free:
+            need = k
+    return {"snapshot": snap, "he_no_limit": round(free, 3), "by_depth": rows,
+            "depth_multiple_for_90pct": need,
+            "max_cover_per_month_usd": round(gap_prot / need, 0) if need else None,
+            "he_at_today_depth": rows[0]["he_out_of_sample"]}
+
 def companion(params: dict, live: LiveQuotes | None = None, today: date | None = None) -> dict:
     """Score the gaps a PRF election leaves and build a Kalshi hedge for the ones that track well.
 
@@ -366,16 +449,29 @@ def companion(params: dict, live: LiveQuotes | None = None, today: date | None =
                                   "possible" if sc["he_out_of_sample"] >= OK_HE else "poor match")
         months.append(row)
     rec = [r["name"] for r in months if r.get("verdict") == "recommended"]
-    # wet side: excess rain on each insured interval with today's monthly YES contracts
-    wet = []
+    # wet side (excess rain) and the two-month what-if, on each insured interval
+    from agri_hedge import error_budget as eb
+    wet, whatif, wet_rec = [], [], []
     for w in req.windows:
         pw = hb.build_problem(hb.CoverageRequest(req.lat, req.lon, [hb.Window(w.months, 1.0)], req.coverage,
                                                  prot * w.share, station_key=req.station_key, grid_id=req.grid_id))
         idx = hb.window_index(pw.grid_id, w, pw.years)
-        y = np.where(np.isnan(idx), np.nan, prot * w.share * np.clip((idx - 130.0) / 100.0, 0, 1))
-        sc = _score(1.0 - pw.X, y, 1.0 - pw.q, prot * w.share)
+        y_wet = np.where(np.isnan(idx), np.nan, prot * w.share * EXCESS_SHARE_OF_PROTECTION *
+                         np.clip((idx - EXCESS_START) / EXCESS_SPAN, 0, 1))
+        sc = _score(1.0 - pw.X, y_wet, 1.0 - pw.q, prot * w.share)
         if sc:
+            sc["verdict"] = "recommended" if sc["he_out_of_sample"] >= min_he else "needs two-month contracts"
             wet.append({"interval": w.label, **sc})
+            if sc["verdict"] == "recommended":
+                wet_rec.append((w, pw, y_wet))
+        X2, _, q2 = eb.window_total_ladder_cols(pw, 1.0)
+        q2 = np.asarray(q2, float)
+        whatif.append({"interval": w.label,
+                       "drought_today": _he_quick(pw.X, pw.target, pw.q, prot * w.share),
+                       "drought_two_month": _he_quick(X2, pw.target, q2, prot * w.share),
+                       "wet_today": _he_quick(1.0 - pw.X, y_wet, 1.0 - pw.q, prot * w.share),
+                       "wet_two_month": _he_quick(1.0 - X2, y_wet, 1.0 - q2, prot * w.share)})
+    wet_package = _wet_package(wet_rec, prot, req) if wet_rec else None
     out = {"station": {"key": prf.station["station_key"], "series": prf.station["series_ticker"],
                        "name": prf.station.get("name"), "distance_mi": round(prf.distance_mi, 1)},
            "station_choice": choice, "grid": {"grid_id": prf.grid_id, "center": list(prf.grid_center)},
@@ -384,8 +480,10 @@ def companion(params: dict, live: LiveQuotes | None = None, today: date | None =
                    "est_producer_premium_usd": round(float(np.nanmean(prf.target)) * PRF_PRODUCER_PER_DOLLAR, 2),
                    "months_covered": [hb.MONTH_ABBR[m - 1] for m in covered]},
            "gap_protection_per_month_usd": gap_prot, "months": months, "excess_rain": wet,
-           "recommended_months": rec, "package": None}
+           "recommended_months": rec, "package": None, "wet_package": wet_package, "two_month_whatif": whatif}
+    depth = None
     if rec:
+        depth = _depth_check(req, rec, gap_prot)
         q = quote({"lat": req.lat, "lon": req.lon, "coverage": req.coverage, "protection": gap_prot * len(rec),
                    "windows": [{"label": m, "share": 1.0 / len(rec)} for m in rec],
                    "station_key": req.station_key, "price_source": params.get("price_source", "auto")},
@@ -395,6 +493,7 @@ def companion(params: dict, live: LiveQuotes | None = None, today: date | None =
         q["backtest"]["prf_usd"] = [None if np.isnan(v) else round(float(v), 0) for v in prf_pay]
         out["package"] = q
         tot_gap = float(np.mean(q["backtest"]["target_usd"]))
+        out["depth_check"] = depth
         out["summary"] = {
             "months_added": rec, "package_cost_usd": q["hedge"]["cost_usd"],
             "package_expected_payout_usd": q["hedge"]["expected_payout_usd"],
@@ -407,8 +506,13 @@ def companion(params: dict, live: LiveQuotes | None = None, today: date | None =
         "you chose another coverage level), hedged with Kalshi NO contracts at the settlement station.",
         f"Recommended = out-of-sample hedge effectiveness at least {min_he:.1f}: the hedge removes at least that "
         "share of the year-to-year swing in the gap cover, tested on years it was not fitted to.",
-        "Excess-rain rows use today's monthly YES contracts; two-month contracts would roughly double their fit (doc 20).",
-        "Cool-season rain matters less for warm-season forage; gap cover suits winter pasture, stock water and wheat."]
+        f"Excess-rain cover pays {EXCESS_SHARE_OF_PROTECTION:.0%} of the interval's protection in full when grid rain reaches "
+        f"{EXCESS_START + EXCESS_SPAN:.0f}% of normal, starting at {EXCESS_START:.0f}%, hedged with YES contracts.",
+        "The two-month what-if shows the fit if Kalshi listed contracts on two-month rain totals (our proposal, doc 17); "
+        "it uses the lowest-error hedge.",
+        "Cool-season rain matters less for warm-season forage; gap cover suits winter pasture, stock water and wheat.",
+        "Depth check: Kalshi books are thin. The app refits the package with orders capped at the depth near fair value "
+        "on the latest saved book, and suggests the largest cover per month that keeps 90% of the fit (doc 22)."]
     return out
 
 

@@ -265,6 +265,14 @@ function renderCompanion(c) {
     html += `<div class="verdict bad" style="margin-top:10px">No uncovered month tracks well enough at this location. Kalshi contracts at ${c.station.key} would mostly pay in the wrong years.</div>`;
   }
   html += `</div>`;
+  if (c.depth_check) {
+    const d = c.depth_check, ok = d.max_cover_per_month_usd;
+    html += `<div class="card"><h2>Can today's Kalshi books fill it?</h2>
+      <div class="verdict ${d.he_at_today_depth >= 0.9 * d.he_no_limit ? "good" : "mid"}">At today's order-book depth the package keeps a fit of ${fmt(d.he_at_today_depth,2)} (vs ${fmt(d.he_no_limit,2)} with unlimited depth). ${ok ? `Size it to about <b>${usd(ok)} of cover per month</b> to keep 90% of the fit with today's books, or wait for deeper markets (${d.depth_multiple_for_90pct}× today's depth fills your full request).` : "Even 25× today's depth would not fill it at a good fit."}</div>
+      <table><tr><th>Book depth</th>${d.by_depth.map(r => `<th class="num">${r.depth_multiple}×</th>`).join("")}<th class="num">unlimited</th></tr>
+      <tr><td>Fit on unseen years</td>${d.by_depth.map(r => `<td class="num">${fmt(r.he_out_of_sample,2)}</td>`).join("")}<td class="num">${fmt(d.he_no_limit,2)}</td></tr></table>
+      <p class="note">Depth = NO contracts offered within 10¢ of fair value on the station's listed ladder (snapshot ${d.snapshot}), used for every month.</p></div>`;
+  }
   if (q) {
     html += `<div class="card"><h2>Backtest 1951-2025: PRF plus the companion</h2>${companionSvg(q.backtest)}
       <p class="note">Grey: what your PRF policy paid. Light green: the rain-index cover you wanted for the gap months. Dark green: what the Kalshi companion paid. Worst gap year: ${q.backtest.worst_year} (short ${usd(q.backtest.worst_shortfall_usd)}).</p></div>`;
@@ -272,9 +280,20 @@ function renderCompanion(c) {
       q.ticket.map(t => `<tr><td>${t.ticker}</td><td>${t.meaning}</td><td class="num">${fmt(t.contracts)}</td><td class="num">${fmt(t.limit_price,2)}</td><td class="num">${usd(t.premium_usd)}</td><td class="num">${usd(t.fee_usd)}</td><td><span class="tag ${t.price_source==="live"||t.price_source==="snapshot"?"live":"est"}">${t.price_source}</span></td></tr>`).join("") +
       `</table><p class="note">Kalshi lists each month about 30 days ahead, so most orders are priced at fair value plus a typical spread until their market opens.</p></div>`;
   }
-  html += `<div class="card"><h2>Too much rain on your PRF intervals (today's contracts)</h2><table><tr><th>Interval</th><th class="num">Fit on unseen years</th><th class="num">Cost per $1</th><th>Verdict</th></tr>` +
-    c.excess_rain.map(w => `<tr><td>${w.interval}</td><td class="num">${fmt(w.he_out_of_sample,2)}</td><td class="num">${fmt(w.cost_per_dollar_expected,2)}</td><td>${w.he_out_of_sample >= 0.5 ? "usable" : "needs two-month contracts"}</td></tr>`).join("") +
-    `</table></div>`;
+  html += `<div class="card"><h2>Too much rain on your PRF intervals</h2><table><tr><th>Interval</th><th class="num">Fit on unseen years</th><th class="num">Cost per $1</th><th>Verdict</th></tr>` +
+    c.excess_rain.map(w => `<tr><td>${w.interval}</td><td class="num">${fmt(w.he_out_of_sample,2)}</td><td class="num">${fmt(w.cost_per_dollar_expected,2)}</td><td>${w.verdict}</td></tr>`).join("") + `</table>`;
+  if (c.wet_package) {
+    const wp = c.wet_package;
+    html += `<div class="verdict good" style="margin-top:10px">Excess-rain cover for <b>${wp.intervals.join(", ")}</b> tracks ${fmt(wp.he_out_of_sample*100)}% of the swing on unseen years: ${usd(wp.cost_usd)} a year, ${fmt(wp.cost_per_dollar_expected,2)} per $1 expected payout.</div>
+      <table><tr><th>Contract</th><th>What it pays</th><th class="num">Contracts</th><th class="num">Limit</th><th class="num">Premium</th><th>Price</th></tr>` +
+      wp.ticket.map(t => `<tr><td>${t.ticker}</td><td>${t.meaning}</td><td class="num">${fmt(t.contracts)}</td><td class="num">${fmt(t.limit_price,2)}</td><td class="num">${usd(t.premium_usd)}</td><td><span class="tag est">${t.price_source}</span></td></tr>`).join("") + `</table>`;
+  }
+  html += `</div>`;
+  const cell = (a, b) => `<td class="num">${fmt(a,2)} → <b>${fmt(b,2)}</b></td>`;
+  html += `<div class="card"><h2>What if Kalshi listed two-month rain contracts?</h2>
+    <p class="note">Our proposal to the exchange (doc 17): contracts on a two-month rain total, matching PRF's intervals. Fit on unseen years, today → with two-month contracts.</p>
+    <table><tr><th>Your PRF interval</th><th class="num">Drought cover</th><th class="num">Excess-rain cover</th></tr>` +
+    c.two_month_whatif.map(w => `<tr><td>${w.interval}</td>${cell(w.drought_today, w.drought_two_month)}${cell(w.wet_today, w.wet_two_month)}</tr>`).join("") + `</table></div>`;
   html += `<div class="card"><h2>Notes</h2>${c.notes.map(n => `<p class="note">• ${n}</p>`).join("")}<p class="note">Computed in ${c.elapsed_s}s. Research prototype for ECE 473, not investment advice.</p></div>`;
   $("results").innerHTML = html;
 }

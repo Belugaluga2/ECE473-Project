@@ -104,3 +104,15 @@ def test_companion_scores_only_uncovered_months():
     assert set(c["recommended_months"]) <= {m["name"] for m in open_months}
     if c["package"]:
         assert c["package"]["hedge"]["legs"] > 0 and len(c["package"]["backtest"]["prf_usd"]) == len(c["package"]["backtest"]["years"])
+
+
+def test_companion_wet_side_and_two_month_whatif():
+    c = pf.companion({"lat": 32.7771, "lon": -97.8059, "coverage": 0.9, "protection": 36585,
+                      "prf_intervals": [{"label": "Apr-May", "share": 0.4}, {"label": "Jun-Jul", "share": 0.35},
+                                        {"label": "Aug-Sep", "share": 0.25}], "price_source": "model"})
+    assert [w["interval"] for w in c["two_month_whatif"]] == ["Apr-May", "Jun-Jul", "Aug-Sep"]
+    assert all(set(w) >= {"drought_today", "drought_two_month", "wet_today", "wet_two_month"} for w in c["two_month_whatif"])
+    if c["wet_package"]:
+        t = c["wet_package"]["ticket"]
+        assert t and all(r["side"] == "YES" for r in t)
+        assert len({r["ticker"] for r in t}) == len(t)

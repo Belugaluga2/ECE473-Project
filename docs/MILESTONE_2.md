@@ -11,6 +11,7 @@ Keep your USDA rainfall insurance (PRF), and use Kalshi weather contracts to cov
 - Recommended for **9 of 11** farms. Median hedge effectiveness (HE) on unseen years is **0.66**, against 0.38 for hedging PRF's own intervals.
 - Holdout with no peeking (months chosen and fit on 1951-2000, scored on 2001-2025): **0.61 vs 0.23**. The companion wins on 7 of 10 farms.
 - December, November and January carry it. At 60 random grids, 60% of locations get at least one recommended month.
+- What limits it now is liquidity ([doc 22](analysis/22_making_it_better.md)). Today's books fill about a fifth of the cover at good fit, and 5-10x more depth fills it all. The app sizes orders to the book, offers excess-rain cover where it tracks, and shows each rancher what two-month contracts would add.
 - Run `python scripts/run_app.py` and open `http://localhost:8473/?demo`.
 
 ![PRF Companion](figures/m2_companion_screenshot.png)
@@ -45,12 +46,13 @@ This milestone follows the Milestone II table and the "Refinements to our plan" 
 ## Reproduce
 
 ```bash
-.venv/bin/python -m pytest                       # 352 tests
+.venv/bin/python -m pytest                       # 353 tests
 .venv/bin/python scripts/run_optimizer.py        # doc 15 (about 2 min)
 .venv/bin/python scripts/run_error_budget.py     # docs 16-17 (under 1 min)
 .venv/bin/python scripts/run_prf_gaps.py         # doc 20 (under 1 min)
 .venv/bin/python scripts/run_companion_study.py  # doc 21 (about 6 min)
 .venv/bin/python scripts/run_companion_holdout.py  # doc 21 holdout (about 1 min)
+.venv/bin/python scripts/run_companion_improve.py  # doc 22 (about 5 min)
 .venv/bin/python scripts/run_app_test.py --live  # doc 19 (about 5 min; --live needs internet)
 .venv/bin/python scripts/run_app.py              # the app, http://localhost:8473 (?demo runs the PRF Companion, ?demo=custom the custom hedge)
 ```
