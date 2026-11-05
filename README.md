@@ -10,7 +10,7 @@ to measure where the remaining coverage error comes from.
 
 **Status (2026-11-05):** Milestone II (contract design and platform) is built as planned in the
 Milestone I submission: a cost-aware hedge optimizer, a five-part error breakdown, contract proposals,
-a live-price backend and a farmer web app, tested against PRF (docs 15-19,
+a live-price backend and a farmer web app, tested against PRF, and the PRF-gap refinements from the submitted Milestone I update (docs 15-20,
 [docs/MILESTONE_2.md](docs/MILESTONE_2.md)). The team's 2026-11-02 pivot discussion still stands;
 see the note in the overview.
 
