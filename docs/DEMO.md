@@ -2,6 +2,8 @@
 
 **One-line pitch:** keep your USDA rainfall insurance (PRF), and use Kalshi weather contracts to cover the months PRF leaves open. The app tells you, month by month, where that works at your location, and builds the order.
 
+**Slides (11/17):** [Rain Insurance on Prediction Markets](https://claude.ai/artifact/1542eCG6kPUgw4itzm9N4P), a 16-slide deck with speaker notes. It tells the story from the problem through Milestone I's "no", the diagnosis, the turn to complementing PRF, the PRF Companion and its holdout test, to the liquidity limit and the road to the final paper.
+
 ## Start it
 
 ```bash
