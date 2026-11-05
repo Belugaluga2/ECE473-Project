@@ -1,0 +1,157 @@
+{
+ "run_utc": "2026-11-05 16:16 UTC",
+ "request": {
+  "lat": 32.777096,
+  "lon": -97.805905,
+  "coverage": 0.9,
+  "protection": 36652.0,
+  "windows": [
+   {
+    "label": "Dec",
+    "share": 0.5
+   },
+   {
+    "label": "Jan",
+    "share": 0.5
+   }
+  ],
+  "price_source": "auto",
+  "budget": "recommended"
+ },
+ "legs_priced_from_book": 0,
+ "legs": 4,
+ "live_reference": [
+  {
+   "ticker": "KXRAINDALM-26NOV-1",
+   "contract_month": "2026-11",
+   "strike_in": 1.0,
+   "source": "live",
+   "as_of": "2026-11-05 16:16 UTC",
+   "fair_no_climatology": 0.257,
+   "best_no_ask": 0.41,
+   "no_depth_contracts": 543.7,
+   "no_depth_within_10c_of_fair": 0.0
+  },
+  {
+   "ticker": "KXRAINDALM-26NOV-2",
+   "contract_month": "2026-11",
+   "strike_in": 2.0,
+   "source": "live",
+   "as_of": "2026-11-05 16:16 UTC",
+   "fair_no_climatology": 0.543,
+   "best_no_ask": 0.58,
+   "no_depth_contracts": 598.7,
+   "no_depth_within_10c_of_fair": 62.7
+  },
+  {
+   "ticker": "KXRAINDALM-26NOV-3",
+   "contract_month": "2026-11",
+   "strike_in": 3.0,
+   "source": "live",
+   "as_of": "2026-11-05 16:16 UTC",
+   "fair_no_climatology": 0.629,
+   "best_no_ask": 0.75,
+   "no_depth_contracts": 497.0,
+   "no_depth_within_10c_of_fair": 0.0
+  },
+  {
+   "ticker": "KXRAINDALM-26NOV-4",
+   "contract_month": "2026-11",
+   "strike_in": 4.0,
+   "source": "live",
+   "as_of": "2026-11-05 16:16 UTC",
+   "fair_no_climatology": 0.743,
+   "best_no_ask": 0.87,
+   "no_depth_contracts": 66.0,
+   "no_depth_within_10c_of_fair": 0.0
+  },
+  {
+   "ticker": "KXRAINDALM-26NOV-5",
+   "contract_month": "2026-11",
+   "strike_in": 5.0,
+   "source": "live",
+   "as_of": "2026-11-05 16:16 UTC",
+   "fair_no_climatology": 0.8,
+   "best_no_ask": 0.97,
+   "no_depth_contracts": 651.0,
+   "no_depth_within_10c_of_fair": 0.0
+  },
+  {
+   "ticker": "KXRAINDALM-26NOV-6",
+   "contract_month": "2026-11",
+   "strike_in": 6.0,
+   "source": "live",
+   "as_of": "2026-11-05 16:16 UTC",
+   "fair_no_climatology": 0.886,
+   "best_no_ask": 0.99,
+   "no_depth_contracts": 50.0,
+   "no_depth_within_10c_of_fair": 0.0
+  },
+  {
+   "ticker": "KXRAINDALM-26NOV-7",
+   "contract_month": "2026-11",
+   "strike_in": 7.0,
+   "source": "live",
+   "as_of": "2026-11-05 16:16 UTC",
+   "fair_no_climatology": 0.971,
+   "best_no_ask": 0.99,
+   "no_depth_contracts": 50.0,
+   "no_depth_within_10c_of_fair": 50.0
+  }
+ ],
+ "ticket": [
+  {
+   "ticker": "KXRAINDALM-26DEC-2",
+   "contract_month": "2026-12",
+   "side": "NO",
+   "meaning": "pays $1 per contract if Dec rain at the station is 2 in or less",
+   "contracts": 6130,
+   "limit_price": 0.37,
+   "avg_price": 0.3654,
+   "premium_usd": 2239.64,
+   "fee_usd": 99.5,
+   "price_source": "estimated (not listed yet)",
+   "fair_probability": 0.343
+  },
+  {
+   "ticker": "KXRAINDALM-26DEC-1",
+   "contract_month": "2026-12",
+   "side": "NO",
+   "meaning": "pays $1 per contract if Dec rain at the station is 1 in or less",
+   "contracts": 4164,
+   "limit_price": 0.25,
+   "avg_price": 0.2511,
+   "premium_usd": 1045.46,
+   "fee_usd": 54.81,
+   "price_source": "estimated (not listed yet)",
+   "fair_probability": 0.229
+  },
+  {
+   "ticker": "KXRAINDALM-27JAN-1",
+   "contract_month": "2027-01",
+   "side": "NO",
+   "meaning": "pays $1 per contract if Jan rain at the station is 1 in or less",
+   "contracts": 9441,
+   "limit_price": 0.28,
+   "avg_price": 0.2796,
+   "premium_usd": 2640.11,
+   "fee_usd": 133.13,
+   "price_source": "estimated (not listed yet)",
+   "fair_probability": 0.257
+  },
+  {
+   "ticker": "KXRAINDALM-27JAN-2",
+   "contract_month": "2027-01",
+   "side": "NO",
+   "meaning": "pays $1 per contract if Jan rain at the station is 2 in or less",
+   "contracts": 213,
+   "limit_price": 0.51,
+   "avg_price": 0.5082,
+   "premium_usd": 108.25,
+   "fee_usd": 3.73,
+   "price_source": "estimated (not listed yet)",
+   "fair_probability": 0.486
+  }
+ ],
+ "elapsed_s": 1.57
+}

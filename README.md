@@ -8,8 +8,17 @@ We set out to build a platform that lets a farmer approximate USDA rainfall-inde
 (Pasture, Rangeland, Forage, or PRF) with a portfolio of Kalshi weather event contracts, and
 to measure where the remaining coverage error comes from.
 
-**Status (2026-11-02):** the team has pivoted away from the rain/PRF replication. The new direction
-is not chosen yet; the existing research is kept as background. See the pivot note in the overview.
+**Status (2026-11-05):** Milestone II (contract design and platform) is built as planned in the
+Milestone I submission: a cost-aware hedge optimizer, a five-part error breakdown, contract proposals,
+a live-price backend and a farmer web app, tested against PRF (docs 15-19,
+[docs/MILESTONE_2.md](docs/MILESTONE_2.md)). The team's 2026-11-02 pivot discussion still stands;
+see the note in the overview.
+
+**Try the app:**
+
+```bash
+.venv/bin/python scripts/run_app.py   # then open http://localhost:8473
+```
 
 **Start here:** [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) is the index of all research and results, with status and next steps.
 

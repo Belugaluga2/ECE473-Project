@@ -1,9 +1,11 @@
-# Milestone 1 Overview: Research Foundation & Baseline Metrics
+# Project Overview: Milestone 1 (Research Foundation) and Milestone 2 (Contract Design & Platform)
 
 **Project:** Agricultural Risk Management & Weather Derivative Replicating Platform (ECE473, Maya / Evan / Jack)
 **Goal of Milestone 1:** understand current USDA rainfall insurance, understand Kalshi weather markets, gather the weather data, and measure the gaps between them.
 **Status (2026-10-29):** all 9 proposal cells are done, plus both extra research questions.
 **Update (2026-11-02):** Milestone 2 prep added: fact-check of docs 01-06 (doc 11), post-rewards Kalshi liquidity (doc 12), a rain-to-loss model (doc 13), and a row-crop exploration (doc 14). See [Milestone 2 prep](#milestone-2-prep-2026-11-02).
+
+> **Milestone 2 (2026-11-05):** built as planned in the submitted Milestone I: optimizer (doc 15), error breakdown (doc 16), contract gaps and proposals (doc 17), live-price backend and farmer web app (doc 18), app test against PRF (doc 19). Summary and write-up: [MILESTONE_2.md](MILESTONE_2.md). See [Milestone 2 results](#milestone-2-results-2026-11-05).
 
 > **Project pivot (2026-11-02):** the team agreed to move away from replicating PRF with Kalshi rain contracts. A subsidized, US-backed rainfall insurance (PRF) already exists, and the findings below show Kalshi cannot beat it on cost, today's books are too thin to hedge a single ranch, and rain hedges did not help row crops. The new direction is not chosen yet. Everything in this overview (docs 01-14) is kept as **background** for that decision, not as work in progress.
 
@@ -25,6 +27,11 @@ Every research document has a numbers table that gives a source for each number.
 | Extra: how rainfall moves crop yields ($ per inch) | team | [research/03a_rain_yield_corn_soybean.md](research/03a_rain_yield_corn_soybean.md), [research/03b_rain_yield_forage_and_other_crops.md](research/03b_rain_yield_forage_and_other_crops.md) | corn/soy VERIFIED; forage and other crops done, fact-checked 2026-11-01 (doc 11) |
 | Extra: how farmers buy weather insurance today | team | [research/02_how_farmers_buy_weather_insurance.md](research/02_how_farmers_buy_weather_insurance.md) | done, fact-checked 2026-11-01 (doc 11) |
 | Literature review and prior art | team | [research/10_literature_review.md](research/10_literature_review.md), [references.bib](research/references.bib) | VERIFIED |
+| M2 W4 Optimizer: lowest-error / lowest-cost portfolio | Jack | [analysis/15_hedge_optimizer.md](analysis/15_hedge_optimizer.md) | done 2026-11-05 |
+| M2 W4 Decompose the hedge error | Maya | [analysis/16_error_budget.md](analysis/16_error_budget.md) | done 2026-11-05 |
+| M2 W4 Exposures that fail; proposed contracts and mechanisms | Evan | [analysis/17_contract_gaps_and_proposals.md](analysis/17_contract_gaps_and_proposals.md) | done 2026-11-05 |
+| M2 W5 Live-price backend and farmer screen | Jack, Maya | [analysis/18_platform.md](analysis/18_platform.md) | working prototype (`python scripts/run_app.py`) |
+| M2 W5 Test the app against the USDA benchmark | Evan | [analysis/19_app_test.md](analysis/19_app_test.md) | done 2026-11-05 |
 
 ## Study sites
 
@@ -114,6 +121,35 @@ Each item below was done by two independent agent runs and then checked by a sep
 - **Rain-to-loss model (doc 13, `loss_model.py`):** turns a farm and its rainfall into dollars of loss, with timing weights, dry/wet asymmetry, a wet plateau, an irrigated share, and corn/soy support. It also gives marginal $ per index point, which the optimizer will need. Over 2015-2025, PRF and the Kalshi hedges each pay about 7x modeled loss at rent value, but cover only about 58% of in-year loss at replacement-hay value. Median correlation with modeled loss: PRF 0.78, Kalshi 0.52; Kalshi is close to useless in Florida. In the check against NASS state hay yields (correlation 0.34-0.57) the model overstates the size of swings.
 - **Row crops (doc 14):** against actual Kane County yields, Chicago July/August rain hedges remove no variance (leave-one-year-out effectiveness about -0.06). In 2012, O'Hare got near-normal July rain while Kane corn fell 37.5 bu/ac. The excess-rain side does not help either. Only 7.1% of corn and soy acres lie within 50 miles of a Kalshi rain station, and none of Iowa, Nebraska or the Dakotas within 100. Verdict: not a main Milestone 2 direction with today's contracts; defensible only as a contract-design study (area index, heat or multi-month windows, Corn Belt stations).
 
+## Milestone 2 results (2026-11-05)
+All numbers: 11 farms, NCEI PRF index, 1951-2025, hedge effectiveness (HE) out of sample (leave one year out).
+
+- **Optimizer (doc 15):**
+  - The efficient frontier includes prices, fees, capital and order-book depth.
+  - The lowest-error hedges cost $104,970 a year (doc 09 priced the same hedges at $107,500).
+  - The cheapest hedge with 90% of the best fit costs $81,516 with the same out-of-sample HE (0.36 vs 0.37).
+  - In-sample HE overstates real HE by about 40%.
+- **Error breakdown (doc 16):** HE falls from 1.00 to 0.17:
+  - geography -0.35, settlement source -0.13 (together two thirds of the total loss);
+  - monthly instead of two-month contracts -0.19;
+  - whole-inch strikes about 0 out of sample;
+  - order-book depth -0.16;
+  - a budget equal to the PRF producer premium -0.01.
+- **Gaps and proposals (doc 17):**
+  - 3 of 36 insured windows replicate well today. Summer convective and monsoon rain fails.
+  - Two-month contracts raise pooled HE from 0.34 to 0.48. Half-inch strikes do not help.
+  - Binaries on the farm grid's PRF index reach 0.98, but that is PRF without the subsidy.
+  - The busiest leg needs 5-28x today's sensible depth.
+  - Mechanisms: earlier listing, a drought-side market maker, pooled orders.
+- **Platform (doc 18):**
+  - A farmer clicks a location and picks any months.
+  - The app prices from live Kalshi books where listed and estimates elsewhere (flagged).
+  - It returns a verdict, frontier, backtest, order ticket and PRF comparison.
+- **App test (doc 19):**
+  - Recommended hedges cost 1.47x PRF producer premiums (median) and copy about a third of PRF's swings (median HE 0.36).
+  - Median HE is 0.44 within 25 miles of a station and 0.14 beyond 100 miles.
+  - On 2026-11-05 no month after the current one was listed, so no real season could be priced live.
+
 ## Next steps
 Items 1-3 only matter if the rain work is picked up again.
 
@@ -135,11 +171,13 @@ Items 1-3 only matter if the rain work is picked up again.
   - `replicate.py`: hedge fitting
   - `pricing.py`: hedge pricing and order-book fills
   - `locations.py`: study sites
+  - `optimizer.py`, `hedge_builder.py`, `error_budget.py`: Milestone 2 optimizer and error breakdown
+  - `platform.py`, `webapp/`: Milestone 2 live-price backend and farmer screen
   - `loss_model.py`: rain-to-dollar-loss model for each farm (doc 13)
   - `rowcrop.py`: corn/soy farm exposure and hedge backtest (doc 14)
 - `scripts/` runnable entry points that pull data and regenerate every result
 - `data/processed/` small derived datasets (committed); `data/raw/` downloads (gitignored, recreated by scripts)
-- `tests/` pytest checks (333 passing)
+- `tests/` pytest checks (350 passing)
 
 ## How to reproduce
 
