@@ -45,13 +45,23 @@
   svg text { font-size:11px; fill:var(--muted); }
   #results { min-height: 300px; }
   .verdict { padding:10px 12px; border-radius:6px; margin-bottom:10px; }
+  .tabs { display:flex; gap:6px; margin-bottom:14px; }
+  .tabs button { flex:1; padding:9px 10px; border:1px solid var(--line); background:#fff; border-radius:6px; cursor:pointer; font-weight:600; color:var(--muted); }
+  .tabs button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .months { display:grid; grid-template-columns: repeat(12, 1fr); gap:5px; margin:6px 0 4px; }
+  .mo { border-radius:6px; padding:7px 2px; text-align:center; font-size:12px; border:1px solid var(--line); }
+  .mo b { display:block; font-size:13px; }
+  .mo.prf { background:#e8ebee; color:#5b6770; } .mo.rec { background:#cfe9d7; } .mo.pos { background:#fbe9cc; } .mo.poor { background:#f6d4d4; }
+  .legend span { display:inline-block; margin-right:12px; font-size:12px; color:var(--muted); }
+  .legend i { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:-1px; }
   .verdict.good { background:#e3f2e8; } .verdict.mid { background:#fdf3e1; } .verdict.bad { background:#fbe4e4; }
 </style>
 </head>
 <body>
-<header><h1>AgriHedge</h1><span>Build rain cover from Kalshi weather contracts and see how it compares with USDA rainfall insurance.</span></header>
+<header><h1>AgriHedge</h1><span>Keep your USDA rainfall insurance, and use Kalshi weather contracts to cover the months it leaves open.</span></header>
 <main>
 <section>
+  <div class="tabs"><button id="tab-comp" class="on">PRF Companion</button><button id="tab-custom">Custom cover</button></div>
   <div class="card">
     <h2>1. Where is the land?</h2>
     <div id="map"></div>
@@ -64,7 +74,8 @@
     <select id="station"><option value="">Nearest station (automatic)</option></select>
   </div>
   <div class="card">
-    <h2>2. Which months, how much cover?</h2>
+    <h2 id="h2win">2. Your PRF policy</h2>
+    <p class="hint" id="winhint"></p>
     <div id="windows"></div>
     <button class="link" id="addwin">+ add a month or interval</button>
     <span class="hint">&nbsp;Presets:</span>
@@ -81,19 +92,24 @@
   </div>
   <div class="card">
     <h2>3. Price and fit</h2>
+    <div id="compbox"><label for="gapprot">Cover per gap month ($)</label><input id="gapprot" type="number" value="6100">
+    <label for="minhe">Recommend a month if the hedge tracks at least</label>
+    <select id="minhe"><option value="0.6">0.6 (strict)</option><option value="0.5" selected>0.5</option><option value="0.4">0.4 (lenient)</option></select></div>
+    <div id="custbox">
     <label for="budgetmode">How much to spend</label>
     <select id="budgetmode">
-      <option value="recommended">Recommended: cheapest hedge with 90% of the best fit</option>
+      <option value="recommended">Recommended: cheapest hedge with 95% of the best fit</option>
       <option value="lowest_error">Best fit, whatever it costs</option>
       <option value="custom">My budget</option>
     </select>
     <div id="budgetbox" style="display:none"><label for="budget">Budget ($ per year)</label><input id="budget" type="number" value="3000"></div>
+    </div>
     <label for="pricesrc">Prices</label>
     <select id="pricesrc"><option value="auto">Live Kalshi order books where listed, estimates elsewhere</option><option value="model">Estimates only (fair value + typical spread)</option></select>
     <button class="btn" id="go">Build my hedge</button>
   </div>
 </section>
-<section id="results"><div class="card"><h2>Your hedge</h2><p class="hint">Pick a location and months, then press <b>Build my hedge</b>. A quote takes a few seconds: we refit the hedge 75 times to test it on years it has not seen.</p></div></section>
+<section id="results"><div class="card"><h2>How it works</h2><p class="hint"><b>PRF Companion:</b> enter where your land is and the PRF intervals you insure. We test, month by month, how well Kalshi rain contracts at the nearest settlement station track rain on your PRF grid in the months PRF leaves open, recommend the months that track well, and build one order for them. <b>Custom cover:</b> pick any months and build a stand-alone hedge.</p><p class="hint">Each answer takes a few seconds: every hedge is refit 75 times to test it on years it has not seen.</p></div></section>
 </main>
 <script>
 const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -139,7 +155,36 @@ fetch("/api/stations").then(r => r.json()).then(st => {
   });
 });
 
+let MODE = "companion";
+function setMode(m) {
+  MODE = m;
+  $("tab-comp").classList.toggle("on", m === "companion"); $("tab-custom").classList.toggle("on", m === "custom");
+  $("h2win").textContent = m === "companion" ? "2. Your PRF policy" : "2. Which months, how much cover?";
+  $("winhint").textContent = m === "companion" ? "The PRF intervals you insure and their shares. Protection = acres × county base value × coverage × productivity." : "";
+  $("compbox").style.display = m === "companion" ? "" : "none"; $("custbox").style.display = m === "custom" ? "" : "none";
+  $("go").textContent = m === "companion" ? "Find my gaps" : "Build my hedge";
+}
+$("tab-comp").onclick = () => setMode("companion"); $("tab-custom").onclick = () => setMode("custom");
+setMode("companion");
+
+async function runCompanion() {
+  const body = { lat: Number($("lat").value), lon: Number($("lon").value), prf_intervals: windows(), coverage: Number($("coverage").value),
+    protection: protection(), station_key: $("station").value || null, price_source: $("pricesrc").value,
+    gap_protection_per_month: Number($("gapprot").value), min_he: Number($("minhe").value) };
+  $("go").disabled = true; $("go").textContent = "Testing every month…";
+  $("results").innerHTML = `<div class="card"><h2>Your PRF gaps</h2><p class="hint">Scoring each uncovered month out of sample…</p></div>`;
+  try {
+    const r = await fetch("/api/companion", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
+    const c = await r.json();
+    if (!r.ok) throw new Error(c.error || r.statusText);
+    renderCompanion(c);
+  } catch (e) {
+    $("results").innerHTML = `<div class="card"><h2>Your PRF gaps</h2><p class="err">${e.message}</p></div>`;
+  } finally { $("go").disabled = false; setMode(MODE); }
+}
+
 $("go").onclick = async () => {
+  if (MODE === "companion") return runCompanion();
   const body = { lat: Number($("lat").value), lon: Number($("lon").value), windows: windows(), coverage: Number($("coverage").value),
     protection: protection(), station_key: $("station").value || null, price_source: $("pricesrc").value,
     budget: $("budgetmode").value === "custom" ? Number($("budget").value) : $("budgetmode").value };
@@ -156,7 +201,8 @@ $("go").onclick = async () => {
 };
 
 // ?demo builds the default quote on load (for class demos and screenshots)
-if (new URLSearchParams(location.search).has("demo")) setTimeout(() => $("go").click(), 300);
+const DEMO = new URLSearchParams(location.search).get("demo");
+if (DEMO !== null) { if (DEMO === "custom") setMode("custom"); setTimeout(() => $("go").click(), 300); }
 
 function verdict(he) {
   if (he == null) return ["mid", ""];
@@ -198,6 +244,59 @@ function render(q) {
   }
   html += `<div class="card"><h2>Notes</h2>${q.notes.map(n => `<p class="note">• ${n}</p>`).join("")}<p class="note">Computed in ${q.elapsed_s}s. Not investment advice; a research prototype for ECE 473.</p></div>`;
   $("results").innerHTML = html;
+}
+
+function renderCompanion(c) {
+  const p = c.prf, s = c.summary, q = c.package;
+  const cls = m => m.covered_by_prf ? "prf" : m.verdict === "recommended" ? "rec" : m.verdict === "possible" ? "pos" : "poor";
+  let html = `<div class="card"><h2>Your PRF gaps · ${c.station.key} station, ${fmt(c.station.distance_mi)} mi · PRF grid ${c.grid.grid_id}</h2>
+    <div class="months">${c.months.map(m => `<div class="mo ${cls(m)}" title="${m.covered_by_prf ? "covered by your PRF policy" : (m.verdict||"") + ", cost per $1 " + fmt(m.cost_per_dollar_expected,2)}"><b>${m.name}</b>${m.covered_by_prf ? "PRF" : fmt(m.he_out_of_sample,2)}</div>`).join("")}</div>
+    <div class="legend"><span><i style="background:#e8ebee"></i>covered by PRF</span><span><i style="background:#cfe9d7"></i>recommended</span><span><i style="background:#fbe9cc"></i>possible</span><span><i style="background:#f6d4d4"></i>poor match</span><span>number = hedge effectiveness on unseen years</span></div>`;
+  if (s) {
+    html += `<div class="verdict good" style="margin-top:10px">Add <b>${s.months_added.join(", ")}</b> to your PRF policy with Kalshi contracts at ${c.station.key}. Together they track ${fmt(s.package_he_out_of_sample*100)}% of the year-to-year swing in rain-index cover for those months, tested on years the hedge never saw.</div>
+    <div class="stats">
+      <div class="stat"><b>${usd(s.package_cost_usd)}</b><span>companion cost per year (all-in)</span></div>
+      <div class="stat"><b>${usd(s.package_expected_payout_usd)}</b><span>companion expected payout</span></div>
+      <div class="stat"><b>${fmt(q.hedge.cost_per_dollar_expected,2)}</b><span>cost per $1 expected payout</span></div>
+      <div class="stat"><b>${usd(p.est_producer_premium_usd)}</b><span>your PRF premium (estimate) for ${p.months_covered.join(", ")}</span></div>
+      <div class="stat"><b>${usd(p.expected_payout_usd)}</b><span>PRF expected payout per year</span></div>
+    </div>`;
+  } else {
+    html += `<div class="verdict bad" style="margin-top:10px">No uncovered month tracks well enough at this location. Kalshi contracts at ${c.station.key} would mostly pay in the wrong years.</div>`;
+  }
+  html += `</div>`;
+  if (q) {
+    html += `<div class="card"><h2>Backtest 1951-2025: PRF plus the companion</h2>${companionSvg(q.backtest)}
+      <p class="note">Grey: what your PRF policy paid. Light green: the rain-index cover you wanted for the gap months. Dark green: what the Kalshi companion paid. Worst gap year: ${q.backtest.worst_year} (short ${usd(q.backtest.worst_shortfall_usd)}).</p></div>`;
+    html += `<div class="card"><h2>Companion order ticket</h2><table><tr><th>Contract</th><th>What it pays</th><th class="num">Contracts</th><th class="num">Limit</th><th class="num">Premium</th><th class="num">Fee</th><th>Price</th></tr>` +
+      q.ticket.map(t => `<tr><td>${t.ticker}</td><td>${t.meaning}</td><td class="num">${fmt(t.contracts)}</td><td class="num">${fmt(t.limit_price,2)}</td><td class="num">${usd(t.premium_usd)}</td><td class="num">${usd(t.fee_usd)}</td><td><span class="tag ${t.price_source==="live"||t.price_source==="snapshot"?"live":"est"}">${t.price_source}</span></td></tr>`).join("") +
+      `</table><p class="note">Kalshi lists each month about 30 days ahead, so most orders are priced at fair value plus a typical spread until their market opens.</p></div>`;
+  }
+  html += `<div class="card"><h2>Too much rain on your PRF intervals (today's contracts)</h2><table><tr><th>Interval</th><th class="num">Fit on unseen years</th><th class="num">Cost per $1</th><th>Verdict</th></tr>` +
+    c.excess_rain.map(w => `<tr><td>${w.interval}</td><td class="num">${fmt(w.he_out_of_sample,2)}</td><td class="num">${fmt(w.cost_per_dollar_expected,2)}</td><td>${w.he_out_of_sample >= 0.5 ? "usable" : "needs two-month contracts"}</td></tr>`).join("") +
+    `</table></div>`;
+  html += `<div class="card"><h2>Notes</h2>${c.notes.map(n => `<p class="note">• ${n}</p>`).join("")}<p class="note">Computed in ${c.elapsed_s}s. Research prototype for ECE 473, not investment advice.</p></div>`;
+  $("results").innerHTML = html;
+}
+
+function companionSvg(b) {
+  const W=900, H=250, L=64, B=28, T=44, R=8, n=b.years.length;
+  const vals = b.years.map((_,i) => Math.max(b.prf_usd[i] || 0, b.target_usd[i], b.hedge_usd[i]));
+  const vmax = Math.max(1, ...vals);
+  const bw = (W-L-R) / n, y = v => T + (H-T-B) * (1 - v / vmax);
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%"><line x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}" stroke="#ccc"/>`;
+  b.years.forEach((yr,i) => {
+    const x0 = L + i*bw, w3 = bw*0.31, pv = b.prf_usd[i] || 0;
+    s += `<rect x="${x0}" y="${y(pv)}" width="${w3}" height="${H-B-y(pv)}" fill="#b8c0c8"/>`;
+    s += `<rect x="${x0+w3}" y="${y(b.target_usd[i])}" width="${w3}" height="${H-B-y(b.target_usd[i])}" fill="#95d5a8"/>`;
+    s += `<rect x="${x0+2*w3}" y="${y(b.hedge_usd[i])}" width="${w3}" height="${H-B-y(b.hedge_usd[i])}" fill="#2b9348"/>`;
+    if (yr % 10 === 0) s += `<text x="${x0}" y="${H-B+15}">${yr}</text>`;
+  });
+  s += `<text x="${L-6}" y="${y(vmax)+4}" text-anchor="end">${usd(vmax)}</text><text x="${L-6}" y="${H-B}" text-anchor="end">$0</text>`;
+  s += `<rect x="${L}" y="4" width="10" height="10" fill="#b8c0c8"/><text x="${L+14}" y="13">PRF paid</text>`;
+  s += `<rect x="${L+100}" y="4" width="10" height="10" fill="#95d5a8"/><text x="${L+114}" y="13">gap cover wanted</text>`;
+  s += `<rect x="${L+250}" y="4" width="10" height="10" fill="#2b9348"/><text x="${L+264}" y="13">Kalshi companion paid</text></svg>`;
+  return s;
 }
 
 function frontierSvg(fr, cost) {

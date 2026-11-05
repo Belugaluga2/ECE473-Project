@@ -27,6 +27,12 @@
 
 \section*{Executive Summary}
 
+\textbf{Showcase: the PRF Companion.} A working web app that keeps a rancher's USDA rainfall insurance and
+uses Kalshi contracts to cover the months it leaves open. It tests each month at the rancher's location,
+recommends only the months that track, and builds the order. Fit on 1951--2000 and scored on 2001--2025,
+the companion has a median hedge effectiveness of 0.61, against 0.23 for hedging the PRF intervals themselves.
+It is recommended for 9 of our 11 farms (Section~4).
+
 Milestone I measured how far today's Kalshi monthly-rain contracts are from USDA's Pasture, Rangeland
 and Forage (PRF) rainfall-index insurance. Milestone II builds the tools the proposal promised and uses
 them to answer two questions: \emph{what is the best hedge a farmer can buy}, and \emph{what would have to
@@ -54,9 +60,10 @@ and scored on the year it did not see.
   swings (median HE 0.52; December 0.68). A top-up above PRF's 90\% cap copies little (0.14). Excess-rain
   cover needs two-month contracts (0.22 to 0.40). Backtests on the CPC index USDA actually paid tell the same story.
   \item \textbf{App test (Week 5, Evan).} Typing the 11 farms into the app reproduces the analysis exactly. The
-  recommended hedges cost 1.47$\times$ the farmers' PRF premiums (median) and copy about a third of PRF's
-  payout swings out of sample (median HE 0.36). Across 150 random grids the median HE is 0.44 within 25 miles
-  of a station and 0.14 beyond 100 miles; 71\% of sampled grids score below 0.3.
+  recommended hedges cost 1.71$\times$ the farmers' PRF premiums (median) and copy a bit over a third of PRF's
+  payout swings out of sample (median HE 0.38). Across 150 random grids the median HE is 0.47 within 25 miles
+  of a station and 0.15 beyond 100 miles; 69\% of sampled grids score below 0.3.
+  \item \textbf{Showcase: PRF Companion.} Built on these results; see Section~4.
 \end{enumerate}
 
 %=====================================================================
@@ -88,7 +95,7 @@ equal to the farm's PRF producer premium. Green: the ``90\% knee''. Purple: full
 Point on the frontier (11 farms) & Cost / yr & \$ per \$1 expected & Median HE in & Median HE out \\
 \midrule
 Lowest error (no budget) & \$104,970 & 1.10 & 0.64 & 0.37 \\
-90\% knee (recommended) & \$81,516 & 1.11 & 0.59 & 0.36 \\
+90\% knee & \$81,516 & 1.11 & 0.59 & 0.36 \\
 Budget = PRF producer premium & \$55,992 & 1.12 & 0.46 & 0.30 \\
 \midrule
 PRF itself: producer / full premium & \$55,994 / \$117,053 & 0.61 / 1.28 & 1 & 1 \\
@@ -199,13 +206,13 @@ Right: out-of-sample HE against the PRF payout.}
 \toprule
 Measure (11 farms) & Value \\
 \midrule
-PRF producer premiums / app recommended hedges & \$55,994 / \$81,438 per year \\
-Hedge cost $\div$ PRF producer premium, per farm & 1.28--1.63 (median 1.47) \\
-Cost per \$1 expected payout: PRF producer / app hedge & \$0.56--0.70 / \$1.05--1.19 \\
-Median HE out of sample: recommended / PRF-premium budget / lowest error & 0.36 / 0.30 / 0.37 \\
-Years the hedge paid $<$ half of PRF, of years PRF paid & 5--17 of 50--68 per farm \\
-Farm-years the hedge paid but PRF did not & 106 \\
-Worst single-year shortfall & \$3,942 (SGF\_graze) to \$53,593 (ABQ\_graze) \\
+PRF producer premiums / app recommended hedges & \$55,994 / \$95,182 per year \\
+Hedge cost $\div$ PRF producer premium, per farm & 1.56--1.97 (median 1.71) \\
+Cost per \$1 expected payout: PRF producer / app hedge & \$0.56--0.70 / \$1.05--1.18 \\
+Median HE out of sample: recommended / PRF-premium budget / lowest error & 0.38 / 0.30 / 0.37 \\
+Years the hedge paid $<$ half of PRF, of years PRF paid & 2--11 of 50--68 per farm \\
+Farm-years the hedge paid but PRF did not & 115 \\
+Worst single-year shortfall & \$3,588 (SGF\_graze) to \$50,964 (ABQ\_graze) \\
 App matches doc analysis (station, grid, cost) & 11 of 11; \$0.00 cost gap \\
 App PRF premium estimate vs.\ real 2026 premium & median $+3\%$ ($-13\%$ to $+10\%$) \\
 \bottomrule
@@ -219,10 +226,11 @@ App PRF premium estimate vs.\ real 2026 premium & median $+3\%$ ($-13\%$ to $+10
 station (left) and on a map (right).}
 \end{figure}
 
-\textbf{Findings.} The app is correct, and its answer is sobering. It costs about 1.5$\times$ what PRF costs
-the farmer and copies about a third of PRF's swings. In 106 farm-years it paid when PRF did not, and those
-false alarms are what make it expensive. Distance decides who can use it: median HE is 0.44 within 25 miles,
-0.33 at 25--50, and 0.14 beyond 100 miles. With only 7.4\% of US PRF grids within 50 miles of a Kalshi rain
+\textbf{Findings.} The app is correct, and its answer is sobering. Hedging PRF's own intervals costs about 1.7$\times$ what
+PRF costs the farmer and copies a bit over a third of PRF's swings. In 115 farm-years it paid when PRF did
+not, and those false alarms are what make it expensive. Distance decides who can use it: median HE is 0.47
+within 25 miles, 0.35 at 25--50, and 0.15 beyond 100 miles. (The app now recommends the cheapest hedge with
+95\% of the best fit, which did best on unseen years across 44 cases.) With only 7.4\% of US PRF grids within 50 miles of a Kalshi rain
 station (Milestone I), a useful hedge reaches a small minority of PRF land. On 2026-11-05 no month beyond
 the one in progress was listed, so every order for a real season was correctly flagged as estimated.
 
@@ -267,6 +275,63 @@ lower out-of-sample HE than NCEI on the same years. The 90\% knee closes most of
 (``if time permits'') is left for Milestone III.
 
 %=====================================================================
+\section{Showcase: the PRF Companion}
+
+Sections 1--3 point to one product. Kalshi rain contracts are a poor \emph{substitute} for PRF, but a good
+\emph{complement} in the months PRF leaves open. The app's PRF Companion tab does exactly that:
+\begin{enumerate}
+  \item The rancher enters a location and the PRF intervals they insure.
+  \item Each month PRF leaves open is scored by out-of-sample HE.
+  \item Months at 0.5 or above are recommended and combined into one Kalshi order.
+  \item A 1951--2025 backtest shows the companion's payouts next to what PRF paid.
+\end{enumerate}
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{m2_companion_screenshot.png}
+\caption{The PRF Companion for the Dallas hay farm (PRF on Apr--Sep). The month strip shows the recommended gap
+months (green), with their out-of-sample HE. Below it: the package, the backtest of PRF plus the companion,
+and the order ticket.}
+\end{figure}
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{m2_companion_farms.png}
+\caption{Out-of-sample HE of a Kalshi hedge for every month each farm's PRF policy leaves open.}
+\end{figure}
+
+\begin{table}[H]\centering\small
+\begin{tabularx}{\textwidth}{Yrr}
+\toprule
+Measure & PRF Companion & Hedging PRF's own intervals \\
+\midrule
+Farms where it is recommended & 9 of 11 & -- \\
+Median HE out of sample (leave one year out) & 0.66 & 0.38 \\
+Holdout: months chosen and fit on 1951--2000, scored on 2001--2025 & 0.61 & 0.23 \\
+Random grids with a useful result (60 grids / 150 grids) & 60\% with $\ge 1$ month & 1\% with HE $\ge 0.6$ \\
+Cost per \$1 of expected payout (median) & \$1.10 & \$1.12 \\
+\bottomrule
+\end{tabularx}
+\caption{The companion against hedging PRF itself.}
+\end{table}
+
+\textbf{Findings.} December, November and January carry the companion: 7 of 11, 6 of 9 and 9 of 11 of those
+farm-months are recommended. Summer months almost never are. Picking months and fitting on 1951--2000 only,
+the companion still scores 0.61 on 2001--2025, so the result is not an artifact of choosing on the test
+years. Combining several nearby stations does not help, because Kalshi stations are too sparse; only the Tampa
+farms gain (0.37 to 0.43). Caveats: winter rain matters less for warm-season forage, so the value is greatest
+for winter pasture, winter wheat and stock water. Each month is listed only about 30 days ahead, so orders are
+placed month by month.
+
+\textbf{What the rest of the project builds on.} The companion is the platform the remaining work expands:
+\begin{itemize}
+  \item wet-side (excess-rain) cover;
+  \item a mock two-month market to demonstrate our contract proposal;
+  \item national coverage for all 38 Kalshi rain stations;
+  \item hedging modeled forage loss instead of the PRF formula;
+  \item temperature risk;
+  \item order placement in Kalshi's demo environment.
+\end{itemize}
+
+%=====================================================================
 \section{Synthesis and Next Steps}
 
 The platform works, and it gives a farmer an honest answer. That answer is mostly ``not yet''. With
@@ -277,12 +342,13 @@ matter. The binding problems are where the rain is measured, how long the contra
 on the other side of the trade. The constructive results are a ranked list of fixes: two-month contracts
 (no new data needed), seasonal listing, a drought-side market maker, and, as the end point, contracts on a
 gridded rain index. As our Milestone I update proposed, the tool is most useful as a complement to PRF.
-The clearest case is the cool-season months PRF leaves uncovered, near a station. Fast settlement and
-access for non-PRF producers also help. The team will
-weigh these results when choosing the project's final direction.
+The PRF Companion makes that concrete: in the cool-season months PRF leaves open, a Kalshi hedge near a
+station tracks the farm's rain well on years it never saw (0.61). That is the base the rest of the project
+builds on.
 
-\textbf{Reproducibility.} Code and data: \url{https://github.com/Belugaluga2/ECE473-Project} (docs 15--20).
+\textbf{Reproducibility.} Code and data: \url{https://github.com/Belugaluga2/ECE473-Project} (docs 15--21; demo guide \texttt{docs/DEMO.md}).
 \texttt{python scripts/run\_optimizer.py}, \texttt{run\_error\_budget.py}, \texttt{run\_app\_test.py
---live}; app: \texttt{python scripts/run\_app.py}. 351 automated tests (18 new for Milestone II).
+--live}, \texttt{run\_prf\_gaps.py}, \texttt{run\_companion\_study.py}, \texttt{run\_companion\_holdout.py};
+app: \texttt{python scripts/run\_app.py} (\texttt{?demo} runs the companion). 352 automated tests (19 new for Milestone II).
 
 \end{document}

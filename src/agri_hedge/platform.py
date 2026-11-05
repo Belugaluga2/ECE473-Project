@@ -36,7 +36,10 @@ SENSIBLE_TOL = 0.10            # doc 09: skip book levels more than 10 cents abo
 #: and $1.28 before it. Used only to *estimate* a PRF premium where we have no actuarial rates.
 PRF_PRODUCER_PER_DOLLAR = 0.61
 PRF_FULL_PER_DOLLAR = 1.28
-KNEE_SHARE = 0.9
+#: Recommended hedge = cheapest frontier point with this share of the best in-sample fit. 0.95 scored
+#: best out of sample across 44 farm and single-month cases (median HE 0.49 vs 0.46 at 0.90 and 0.48
+#: with no cost limit; doc 21).
+KNEE_SHARE = 0.95
 #: Automatic station choice: stations up to this many miles farther than the nearest one are
 #: compared by out-of-sample fit (doc 19: the nearest station was the worse choice for Tampa).
 STATION_SLACK_MI = 25.0
@@ -249,7 +252,7 @@ def quote(params: dict, live: LiveQuotes | None = None, today: date | None = Non
     budget = params.get("budget")
     if budget in (None, "", "recommended"):
         b = op.knee_budget(fr, KNEE_SHARE)
-        mode = "recommended (cheapest hedge with 90% of the best fit)"
+        mode = "recommended (cheapest hedge with 95% of the best fit)"
     elif budget == "lowest_error":
         b, mode = None, "lowest error (no cost limit)"
     else:
@@ -304,6 +307,109 @@ def quote(params: dict, live: LiveQuotes | None = None, today: date | None = Non
             "each year in turn."],
         "elapsed_s": round(time.time() - t0, 2),
     }
+
+
+# ---------------------------------------------------------------------------------------------
+# PRF Companion: keep the rancher's PRF policy and cover the gaps it leaves
+# ---------------------------------------------------------------------------------------------
+
+GOOD_HE = 0.5      # recommend a gap month if its hedge tracks at least this well out of sample
+OK_HE = 0.3
+
+
+def _score(X, y, q, prot, share=KNEE_SHARE):
+    ok = ~np.isnan(y) & ~np.isnan(X).any(axis=1)
+    X, y = X[ok], y[ok]
+    if len(y) < 30 or np.var(y) == 0:
+        return None
+    tr = op.model_tranches(q)
+    fr = op.efficient_frontier(X, y, tr, n_points=13, scale=prot, q=q)
+    b = op.knee_budget(fr, share)
+    sol = op.solve_budget(X, y, tr, b, prot)
+    he = op.hedge_effectiveness(y, op.loyo_payout(X, y, tr, b, prot))
+    ev = float(np.asarray(q) @ sol.leg_contracts)
+    return {"he_out_of_sample": round(he, 3), "cost_usd": round(sol.cost, 2),
+            "expected_payout_usd": round(ev, 2), "cost_per_dollar_expected": round(sol.cost / ev, 3) if ev > 0 else None,
+            "target_mean_usd": round(float(y.mean()), 2), "years": int(len(y))}
+
+
+def companion(params: dict, live: LiveQuotes | None = None, today: date | None = None) -> dict:
+    """Score the gaps a PRF election leaves and build a Kalshi hedge for the ones that track well.
+
+    params: lat, lon, prf_intervals [{label: 'Apr-May', share}], coverage, protection (the PRF policy's
+    dollars), optional gap_protection_per_month (default protection / 6, about one interval's share),
+    station_key, price_source ('auto' | 'model'), min_he (default 0.5).
+    """
+    t0 = time.time()
+    prf_windows = [{"label": w["label"], "share": float(w["share"])} for w in params["prf_intervals"]]
+    base = dict(params, windows=prf_windows, price_source="model")
+    req = parse_request(base)
+    choice = choose_station(req) if not req.station_key else []
+    if choice:
+        req.station_key = choice[0]["station_key"]
+    prf = hb.build_problem(req)
+    prot = req.protection
+    gap_prot = float(params.get("gap_protection_per_month") or prot / 6)
+    min_he = float(params.get("min_he", GOOD_HE))
+    covered = sorted({m for w in req.windows for m in w.months})
+    months = []
+    for m in range(1, 13):
+        row = {"month": m, "name": hb.MONTH_ABBR[m - 1], "covered_by_prf": m in covered}
+        if m not in covered:
+            r1 = hb.CoverageRequest(req.lat, req.lon, [hb.Window((m,), 1.0)], req.coverage, gap_prot,
+                                    station_key=req.station_key, grid_id=req.grid_id)
+            pm = hb.build_problem(r1)
+            sc = _score(pm.X, pm.target, pm.q, gap_prot)
+            if sc:
+                row.update(sc)
+                row["verdict"] = ("recommended" if sc["he_out_of_sample"] >= min_he else
+                                  "possible" if sc["he_out_of_sample"] >= OK_HE else "poor match")
+        months.append(row)
+    rec = [r["name"] for r in months if r.get("verdict") == "recommended"]
+    # wet side: excess rain on each insured interval with today's monthly YES contracts
+    wet = []
+    for w in req.windows:
+        pw = hb.build_problem(hb.CoverageRequest(req.lat, req.lon, [hb.Window(w.months, 1.0)], req.coverage,
+                                                 prot * w.share, station_key=req.station_key, grid_id=req.grid_id))
+        idx = hb.window_index(pw.grid_id, w, pw.years)
+        y = np.where(np.isnan(idx), np.nan, prot * w.share * np.clip((idx - 130.0) / 100.0, 0, 1))
+        sc = _score(1.0 - pw.X, y, 1.0 - pw.q, prot * w.share)
+        if sc:
+            wet.append({"interval": w.label, **sc})
+    out = {"station": {"key": prf.station["station_key"], "series": prf.station["series_ticker"],
+                       "name": prf.station.get("name"), "distance_mi": round(prf.distance_mi, 1)},
+           "station_choice": choice, "grid": {"grid_id": prf.grid_id, "center": list(prf.grid_center)},
+           "prf": {"intervals": prf_windows, "coverage": req.coverage, "protection_usd": prot,
+                   "expected_payout_usd": round(float(np.nanmean(prf.target)), 2),
+                   "est_producer_premium_usd": round(float(np.nanmean(prf.target)) * PRF_PRODUCER_PER_DOLLAR, 2),
+                   "months_covered": [hb.MONTH_ABBR[m - 1] for m in covered]},
+           "gap_protection_per_month_usd": gap_prot, "months": months, "excess_rain": wet,
+           "recommended_months": rec, "package": None}
+    if rec:
+        q = quote({"lat": req.lat, "lon": req.lon, "coverage": req.coverage, "protection": gap_prot * len(rec),
+                   "windows": [{"label": m, "share": 1.0 / len(rec)} for m in rec],
+                   "station_key": req.station_key, "price_source": params.get("price_source", "auto")},
+                  live=live, today=today)
+        yrs = np.array(q["backtest"]["years"])
+        prf_pay = pd.Series(prf.target, index=prf.years).reindex(yrs)
+        q["backtest"]["prf_usd"] = [None if np.isnan(v) else round(float(v), 0) for v in prf_pay]
+        out["package"] = q
+        tot_gap = float(np.mean(q["backtest"]["target_usd"]))
+        out["summary"] = {
+            "months_added": rec, "package_cost_usd": q["hedge"]["cost_usd"],
+            "package_expected_payout_usd": q["hedge"]["expected_payout_usd"],
+            "package_he_out_of_sample": q["hedge"]["he_out_of_sample"],
+            "gap_cover_expected_usd": round(tot_gap, 2),
+            "years_gap_cover_paid": int((np.array(q["backtest"]["target_usd"]) > 0).sum())}
+    out["elapsed_s"] = round(time.time() - t0, 2)
+    out["notes"] = [
+        "Gap months are covered with a PRF-style payout on your grid's rain for that month (90% trigger unless "
+        "you chose another coverage level), hedged with Kalshi NO contracts at the settlement station.",
+        f"Recommended = out-of-sample hedge effectiveness at least {min_he:.1f}: the hedge removes at least that "
+        "share of the year-to-year swing in the gap cover, tested on years it was not fitted to.",
+        "Excess-rain rows use today's monthly YES contracts; two-month contracts would roughly double their fit (doc 20).",
+        "Cool-season rain matters less for warm-season forage; gap cover suits winter pasture, stock water and wheat."]
+    return out
 
 
 def live_reference(p: hb.HedgeProblem, books: dict) -> list[dict]:

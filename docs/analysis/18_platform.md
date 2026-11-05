@@ -6,11 +6,16 @@ Code: `src/agri_hedge/platform.py` (quote engine, live order books), `src/agri_h
 
 ![The farmer screen](../figures/m2_app_screenshot.png)
 
-## What a farmer does
+## Two modes
+
+- **PRF Companion** (default, added for the showcase; doc 21): the rancher enters their PRF election. The app scores every month PRF leaves open, recommends the months a Kalshi hedge tracks well, and builds one order for them. It shows a backtest next to PRF's own payouts and an excess-rain check on the insured intervals. Route `POST /api/companion`, function `platform.companion`.
+- **Custom cover**: any months, a stand-alone hedge, described below. Route `POST /api/quote`.
+
+## What a farmer does (custom cover)
 
 1. **Where.** Click the map or type a latitude and longitude. Shaded dots show where we have rainfall history: every PRF grid within about 150 miles of the 8 study stations, 2,036 grids. Red dots are Kalshi rain stations. The settlement station is picked automatically or chosen from a list.
 2. **Which months and how much.** Add rows: any of PRF's 11 two-month intervals, any single month, or a three-month season, each with a share of the protection. Presets: hay season, spring only, just July. Then acres, value per acre and a coverage level (70-90%). Protection = acres x value x coverage, as in PRF.
-3. **Price and fit.** Choose "recommended" (the cheapest hedge with 90% of the best fit, doc 15), "best fit at any cost", or a budget. Choose live prices where listed, or estimates only.
+3. **Price and fit.** Choose "recommended" (the cheapest hedge with 95% of the best fit; doc 15 introduced the knee at 90%, and doc 21 found 95% does best on unseen years), "best fit at any cost", or a budget. Choose live prices where listed, or estimates only.
 4. **Read the answer.**
    - A plain verdict (good, partial or poor match) based on out-of-sample hedge effectiveness.
    - Cost per year, fair expected payout, cost per $1 of expected payout, and the most the hedge can pay.

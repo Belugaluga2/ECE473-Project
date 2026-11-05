@@ -91,3 +91,16 @@ def test_cpc_index_target_matches_as_paid_prf():
     a = fy[fy["farm_id"] == F["farm_id"]].set_index("year")["prf_cpc_as_paid_usd"].reindex(p.years).to_numpy(float)
     ok = ~np.isnan(a) & ~np.isnan(p.target)
     assert ok.sum() > 50 and np.max(np.abs(a[ok] - p.target[ok])) < 0.005 * F["protection"]
+
+
+def test_companion_scores_only_uncovered_months():
+    c = pf.companion({"lat": 32.78, "lon": -97.81, "coverage": 0.9, "protection": 36000,
+                      "prf_intervals": [{"label": "Apr-May", "share": 0.5}, {"label": "Jul-Aug", "share": 0.5}],
+                      "price_source": "model"})
+    covered = {m["name"] for m in c["months"] if m["covered_by_prf"]}
+    assert covered == {"Apr", "May", "Jul", "Aug"}
+    open_months = [m for m in c["months"] if not m["covered_by_prf"]]
+    assert all("he_out_of_sample" in m for m in open_months)
+    assert set(c["recommended_months"]) <= {m["name"] for m in open_months}
+    if c["package"]:
+        assert c["package"]["hedge"]["legs"] > 0 and len(c["package"]["backtest"]["prf_usd"]) == len(c["package"]["backtest"]["years"])

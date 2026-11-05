@@ -7,6 +7,7 @@ Routes
   GET  /api/stations     Kalshi monthly-rain stations with rain records
   GET  /api/coverage     PRF grid centers the app can serve (for the map)
   POST /api/quote        JSON body -> agri_hedge.platform.quote(...)
+  POST /api/companion    JSON body -> agri_hedge.platform.companion(...) (PRF Companion mode)
 """
 from __future__ import annotations
 
@@ -65,12 +66,14 @@ class Handler(BaseHTTPRequestHandler):
         return self._json(404, {"error": "not found"})
 
     def do_POST(self):  # noqa: N802
-        if self.path.split("?", 1)[0] != "/api/quote":
+        route = self.path.split("?", 1)[0]
+        handlers = {"/api/quote": pf.quote, "/api/companion": pf.companion}
+        if route not in handlers:
             return self._json(404, {"error": "not found"})
         try:
             n = int(self.headers.get("Content-Length", "0"))
             params = json.loads(self.rfile.read(n) or b"{}")
-            return self._json(200, pf.quote(params))
+            return self._json(200, handlers[route](params))
         except ValueError as exc:
             return self._json(400, {"error": str(exc)})
         except Exception as exc:  # report, keep serving

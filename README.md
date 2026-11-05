@@ -14,10 +14,14 @@ a live-price backend and a farmer web app, tested against PRF, and the PRF-gap r
 [docs/MILESTONE_2.md](docs/MILESTONE_2.md)). The team's 2026-11-02 pivot discussion still stands;
 see the note in the overview.
 
+**Milestone II showcase: the PRF Companion.** Keep your USDA rainfall insurance and use Kalshi contracts
+to cover the months it leaves open. It is recommended for 9 of 11 farms and tracks rain-index cover with
+hedge effectiveness 0.61 on held-out years (doc 21, [docs/DEMO.md](docs/DEMO.md)).
+
 **Try the app:**
 
 ```bash
-.venv/bin/python scripts/run_app.py   # then open http://localhost:8473
+.venv/bin/python scripts/run_app.py   # then open http://localhost:8473/?demo
 ```
 
 **Start here:** [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) is the index of all research and results, with status and next steps.

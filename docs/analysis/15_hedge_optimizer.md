@@ -89,7 +89,7 @@ where h_t is the hedge payout and c_j is the all-in unit cost: price + 0.07 P(1 
 
 ## Implications for the platform
 
-- Recommend the knee, not the lowest-error hedge: it is about 22% cheaper with no loss out of sample.
+- Recommend a knee, not the lowest-error hedge: the 90% knee is about 22% cheaper with no loss out of sample. A later test over 44 farm and single-month cases (doc 21) found 95% does slightly better on unseen years (median HE 0.49 vs 0.46), so the app now recommends the 95% knee.
 - Always show the out-of-sample number next to the in-sample one. The in-sample number is what a naive backtest would advertise, and it is about 40% too optimistic.
 - The optimizer accepts order-book tranches directly, so live depth limits (doc 12: a few hundred contracts per strike) enter the same problem. Doc 16 shows that they bind hard.
 
