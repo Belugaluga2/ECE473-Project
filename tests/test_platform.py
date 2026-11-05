@@ -77,3 +77,17 @@ def test_live_quotes_fall_back_to_snapshot():
 
 def test_json_clean():
     assert _clean({"a": float("nan"), "b": [np.float64(1.5), np.int64(2)]}) == {"a": None, "b": [1.5, 2]}
+
+
+def test_cpc_index_target_matches_as_paid_prf():
+    import pandas as pd
+    from agri_hedge.config import PROCESSED
+    F = hb.load_farm_requests()[0]
+    r = F["request"]
+    req = hb.CoverageRequest(r.lat, r.lon, r.windows, r.coverage, r.protection, station_key=r.station_key,
+                             grid_id=r.grid_id, index="cpc")
+    p = hb.build_problem(req, years=hb.CPC_YEARS)
+    fy = pd.read_csv(PROCESSED / "payout_comparison_farm_year.csv")
+    a = fy[fy["farm_id"] == F["farm_id"]].set_index("year")["prf_cpc_as_paid_usd"].reindex(p.years).to_numpy(float)
+    ok = ~np.isnan(a) & ~np.isnan(p.target)
+    assert ok.sum() > 50 and np.max(np.abs(a[ok] - p.target[ok])) < 0.005 * F["protection"]

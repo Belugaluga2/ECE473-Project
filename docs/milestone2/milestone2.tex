@@ -49,6 +49,10 @@ and scored on the year it did not see.
   \item \textbf{Platform (Week 5, Jack and Maya).} A working web app: a farmer clicks a location, picks any
   months, and gets an order ticket priced from live Kalshi order books where markets are listed, a
   price-vs-fit frontier, a 75-year backtest, and a comparison with PRF.
+  \item \textbf{Complementing PRF (refinements promised in our Milestone I update).} The best niche is the
+  months PRF leaves uncovered: single-month cover for November--February copies about half of the payout
+  swings (median HE 0.52; December 0.68). A top-up above PRF's 90\% cap copies little (0.14). Excess-rain
+  cover needs two-month contracts (0.22 to 0.40). Backtests on the CPC index USDA actually paid tell the same story.
   \item \textbf{App test (Week 5, Evan).} Typing the 11 farms into the app reproduces the analysis exactly. The
   recommended hedges cost 1.47$\times$ the farmers' PRF premiums (median) and copy about a third of PRF's
   payout swings out of sample (median HE 0.36). Across 150 random grids the median HE is 0.44 within 25 miles
@@ -223,6 +227,46 @@ station (Milestone I), a useful hedge reaches a small minority of PRF land. On 2
 the one in progress was listed, so every order for a real season was correctly flagged as estimated.
 
 %=====================================================================
+\section{Complementing PRF (refinements from our Milestone I update)}
+
+Our Milestone I update said we would complement PRF rather than replace it, by targeting cover above
+PRF's 90\% cap, uncovered months and too much rain. It also said we would look beyond binary payouts and
+backtest on the index USDA actually paid (CPC), with NCEI for forward results.
+
+\begin{figure}[H]\centering
+\includegraphics[width=\textwidth]{m2_prf_gaps.png}
+\caption{Left: out-of-sample HE of single-month cover for months outside each farm's PRF intervals.
+Middle: a top-up layer above PRF's 90\% cap. Right: excess-rain cover with monthly vs.\ two-month YES contracts.}
+\end{figure}
+
+\begin{table}[H]\centering\small
+\begin{tabularx}{\textwidth}{Yrr}
+\toprule
+Gap PRF leaves & Median HE in & Median HE out of sample \\
+\midrule
+Uncovered months, single-month cover at 90\% (60 farm-months) & -- & 0.52 (26 of 60 $\ge 0.6$) \\
+Top-up layer above PRF's 90\% cap (11 farms) & 0.40 & 0.14 \\
+Excess rain ($>130\%$ of normal), today's monthly YES (36 windows) & 0.47 & 0.22 \\
+Excess rain, proposed two-month YES (36 windows) & 0.70 & 0.40 \\
+\midrule
+PRF itself, CPC as paid vs.\ NCEI, 1969--2025 (lowest error / knee) & -- & 0.20 vs.\ 0.28 / 0.26 vs.\ 0.27 \\
+\bottomrule
+\end{tabularx}
+\caption{Where event contracts can complement PRF.}
+\end{table}
+
+\textbf{Findings.} Cool-season frontal rain spreads evenly over a region, so the airport gauge tracks the
+farm in the months PRF leaves open (December 0.68, November 0.65, January 0.60). That is the strongest use
+of today's contracts we found. The value is mainly for winter pasture, stock water and winter wheat, because
+warm-season forage responds little to winter rain. A top-up above 90\% pays a little in nearly every year and
+copies poorly. Excess-rain cover works only with two-month contracts, which strengthens the case for them.
+On payouts beyond binaries: contracts paying the PRF formula linearly on the station gauge or station grid
+index reach 0.52--0.65 (Section 1.2). Grid-index binaries reach 0.98. So what matters is \emph{what} a
+contract settles on, not the payout shape. Backtesting on the CPC index USDA actually paid gives slightly
+lower out-of-sample HE than NCEI on the same years. The 90\% knee closes most of that gap. Temperature risk
+(``if time permits'') is left for Milestone III.
+
+%=====================================================================
 \section{Synthesis and Next Steps}
 
 The platform works, and it gives a farmer an honest answer. That answer is mostly ``not yet''. With
@@ -232,12 +276,13 @@ filled from current order books. Strike binning, the problem Milestone I flagged
 matter. The binding problems are where the rain is measured, how long the contract window is, and who is
 on the other side of the trade. The constructive results are a ranked list of fixes: two-month contracts
 (no new data needed), seasonal listing, a drought-side market maker, and, as the end point, contracts on a
-gridded rain index. A farmer-facing tool is valuable where PRF is not available or not flexible enough:
-single critical months, cover above PRF's caps, fast settlement, and non-PRF producers. The team will
+gridded rain index. As our Milestone I update proposed, the tool is most useful as a complement to PRF.
+The clearest case is the cool-season months PRF leaves uncovered, near a station. Fast settlement and
+access for non-PRF producers also help. The team will
 weigh these results when choosing the project's final direction.
 
-\textbf{Reproducibility.} Code and data: \url{https://github.com/Belugaluga2/ECE473-Project} (docs 15--19).
+\textbf{Reproducibility.} Code and data: \url{https://github.com/Belugaluga2/ECE473-Project} (docs 15--20).
 \texttt{python scripts/run\_optimizer.py}, \texttt{run\_error\_budget.py}, \texttt{run\_app\_test.py
---live}; app: \texttt{python scripts/run\_app.py}. 350 automated tests (17 new for Milestone II).
+--live}; app: \texttt{python scripts/run\_app.py}. 351 automated tests (18 new for Milestone II).
 
 \end{document}

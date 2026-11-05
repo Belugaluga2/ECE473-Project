@@ -70,15 +70,21 @@ def station_rain(station_key: str) -> pd.DataFrame:
     return rain_wide(_station_monthly(), station_key)
 
 
-@lru_cache(maxsize=1)
-def _grid_monthly_all() -> pd.DataFrame:
-    return pd.read_parquet(PROCESSED / "ncei_monthly_precip_grids.parquet",
+#: Index sources: "ncei" = what PRF pays on from crop year 2027 (our nClimGrid rebuild);
+#: "cpc" = the CPC index PRF actually paid on through 2026 (our rebuild matches 854 finals, doc 06b).
+INDEX_SOURCES = ("ncei", "cpc")
+CPC_YEARS = (1969, 2025)   # as-paid regime window used in doc 09
+
+
+@lru_cache(maxsize=2)
+def _grid_monthly_all(source: str = "ncei") -> pd.DataFrame:
+    return pd.read_parquet(PROCESSED / f"{source}_monthly_precip_grids.parquet",
                            columns=["grid_id", "year", "month", "precip_in"])
 
 
-@lru_cache(maxsize=1)
-def _grid_interval_all() -> pd.DataFrame:
-    d = pd.read_parquet(PROCESSED / "ncei_interval_index.parquet",
+@lru_cache(maxsize=2)
+def _grid_interval_all(source: str = "ncei") -> pd.DataFrame:
+    d = pd.read_parquet(PROCESSED / f"{source}_interval_index.parquet",
                         columns=["grid_id", "year", "interval_name", "index_value_ours"])
     d["interval_name"] = d["interval_name"].astype(str)
     return d
@@ -86,20 +92,20 @@ def _grid_interval_all() -> pd.DataFrame:
 
 @lru_cache(maxsize=1)
 def covered_grids() -> frozenset:
-    return frozenset(int(g) for g in _grid_monthly_all()["grid_id"].unique())
+    return frozenset(int(g) for g in _grid_monthly_all("ncei")["grid_id"].unique())
 
 
 @lru_cache(maxsize=256)
-def grid_monthly(grid_id: int) -> pd.DataFrame:
-    g = _grid_monthly_all()
+def grid_monthly(grid_id: int, source: str = "ncei") -> pd.DataFrame:
+    g = _grid_monthly_all(source)
     g = g[g["grid_id"] == int(grid_id)]
     return g.pivot_table(index="year", columns="month", values="precip_in", aggfunc="first").reindex(
         columns=range(1, 13)).sort_index()
 
 
 @lru_cache(maxsize=256)
-def grid_interval_index(grid_id: int) -> pd.DataFrame:
-    g = _grid_interval_all()
+def grid_interval_index(grid_id: int, source: str = "ncei") -> pd.DataFrame:
+    g = _grid_interval_all(source)
     g = g[g["grid_id"] == int(grid_id)]
     return g.pivot_table(index="year", columns="interval_name", values="index_value_ours",
                          aggfunc="first").reindex(columns=INTERVAL_NAMES).sort_index()
@@ -161,6 +167,7 @@ class CoverageRequest:
     station_key: str | None = None  # None = nearest station with data
     strikes: str | Sequence[float] = "kalshi"   # "kalshi", "fine" (0.25 in), or explicit list
     grid_id: int | None = None       # override the grid (e.g. a farm's official grid)
+    index: str = "ncei"              # "ncei" (from 2027) or "cpc" (as paid through 2026)
 
 
 @dataclass
@@ -197,13 +204,24 @@ def nearest_stations(lat: float, lon: float, k: int = 3) -> pd.DataFrame:
     return st.sort_values("distance_mi").head(k).reset_index(drop=True)
 
 
-def window_target_per_dollar(grid_id: int, w: Window, coverage: float, years: np.ndarray) -> np.ndarray:
+def window_index(grid_id: int, w: Window, years: np.ndarray, source: str = "ncei") -> np.ndarray:
+    """The grid's rainfall index (100 = normal) for a window, by year (NaN if data are missing)."""
+    if w.prf_interval:
+        return grid_interval_index(grid_id, source)[w.prf_interval].reindex(years).to_numpy(float)
+    gm = grid_monthly(grid_id, source)
+    tot = gm[list(w.months)].sum(axis=1, min_count=len(w.months))
+    base = tot[(tot.index >= NORMAL_YEARS[0]) & (tot.index <= NORMAL_YEARS[1])].mean()
+    return (100.0 * tot / base).reindex(years).to_numpy(float)
+
+
+def window_target_per_dollar(grid_id: int, w: Window, coverage: float, years: np.ndarray,
+                             source: str = "ncei") -> np.ndarray:
     """PRF payment factor per $1 of the window's protection, by year (NaN if data are missing)."""
     trig = float(trigger_grid_index(coverage))
     if w.prf_interval:
-        idx = grid_interval_index(grid_id)[w.prf_interval].reindex(years).to_numpy(float)
+        idx = grid_interval_index(grid_id, source)[w.prf_interval].reindex(years).to_numpy(float)
     else:
-        gm = grid_monthly(grid_id)
+        gm = grid_monthly(grid_id, source)
         tot = gm[list(w.months)].sum(axis=1, min_count=len(w.months))
         base = tot[(tot.index >= NORMAL_YEARS[0]) & (tot.index <= NORMAL_YEARS[1])].mean()
         idx = (100.0 * tot / base).reindex(years).to_numpy(float)
@@ -245,7 +263,7 @@ def build_problem(req: CoverageRequest, years: tuple = YEARS) -> HedgeProblem:
         notes.append(f"Window shares sum to {shares.sum():.2f}; protection is split in those proportions.")
     tgt_w, total = {}, np.zeros(len(yrs))
     for w in req.windows:
-        pdol = window_target_per_dollar(gid, w, req.coverage, yrs) * w.share * req.protection
+        pdol = window_target_per_dollar(gid, w, req.coverage, yrs, req.index) * w.share * req.protection
         tgt_w[w.label] = pdol
         total = total + pdol
     rain = station_rain(st["station_key"]).reindex(yrs)

@@ -5,7 +5,7 @@
 **Status (2026-10-29):** all 9 proposal cells are done, plus both extra research questions.
 **Update (2026-11-02):** Milestone 2 prep added: fact-check of docs 01-06 (doc 11), post-rewards Kalshi liquidity (doc 12), a rain-to-loss model (doc 13), and a row-crop exploration (doc 14). See [Milestone 2 prep](#milestone-2-prep-2026-11-02).
 
-> **Milestone 2 (2026-11-05):** built as planned in the submitted Milestone I: optimizer (doc 15), error breakdown (doc 16), contract gaps and proposals (doc 17), live-price backend and farmer web app (doc 18), app test against PRF (doc 19). Summary and write-up: [MILESTONE_2.md](MILESTONE_2.md). See [Milestone 2 results](#milestone-2-results-2026-11-05).
+> **Milestone 2 (2026-11-05):** built as planned in the submitted Milestone I: optimizer (doc 15), error breakdown (doc 16), contract gaps and proposals (doc 17), live-price backend and farmer web app (doc 18), app test against PRF (doc 19), and the refinements from the M1 update (doc 20). Summary and write-up: [MILESTONE_2.md](MILESTONE_2.md). See [Milestone 2 results](#milestone-2-results-2026-11-05).
 
 > **Project pivot (2026-11-02):** the team agreed to move away from replicating PRF with Kalshi rain contracts. A subsidized, US-backed rainfall insurance (PRF) already exists, and the findings below show Kalshi cannot beat it on cost, today's books are too thin to hedge a single ranch, and rain hedges did not help row crops. The new direction is not chosen yet. Everything in this overview (docs 01-14) is kept as **background** for that decision, not as work in progress.
 
@@ -32,6 +32,7 @@ Every research document has a numbers table that gives a source for each number.
 | M2 W4 Exposures that fail; proposed contracts and mechanisms | Evan | [analysis/17_contract_gaps_and_proposals.md](analysis/17_contract_gaps_and_proposals.md) | done 2026-11-05 |
 | M2 W5 Live-price backend and farmer screen | Jack, Maya | [analysis/18_platform.md](analysis/18_platform.md) | working prototype (`python scripts/run_app.py`) |
 | M2 W5 Test the app against the USDA benchmark | Evan | [analysis/19_app_test.md](analysis/19_app_test.md) | done 2026-11-05 |
+| M2 refinements from the submitted M1 update: complement PRF, CPC as-paid backtest | team | [analysis/20_complementing_prf.md](analysis/20_complementing_prf.md) | done 2026-11-05 |
 
 ## Study sites
 
@@ -145,6 +146,11 @@ All numbers: 11 farms, NCEI PRF index, 1951-2025, hedge effectiveness (HE) out o
   - A farmer clicks a location and picks any months.
   - The app prices from live Kalshi books where listed and estimates elsewhere (flagged).
   - It returns a verdict, frontier, backtest, order ticket and PRF comparison.
+- **Complementing PRF (doc 20):**
+  - Months PRF leaves uncovered (mostly Nov-Feb) hedge best: median HE 0.52, December 0.68.
+  - A top-up above PRF's 90% cap copies poorly (0.14).
+  - Excess-rain cover needs two-month contracts (0.22 to 0.40).
+  - Backtests on the CPC index PRF actually paid give the same picture, slightly lower.
 - **App test (doc 19):**
   - Recommended hedges cost 1.47x PRF producer premiums (median) and copy about a third of PRF's swings (median HE 0.36).
   - Median HE is 0.44 within 25 miles of a station and 0.14 beyond 100 miles.
@@ -177,7 +183,7 @@ Items 1-3 only matter if the rain work is picked up again.
   - `rowcrop.py`: corn/soy farm exposure and hedge backtest (doc 14)
 - `scripts/` runnable entry points that pull data and regenerate every result
 - `data/processed/` small derived datasets (committed); `data/raw/` downloads (gitignored, recreated by scripts)
-- `tests/` pytest checks (350 passing)
+- `tests/` pytest checks (351 passing)
 
 ## How to reproduce
 
