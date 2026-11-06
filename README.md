@@ -8,15 +8,11 @@ We set out to build a platform that lets a farmer approximate USDA rainfall-inde
 (Pasture, Rangeland, Forage, or PRF) with a portfolio of Kalshi weather event contracts, and
 to measure where the remaining coverage error comes from.
 
-**Status (2026-11-05):** Milestone II (contract design and platform) is built as planned in the
-Milestone I submission: a cost-aware hedge optimizer, a five-part error breakdown, contract proposals,
-a live-price backend and a farmer web app, tested against PRF, and the PRF-gap refinements from the submitted Milestone I update (docs 15-20,
-[docs/MILESTONE_2.md](docs/MILESTONE_2.md)). The team's 2026-11-02 pivot discussion still stands;
-see the note in the overview.
-
-**Milestone II showcase: the PRF Companion.** Keep your USDA rainfall insurance and use Kalshi contracts
-to cover the months it leaves open. It is recommended for 9 of 11 farms and tracks rain-index cover with
-hedge effectiveness 0.61 on held-out years (doc 21, [docs/DEMO.md](docs/DEMO.md)).
+**Status (2026-11-05):** replicating PRF with Kalshi did not work (Milestone I). Milestone II is built
+([docs/MILESTONE_2.md](docs/MILESTONE_2.md)) and the project now centres on the **PRF Companion**: keep
+your USDA rainfall insurance and use Kalshi contracts to cover the months it leaves open. It is recommended
+for 9 of 11 farms and tracks rain-index cover with hedge effectiveness 0.61 on held-out years (doc 21).
+Order-book depth is the remaining limit (doc 22). Demo script and roadmap: [docs/DEMO.md](docs/DEMO.md).
 
 **Try the app:**
 
@@ -24,13 +20,16 @@ hedge effectiveness 0.61 on held-out years (doc 21, [docs/DEMO.md](docs/DEMO.md)
 .venv/bin/python scripts/run_app.py   # then open http://localhost:8473/?demo
 ```
 
-**Start here:** [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) is the index of all research and results, with status and next steps.
+**Start here:** [AGENTS.md](AGENTS.md) is a one-page handoff (status, deadlines, conventions). [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) is the index of all research and results, with next steps.
 
 ## Layout
 
 | Path | Contents |
 |---|---|
+| `AGENTS.md` | Handoff for new contributors and agents |
 | `docs/00_OVERVIEW.md` | Milestone overview, status, headline findings |
+| `docs/DEMO.md`, `docs/MILESTONE_2.md` | Demo script + roadmap; Milestone II summary |
+| `docs/milestone2/` | Milestone II LaTeX write-up and PDF |
 | `docs/research/` | Sourced research documents, one topic each |
 | `docs/analysis/` | Results produced by our own code |
 | `docs/figures/` | Generated figures |

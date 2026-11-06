@@ -1,13 +1,12 @@
-# Project Overview: Milestone 1 (Research Foundation) and Milestone 2 (Contract Design & Platform)
+# Project Overview: Milestone 1 (Research Foundation), Milestone 2 (Contract Design & Platform), and the PRF Companion
 
 **Project:** Agricultural Risk Management & Weather Derivative Replicating Platform (ECE473, Maya / Evan / Jack)
-**Goal of Milestone 1:** understand current USDA rainfall insurance, understand Kalshi weather markets, gather the weather data, and measure the gaps between them.
-**Status (2026-10-29):** all 9 proposal cells are done, plus both extra research questions.
-**Update (2026-11-02):** Milestone 2 prep added: fact-check of docs 01-06 (doc 11), post-rewards Kalshi liquidity (doc 12), a rain-to-loss model (doc 13), and a row-crop exploration (doc 14). See [Milestone 2 prep](#milestone-2-prep-2026-11-02).
+> **Current direction (2026-11-05): the PRF Companion.** Replacing PRF with Kalshi does not work (Milestone 1, docs 08-09: costlier than the subsidized policy, loose fit, thin books). Complementing it does: Kalshi hedges for the months PRF leaves open track the rancher's rain index with HE 0.61 on held-out years (doc 21). The rest of the project expands on the companion; the roadmap is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). For a short handoff (status, deadlines, how to work here) read [../AGENTS.md](../AGENTS.md).
 
-> **Milestone 2 (2026-11-05):** built as planned in the submitted Milestone I: optimizer (doc 15), error breakdown (doc 16), contract gaps and proposals (doc 17), live-price backend and farmer web app (doc 18), app test against PRF (doc 19), the refinements from the M1 update (doc 20), and the showcase, a PRF Companion app mode (doc 21). Summary and write-up: [MILESTONE_2.md](MILESTONE_2.md). See [Milestone 2 results](#milestone-2-results-2026-11-05).
-
-> **Project pivot (2026-11-02):** the team agreed to move away from replicating PRF with Kalshi rain contracts. A subsidized, US-backed rainfall insurance (PRF) already exists, and the findings below show Kalshi cannot beat it on cost, today's books are too thin to hedge a single ranch, and rain hedges did not help row crops. The new direction is not chosen yet. Everything in this overview (docs 01-14) is kept as **background** for that decision, not as work in progress.
+**Timeline:**
+- 2026-10-29: Milestone 1 done (all 9 proposal cells plus two extra research questions, docs 01-10).
+- 2026-11-02: Milestone 2 prep (docs 11-14: fact-check, post-rewards liquidity, rain-to-loss model, row crops). The team agreed to stop trying to *replace* PRF with Kalshi; docs 01-14 are background for that decision.
+- 2026-11-05: Milestone 2 built as planned in the submitted Milestone I (docs 15-20) plus the PRF Companion showcase (docs 21-22). Summary and write-up: [MILESTONE_2.md](MILESTONE_2.md); see [Milestone 2 results](#milestone-2-results-2026-11-05).
 
 Every research document has a numbers table that gives a source for each number. Documents marked **VERIFIED** were re-checked line by line by an independent fact-checking pass. The others were not fact-checked because the run was trimmed to save usage, so check their key numbers before presenting.
 
@@ -162,13 +161,22 @@ All numbers: 11 farms, NCEI PRF index, 1951-2025, hedge effectiveness (HE) out o
   - Median HE is 0.44 within 25 miles of a station and 0.14 beyond 100 miles.
   - On 2026-11-05 no month after the current one was listed, so no real season could be priced live.
 
-## Next steps
-Items 1-3 only matter if the rain work is picked up again.
+- **Making it better (doc 22):**
+  - Liquidity is now the binding limit: capped at today's near-fair depth, companion HE falls from 0.67 to 0.18; 5-10x today's depth restores it.
+  - Today a rancher keeps 90% of the fit on about a fifth of the requested cover; the app shows the depth check and suggested size.
+  - Payout design matters little (keep PRF-style linear at 90%). Excess-rain cover is offered where its HE is at least 0.5.
 
-1. **Luo SSRN numbers:** still unverified; download the PDF in a browser.
-2. **Second post-rewards order-book snapshot** in a week or two, to confirm doc 12's one-day result.
-3. **Note for doc 04b:** its farm scenarios use the NCEI index from the USDA tool, not what RMA actually paid. Doc 09 has the as-paid CPC payouts in the `prf_cpc_as_paid_usd` column.
-4. **New project direction:** not chosen yet (see the pivot note at the top). Reusable pieces for any Kalshi weather work: the market data client (`kalshi.py`), station data (`stations.py`), and the settlement checks (doc 06c).
+## Next steps
+The full roadmap (wet-side cover, two-month mock market, national coverage, loss-based target, temperature, demo-exchange orders, liquidity plan) is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Near-term:
+
+1. **Milestone II submission (due 2026-11-12):** the write-up is [milestone2/milestone2.tex](milestone2/milestone2.tex) / `.pdf`. Branch `milestone-2` is pushed and open as GitHub PR 3 into `main`; it already contains PRs 1 (`milestone-2-prep`) and 2 (`repo-setup`), so merging PR 3 lets those two be closed.
+2. **Slides (due 2026-11-17):** the deck is linked from [DEMO.md](DEMO.md). Rehearse the live demo; keep `docs/figures/m2_companion_full.png` as an offline fallback.
+3. **Second post-rewards order-book snapshot**, to confirm doc 12's one-day result and refresh doc 22's depth numbers (`scripts/pull_kalshi.py`, `scripts/compare_orderbook_snapshots.py`).
+4. **Pick the first roadmap items for the final paper (due 2026-12-15).** Doc 22 points to the liquidity plan (roadmap 7) and the two-month mock market (roadmap 2) as the most direct wins.
+
+Open loose ends from Milestone 1 (low priority):
+- **Luo SSRN numbers** (doc 10) are still unverified; download the PDF in a browser.
+- **Doc 04b** uses the NCEI index from the USDA tool, not what RMA actually paid. Doc 09 has the as-paid CPC payouts in the `prf_cpc_as_paid_usd` column.
 
 ## Repository map
 - `docs/research/` sourced research documents, one topic each
@@ -194,10 +202,12 @@ Items 1-3 only matter if the rain work is picked up again.
 ## How to reproduce
 
 ```bash
-python -m pip install -e .
-python -m pytest
-python scripts/run_basis_risk.py      # doc 07
-python scripts/run_replication.py     # doc 08
-python scripts/run_scenarios.py       # doc 04b
-python scripts/run_payout_comparison.py  # doc 09
+.venv/bin/python -m pip install -e .
+.venv/bin/python -m pytest                        # 353 tests, ~10 s
+# Milestone 1
+.venv/bin/python scripts/run_basis_risk.py        # doc 07
+.venv/bin/python scripts/run_replication.py       # doc 08
+.venv/bin/python scripts/run_scenarios.py         # doc 04b
+.venv/bin/python scripts/run_payout_comparison.py # doc 09
 ```
+Milestone 2 and companion scripts (docs 15-22) and their run times are listed in [MILESTONE_2.md](MILESTONE_2.md#reproduce).
