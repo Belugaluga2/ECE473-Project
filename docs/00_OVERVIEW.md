@@ -34,6 +34,7 @@ Every research document has a numbers table that gives a source for each number.
 | M2 refinements from the submitted M1 update: complement PRF, CPC as-paid backtest | team | [analysis/20_complementing_prf.md](analysis/20_complementing_prf.md) | done 2026-11-05 |
 | M2 showcase: PRF Companion (app tab) | team | [analysis/21_prf_companion.md](analysis/21_prf_companion.md), [DEMO.md](DEMO.md) | working prototype |
 | M2 showcase follow-up: liquidity, cover design, excess rain, two-month what-if | team | [analysis/22_making_it_better.md](analysis/22_making_it_better.md) | done 2026-11-05 |
+| Roadmap 5: temperature risk (heat on forage and cattle; Kalshi temperature contracts) | team | [research/23_temperature_risk.md](research/23_temperature_risk.md) | research draft 2026-11-06 (not fact-checked); no hedge built |
 
 ## Study sites
 
@@ -164,6 +165,17 @@ All numbers: 11 farms, NCEI PRF index, 1951-2025, hedge effectiveness (HE) out o
   - Liquidity is now the binding limit: capped at today's near-fair depth, companion HE falls from 0.67 to 0.18; 5-10x today's depth restores it.
   - Today a rancher keeps 90% of the fit on about a fifth of the requested cover; the app shows the depth check and suggested size.
   - Payout design matters little (keep PRF-style linear at 90%). Excess-rain cover is offered where its HE is at least 0.5.
+
+## Temperature risk (doc 23, 2026-11-06)
+Roadmap item 5, research only. No hedge has been built or backtested.
+
+- **No summer heat cover can be bought ahead.** Every Kalshi daily high/low market opens about 10 AM Eastern the day before the day it measures (17,955 of 17,981 events since 2021; none earlier). The weekly heat series opened at the start of its own week and ran only Aug-Oct 2026.
+- **Day-ahead prices already know the weather.** The daily ladder is centered on the forecast: the actual high landed in its middle 8°F on 75-95% of summer 2026 days at our cities. Buying day by day covers only the one-day forecast error (hypothesis, not yet tested on prices).
+- **Stations:** Dallas, San Antonio, Oklahoma City and Denver have daily high/low markets on the same NWS stations as their rain markets. Springfield, Albuquerque and Tampa have none. Chicago temperature settles at Midway, not O'Hare.
+- **Liquidity:** volume is large (a median 56,453 contracts per summer day for the Dallas high). Next-day depth is a few hundred dollars per ladder, in one November snapshot.
+- **Degree-day contracts:** the only seasonal one is Cincinnati heating degree-days (Oct-Dec 2026), with an almost empty book. Kalshi can list temperature months ahead (San Jose December, listed 102 days early).
+- **Exposure:** cattle carry most of the heat risk, not grass. US beef heat-stress losses are about $369M a year, mostly in feedlots and Texas. Atascosa and Parker, TX are the most exposed of our sites, then Hardee, FL (humid heat: 156 THI-danger days a year but only 5 days at 95°F or above) and Grady, OK. Elbert, CO and Torrance, NM are the least exposed. We found no published hay yield-per-degree estimate.
+- **Proposal (untested):** a June-August degree-days-above-95°F ladder at DFW, SAT and OKC, listed by March, built on Kalshi's existing degree-day template. Dallas DD-95 averaged 209 (SD 135) over 1991-2025 and reached 585 in 2011.
 
 ## Next steps
 The full roadmap (wet-side cover, two-month mock market, national coverage, loss-based target, temperature, demo-exchange orders, liquidity plan) is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Near-term:

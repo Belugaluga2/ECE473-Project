@@ -44,7 +44,7 @@ Ordered by how directly each builds on what exists. Each item names the module i
 | 2 | **Two-month contract mock market**: list synthetic two-month ladders priced at fair value and let the companion use them | `error_budget.window_total_ladder_cols`, `platform.build_tranches` | Turns doc 17's proposal into a working demo for the exchange pitch. |
 | 3 | **National coverage**: pull NCEI grids for every Kalshi station (38) instead of 8 | `scripts/pull_cpc.py`, `build_indices.py`, `hedge_builder` | Today's app serves 2,036 grids near 8 stations. |
 | 4 | **Loss-based target**: hedge the rancher's modeled forage loss (doc 13), not the PRF formula | `loss_model.py` → `quote(target=...)` | What a farmer actually cares about. The optimizer takes any target. |
-| 5 | **Temperature risk** (the Milestone I "if time permits" item): Kalshi daily/monthly temperature markets for heat stress on hay and cattle | `kalshi.py` client, `optimizer` | Weather risk PRF does not cover at all. |
+| 5 | **Temperature risk** (the Milestone I "if time permits" item): Kalshi daily/monthly temperature markets for heat stress on hay and cattle | `kalshi.py` client, `optimizer` | Weather risk PRF does not cover at all. Research done in doc 23: daily markets list only one day ahead, so the next step is a seasonal degree-day contract proposal and a price test, not a live hedge. |
 | 6 | **Order placement in Kalshi's demo environment** | `platform.order_ticket`, Kalshi authenticated API | Closes the loop from quote to trade. |
 | 7 | **Liquidity plan**: simulate a market maker or pooled orders across many ranches | `optimizer` tranches, doc 12 depth data | Depth is the binding constraint after geography. |
 
