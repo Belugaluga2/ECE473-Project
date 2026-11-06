@@ -74,6 +74,7 @@ class LiveQuotes:
         self.offline = offline
         self._client = client
         self._cache: dict = {}
+        self.status: dict = {}  # per-series provenance, including empty API results and fallbacks
         self._lock = threading.Lock()
 
     def _kalshi(self):
@@ -84,12 +85,13 @@ class LiveQuotes:
 
     def series_books(self, series: str) -> dict:
         """{(contract_month, strike): {'ticker', 'yes_bids', 'source', 'as_of'}} for open markets."""
+        from agri_hedge.kalshi import event_contract_month, parse_orderbook
         now = time.time()
         with self._lock:
             hit = self._cache.get(series)
             if hit and now - hit[0] < self.ttl:
                 return hit[1]
-        books, source = {}, "live"
+        books, source, error = {}, "live", None
         try:
             if self.offline:
                 raise RuntimeError("offline mode")
@@ -98,19 +100,21 @@ class LiveQuotes:
             for m in markets:
                 if m.get("strike_type") != "greater" or m.get("floor_strike") is None:
                     continue
-                cm = k.event_contract_month(m["event_ticker"])
+                cm = event_contract_month(m["event_ticker"])
                 if not cm:
                     continue
-                ob = k.parse_orderbook(k.get_orderbook(m["ticker"]))
+                ob = parse_orderbook(k.get_orderbook(m["ticker"]))
                 books[(str(cm), float(m["floor_strike"]))] = {
                     "ticker": m["ticker"], "yes_bids": ob["yes_bids"], "source": "live",
                     "as_of": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC"),
                     "close_time": m.get("close_time")}
         except Exception as exc:  # network down, API change: fall back to the saved snapshot
-            source = f"snapshot ({type(exc).__name__})"
+            source, error = "snapshot", type(exc).__name__
             books = self.snapshot_books(series)
         with self._lock:
             self._cache[series] = (now, books)
+            self.status[series] = {"source": source, "error": error, "books_count": len(books),
+                                   "observed_at": datetime.now(timezone.utc).isoformat()}
         return books
 
     @staticmethod
