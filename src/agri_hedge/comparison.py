@@ -251,3 +251,40 @@ def compare(params: dict, live=None, now: datetime | None = None) -> dict:
                 "Book availability is an observation, not an execution guarantee. Snapshot, stale, closed and wrong-date books never count as available orders.",
                 "No policy is issued and no order is submitted. A positive price gap means estimated premium savings, not risk-free profit."
             ]}
+
+
+def subsidy_trade(record: dict, settle_days: int = 180, rate=DEFAULT_TBILL_RATE) -> list[dict]:
+    """Buy subsidized PRF and sell the Kalshi replacement against it: holdout P&L by year.
+
+    Selling a NO drought leg (buying its YES) collects the bid, taken here as the forward
+    planning price minus the half spread, less taker fees and the cost of the $1 - bid
+    collateral locked for `settle_days`. Three trades: PRF alone; PRF plus selling the full
+    best-fit hedge; PRF plus selling the variance-minimizing multiple of it, beta =
+    cov(PRF, hedge) / var(hedge) on training years. Eligibility is ignored here: only
+    producers with insurable grazing or hay acres in the grid can buy PRF.
+    """
+    from agri_hedge.pricing import taker_fee
+    p = hb.build_problem(record["request"])
+    w = fit_portfolios(p.X, p.target, p.years, record["request"].protection)["best_fit"]
+    tr = p.ok & (p.years >= TRAIN[0]) & (p.years <= TRAIN[1])
+    te = p.ok & (p.years >= TEST[0]) & (p.years <= TEST[1])
+    htr = p.X[tr] @ w
+    beta = float(np.cov(p.target[tr], htr)[0, 1] / np.var(htr, ddof=1)) if np.var(htr) > 0 else 0.0
+    bid = np.clip(p.q - HALF_SPREAD, 0.01, 0.99)
+    y, premium = p.target[te], record["producer_premium"]
+    rows = []
+    for name, n in (("PRF only", np.zeros_like(w)), ("PRF + sell Kalshi hedge", w),
+                    ("PRF + sell beta x hedge", np.rint(beta * w))):
+        n = np.asarray(n, float)
+        gross = float(n @ bid)
+        fees = float(taker_fee(n, bid).sum()) if n.any() else 0.0
+        collateral = float(n @ (1 - bid))
+        proceeds = gross - fees - float(capital_cost(collateral, rate=rate, days=settle_days))
+        pnl = y - premium + proceeds - p.X[te] @ n
+        rows.append({"farm_id": record["farm_id"], "trade": name, "beta": beta,
+                     "sale_proceeds_usd": proceeds, "fair_value_sold_usd": float(n @ p.q),
+                     "prf_producer_usd": premium, "prf_full_usd": record["total_premium"],
+                     "mean_pnl_usd": float(pnl.mean()), "sd_pnl_usd": float(pnl.std(ddof=1)),
+                     "worst_pnl_usd": float(pnl.min()), "loss_years": int((pnl < 0).sum()),
+                     "n_years": int(len(pnl))})
+    return rows

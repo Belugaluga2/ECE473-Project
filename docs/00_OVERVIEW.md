@@ -169,6 +169,8 @@ All numbers: 11 farms, NCEI PRF index, 1951-2025, hedge effectiveness (HE) out o
   - Cheaper than the subsidized PRF premium for 0 of 11 farms (median 2.06x the producer premium, about 1.0x the unsubsidized premium).
   - Coverage is not the same: median holdout HE 0.21 and 76.5% of PRF dollars recovered in the same year. A station-only portfolio cannot equal a grid-index payout in every weather outcome, so no arbitrage exists.
   - A live check on 2026-11-06 found only November 2026 contracts listed, so none of the 2027 hedge is fillable today.
+  - Buying PRF and selling the Kalshi hedge against it lowers mean P&L at all 11 farms (median $2,699 to $1,384 a year) and more than doubles the worst year. Kalshi is priced near PRF's *unsubsidized* premium; the only edge is the subsidy, which a farmer gets just by buying PRF.
+- **Winter-cover caveat (2026-11-06):** PRF already offers winter intervals; ranchers skip them because Nov-Feb carries 1-15% of forage value in our loss model (median 6%). The companion's HE 0.61 is for tracking winter rain, not covering much loss (doc 21 caveats).
 
 ## Next steps
 The full roadmap (wet-side cover, two-month mock market, national coverage, loss-based target, temperature, demo-exchange orders, liquidity plan) is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Near-term:
@@ -201,13 +203,13 @@ Open loose ends from Milestone 1 (low priority):
   - `rowcrop.py`: corn/soy farm exposure and hedge backtest (doc 14)
 - `scripts/` runnable entry points that pull data and regenerate every result
 - `data/processed/` small derived datasets (committed); `data/raw/` downloads (gitignored, recreated by scripts)
-- `tests/` pytest checks (392 passing)
+- `tests/` pytest checks (393 passing)
 
 ## How to reproduce
 
 ```bash
 .venv/bin/python -m pip install -e .
-.venv/bin/python -m pytest                        # 392 tests, ~10 s
+.venv/bin/python -m pytest                        # 393 tests, ~10 s
 # Milestone 1
 .venv/bin/python scripts/run_basis_risk.py        # doc 07
 .venv/bin/python scripts/run_replication.py       # doc 08

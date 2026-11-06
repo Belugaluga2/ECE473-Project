@@ -42,6 +42,7 @@ Doc 20 found the exception: the months PRF leaves open. Cool-season rain is spre
   - Combining contracts from several nearby stations does not help much. Few farms have a second Kalshi station with a long record within 150 miles. Only the Tampa farms improve (0.37 to 0.43), so the app uses one station.
 - **Caveats.**
   - Winter rain matters less for warm-season forage (doc 03b). The companion's value is for winter pasture, winter wheat, stock-water ponds, and ranchers whose PRF allocation caps leave months open.
+  - **Added 2026-11-06: this is the companion's biggest weakness.** PRF does offer winter intervals (Nov-Dec, Dec-Jan, Jan-Feb); ranchers skip them because winter rain grows little warm-season forage. Our own rain-to-loss model (doc 13, growth-timing weights in `loss_model_parameters.csv`) puts Nov-Feb at 1-15% of each farm's forage value, median 6%. So HE 0.61 measures how well Kalshi tracks winter *rain*, not how much *loss* it covers; for most of these farms there is little loss to cover. It matters only where winter forage is the crop (wheat pasture for stocker cattle in OK/TX, cool-season grass in MO) or for stock water.
   - Today only the next month is listed, about 30 days ahead, and books are thin (doc 12). A real order would be placed month by month as each market opens.
 
 ![Companion by farm and month](../figures/m2_companion_farms.png)

@@ -212,3 +212,14 @@ def test_real_dfw_comparison_offline():
         assert all(isinstance(row["contracts"], int) for row in strategy["ticket"])
         assert strategy["execution"]["checked"] is False
         assert strategy["execution"]["full_cost_usd"] is None
+
+
+def test_subsidy_trade_selling_kalshi_lowers_mean_pnl():
+    rec = hb.load_farm_requests()[0]
+    rows = {r["trade"]: r for r in cmp.subsidy_trade(rec)}
+    alone = rows["PRF only"]
+    sold = rows["PRF + sell Kalshi hedge"]
+    assert alone["sale_proceeds_usd"] == 0
+    assert sold["sale_proceeds_usd"] < sold["fair_value_sold_usd"]  # spread, fees, collateral
+    assert sold["mean_pnl_usd"] < alone["mean_pnl_usd"]
+    assert alone["worst_pnl_usd"] == pytest.approx(-alone["prf_producer_usd"], abs=1)

@@ -15,10 +15,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from agri_hedge.comparison import compare, farms
+from agri_hedge import hedge_builder as hb
+from agri_hedge.comparison import compare, farms, subsidy_trade
 from agri_hedge.config import DOCS, PROCESSED
 from agri_hedge.docs_util import write_auto_block
 from agri_hedge.webapp.server import _clean
+
+
+def _usd(x: float) -> str:
+    return f"-${-x:,.0f}" if x < 0 else f"${x:,.0f}"
 
 
 def main(argv=None):
@@ -91,6 +96,22 @@ def main(argv=None):
               "| Taker rate / rounding assumption | 0.07 / up to $0.01 per price-level fill | Repository retail model; [Kalshi fee schedule](https://kalshi.com/docs/kalshi-fee-schedule.pdf) has account-specific rounding and multipliers |",
               "| Freshness threshold / material shortfall threshold | 120 seconds / $1 | `comparison.MAX_BOOK_AGE_SECONDS` / `coverage_metrics` |"]
     write_auto_block(DOCS / "analysis" / "23_farmer_price_comparison.md", "farmer comparison (scripts/run_farmer_comparison.py)", "\n".join(lines))
+    trades = pd.DataFrame([r for rec in hb.load_farm_requests() for r in subsidy_trade(rec)])
+    trades.to_csv(PROCESSED / "farmer_comparison_subsidy_trade.csv", index=False)
+    med = trades.groupby("trade", sort=False)[["mean_pnl_usd", "sd_pnl_usd", "worst_pnl_usd", "loss_years"]].median()
+    sold = trades[trades.trade == "PRF + sell Kalshi hedge"]
+    t = ["### Buy subsidized PRF, sell the Kalshi hedge against it (2001-2025 holdout)", "",
+         "Median across the 11 farms of each farm's annual P&L (PRF payout - producer premium + Kalshi sale proceeds - Kalshi payout).", "",
+         "| Trade | Mean P&L / yr | SD | Worst year | Losing years (of ~25) |", "|---|---:|---:|---:|---:|"]
+    for name, r in med.iterrows():
+        t.append(f"| {name} | {_usd(r.mean_pnl_usd)} | {_usd(r.sd_pnl_usd)} | {_usd(r.worst_pnl_usd)} | {r.loss_years:.0f} |")
+    t += ["", "| Claim | Value | Source |", "|---|---:|---|",
+          f"| Farms where selling the hedge raises mean P&L | {int((trades.pivot(index='farm_id', columns='trade', values='mean_pnl_usd').eval('`PRF + sell Kalshi hedge` > `PRF only`')).sum())} / 11 | `farmer_comparison_subsidy_trade.csv` |",
+          f"| Median subsidy (full - producer premium) | ${(sold.prf_full_usd - sold.prf_producer_usd).median():,.0f} | Same CSV |",
+          f"| Median sale proceeds - fair value of what is sold | {_usd((sold.sale_proceeds_usd - sold.fair_value_sold_usd).median())} | Same CSV; spread, fees, collateral |",
+          f"| Median variance-minimizing beta (training) | {trades.beta.median():.2f} | Same CSV |",
+          "| Collateral lock / sale price | 180 days / planning price - 2.25 cents | `comparison.subsidy_trade` |"]
+    write_auto_block(DOCS / "analysis" / "23_farmer_price_comparison.md", "subsidy trade (scripts/run_farmer_comparison.py)", "\n".join(t))
     fig, (a, b) = plt.subplots(1, 2, figsize=(12, 5), layout="constrained")
     yy = np.arange(len(best))
     a.barh(yy, best.cost_ratio, color="#2a6f97")

@@ -87,3 +87,29 @@ Positive price gap would mean estimated savings; these hedges have different cov
 | Taker rate / rounding assumption | 0.07 / up to $0.01 per price-level fill | Repository retail model; [Kalshi fee schedule](https://kalshi.com/docs/kalshi-fee-schedule.pdf) has account-specific rounding and multipliers |
 | Freshness threshold / material shortfall threshold | 120 seconds / $1 | `comparison.MAX_BOOK_AGE_SECONDS` / `coverage_metrics` |
 <!-- END AUTO: farmer comparison (scripts/run_farmer_comparison.py) -->
+
+## Can you buy PRF and short Kalshi to lock in the difference?
+
+The Kalshi replacement costs about twice the farmer's PRF premium, so the natural trade is to buy the cheap one (PRF) and sell the expensive one (sell the Kalshi drought legs, i.e. buy their YES side). The table below backtests that trade on the same holdout years and finds it makes things worse at every farm. The reason is in the numbers table of the first section: the Kalshi hedge costs about the same as PRF's *full, unsubsidized* premium (median 1.01x). Kalshi is not overpriced; PRF is underpriced because the government pays roughly half of it. Selling Kalshi near fair value earns nothing and pays the spread, fees and collateral cost (about $1,100 a year per farm). All of the profit comes from the subsidy, which the farmer collects just by buying PRF.
+
+The short leg is supposed to cancel PRF's risk and leave the subsidy as a sure profit. With holdout HE around 0.2 it cancels little: the typical swing in P&L falls from about $5,200 to $4,700, while the worst year gets more than twice as bad, because in some years Kalshi's airport is dry while the farm grid is not, and the seller pays out with no PRF check to cover it. There is a second barrier outside the model: only a producer with grazing or hay acres in the grid can buy PRF, so a trader cannot run this at scale.
+
+<!-- BEGIN AUTO: subsidy trade (scripts/run_farmer_comparison.py) -->
+### Buy subsidized PRF, sell the Kalshi hedge against it (2001-2025 holdout)
+
+Median across the 11 farms of each farm's annual P&L (PRF payout - producer premium + Kalshi sale proceeds - Kalshi payout).
+
+| Trade | Mean P&L / yr | SD | Worst year | Losing years (of ~25) |
+|---|---:|---:|---:|---:|
+| PRF only | $2,699 | $5,230 | -$3,643 | 11 |
+| PRF + sell Kalshi hedge | $1,384 | $4,699 | -$8,519 | 10 |
+| PRF + sell beta x hedge | $1,068 | $4,952 | -$9,518 | 11 |
+
+| Claim | Value | Source |
+|---|---:|---|
+| Farms where selling the hedge raises mean P&L | 0 / 11 | `farmer_comparison_subsidy_trade.csv` |
+| Median subsidy (full - producer premium) | $3,834 | Same CSV |
+| Median sale proceeds - fair value of what is sold | -$1,142 | Same CSV; spread, fees, collateral |
+| Median variance-minimizing beta (training) | 1.16 | Same CSV |
+| Collateral lock / sale price | 180 days / planning price - 2.25 cents | `comparison.subsidy_trade` |
+<!-- END AUTO: subsidy trade (scripts/run_farmer_comparison.py) -->
