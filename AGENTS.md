@@ -28,7 +28,7 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 ## Run it
 
 ```bash
-.venv/bin/python -m pytest              # 353 tests, ~10 s
+.venv/bin/python -m pytest              # 392 tests, ~10 s
 .venv/bin/python scripts/run_app.py     # http://localhost:8473/?demo  (PRF Companion, Dallas hay farm)
 ```
 

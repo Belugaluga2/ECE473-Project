@@ -19,6 +19,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 from agri_hedge import platform as pf
+from agri_hedge import comparison
 
 STATIC = Path(__file__).resolve().parent / "static"
 _COVERAGE_CACHE: list | None = None
@@ -57,6 +58,10 @@ class Handler(BaseHTTPRequestHandler):
         path = self.path.split("?", 1)[0]
         if path in ("/", "/index.html"):
             return self._send(200, (STATIC / "index.html").read_bytes(), "text/html; charset=utf-8")
+        if path in ("/compare", "/compare.html"):
+            return self._send(200, (STATIC / "compare.html").read_bytes(), "text/html; charset=utf-8")
+        if path == "/api/farms":
+            return self._json(200, comparison.farms())
         if path == "/api/stations":
             return self._json(200, pf.stations())
         if path == "/api/coverage":
@@ -67,7 +72,8 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):  # noqa: N802
         route = self.path.split("?", 1)[0]
-        handlers = {"/api/quote": pf.quote, "/api/companion": pf.companion}
+        handlers = {"/api/quote": pf.quote, "/api/companion": pf.companion,
+                    "/api/compare": comparison.compare}
         if route not in handlers:
             return self._json(404, {"error": "not found"})
         try:
