@@ -1,6 +1,6 @@
 # 09: What PRF pays a farmer, what a Kalshi rain hedge would pay, and what that hedge would cost
 
-**Proposal cell:** Week 3 / Evan (A3, "Compare what farmers currently get paid by traditional insurance versus what they could get paid using the current weather betting markets")  |  **Status:** DRAFT (all numbers reproducible with `python scripts/run_payout_comparison.py`)  |  **Last updated:** 2026-10-29
+**Proposal cell:** Week 3 / Evan (A3, "Compare what farmers currently get paid by traditional insurance versus what they could get paid using the current weather betting markets")  |  **Status:** DRAFT (all numbers reproducible with `python scripts/run_payout_comparison.py`)  |  **Last updated:** 2026-11-02 (capacity rerun on the post-rewards order books; costs and payouts unchanged)
 
 Code: `src/agri_hedge/pricing.py` (hedge legs, payouts, prices, fees, capital cost, order-book walks, comparison metrics), `scripts/run_payout_comparison.py` (study loop, figures, and the tables between the AUTO markers), tests in `tests/test_pricing.py` (synthetic data, no network).
 Data written: `data/processed/payout_comparison_farm_year.csv` (one row per farm and year, 1951-2025), `data/processed/payout_comparison_summary.csv` (one row per farm); figures `docs/figures/a3_*.png`.
@@ -18,12 +18,12 @@ All dollar figures are per farm per year unless stated. "PRF" is each farm's 202
 - **Across all six pricing assumptions, Kalshi costs $0.89-$1.31 per $1 of expected payout.** The doc-02 prior ($0.47 for PRF, $1.00-$1.40 for Kalshi) holds in direction. With our farms and data, PRF is a bit dearer for the farmer ($0.55-$0.61, $0.32-$1.12 by farm). The Kalshi range starts lower because the evidence points to drought-side (NO) contracts trading slightly *below* fair value, not above it.
 - **Spreads, not fees or capital, are the main trading cost.** The hedge holds 1.4-4.0 contracts per $1 of expected payout (13,000-38,000 contracts per year), and every contract pays half the spread. In the central case the markup over fair value is $490-$1,450 per year per farm (5-14%). Taker fees are 1.6-4.2% of the premium, and the capital lock-up costs $15-$81 per year (4.05% T-bill rate for 31 days). Using the 13.1-cent spread instead of 4.5 cents adds another 6-15%.
 - **Observed prices: drought contracts were not marked up.** At DFW and DEN in Nov 2025 - Oct 2026, the NO ask at listing (median 30 days before close) averaged 2.1 cents *below* the 1991-2025 climatological probability, and the mid 4.8 cents below (154 markets). On the 142 settled ones, NO paid 81% of the time against a 75% average ask. The pooled calibration of doc 05b shows the same pattern: YES is priced above its win rate, so NO is priced below.
-- **Depth, not price, is what stops a farmer today.** The busiest month of DFW_hay's hedge needs 3,640 contracts. The 2026-10-29 DFW book could fill 566 at any price and 326 at a price within 10 cents of fair value. That is 10-17% of the hedge for the two DFW farms and 46% for DEN_graze. The five sites listed on 2026-10-25 look much deeper (17-100% fillable at a sensible price), but their depth sits next to liquidity rewards that end 2026-11-01. At DFW, DEN and ORD the depth fell to hundreds of dollars after the same rewards ended (05b).
+- **Depth, not price, is what stops a farmer today, and the reward-supported depth is gone.** The busiest month of DFW_hay's hedge needs 3,640 contracts. In the 2026-11-02 books, after Kalshi's liquidity rewards on the new listings ended (2026-11-01 03:59 UTC), the DFW book could fill 869 at any price and 566 at a price within 10 cents of fair value. At a sensible price only 17-30% of the hedge fills for the two DFW farms, 33% for DEN_graze, and 8-33% at the five sites listed on 2026-10-25; 20% across all 11 farms. On 2026-10-29, while the rewards ran, the new sites looked far deeper (17-100%, 56% across all farms); that depth did not survive the end of the rewards ([doc 12](12_post_rewards_liquidity.md)). Costs and payouts in this doc do not depend on the books and did not change.
 - **One real season (2026).** DFW_hay's 2026 hedge, bought at the actual asks when each month listed, cost $6,484 and paid $7,266. Its PRF policy cost the farmer $3,683 and paid $6,671 (the Aug-Sep figure is provisional). DEN_graze's hedge cost $14,663 and paid $20,739, while its PRF policy cost $9,330 and paid only $1,165: the Denver gauge was dry while the Elbert County grid was not.
 
 ## Numbers table
 
-"Computed" = produced by `scripts/run_payout_comparison.py` (run 2026-10-29) from the processed files named in Methods. Unless stated, dollar values are per year, summed or quoted per farm as labeled.
+"Computed" = produced by `scripts/run_payout_comparison.py` (run 2026-10-29; rerun 2026-11-02 on the new order books, which changed only the capacity rows) from the processed files named in Methods. Unless stated, dollar values are per year, summed or quoted per farm as labeled.
 
 | Quantity | Value | Units | Region / period | Source | Verification |
 |---|---|---|---|---|---|
@@ -59,9 +59,10 @@ All dollar figures are per farm per year unless stated. "PRF" is each farm's 202
 | Calibration fit logit(YES rate) = a + b logit(price) | a = -0.412, b = 1.014 | | 21 days before close, last trade, 795 markets | `kalshi_rain_calibration.csv` ([05b](05b_kalshi_liquidity_stats.md)) | CONFIRMED (computed) |
 | DFW/DEN NO ask - climatology / mid - climatology at listing | -0.021 / -0.048 | $ per contract | 154 markets, Nov 2025 - Oct 2026 | Table 8 | CONFIRMED (computed) |
 | Settled DFW/DEN markets: mean NO ask / climatology / NO paid | 0.749 / 0.758 / 0.810 | $ / share / share | 142 markets | Table 8 | CONFIRMED (computed) |
-| DFW_hay busiest month: needed / fillable at all / at a sensible price | 3,640 / 566 / 326 | contracts | 2026-10-29 Nov book | Table 9 | CONFIRMED (computed) |
-| Share of hedge fillable at a sensible price | DFW 10-17%; DEN 46%; new sites 17-100%; all farms 56% | share of contracts | same | Table 9 | CONFIRMED (computed) |
-| New-listing liquidity rewards | $170 per market, end 2026-11-01 03:59 UTC | $ | SAT, OKC, SGF, ABQ, TPA Nov 2026 | [05b](05b_kalshi_liquidity_stats.md) | CONFIRMED (05b) |
+| DFW_hay busiest month: needed / fillable at all / at a sensible price | 3,640 / 869 / 566 | contracts | 2026-11-02 Nov book (post-rewards) | Table 9 | CONFIRMED (computed) |
+| Share of hedge fillable at a sensible price | DFW 17-30%; DEN 33%; new sites 8-33%; all farms 20% | share of contracts | same | Table 9 | CONFIRMED (computed) |
+| Same two rows on the 2026-10-29 books (rewards running) | 3,640 / 566 / 326; DFW 10-17%, DEN 46%, new sites 17-100%, all farms 56% | contracts; share | 2026-10-29 Nov book | `payout_comparison_summary_books20261029.csv` (`run_payout_comparison.py --orderbook data/processed/kalshi_rain_orderbook_summary_20261029.csv --summary-out ...`); reproduces the committed 2026-10-29 results to 4 decimals | CONFIRMED (computed) |
+| New-listing liquidity rewards | $170 per market, ended 2026-11-01 03:59 UTC; none listed since (checked 2026-11-02) | $ | SAT, OKC, SGF, ABQ, TPA Nov 2026 | [05b](05b_kalshi_liquidity_stats.md) | CONFIRMED (05b) |
 | 2026 season, DFW_hay: hedge cost / paid; PRF premium / paid | 6,484 / 7,266; 3,683 / 6,671 | $ | 2026 | Table 10 | CONFIRMED (computed; PRF Aug-Sep provisional) |
 | 2026 season, DEN_graze: hedge cost / paid; PRF premium / paid | 14,663 / 20,739; 9,330 / 1,165 | $ | 2026 | Table 10 | CONFIRMED (computed; PRF Aug-Sep provisional) |
 | PRF premium billing date | Sep 1 of the crop year | date | PRF | [01](../research/01_usda_prf_mechanics.md) (ADM A00200) | CONFIRMED (01) |
@@ -114,18 +115,20 @@ Correlation and hedge effectiveness across years. **Recovery** = sum over years 
 | (b1), (b2) calibrated | calibrated mid + 2.25 or 6.55 cents | taker | mid = 1 - f(1 - q), where f maps a YES contract's true win rate to the price Kalshi markets have charged for it. f comes from a logistic fit logit(rate) = a + b logit(price) to `kalshi_rain_calibration.csv`, 21 days before close, last trade (a = -0.41, b = 1.01). Sensitivity: 7 and 14 days, last trade or mid |
 | (c1) observed ask curve | q + the mean (NO ask - q) observed at listing at DFW/DEN in the same probability bin (Table 8) | taker | applies the only real ask history we have to every farm |
 | (c2) actual asks | the real 2025-26 NO ask at listing for each (month, strike) leg, DFW and DEN farms only | taker | "listing" = earliest daily candle with a two-sided quote and spread <= 25 cents, median 30 days before close |
-| Order books | walk the 2026-10-29 Nov 2026 book (YES bids -> NO offers at 1 - bid), level by level | taker per level | see Capacity |
+| Order books | walk the latest Nov 2026 book, 2026-11-02 (YES bids -> NO offers at 1 - bid), level by level | taker per level | see Capacity |
 
 Fees: 0.07 x C x P x (1 - P), rounded up to the cent per order (FCM-cleared retail account). Direct-member rounding ($0.0001) is a sensitivity. Capital: contracts are fully prepaid. A monthly market lists about 30 days before it closes and settles about a day after, so cash is locked for 31 days at the 3-month T-bill rate of 4.05% (FRED DTB3, 2026-10-27). Sensitivities: Kalshi's 3.50% APY on positions credited back, and a 92-day lock-up. A farmer cannot lock in the whole season at PRF's sales-closing date, because each month's ladder lists only around the start of that month (doc 05).
 
-### Capacity (Nov 2026 order books, snapshot 2026-10-29 09:30 UTC)
+### Capacity (Nov 2026 order books, snapshot 2026-11-02 01:34 UTC; earlier snapshot 2026-10-29 09:30 UTC kept for comparison)
 
 Only November 2026 ladders were open at every site. Two measures:
 
-1. **At all:** each leg walks the same site's November book at the same strike, at any price up to 99 cents. This is an upper bound. At the new sites much of the depth is NO offered at 98-99 cents, which is worthless for a leg worth 25 cents.
+1. **At all:** each leg walks the same site's November book at the same strike, at any price up to 99 cents. This is an upper bound. Much of the depth is NO offered at 98-99 cents, which is worthless for a leg worth 25 cents. (In the 2026-10-29 books this was most of the new-site depth.)
 2. **At a sensible price:** each leg is matched to the November strike whose November probability of paying (1991-2025) is closest to the leg's own probability. Only offers at most 10 cents above that strike's fair value count. Legs of one month that map to the same strike share its depth.
 
 Both assume every month's book looks like this November's. Two farms at the same site would compete for the same depth; each farm is reported alone. The farms with real November legs (SGF_graze, TPA_graze) are also priced exactly against the live book.
+
+The tables below use the latest books (`data/processed/kalshi_rain_orderbook_summary.csv` = the 2026-11-02 snapshot). The same capacity block on the 2026-10-29 books is kept in `data/processed/payout_comparison_summary_books20261029.csv`; [doc 12](12_post_rewards_liquidity.md) compares the two farm by farm. The 2026-11-02 snapshot is one day into November, so the November-leg prices in Table 9 carry one day of known rain.
 
 ### Checks
 
@@ -136,22 +139,22 @@ The NCEI indemnities recomputed here from `prf_official_index.csv` match `prf_sc
 <!-- BEGIN AUTO: payout comparison tables (scripts/run_payout_comparison.py) -->
 Generated by `scripts/run_payout_comparison.py`. PRF = the farm's 2026 policy (2026 rates, premium and subsidy) applied to each year's index. Kalshi hedge = the doc-08 H3 ladder (real Kalshi strikes) scaled to the farm's protection. Central Kalshi cost = scenario (a1) fair value + half of a 4.5c spread + taker fee, with T-bill capital cost 4.05% for 31 days. Fair value = expected payout under 1991-2025 station climatology.
 
-**Table 1. Plain-English summary per farm (dollars per year).** PRF payout = mean indemnity on the NCEI index 1951-2025 (the data PRF now pays on) and, in brackets, as actually paid on CPC 2015-2025. Kalshi payout = mean payout of the hedge under 1991-2025 climatology (its fair value) and, in brackets, the out-of-sample hedge's mean payout in 2015-2025 (CPC weights). Correlation = out-of-sample hedge vs PRF as paid, 2015-2025 (fit 1951-2009). Fill today = share of the hedge's contracts that November-2026-sized order books (2026-10-29) could fill at all (same strike, any price) / at a sensible price (same chance of paying, at most 10 cents above fair value); see Table 9.
+**Table 1. Plain-English summary per farm (dollars per year).** PRF payout = mean indemnity on the NCEI index 1951-2025 (the data PRF now pays on) and, in brackets, as actually paid on CPC 2015-2025. Kalshi payout = mean payout of the hedge under 1991-2025 climatology (its fair value) and, in brackets, the out-of-sample hedge's mean payout in 2015-2025 (CPC weights). Correlation = out-of-sample hedge vs PRF as paid, 2015-2025 (fit 1951-2009). Fill today = share of the hedge's contracts that November-2026-sized order books (2026-11-02) could fill at all (same strike, any price) / at a sensible price (same chance of paying, at most 10 cents above fair value); see Table 9.
 
 | Farm | PRF premium farmer pays | PRF full premium | PRF avg payout (as paid 2015-25) | Kalshi central cost | Kalshi avg payout (2015-25 out of sample) | Correlation | Fill today: at all / sensible price |
 |---|---|---|---|---|---|---|---|
-| DFW_hay | 3,683 | 7,517 | 6,153 (7,440) | 7,146 | 6,516 (6,807) | 0.78 | 15% / 10% |
-| DFW_graze | 2,734 | 5,579 | 4,664 (5,473) | 5,294 | 4,804 (5,041) | 0.70 | 26% / 17% |
-| SAT_graze | 3,198 | 7,106 | 5,676 (6,499) | 7,019 | 6,386 (7,084) | 0.53 | 100% / 100% |
-| OKC_hay | 3,643 | 7,435 | 6,370 (3,242) | 7,463 | 6,614 (6,118) | 0.40 | 100% / 17% |
-| OKC_graze | 3,129 | 6,386 | 5,377 (3,628) | 6,224 | 5,494 (5,133) | 0.73 | 100% / 26% |
-| SGF_hay | 2,663 | 5,435 | 4,428 (2,870) | 5,217 | 4,595 (4,744) | 0.34 | 100% / 89% |
-| SGF_graze | 2,132 | 4,350 | 3,566 (2,412) | 4,259 | 3,760 (3,966) | 0.37 | 100% / 89% |
-| DEN_graze | 9,330 | 19,040 | 13,410 (8,761) | 16,637 | 15,185 (20,945) | 0.69 | 59% / 46% |
-| ABQ_graze | 12,120 | 26,933 | 21,608 (19,695) | 23,734 | 22,557 (25,298) | 0.25 | 100% / 72% |
-| TPA_graze | 6,061 | 12,369 | 9,394 (18,082) | 11,335 | 10,465 (12,750) | -0.15 | 100% / 69% |
-| TPA_hay | 7,302 | 14,903 | 10,858 (22,813) | 13,158 | 12,023 (13,805) | -0.17 | 100% / 74% |
-| **All 11** | 55,994 | 117,053 | 91,502 (100,916) | 107,486 | 98,399 (111,691) | median 0.40 | 84% / 56% |
+| DFW_hay | 3,683 | 7,517 | 6,153 (7,440) | 7,146 | 6,516 (6,807) | 0.78 | 25% / 17% |
+| DFW_graze | 2,734 | 5,579 | 4,664 (5,473) | 5,294 | 4,804 (5,041) | 0.70 | 41% / 30% |
+| SAT_graze | 3,198 | 7,106 | 5,676 (6,499) | 7,019 | 6,386 (7,084) | 0.53 | 44% / 9% |
+| OKC_hay | 3,643 | 7,435 | 6,370 (3,242) | 7,463 | 6,614 (6,118) | 0.40 | 65% / 8% |
+| OKC_graze | 3,129 | 6,386 | 5,377 (3,628) | 6,224 | 5,494 (5,133) | 0.73 | 74% / 13% |
+| SGF_hay | 2,663 | 5,435 | 4,428 (2,870) | 5,217 | 4,595 (4,744) | 0.34 | 49% / 20% |
+| SGF_graze | 2,132 | 4,350 | 3,566 (2,412) | 4,259 | 3,760 (3,966) | 0.37 | 68% / 33% |
+| DEN_graze | 9,330 | 19,040 | 13,410 (8,761) | 16,637 | 15,185 (20,945) | 0.69 | 55% / 33% |
+| ABQ_graze | 12,120 | 26,933 | 21,608 (19,695) | 23,734 | 22,557 (25,298) | 0.25 | 37% / 14% |
+| TPA_graze | 6,061 | 12,369 | 9,394 (18,082) | 11,335 | 10,465 (12,750) | -0.15 | 34% / 25% |
+| TPA_hay | 7,302 | 14,903 | 10,858 (22,813) | 13,158 | 12,023 (13,805) | -0.17 | 26% / 17% |
+| **All 11** | 55,994 | 117,053 | 91,502 (100,916) | 107,486 | 98,399 (111,691) | median 0.40 | 46% / 20% |
 
 **Table 2. Year by year, 2015-2025: PRF as actually paid (CPC) / Kalshi hedge payout, $ thousand.** Hedge = H3 weights fit to the CPC index on 1951-2009 (out of sample), settled on station rain. n/a = a needed station month has a missing day. The NCEI version is in `payout_comparison_farm_year.csv`.
 
@@ -323,23 +326,23 @@ Scenario key: **a0** fair value, resting limit order (no fee, no spread); **a1**
 
 On the 142 settled quoted markets the mean NO ask was 0.749, the mean climatological probability 0.758, and NO actually paid in 0.810 of them.
 
-Nov 2026 books (2026-10-29), best NO ask minus November climatology, by site (mean over the strikes with a YES bid): ABQ -0.080 (7 strikes); DEN -0.081 (4 strikes); DFW +0.013 (7 strikes); OKC -0.030 (7 strikes); SAT -0.060 (7 strikes); SGF +0.019 (7 strikes); TPA -0.012 (7 strikes).
+Nov 2026 books (2026-11-02), best NO ask minus November climatology, by site (mean over the strikes with a YES bid): ABQ -0.125 (4 strikes); DEN -0.036 (4 strikes); DFW +0.056 (7 strikes); OKC +0.028 (7 strikes); SAT +0.001 (7 strikes); SGF +0.106 (7 strikes); TPA -0.291 (6 strikes).
 
-**Table 9. Fill capacity in the 2026-10-29 order books.** 'At all' = each leg walks the same site's November 2026 book at the same strike, any price up to 99 cents (an upper bound: much of the new-site depth is NO offered at 98-99 cents). 'Sensible price' = each leg uses the November strike with the closest chance of paying and counts only offers at most 10 cents above that strike's fair value; legs of one month that map to the same strike share its depth. Both assume every month's book looks like November's. Payout-weighted = share of the hedge's expected payout that could be filled. Nov legs = the farm's real November 2026 legs bought now at any price (cost incl. fee per $1 of their fair value).
+**Table 9. Fill capacity in the 2026-11-02 order books.** 'At all' = each leg walks the same site's November 2026 book at the same strike, any price up to 99 cents (an upper bound: much of the depth is NO offered at 98-99 cents, which is not insurance). 'Sensible price' = each leg uses the November strike with the closest chance of paying and counts only offers at most 10 cents above that strike's fair value; legs of one month that map to the same strike share its depth. Both assume every month's book looks like November's. Payout-weighted = share of the hedge's expected payout that could be filled. Nov legs = the farm's real November 2026 legs bought now at any price (cost incl. fee per $1 of their fair value).
 
 | Farm | Contracts per year | Busiest month | Needed that month | Fillable at all | Fillable at a sensible price | Share of contracts: at all / sensible | Share of expected payout: at all / sensible | Nov legs: needed / fillable / cost per $1 fair |
 |---|---|---|---|---|---|---|---|---|
-| DFW_hay | 16,236 | 5 | 3,640 | 566 | 326 | 15% / 10% | 16% / 11% | no Nov legs |
-| DFW_graze | 12,979 | 5 | 2,332 | 566 | 326 | 26% / 17% | 29% / 21% | no Nov legs |
-| SAT_graze | 16,371 | 5 | 3,777 | 3,777 | 3,777 | 100% / 100% | 100% / 100% | no Nov legs |
-| OKC_hay | 23,486 | 6 | 6,000 | 6,000 | 675 | 100% / 17% | 100% / 16% | no Nov legs |
-| OKC_graze | 20,401 | 5 | 4,525 | 4,525 | 675 | 100% / 26% | 100% / 27% | no Nov legs |
-| SGF_hay | 18,188 | 4 | 5,015 | 5,015 | 4,890 | 100% / 89% | 100% / 75% | no Nov legs |
-| SGF_graze | 14,383 | 4 | 2,918 | 2,918 | 2,866 | 100% / 89% | 100% / 77% | 1,875 / 1,875 / 1.13 |
-| DEN_graze | 37,623 | 5 | 13,550 | 6,237 | 3,217 | 59% / 46% | 52% / 52% | no Nov legs |
-| ABQ_graze | 31,768 | 8 | 8,256 | 8,256 | 3,845 | 100% / 72% | 100% / 72% | no Nov legs |
-| TPA_graze | 22,834 | 3 | 7,357 | 7,357 | 4,091 | 100% / 69% | 100% / 51% | 1,874 / 1,874 / 1.01 |
-| TPA_hay | 30,430 | 3 | 7,558 | 7,558 | 4,202 | 100% / 74% | 100% / 54% | no Nov legs |
+| DFW_hay | 16,236 | 5 | 3,640 | 869 | 566 | 25% / 17% | 22% / 16% | no Nov legs |
+| DFW_graze | 12,979 | 5 | 2,332 | 840 | 566 | 41% / 30% | 36% / 29% | no Nov legs |
+| SAT_graze | 16,371 | 5 | 3,777 | 1,046 | 253 | 44% / 9% | 45% / 13% | no Nov legs |
+| OKC_hay | 23,486 | 6 | 6,000 | 3,669 | 359 | 65% / 8% | 63% / 9% | no Nov legs |
+| OKC_graze | 20,401 | 5 | 4,525 | 3,124 | 359 | 74% / 13% | 71% / 16% | no Nov legs |
+| SGF_hay | 18,188 | 4 | 5,015 | 1,722 | 673 | 49% / 20% | 58% / 25% | no Nov legs |
+| SGF_graze | 14,383 | 4 | 2,918 | 1,649 | 600 | 68% / 33% | 77% / 40% | 1,875 / 1,317 / 1.51 |
+| DEN_graze | 37,623 | 5 | 13,550 | 5,383 | 2,078 | 55% / 33% | 50% / 38% | no Nov legs |
+| ABQ_graze | 31,768 | 8 | 8,256 | 2,607 | 765 | 37% / 14% | 36% / 14% | no Nov legs |
+| TPA_graze | 22,834 | 3 | 7,357 | 1,753 | 1,285 | 34% / 25% | 33% / 26% | 1,874 / 1,105 / 0.51 |
+| TPA_hay | 30,430 | 3 | 7,558 | 1,753 | 1,285 | 26% / 17% | 25% / 18% | no Nov legs |
 
 **Table 10. One real season, 2026: the hedge bought at each month's actual ask at listing and settled by Kalshi, vs the 2026 PRF policy.** PRF index sources are listed per interval.
 
@@ -367,11 +370,11 @@ Checks: NCEI indemnity recomputed from `prf_official_index.csv` matches `prf_sce
 
 ![Market vs fair](../figures/a3_market_price_vs_fair.png)
 
-*Figure 4. Price of each NO contract against its climatological probability of paying. Circles and triangles: DFW and DEN asks at listing, Nov 2025 - Oct 2026. Crosses: best NO ask in the Nov 2026 books of the 7 PRF sites on 2026-10-29. Single points scatter widely because each month's price reflects that month's forecast. The binned average (dash-dot) and the calibration curve (dashed) both lie slightly below fair value.*
+*Figure 4. Price of each NO contract against its climatological probability of paying. Circles and triangles: DFW and DEN asks at listing, Nov 2025 - Oct 2026. Crosses: best NO ask in the Nov 2026 books of the 7 PRF sites on 2026-11-02. Single points scatter widely because each month's price reflects that month's forecast. The binned average (dash-dot) and the calibration curve (dashed) both lie slightly below fair value.*
 
 ![Fill capacity](../figures/a3_fill_capacity.png)
 
-*Figure 5. Contracts needed in each farm's busiest month against what a November-2026-sized book could fill (log scale). Starred sites were listed on 2026-10-25 and carry liquidity rewards until 2026-11-01.*
+*Figure 5. Contracts needed in each farm's busiest month against what a November-2026-sized book could fill on 2026-11-02 (log scale). Starred sites were listed on 2026-10-25; their liquidity rewards ended 2026-11-01.*
 
 ## Interpretation for beginners
 
@@ -383,7 +386,7 @@ Checks: NCEI indemnity recomputed from `prf_official_index.csv` matches `prf_sce
 
 **4. Why it costs about twice as much to the farmer.** The market charges roughly fair odds: on average you pay about $1 for every $1 you expect to get back. Then you also pay for crossing the spread and for fees, about 5-14% more with a tight spread. PRF's *full* price is actually higher than Kalshi's ($1.28 per $1 expected). But the government pays 51% of it, so the farmer pays only about $0.61. A market product has no subsidy, so it starts with a cost disadvantage of roughly 1.8-1.9 to 1 for the same expected payout. No pricing improvement inside Kalshi can close that.
 
-**5. Why it cannot be bought today anyway.** A typical farm's hedge needs 2,300-13,600 contracts in its busiest month. At Dallas the whole relevant order book holds a few hundred at reasonable prices. The newer markets look deeper, but that depth is being paid for by Kalshi's short-term liquidity rewards.
+**5. Why it cannot be bought today anyway.** A typical farm's hedge needs 2,300-13,600 contracts in its busiest month. At Dallas the whole relevant order book holds a few hundred at reasonable prices. The newer markets looked deeper in late October, but Kalshi was paying for that depth with short-term liquidity rewards; a day after the rewards ended (2026-11-02) their books were as thin as Dallas's.
 
 **6. What the market is good for.** No paperwork, no sales-closing date, and anyone can buy it (doc 02). It pays quickly and settles on a public gauge. Its prices on the drought side were, if anything, slightly below fair odds. Those are reasons to use it as a *top-up* to PRF, for example for months PRF does not cover or the deductible band, not as a replacement.
 
@@ -392,7 +395,7 @@ Checks: NCEI indemnity recomputed from `prf_official_index.csv` matches `prf_sce
 1. **Benchmark against the subsidized price.** The optimizer's "is this worth it" test should compare Kalshi cost with the PRF producer premium per $1 of expected payout (about $0.55-0.61 for our farms), not with PRF's full premium. On that test a Kalshi replica of a PRF policy fails at every farm. The product case must rest on what PRF does not cover.
 2. **Price legs with a probability model plus an explicit execution cost.** Use the station climatology (1991-2025; windows from 1951 change fair value by less than 3%) as the mid. Add half the spread (2.25-6.55 cents) plus `pricing.taker_fee` for orders that cross, and zero for resting orders. The evidence does not support a markup on NO legs. Treat the calibrated discount (b1/b2) as an upside scenario, not the base case, until more drought-side price history exists.
 3. **Minimize contracts per dollar of payout.** Spread cost scales with contract count, and these ladders hold 1.4-4.0 contracts per $1 of expected payout. A cost-aware objective should penalize contracts, for example a per-contract cost of half the spread. Prefer fewer, more informative strikes. ABQ_graze shows the extreme: 70% of its fair value sits in legs that pay in at least 75% of months. That is prepaid money with no insurance in it.
-4. **Cap every leg at book depth and at a price limit.** Use `pricing.walk_no_book` with a limit of fair value + 10 cents. Report the unfillable share instead of assuming fills. Refresh the order-book snapshot after 2026-11-01 to see how much of the new-site depth survives the end of the rewards.
+4. **Cap every leg at book depth and at a price limit.** Use `pricing.walk_no_book` with a limit of fair value + 10 cents. Report the unfillable share instead of assuming fills. The 2026-11-02 refresh showed that the new-site depth did not survive the end of the rewards (doc 12), so plan around books of hundreds to low thousands of dollars per month and keep snapshotting (`python scripts/pull_kalshi.py --orderbooks-only`).
 5. **Score hedges on dollars matched, not only correlation.** Recovery (70-77% in 2015-2025) and the PRF-only / Kalshi-only year counts tell a farmer more than a correlation does. A downside-weighted objective (penalize shortfalls more than overpayments) is the natural next step, as doc 08 also recommends.
 6. **Use the right PRF history.** For "what did farmers get", use CPC as paid. For "what will PRF pay from now on", use NCEI. Florida shows they can give opposite answers for the same farm.
 
@@ -400,7 +403,7 @@ Checks: NCEI indemnity recomputed from `prf_official_index.csv` matches `prf_sce
 
 - **Today's policy on yesterday's weather.** Both products use 2026 rates and sizes in every year. Past rates, subsidies and county base values were different (04b).
 - **Kalshi prices exist for two sites and one year.** Scenarios (c1)/(c2) rest on 154 DFW/DEN markets from Nov 2025 - Oct 2026. Their prices carried each month's forecast, and outcomes within one month are correlated, so the "-2 cents vs climatology" result is suggestive, not established. Scenario (b) relies on doc 05b's calibration, which pools mostly large cities and uses last-trade prices rather than the asks a buyer pays.
-- **Depth is one snapshot.** The order-book capacity is from a single moment (2026-10-29 09:30 UTC) for November only. It is applied to every month, and five sites had liquidity rewards running. Real books change daily, and a large order would move prices. We did not test request-for-quote or block trades.
+- **Depth is two snapshots.** The order-book capacity is from one moment (2026-11-02 01:34 UTC, after the rewards ended) for November only, with 2026-10-29 09:30 UTC (rewards running) kept for comparison. It is applied to every month. Real books change daily, and a large order would move prices. We did not test request-for-quote or block trades.
 - **Station settlement proxy.** Hedge payouts use the cleaned station archive, not the first NWS report or the TWC data Kalshi now settles on. Doc 06c estimates about 0.4% of months could settle differently. Months with a missing day are dropped rather than imputed. That removes DFW 2025, SGF 2025 and SAT 2023 from the 2015-2025 comparison.
 - **Strike sets assumed stable.** Five sites have listed only November 2026 (1-7 inches). We assume that ladder for every month (doc 08).
 - **2026 PRF figure is provisional.** The Aug-Sep 2026 interval settles on NCEI and was not yet published by RMA. We used our NCEI rebuild ([06b](06b_index_validation.md)).
@@ -410,7 +413,7 @@ Checks: NCEI indemnity recomputed from `prf_official_index.csv` matches `prf_sce
 ## Unverified claims and open questions
 
 - **Does the drought-side discount persist?** The calibration and the DFW/DEN asks both say NO contracts traded at or below fair value. That fits a market where retail traders prefer buying YES. It needs more months and more cities with drought-side volume before Milestone 2 relies on it.
-- **Will the new-site depth survive the end of the rewards on 2026-11-01?** At DFW, DEN and ORD it did not (05b). A second snapshot in November 2026 answers this.
+- **Will the new-site depth come back?** It did not survive the end of the rewards: a day later it had fallen 77-97% (doc 12). Whether market makers return later in the month, or Kalshi lists new rewards, needs more snapshots.
 - **Will Kalshi pay interest on positions for a business account at the quoted 3.50% APY?** The help article applies to US individuals with at least $250 (doc 05). We used the full T-bill rate as the base case.
 - **Two farms at one site.** DFW_hay and DFW_graze would draw on the same DFW book. Joint capacity is lower than either alone; we did not model the split.
 

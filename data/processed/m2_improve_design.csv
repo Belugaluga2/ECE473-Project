@@ -1,0 +1,481 @@
+farm_id,month,coverage,shape,pay_years,he_loyo
+DFW_hay,Jan,0.7,linear (PRF-style),30,0.6531382458540813
+DFW_hay,Jan,0.7,fixed payment below trigger,30,0.4914410063049789
+DFW_hay,Jan,0.8,linear (PRF-style),33,0.6396358212440494
+DFW_hay,Jan,0.8,fixed payment below trigger,33,0.5005593061102606
+DFW_hay,Jan,0.9,linear (PRF-style),39,0.6461699168242612
+DFW_hay,Jan,0.9,fixed payment below trigger,39,0.5112375334904007
+DFW_hay,Jan,1.0,linear (PRF-style),42,0.6554629791440632
+DFW_hay,Jan,1.0,fixed payment below trigger,42,0.594752456108625
+DFW_hay,Feb,0.7,linear (PRF-style),33,0.4696398127440965
+DFW_hay,Feb,0.7,fixed payment below trigger,33,0.30792619079400496
+DFW_hay,Feb,0.8,linear (PRF-style),38,0.45562878057975587
+DFW_hay,Feb,0.8,fixed payment below trigger,38,0.34480699756438093
+DFW_hay,Feb,0.9,linear (PRF-style),41,0.4525053353662133
+DFW_hay,Feb,0.9,fixed payment below trigger,41,0.31293696280946703
+DFW_hay,Feb,1.0,linear (PRF-style),43,0.4606064958669033
+DFW_hay,Feb,1.0,fixed payment below trigger,43,0.36104722743979134
+DFW_hay,Mar,0.7,linear (PRF-style),32,0.6273649830967604
+DFW_hay,Mar,0.7,fixed payment below trigger,32,0.5371967359615724
+DFW_hay,Mar,0.8,linear (PRF-style),35,0.6398671092816828
+DFW_hay,Mar,0.8,fixed payment below trigger,35,0.5873502559919842
+DFW_hay,Mar,0.9,linear (PRF-style),41,0.6530889539871318
+DFW_hay,Mar,0.9,fixed payment below trigger,41,0.5601362264276597
+DFW_hay,Mar,1.0,linear (PRF-style),43,0.6652807600616065
+DFW_hay,Mar,1.0,fixed payment below trigger,43,0.5261882227045607
+DFW_hay,Oct,0.7,linear (PRF-style),36,0.5935047829498226
+DFW_hay,Oct,0.7,fixed payment below trigger,36,0.4777130364513189
+DFW_hay,Oct,0.8,linear (PRF-style),41,0.6147109766516126
+DFW_hay,Oct,0.8,fixed payment below trigger,41,0.5665555139835652
+DFW_hay,Oct,0.9,linear (PRF-style),48,0.6351378068237836
+DFW_hay,Oct,0.9,fixed payment below trigger,48,0.6013379903777745
+DFW_hay,Oct,1.0,linear (PRF-style),49,0.653080099847521
+DFW_hay,Oct,1.0,fixed payment below trigger,49,0.6103832970209272
+DFW_hay,Nov,0.7,linear (PRF-style),32,0.6096750591477107
+DFW_hay,Nov,0.7,fixed payment below trigger,32,0.4648081948769416
+DFW_hay,Nov,0.8,linear (PRF-style),40,0.6214455547342393
+DFW_hay,Nov,0.8,fixed payment below trigger,40,0.47935510665859116
+DFW_hay,Nov,0.9,linear (PRF-style),44,0.6322623261773856
+DFW_hay,Nov,0.9,fixed payment below trigger,44,0.4256604141757869
+DFW_hay,Nov,1.0,linear (PRF-style),46,0.647407193190736
+DFW_hay,Nov,1.0,fixed payment below trigger,46,0.4501299589954889
+DFW_hay,Dec,0.7,linear (PRF-style),31,0.6872262202036454
+DFW_hay,Dec,0.7,fixed payment below trigger,31,0.6074448356878273
+DFW_hay,Dec,0.8,linear (PRF-style),37,0.7102754364323176
+DFW_hay,Dec,0.8,fixed payment below trigger,37,0.6525528356634251
+DFW_hay,Dec,0.9,linear (PRF-style),39,0.7300418334669745
+DFW_hay,Dec,0.9,fixed payment below trigger,39,0.7445916687346841
+DFW_hay,Dec,1.0,linear (PRF-style),42,0.7583899931118971
+DFW_hay,Dec,1.0,fixed payment below trigger,42,0.6146863350138727
+DFW_graze,Jan,0.7,linear (PRF-style),30,0.6531382458765707
+DFW_graze,Jan,0.7,fixed payment below trigger,30,0.4914410062747947
+DFW_graze,Jan,0.8,linear (PRF-style),33,0.639635821349375
+DFW_graze,Jan,0.8,fixed payment below trigger,33,0.5005593061102604
+DFW_graze,Jan,0.9,linear (PRF-style),39,0.6461699166595729
+DFW_graze,Jan,0.9,fixed payment below trigger,39,0.5112375334904049
+DFW_graze,Jan,1.0,linear (PRF-style),42,0.6554629791455973
+DFW_graze,Jan,1.0,fixed payment below trigger,42,0.594752456108625
+DFW_graze,Aug,0.7,linear (PRF-style),27,0.41323006550638686
+DFW_graze,Aug,0.7,fixed payment below trigger,27,0.4992323473839202
+DFW_graze,Aug,0.8,linear (PRF-style),35,0.439953161761896
+DFW_graze,Aug,0.8,fixed payment below trigger,35,0.37563792595911183
+DFW_graze,Aug,0.9,linear (PRF-style),41,0.46459794731848725
+DFW_graze,Aug,0.9,fixed payment below trigger,41,0.2857179931634136
+DFW_graze,Aug,1.0,linear (PRF-style),46,0.46003942599090175
+DFW_graze,Aug,1.0,fixed payment below trigger,46,0.2559522983227628
+DFW_graze,Nov,0.7,linear (PRF-style),32,0.6096750594641798
+DFW_graze,Nov,0.7,fixed payment below trigger,32,0.4648081948769417
+DFW_graze,Nov,0.8,linear (PRF-style),40,0.621445554708485
+DFW_graze,Nov,0.8,fixed payment below trigger,40,0.47935510665862957
+DFW_graze,Nov,0.9,linear (PRF-style),44,0.6322623259007771
+DFW_graze,Nov,0.9,fixed payment below trigger,44,0.42566041417577904
+DFW_graze,Nov,1.0,linear (PRF-style),46,0.6474071931240365
+DFW_graze,Nov,1.0,fixed payment below trigger,46,0.4501299589954879
+DFW_graze,Dec,0.7,linear (PRF-style),31,0.6872262202129376
+DFW_graze,Dec,0.7,fixed payment below trigger,31,0.6074448356878271
+DFW_graze,Dec,0.8,linear (PRF-style),37,0.7102754364441393
+DFW_graze,Dec,0.8,fixed payment below trigger,37,0.6525528356634254
+DFW_graze,Dec,0.9,linear (PRF-style),39,0.7300418334666832
+DFW_graze,Dec,0.9,fixed payment below trigger,39,0.7445916687346843
+DFW_graze,Dec,1.0,linear (PRF-style),42,0.7583899931795154
+DFW_graze,Dec,1.0,fixed payment below trigger,42,0.6146863349487539
+SAT_graze,Jan,0.7,linear (PRF-style),35,0.6499125341626774
+SAT_graze,Jan,0.7,fixed payment below trigger,35,0.5619334866376273
+SAT_graze,Jan,0.8,linear (PRF-style),40,0.6849750512383029
+SAT_graze,Jan,0.8,fixed payment below trigger,40,0.5771634611380481
+SAT_graze,Jan,0.9,linear (PRF-style),44,0.6937854263893126
+SAT_graze,Jan,0.9,fixed payment below trigger,44,0.5668371428290286
+SAT_graze,Jan,1.0,linear (PRF-style),45,0.7071718530481761
+SAT_graze,Jan,1.0,fixed payment below trigger,45,0.5612839342298921
+SAT_graze,Feb,0.7,linear (PRF-style),34,0.5804046681194346
+SAT_graze,Feb,0.7,fixed payment below trigger,34,0.5519998145482417
+SAT_graze,Feb,0.8,linear (PRF-style),40,0.5954043195119232
+SAT_graze,Feb,0.8,fixed payment below trigger,40,0.4377696879205273
+SAT_graze,Feb,0.9,linear (PRF-style),42,0.595674017296855
+SAT_graze,Feb,0.9,fixed payment below trigger,42,0.43373743092168426
+SAT_graze,Feb,1.0,linear (PRF-style),46,0.602243976534624
+SAT_graze,Feb,1.0,fixed payment below trigger,46,0.3630946740693597
+SAT_graze,Jul,0.7,linear (PRF-style),37,0.4936039223778631
+SAT_graze,Jul,0.7,fixed payment below trigger,37,0.4923775072582549
+SAT_graze,Jul,0.8,linear (PRF-style),42,0.5092032364904009
+SAT_graze,Jul,0.8,fixed payment below trigger,42,0.33884572092775256
+SAT_graze,Jul,0.9,linear (PRF-style),48,0.5199642591694684
+SAT_graze,Jul,0.9,fixed payment below trigger,48,0.34780840019929216
+SAT_graze,Jul,1.0,linear (PRF-style),50,0.5238888396431564
+SAT_graze,Jul,1.0,fixed payment below trigger,50,0.3523094154994345
+SAT_graze,Aug,0.7,linear (PRF-style),42,0.305778860905906
+SAT_graze,Aug,0.7,fixed payment below trigger,42,0.2887869144014392
+SAT_graze,Aug,0.8,linear (PRF-style),43,0.3269551884098836
+SAT_graze,Aug,0.8,fixed payment below trigger,43,0.3159201597985829
+SAT_graze,Aug,0.9,linear (PRF-style),48,0.35166062221712346
+SAT_graze,Aug,0.9,fixed payment below trigger,48,0.33786075942273686
+SAT_graze,Aug,1.0,linear (PRF-style),48,0.3696345762399056
+SAT_graze,Aug,1.0,fixed payment below trigger,48,0.33786075942273686
+SAT_graze,Nov,0.7,linear (PRF-style),34,0.5337917094343647
+SAT_graze,Nov,0.7,fixed payment below trigger,34,0.27456899034512827
+SAT_graze,Nov,0.8,linear (PRF-style),39,0.5363321192443014
+SAT_graze,Nov,0.8,fixed payment below trigger,39,0.39004509945246457
+SAT_graze,Nov,0.9,linear (PRF-style),43,0.5475437195187038
+SAT_graze,Nov,0.9,fixed payment below trigger,43,0.4269500981640877
+SAT_graze,Nov,1.0,linear (PRF-style),46,0.5470000967791467
+SAT_graze,Nov,1.0,fixed payment below trigger,46,0.30537657006878427
+SAT_graze,Dec,0.7,linear (PRF-style),37,0.4577572674475021
+SAT_graze,Dec,0.7,fixed payment below trigger,37,0.4481012167507843
+SAT_graze,Dec,0.8,linear (PRF-style),41,0.49616576637504917
+SAT_graze,Dec,0.8,fixed payment below trigger,41,0.5512203482470399
+SAT_graze,Dec,0.9,linear (PRF-style),46,0.5409653955868546
+SAT_graze,Dec,0.9,fixed payment below trigger,46,0.5801912774756214
+SAT_graze,Dec,1.0,linear (PRF-style),50,0.578887814513051
+SAT_graze,Dec,1.0,fixed payment below trigger,50,0.5303060758599075
+OKC_hay,Jan,0.7,linear (PRF-style),32,0.524247441591828
+OKC_hay,Jan,0.7,fixed payment below trigger,32,0.6088116264711848
+OKC_hay,Jan,0.8,linear (PRF-style),33,0.5650178083864434
+OKC_hay,Jan,0.8,fixed payment below trigger,33,0.6474720651673427
+OKC_hay,Jan,0.9,linear (PRF-style),37,0.6014734976557872
+OKC_hay,Jan,0.9,fixed payment below trigger,37,0.642378977474402
+OKC_hay,Jan,1.0,linear (PRF-style),38,0.6315260559590793
+OKC_hay,Jan,1.0,fixed payment below trigger,38,0.6100716793874909
+OKC_hay,Feb,0.7,linear (PRF-style),30,0.4695483549798033
+OKC_hay,Feb,0.7,fixed payment below trigger,30,0.7204132167888406
+OKC_hay,Feb,0.8,linear (PRF-style),35,0.5623843291045502
+OKC_hay,Feb,0.8,fixed payment below trigger,35,0.692949586053289
+OKC_hay,Feb,0.9,linear (PRF-style),37,0.6350375712893147
+OKC_hay,Feb,0.9,fixed payment below trigger,37,0.6374688353547009
+OKC_hay,Feb,1.0,linear (PRF-style),39,0.6670220485701702
+OKC_hay,Feb,1.0,fixed payment below trigger,39,0.618645318838745
+OKC_hay,Mar,0.7,linear (PRF-style),27,0.6829774128533924
+OKC_hay,Mar,0.7,fixed payment below trigger,27,0.6553949830787383
+OKC_hay,Mar,0.8,linear (PRF-style),31,0.7161770591369847
+OKC_hay,Mar,0.8,fixed payment below trigger,31,0.5695829080472073
+OKC_hay,Mar,0.9,linear (PRF-style),38,0.7477938036846525
+OKC_hay,Mar,0.9,fixed payment below trigger,38,0.6534305297170648
+OKC_hay,Mar,1.0,linear (PRF-style),43,0.7501322761971659
+OKC_hay,Mar,1.0,fixed payment below trigger,43,0.5181785313157563
+OKC_hay,Oct,0.7,linear (PRF-style),30,0.5083277474869881
+OKC_hay,Oct,0.7,fixed payment below trigger,30,0.4638108475347835
+OKC_hay,Oct,0.8,linear (PRF-style),38,0.5422903487728314
+OKC_hay,Oct,0.8,fixed payment below trigger,38,0.5915497411029307
+OKC_hay,Oct,0.9,linear (PRF-style),42,0.5842057398919493
+OKC_hay,Oct,0.9,fixed payment below trigger,42,0.6957412816289819
+OKC_hay,Oct,1.0,linear (PRF-style),45,0.6404905997862205
+OKC_hay,Oct,1.0,fixed payment below trigger,45,0.6796977680197938
+OKC_hay,Nov,0.7,linear (PRF-style),36,0.6276355997235635
+OKC_hay,Nov,0.7,fixed payment below trigger,36,0.5730287180783282
+OKC_hay,Nov,0.8,linear (PRF-style),42,0.6556967912957126
+OKC_hay,Nov,0.8,fixed payment below trigger,42,0.6579236835339989
+OKC_hay,Nov,0.9,linear (PRF-style),45,0.6943006771458634
+OKC_hay,Nov,0.9,fixed payment below trigger,45,0.7518404985208276
+OKC_hay,Nov,1.0,linear (PRF-style),48,0.7251786020434932
+OKC_hay,Nov,1.0,fixed payment below trigger,48,0.862408278216516
+OKC_hay,Dec,0.7,linear (PRF-style),33,0.5807958696166153
+OKC_hay,Dec,0.7,fixed payment below trigger,33,0.6030297695640476
+OKC_hay,Dec,0.8,linear (PRF-style),38,0.6445919816519845
+OKC_hay,Dec,0.8,fixed payment below trigger,38,0.6173704664725433
+OKC_hay,Dec,0.9,linear (PRF-style),44,0.6797696261616024
+OKC_hay,Dec,0.9,fixed payment below trigger,44,0.6060064685970714
+OKC_hay,Dec,1.0,linear (PRF-style),46,0.6902897416547722
+OKC_hay,Dec,1.0,fixed payment below trigger,46,0.566706120517675
+OKC_graze,Jan,0.7,linear (PRF-style),32,0.524247441591828
+OKC_graze,Jan,0.7,fixed payment below trigger,32,0.6088116264711848
+OKC_graze,Jan,0.8,linear (PRF-style),33,0.5650178083864432
+OKC_graze,Jan,0.8,fixed payment below trigger,33,0.6474720651673427
+OKC_graze,Jan,0.9,linear (PRF-style),37,0.6014734976557874
+OKC_graze,Jan,0.9,fixed payment below trigger,37,0.642378977474402
+OKC_graze,Jan,1.0,linear (PRF-style),38,0.6315260559590792
+OKC_graze,Jan,1.0,fixed payment below trigger,38,0.610071679387491
+OKC_graze,Feb,0.7,linear (PRF-style),30,0.4695483549798033
+OKC_graze,Feb,0.7,fixed payment below trigger,30,0.7204132167888406
+OKC_graze,Feb,0.8,linear (PRF-style),35,0.5623843291045503
+OKC_graze,Feb,0.8,fixed payment below trigger,35,0.6929495860532643
+OKC_graze,Feb,0.9,linear (PRF-style),37,0.6350375712893147
+OKC_graze,Feb,0.9,fixed payment below trigger,37,0.6374688353547013
+OKC_graze,Feb,1.0,linear (PRF-style),39,0.66702204857017
+OKC_graze,Feb,1.0,fixed payment below trigger,39,0.6186453188387444
+OKC_graze,Nov,0.7,linear (PRF-style),36,0.6276355997235634
+OKC_graze,Nov,0.7,fixed payment below trigger,36,0.573028718078328
+OKC_graze,Nov,0.8,linear (PRF-style),42,0.6556967913373803
+OKC_graze,Nov,0.8,fixed payment below trigger,42,0.6579236832700063
+OKC_graze,Nov,0.9,linear (PRF-style),45,0.6943006772787634
+OKC_graze,Nov,0.9,fixed payment below trigger,45,0.7518404985208278
+OKC_graze,Nov,1.0,linear (PRF-style),48,0.7251786020313138
+OKC_graze,Nov,1.0,fixed payment below trigger,48,0.8624082781937032
+OKC_graze,Dec,0.7,linear (PRF-style),33,0.5807958696166151
+OKC_graze,Dec,0.7,fixed payment below trigger,33,0.6030297695640481
+OKC_graze,Dec,0.8,linear (PRF-style),38,0.6445919816519844
+OKC_graze,Dec,0.8,fixed payment below trigger,38,0.6173704664725429
+OKC_graze,Dec,0.9,linear (PRF-style),44,0.6797696261616024
+OKC_graze,Dec,0.9,fixed payment below trigger,44,0.6060064685970712
+OKC_graze,Dec,1.0,linear (PRF-style),46,0.6902897416547721
+OKC_graze,Dec,1.0,fixed payment below trigger,46,0.5667061205176759
+SGF_hay,Jan,0.7,linear (PRF-style),33,0.6028085855249233
+SGF_hay,Jan,0.7,fixed payment below trigger,33,0.6331327333790024
+SGF_hay,Jan,0.8,linear (PRF-style),37,0.6682239944194668
+SGF_hay,Jan,0.8,fixed payment below trigger,37,0.6333433364292211
+SGF_hay,Jan,0.9,linear (PRF-style),44,0.708056193791416
+SGF_hay,Jan,0.9,fixed payment below trigger,44,0.6788142452947362
+SGF_hay,Jan,1.0,linear (PRF-style),45,0.7398954509363488
+SGF_hay,Jan,1.0,fixed payment below trigger,45,0.6458007586845211
+SGF_hay,Feb,0.7,linear (PRF-style),30,0.6124860032784167
+SGF_hay,Feb,0.7,fixed payment below trigger,30,0.606959134010592
+SGF_hay,Feb,0.8,linear (PRF-style),33,0.6662815564545135
+SGF_hay,Feb,0.8,fixed payment below trigger,33,0.6605746901698109
+SGF_hay,Feb,0.9,linear (PRF-style),37,0.6946989209403671
+SGF_hay,Feb,0.9,fixed payment below trigger,37,0.6204549485296823
+SGF_hay,Feb,1.0,linear (PRF-style),42,0.6972433042073398
+SGF_hay,Feb,1.0,fixed payment below trigger,42,0.5724831787055737
+SGF_hay,Jul,0.7,linear (PRF-style),26,0.2412631504023377
+SGF_hay,Jul,0.7,fixed payment below trigger,26,0.4283519500562275
+SGF_hay,Jul,0.8,linear (PRF-style),31,0.33248185978812206
+SGF_hay,Jul,0.8,fixed payment below trigger,31,0.4024601758342944
+SGF_hay,Jul,0.9,linear (PRF-style),37,0.4020592027493525
+SGF_hay,Jul,0.9,fixed payment below trigger,37,0.5201938846468799
+SGF_hay,Jul,1.0,linear (PRF-style),42,0.4547932852021279
+SGF_hay,Jul,1.0,fixed payment below trigger,42,0.46481569209611906
+SGF_hay,Aug,0.7,linear (PRF-style),29,0.2725998132054661
+SGF_hay,Aug,0.7,fixed payment below trigger,29,0.3966891464146053
+SGF_hay,Aug,0.8,linear (PRF-style),35,0.34262925669457134
+SGF_hay,Aug,0.8,fixed payment below trigger,35,0.48106454859670955
+SGF_hay,Aug,0.9,linear (PRF-style),40,0.39279401243411327
+SGF_hay,Aug,0.9,fixed payment below trigger,40,0.4672084840046038
+SGF_hay,Aug,1.0,linear (PRF-style),44,0.44024027619834827
+SGF_hay,Aug,1.0,fixed payment below trigger,44,0.47142912708648743
+SGF_hay,Nov,0.7,linear (PRF-style),29,0.7172301994078676
+SGF_hay,Nov,0.7,fixed payment below trigger,29,0.5507475813487802
+SGF_hay,Nov,0.8,linear (PRF-style),37,0.7319979065164266
+SGF_hay,Nov,0.8,fixed payment below trigger,37,0.6515085868931465
+SGF_hay,Nov,0.9,linear (PRF-style),43,0.7573780534712097
+SGF_hay,Nov,0.9,fixed payment below trigger,43,0.7199111123315727
+SGF_hay,Nov,1.0,linear (PRF-style),45,0.7712806767171952
+SGF_hay,Nov,1.0,fixed payment below trigger,45,0.613568118638105
+SGF_hay,Dec,0.7,linear (PRF-style),29,0.7524941685419732
+SGF_hay,Dec,0.7,fixed payment below trigger,29,0.5604325738268193
+SGF_hay,Dec,0.8,linear (PRF-style),31,0.7391209283066877
+SGF_hay,Dec,0.8,fixed payment below trigger,31,0.5384645212572794
+SGF_hay,Dec,0.9,linear (PRF-style),39,0.7358968430358925
+SGF_hay,Dec,0.9,fixed payment below trigger,39,0.5182280623299182
+SGF_hay,Dec,1.0,linear (PRF-style),45,0.7345615654004797
+SGF_hay,Dec,1.0,fixed payment below trigger,45,0.5899890203928952
+SGF_graze,Jan,0.7,linear (PRF-style),33,0.6028085855204123
+SGF_graze,Jan,0.7,fixed payment below trigger,33,0.6331327333790024
+SGF_graze,Jan,0.8,linear (PRF-style),37,0.668223994379445
+SGF_graze,Jan,0.8,fixed payment below trigger,37,0.6333433364292211
+SGF_graze,Jan,0.9,linear (PRF-style),44,0.7080561937219776
+SGF_graze,Jan,0.9,fixed payment below trigger,44,0.678814245294736
+SGF_graze,Jan,1.0,linear (PRF-style),45,0.7398954509222408
+SGF_graze,Jan,1.0,fixed payment below trigger,45,0.6458007586845209
+SGF_graze,Feb,0.7,linear (PRF-style),30,0.612486003278418
+SGF_graze,Feb,0.7,fixed payment below trigger,30,0.6069591340105922
+SGF_graze,Feb,0.8,linear (PRF-style),33,0.6662815562906148
+SGF_graze,Feb,0.8,fixed payment below trigger,33,0.6605746901698104
+SGF_graze,Feb,0.9,linear (PRF-style),37,0.6946989208404889
+SGF_graze,Feb,0.9,fixed payment below trigger,37,0.6204549485296826
+SGF_graze,Feb,1.0,linear (PRF-style),42,0.6972433039824597
+SGF_graze,Feb,1.0,fixed payment below trigger,42,0.5724831787055746
+SGF_graze,Jul,0.7,linear (PRF-style),26,0.24126315040233115
+SGF_graze,Jul,0.7,fixed payment below trigger,26,0.42835195000374715
+SGF_graze,Jul,0.8,linear (PRF-style),31,0.33248185974199385
+SGF_graze,Jul,0.8,fixed payment below trigger,31,0.4024601758342944
+SGF_graze,Jul,0.9,linear (PRF-style),37,0.4020592026598877
+SGF_graze,Jul,0.9,fixed payment below trigger,37,0.5201938846468799
+SGF_graze,Jul,1.0,linear (PRF-style),42,0.45479328505411065
+SGF_graze,Jul,1.0,fixed payment below trigger,42,0.46481569209611884
+SGF_graze,Dec,0.7,linear (PRF-style),29,0.7524941688336242
+SGF_graze,Dec,0.7,fixed payment below trigger,29,0.5604325738268192
+SGF_graze,Dec,0.8,linear (PRF-style),31,0.7391209284895196
+SGF_graze,Dec,0.8,fixed payment below trigger,31,0.5384645213100114
+SGF_graze,Dec,0.9,linear (PRF-style),39,0.7358968429625359
+SGF_graze,Dec,0.9,fixed payment below trigger,39,0.5182280623601743
+SGF_graze,Dec,1.0,linear (PRF-style),45,0.7345615655394052
+SGF_graze,Dec,1.0,fixed payment below trigger,45,0.5899890202891352
+DEN_graze,Jan,0.7,linear (PRF-style),25,0.034082754501068346
+DEN_graze,Jan,0.7,fixed payment below trigger,25,0.05204157309112267
+DEN_graze,Jan,0.8,linear (PRF-style),29,0.043330696997097684
+DEN_graze,Jan,0.8,fixed payment below trigger,29,0.06567062640682486
+DEN_graze,Jan,0.9,linear (PRF-style),32,0.05169726646834272
+DEN_graze,Jan,0.9,fixed payment below trigger,32,0.07719474726123976
+DEN_graze,Jan,1.0,linear (PRF-style),42,0.06302448206330591
+DEN_graze,Jan,1.0,fixed payment below trigger,42,0.13350443843628468
+DEN_graze,Feb,0.7,linear (PRF-style),27,0.06906942801286997
+DEN_graze,Feb,0.7,fixed payment below trigger,27,0.0977141934293273
+DEN_graze,Feb,0.8,linear (PRF-style),34,0.07299939944893519
+DEN_graze,Feb,0.8,fixed payment below trigger,34,0.033725942382854535
+DEN_graze,Feb,0.9,linear (PRF-style),39,0.0789504042606809
+DEN_graze,Feb,0.9,fixed payment below trigger,39,0.06261136760420638
+DEN_graze,Feb,1.0,linear (PRF-style),43,0.086521071143568
+DEN_graze,Feb,1.0,fixed payment below trigger,43,0.09322295355509391
+DEN_graze,Mar,0.7,linear (PRF-style),30,0.19058266767960352
+DEN_graze,Mar,0.7,fixed payment below trigger,30,0.2797802926049753
+DEN_graze,Mar,0.8,linear (PRF-style),35,0.23167760001408044
+DEN_graze,Mar,0.8,fixed payment below trigger,35,0.31388159717908704
+DEN_graze,Mar,0.9,linear (PRF-style),42,0.2694769928173981
+DEN_graze,Mar,0.9,fixed payment below trigger,42,0.2872984791869112
+DEN_graze,Mar,1.0,linear (PRF-style),44,0.29825803848775967
+DEN_graze,Mar,1.0,fixed payment below trigger,44,0.3055319110920587
+DEN_graze,Oct,0.7,linear (PRF-style),35,0.2520256275242878
+DEN_graze,Oct,0.7,fixed payment below trigger,35,0.25116884947297946
+DEN_graze,Oct,0.8,linear (PRF-style),41,0.2849633273277419
+DEN_graze,Oct,0.8,fixed payment below trigger,41,0.3086656109766658
+DEN_graze,Oct,0.9,linear (PRF-style),46,0.3252486614495964
+DEN_graze,Oct,0.9,fixed payment below trigger,46,0.29659445151533415
+DEN_graze,Oct,1.0,linear (PRF-style),50,0.34773367704802494
+DEN_graze,Oct,1.0,fixed payment below trigger,50,0.3484642241616661
+DEN_graze,Nov,0.7,linear (PRF-style),35,0.18018960200541678
+DEN_graze,Nov,0.7,fixed payment below trigger,35,0.25811370555092006
+DEN_graze,Nov,0.8,linear (PRF-style),40,0.22657012874846516
+DEN_graze,Nov,0.8,fixed payment below trigger,40,0.3463130007120625
+DEN_graze,Nov,0.9,linear (PRF-style),43,0.2685781819861972
+DEN_graze,Nov,0.9,fixed payment below trigger,43,0.4138724580631844
+DEN_graze,Nov,1.0,linear (PRF-style),49,0.33305819789550495
+DEN_graze,Nov,1.0,fixed payment below trigger,49,0.596195194038464
+DEN_graze,Dec,0.7,linear (PRF-style),30,0.0754883343934708
+DEN_graze,Dec,0.7,fixed payment below trigger,30,0.10783363992506712
+DEN_graze,Dec,0.8,linear (PRF-style),35,0.08833785509143444
+DEN_graze,Dec,0.8,fixed payment below trigger,35,0.14268675431668898
+DEN_graze,Dec,0.9,linear (PRF-style),37,0.10356181935118569
+DEN_graze,Dec,0.9,fixed payment below trigger,37,0.15838421159224003
+DEN_graze,Dec,1.0,linear (PRF-style),41,0.12203041989002184
+DEN_graze,Dec,1.0,fixed payment below trigger,41,0.19747763662113094
+ABQ_graze,Jan,0.7,linear (PRF-style),27,0.036695159217205675
+ABQ_graze,Jan,0.7,fixed payment below trigger,27,0.0477924823224114
+ABQ_graze,Jan,0.8,linear (PRF-style),35,0.04296460643734501
+ABQ_graze,Jan,0.8,fixed payment below trigger,35,0.07381023078217364
+ABQ_graze,Jan,0.9,linear (PRF-style),37,0.05105255982897594
+ABQ_graze,Jan,0.9,fixed payment below trigger,37,0.08293596918634227
+ABQ_graze,Jan,1.0,linear (PRF-style),45,0.05888503455843508
+ABQ_graze,Jan,1.0,fixed payment below trigger,45,0.04951963450511798
+ABQ_graze,Feb,0.7,linear (PRF-style),29,0.041585507988875614
+ABQ_graze,Feb,0.7,fixed payment below trigger,29,0.06292934768813718
+ABQ_graze,Feb,0.8,linear (PRF-style),32,0.04898797020095147
+ABQ_graze,Feb,0.8,fixed payment below trigger,32,0.07430262112788333
+ABQ_graze,Feb,0.9,linear (PRF-style),37,0.05962598792940088
+ABQ_graze,Feb,0.9,fixed payment below trigger,37,0.09728254034868478
+ABQ_graze,Feb,1.0,linear (PRF-style),44,0.07292487111478707
+ABQ_graze,Feb,1.0,fixed payment below trigger,44,0.14187071908938576
+ABQ_graze,Mar,0.7,linear (PRF-style),33,0.05858010921878487
+ABQ_graze,Mar,0.7,fixed payment below trigger,33,0.09096541416439552
+ABQ_graze,Mar,0.8,linear (PRF-style),37,0.07182874568551945
+ABQ_graze,Mar,0.8,fixed payment below trigger,37,0.11351533602930253
+ABQ_graze,Mar,0.9,linear (PRF-style),39,0.08242288187587354
+ABQ_graze,Mar,0.9,fixed payment below trigger,39,0.12552321159129476
+ABQ_graze,Mar,1.0,linear (PRF-style),42,0.0942202946957924
+ABQ_graze,Mar,1.0,fixed payment below trigger,42,0.14751453589173125
+ABQ_graze,Oct,0.7,linear (PRF-style),40,0.39668297440927835
+ABQ_graze,Oct,0.7,fixed payment below trigger,40,0.625070552713508
+ABQ_graze,Oct,0.8,linear (PRF-style),41,0.46607975594092743
+ABQ_graze,Oct,0.8,fixed payment below trigger,41,0.6594267905657847
+ABQ_graze,Oct,0.9,linear (PRF-style),42,0.5181225922959725
+ABQ_graze,Oct,0.9,fixed payment below trigger,42,0.6960996319751614
+ABQ_graze,Oct,1.0,linear (PRF-style),44,0.563354265654276
+ABQ_graze,Oct,1.0,fixed payment below trigger,44,0.6734152108584561
+ABQ_graze,Nov,0.7,linear (PRF-style),28,0.061206048875288355
+ABQ_graze,Nov,0.7,fixed payment below trigger,28,0.0791532876564478
+ABQ_graze,Nov,0.8,linear (PRF-style),35,0.07141890840706178
+ABQ_graze,Nov,0.8,fixed payment below trigger,35,0.11616409001419448
+ABQ_graze,Nov,0.9,linear (PRF-style),39,0.08298660629038479
+ABQ_graze,Nov,0.9,fixed payment below trigger,39,0.14311484102702776
+ABQ_graze,Nov,1.0,linear (PRF-style),43,0.09239852959712591
+ABQ_graze,Nov,1.0,fixed payment below trigger,43,0.1159731219346144
+ABQ_graze,Dec,0.7,linear (PRF-style),37,0.07765687445641722
+ABQ_graze,Dec,0.7,fixed payment below trigger,37,0.0948234359972484
+ABQ_graze,Dec,0.8,linear (PRF-style),39,0.08610462602327196
+ABQ_graze,Dec,0.8,fixed payment below trigger,39,0.11003039666405467
+ABQ_graze,Dec,0.9,linear (PRF-style),41,0.09160786066691651
+ABQ_graze,Dec,0.9,fixed payment below trigger,41,0.1263455983175351
+ABQ_graze,Dec,1.0,linear (PRF-style),45,0.1007408828674955
+ABQ_graze,Dec,1.0,fixed payment below trigger,45,0.1150672067386469
+TPA_graze,Jan,0.7,linear (PRF-style),34,0.4616248861401757
+TPA_graze,Jan,0.7,fixed payment below trigger,34,0.4619426404879958
+TPA_graze,Jan,0.8,linear (PRF-style),34,0.4940911912755783
+TPA_graze,Jan,0.8,fixed payment below trigger,34,0.4619426404879958
+TPA_graze,Jan,0.9,linear (PRF-style),37,0.5245897264485997
+TPA_graze,Jan,0.9,fixed payment below trigger,37,0.5541371714044234
+TPA_graze,Jan,1.0,linear (PRF-style),42,0.5520242017556309
+TPA_graze,Jan,1.0,fixed payment below trigger,42,0.45019943708952015
+TPA_graze,Feb,0.7,linear (PRF-style),28,0.4755689350019736
+TPA_graze,Feb,0.7,fixed payment below trigger,28,0.4077664444208996
+TPA_graze,Feb,0.8,linear (PRF-style),32,0.5028550669046363
+TPA_graze,Feb,0.8,fixed payment below trigger,32,0.3758386871860646
+TPA_graze,Feb,0.9,linear (PRF-style),39,0.5214826959734452
+TPA_graze,Feb,0.9,fixed payment below trigger,39,0.3180377597721209
+TPA_graze,Feb,1.0,linear (PRF-style),44,0.5334144803696284
+TPA_graze,Feb,1.0,fixed payment below trigger,44,0.43267071788695477
+TPA_graze,Jul,0.7,linear (PRF-style),9,0.23934127297157226
+TPA_graze,Jul,0.7,fixed payment below trigger,9,0.12013365740235082
+TPA_graze,Jul,0.8,linear (PRF-style),18,0.21934013366688343
+TPA_graze,Jul,0.8,fixed payment below trigger,18,0.16035847128395198
+TPA_graze,Jul,0.9,linear (PRF-style),34,0.23858419008465237
+TPA_graze,Jul,0.9,fixed payment below trigger,34,0.05588312321353739
+TPA_graze,Jul,1.0,linear (PRF-style),43,0.21083537707074984
+TPA_graze,Jul,1.0,fixed payment below trigger,43,0.0033151908066204605
+TPA_graze,Aug,0.7,linear (PRF-style),9,-0.020545755617395578
+TPA_graze,Aug,0.7,fixed payment below trigger,9,-0.06025069462317956
+TPA_graze,Aug,0.8,linear (PRF-style),19,-0.0017646548916230298
+TPA_graze,Aug,0.8,fixed payment below trigger,19,0.05499788507780112
+TPA_graze,Aug,0.9,linear (PRF-style),33,0.035634333217029024
+TPA_graze,Aug,0.9,fixed payment below trigger,33,0.11752441574390671
+TPA_graze,Aug,1.0,linear (PRF-style),44,0.06546677252082012
+TPA_graze,Aug,1.0,fixed payment below trigger,44,0.056363551372407894
+TPA_graze,Sep,0.7,linear (PRF-style),19,0.26661786527018005
+TPA_graze,Sep,0.7,fixed payment below trigger,19,0.27413318288868027
+TPA_graze,Sep,0.8,linear (PRF-style),27,0.3018049961974515
+TPA_graze,Sep,0.8,fixed payment below trigger,27,0.19747500680991736
+TPA_graze,Sep,0.9,linear (PRF-style),31,0.30252980778141647
+TPA_graze,Sep,0.9,fixed payment below trigger,31,0.24370167774651041
+TPA_graze,Sep,1.0,linear (PRF-style),43,0.32558439730708777
+TPA_graze,Sep,1.0,fixed payment below trigger,43,0.1388937444270988
+TPA_graze,Dec,0.7,linear (PRF-style),38,0.333434388228782
+TPA_graze,Dec,0.7,fixed payment below trigger,38,0.4224975675635261
+TPA_graze,Dec,0.8,linear (PRF-style),40,0.3752732883762544
+TPA_graze,Dec,0.8,fixed payment below trigger,40,0.36039460042439564
+TPA_graze,Dec,0.9,linear (PRF-style),41,0.39979177878322514
+TPA_graze,Dec,0.9,fixed payment below trigger,41,0.33621925769480876
+TPA_graze,Dec,1.0,linear (PRF-style),43,0.410267858823829
+TPA_graze,Dec,1.0,fixed payment below trigger,43,0.36092879421955415
+TPA_hay,Jan,0.7,linear (PRF-style),34,0.46162488603187135
+TPA_hay,Jan,0.7,fixed payment below trigger,34,0.4619426406766255
+TPA_hay,Jan,0.8,linear (PRF-style),34,0.4940911914057051
+TPA_hay,Jan,0.8,fixed payment below trigger,34,0.4619426406766255
+TPA_hay,Jan,0.9,linear (PRF-style),37,0.5245897264715641
+TPA_hay,Jan,0.9,fixed payment below trigger,37,0.5541371712189724
+TPA_hay,Jan,1.0,linear (PRF-style),42,0.5520242014406842
+TPA_hay,Jan,1.0,fixed payment below trigger,42,0.4501994349069032
+TPA_hay,Feb,0.7,linear (PRF-style),28,0.4755689348169092
+TPA_hay,Feb,0.7,fixed payment below trigger,28,0.40776644442090026
+TPA_hay,Feb,0.8,linear (PRF-style),32,0.5028550666538214
+TPA_hay,Feb,0.8,fixed payment below trigger,32,0.3758386871860647
+TPA_hay,Feb,0.9,linear (PRF-style),39,0.5214826957768128
+TPA_hay,Feb,0.9,fixed payment below trigger,39,0.3180377597724877
+TPA_hay,Feb,1.0,linear (PRF-style),44,0.5334144803696286
+TPA_hay,Feb,1.0,fixed payment below trigger,44,0.4326707178869136
+TPA_hay,Jul,0.7,linear (PRF-style),9,0.23934127297023344
+TPA_hay,Jul,0.7,fixed payment below trigger,9,0.12013365741012905
+TPA_hay,Jul,0.8,linear (PRF-style),18,0.21934013367210825
+TPA_hay,Jul,0.8,fixed payment below trigger,18,0.16035847128347946
+TPA_hay,Jul,0.9,linear (PRF-style),34,0.23858419008078002
+TPA_hay,Jul,0.9,fixed payment below trigger,34,0.05588312290109032
+TPA_hay,Jul,1.0,linear (PRF-style),43,0.21083537699652166
+TPA_hay,Jul,1.0,fixed payment below trigger,43,0.0033151908066205715
+TPA_hay,Aug,0.7,linear (PRF-style),9,-0.020545755617396244
+TPA_hay,Aug,0.7,fixed payment below trigger,9,-0.06025069462318022
+TPA_hay,Aug,0.8,linear (PRF-style),19,-0.0017646548521201844
+TPA_hay,Aug,0.8,fixed payment below trigger,19,0.05499788507780068
+TPA_hay,Aug,0.9,linear (PRF-style),33,0.03563433321702947
+TPA_hay,Aug,0.9,fixed payment below trigger,33,0.11752441574390671
+TPA_hay,Aug,1.0,linear (PRF-style),44,0.06546677252082012
+TPA_hay,Aug,1.0,fixed payment below trigger,44,0.056363551372408005
+TPA_hay,Nov,0.7,linear (PRF-style),33,0.15877769536746278
+TPA_hay,Nov,0.7,fixed payment below trigger,33,0.2118869740461028
+TPA_hay,Nov,0.8,linear (PRF-style),39,0.1900922630157864
+TPA_hay,Nov,0.8,fixed payment below trigger,39,0.26855800059046075
+TPA_hay,Nov,0.9,linear (PRF-style),43,0.2202884002287001
+TPA_hay,Nov,0.9,fixed payment below trigger,43,0.2879959646483745
+TPA_hay,Nov,1.0,linear (PRF-style),46,0.2412751288522772
+TPA_hay,Nov,1.0,fixed payment below trigger,46,0.32450279861165643
+TPA_hay,Dec,0.7,linear (PRF-style),38,0.33343438823155047
+TPA_hay,Dec,0.7,fixed payment below trigger,38,0.42249756756437473
+TPA_hay,Dec,0.8,linear (PRF-style),40,0.37527328828490747
+TPA_hay,Dec,0.8,fixed payment below trigger,40,0.36039460058133244
+TPA_hay,Dec,0.9,linear (PRF-style),41,0.39979177925299103
+TPA_hay,Dec,0.9,fixed payment below trigger,41,0.3362192575657097
+TPA_hay,Dec,1.0,linear (PRF-style),43,0.41026785877238847
+TPA_hay,Dec,1.0,fixed payment below trigger,43,0.3609287941878181

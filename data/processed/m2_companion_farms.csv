@@ -1,0 +1,12 @@
+farm_id,station,distance_mi,uncovered_months,recommended,n_recommended,package_cost_usd,package_expected_payout_usd,package_cost_per_dollar,package_he_oos,gap_cover_expected_usd,prf_producer_premium_usd,prf_expected_payout_usd,prf_intervals_he_oos_doc19
+DFW_hay,DFW,46.3,6,"Jan, Mar, Oct, Nov, Dec",5,6739.56,5997.72,1.124,0.676,8530.12,3683.33,6152.27,0.484
+DFW_graze,DFW,46.3,4,"Jan, Nov, Dec",3,3127.0,2784.11,1.123,0.763,3791.93,2733.71,4664.71,0.479
+SAT_graze,SAT,45.2,6,"Jan, Feb, Jul, Nov, Dec",5,8165.6,7595.22,1.075,0.588,8741.56,3197.7,5676.97,0.273
+OKC_hay,OKC,30.1,6,"Jan, Feb, Mar, Oct, Nov, Dec",6,11647.29,10629.1,1.096,0.651,11719.73,3643.15,6369.13,0.437
+OKC_graze,OKC,30.1,4,"Jan, Feb, Nov, Dec",4,6617.06,6047.14,1.094,0.659,7165.96,3129.14,5377.37,0.492
+SGF_hay,SGF,28.8,6,"Jan, Feb, Nov, Dec",4,5063.9,4494.98,1.127,0.794,5598.33,2663.15,4426.96,0.333
+SGF_graze,SGF,28.8,4,"Jan, Feb, Dec",3,2544.53,2256.12,1.128,0.747,3171.84,2131.5,3565.79,0.375
+DEN_graze,DEN,46.7,6,,0,,,,,,9329.6,13409.59,0.296
+ABQ_graze,ABQ,53.1,6,,0,,,,,,12119.85,21616.32,0.134
+TPA_graze,TPA,54.7,6,"Jan, Feb",2,5202.44,4727.03,1.101,0.44,5294.99,6060.81,9392.74,0.39
+TPA_hay,TPA,54.7,6,"Jan, Feb",2,7125.8,6474.62,1.101,0.44,7252.56,7302.47,10857.4,0.348

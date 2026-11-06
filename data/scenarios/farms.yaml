@@ -18,6 +18,10 @@
 #   proxy for improved pasture) and aum_per_acre = lb x 0.25 harvest efficiency / 912.5 lb per AUM.
 # - expected_value_usd_per_acre: haying = expected yield x NASS 2025 marketing-year state price
 #   (other hay); grazing = NASS pasture cash rent for the county (latest year published).
+#   Hay prices (TX $130, OK $88, MO $113, FL $120 per ton) are the FINAL 2025 marketing-year
+#   averages in NASS Agricultural Prices (Aug 31 2026), p.33 (= Quick Stats "PRICE RECEIVED,
+#   MARKETING YEAR"). The Crop Values 2025 Summary (Feb 2026, p.33) printed preliminary values
+#   (TX $136, OK $90, MO $114, FL $120) that the August report superseded; re-checked 2026-11-01.
 # - productivity_factor follows the county's observed choice: liability-weighted average
 #   implied by RMA Summary of Business 2026 (1.28-1.50), rounded to 0.05.
 # - coverage_level = the most common coverage level (by insured acres) in the county, 2021-2025.
@@ -61,6 +65,7 @@ farms:
       - "RMA Summary of Business sobcov/sobtpu 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
       - "PRF Crop Provisions 26-RI-PRF: https://www.rma.usda.gov/sites/default/files/2025-08/Rainfall-Index-Pasture-Rangeland-Forage-Crop-Provisions-26-RI-PRF.pdf"
       - "NASS Quick Stats, HAY (EXCL ALFALFA) yield and price received, Texas, 2016-2025: https://quickstats.nass.usda.gov/"
+      - "NASS Agricultural Prices (Aug 31 2026), Hay Market Year Average Prices Received, Other, 2025 (final), p.33: https://release.nass.usda.gov/reports/agpr0826.pdf"
       - "NASS 2022 Census of Agriculture county data (Quick Stats) and profile: https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/County_Profiles/Texas/cp48367.pdf"
 
   - farm_id: DFW_graze
@@ -168,6 +173,7 @@ farms:
       - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
       - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
       - "NASS Quick Stats, HAY (EXCL ALFALFA) yield and price, Oklahoma 2016-2025 and Grady County 2010-2018: https://quickstats.nass.usda.gov/"
+      - "NASS Agricultural Prices (Aug 31 2026), Hay Market Year Average Prices Received, Other, 2025 (final), p.33: https://release.nass.usda.gov/reports/agpr0826.pdf"
       - "NASS 2022 Census county profile: https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/County_Profiles/Oklahoma/cp40051.pdf"
 
   - farm_id: OKC_graze
@@ -238,6 +244,7 @@ farms:
       - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
       - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
       - "NASS Quick Stats, HAY (EXCL ALFALFA) yield and price, Missouri 2016-2025 and Dade County 2010-2018: https://quickstats.nass.usda.gov/"
+      - "NASS Agricultural Prices (Aug 31 2026), Hay Market Year Average Prices Received, Other, 2025 (final), p.33: https://release.nass.usda.gov/reports/agpr0826.pdf"
       - "NRCS ESD R116BY021MO climate narrative: https://edit.sc.egov.usda.gov/services/descriptions/esd/116B/R116BY021MO.json"
 
   - farm_id: SGF_graze
@@ -415,4 +422,5 @@ farms:
       - "RMA ADM 2026 Price table A00810: https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/"
       - "RMA Summary of Business 2015-2026: https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
       - "NASS Quick Stats, HAY (EXCL ALFALFA) yield and price, Florida 2016-2025; Census 2022 Hardee: https://quickstats.nass.usda.gov/"
+      - "NASS Agricultural Prices (Aug 31 2026), Hay Market Year Average Prices Received, Other, 2025 (final), p.33: https://release.nass.usda.gov/reports/agpr0826.pdf"
       - "NASS 2022 Census county profile: https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/County_Profiles/Florida/cp12049.pdf"

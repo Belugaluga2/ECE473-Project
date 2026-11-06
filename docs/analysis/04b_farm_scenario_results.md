@@ -1,6 +1,6 @@
 # PRF farm scenarios: premiums, payouts, and uncovered losses
 
-**Proposal cell:** Week 1 / Evan ("Build example farmer scenarios showing the premiums, potential payouts, and uncovered losses under the USDA policy")  |  **Status:** DRAFT (calculator, actuarial data, grid analysis, and first farm results done; farm results use the 11 representative farms in `data/scenarios/farms.yaml` as of 2026-10-29)  |  **Last updated:** 2026-10-29
+**Proposal cell:** Week 1 / Evan ("Build example farmer scenarios showing the premiums, potential payouts, and uncovered losses under the USDA policy")  |  **Status:** DRAFT (calculator, actuarial data, grid analysis, and first farm results done; farm results use the 11 representative farms in `data/scenarios/farms.yaml` as of 2026-10-29)  |  **Last updated:** 2026-11-01 (hay-price check; no result changed)
 
 This document covers three things: (1) the PRF premium and indemnity calculator in
 `src/agri_hedge/prf.py` and the policy rules it implements, (2) the 2025 and 2026 actuarial data
@@ -60,6 +60,12 @@ runner `scripts/run_scenarios.py` and its results for the 11 representative farm
   yield x price, which is within a factor of 1.1-1.6 of CBV x productivity factor. For them,
   indemnities are 1.3-2.0 times the proxy loss, but uncovered loss is still positive in 7-29% of
   years, with a 90th percentile of $0-$2,572 per year.
+- **Hay prices checked 2026-11-01; results unchanged.** The hay farms use NASS's final 2025 other-hay
+  prices (TX $130, OK $88, MO $113, FL $120 per ton; Agricultural Prices, Aug 31 2026, p.33). The
+  slightly higher TX $136 / OK $90 / MO $114 in the Crop Values 2025 Summary (Feb 2026) are
+  preliminary figures that the August report superseded, so `farms.yaml` was already right and was
+  not changed. Rerunning `scripts/run_scenarios.py` on 2026-11-01 reproduced every table in this doc
+  exactly (scenario CSV: 5 of 825 rows differ only by 0.0001 rounding in the last decimal).
 - **How much is left uncovered depends mostly on assumptions, not on the policy.** If forage is
   valued at the PRF protection basis (CBV x productivity factor), mean uncovered loss is close to
   zero for every farm (-$1,537 to +$738 per year), but its 90th percentile is $1,802 to $24,734
@@ -123,6 +129,7 @@ ADM = RMA Actuarial Data Master, https://pubfs-rma.fpac.usda.gov/pub/References/
 | Indemnity / forage loss proxy, long run | grazing 1.7-10.3; haying 1.3-2.0 | ratio | 11 farms, 1951-2025 | computed | CONFIRMED (computed) |
 | Hay farms: share of years with uncovered loss > 0; 90th pct uncovered | 7-29%; $0-2,572 per year | - | 4 hay farms, 1951-2025 | computed | CONFIRMED (computed) |
 | Mean / 90th pct uncovered loss with value = CBV x PF | -1,537 to +738 / 1,802 to 24,734 | $/year | 11 farms, 1951-2025 | computed | CONFIRMED (computed) |
+| Hay prices behind the hay farms' value per acre (yield x price) | TX 130; OK 88; MO 113; FL 120 | $/ton | final 2025 marketing-year average, other hay | NASS Agricultural Prices (Aug 31 2026) p.33, https://release.nass.usda.gov/reports/agpr0826.pdf; equal to `farms.yaml` (checked 2026-11-01) | CONFIRMED |
 | As-paid vs index-file indemnity, TPA_graze / TPA_hay / DEN_graze | 26,989 vs 12,735 / 32,727 vs 12,905 / 6,444 vs 13,807 | $/year | 2021-2025 | computed (ADM final indices vs `prf_official_index.csv`) | CONFIRMED (computed) |
 | ADM streamed to build the actuarial file | about 1.0 | GB (network; about 4 MB kept) | 2025-2026 plus 2021-2024 A00810 | `scripts/pull_prf_actuarial.py` logs | CONFIRMED |
 | 2027 stocking-rate requirement | at least 25% of an average stocking rate | % | PRF grazing, 2027+ | 27-RI-PRF summary of changes, section 4(j) | CONFIRMED |

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "agrihedge",
+      "runtimeExecutable": ".venv/bin/python",
+      "runtimeArgs": ["scripts/run_app.py", "--port", "8473"],
+      "port": 8473
+    }
+  ]
+}

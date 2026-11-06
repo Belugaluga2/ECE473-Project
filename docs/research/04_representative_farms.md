@@ -51,6 +51,11 @@ Jargon used throughout:
   1.57 (2.50 in 2025), Atascosa 1.01, Parker 0.90, Kane 0.82, Dade 0.80, Elbert 0.70, Torrance 0.69,
   Grady 0.50. Because about 52% of premium is subsidized, farmers got back 1.0 (Grady) to 3.2 (Hardee)
   dollars per dollar of premium they paid.
+
+  *Fact-check note (2026-11-01): Parker 0.90 and Torrance 0.69 include RMA's masked "All Other Crops"
+  (commodity 9999) Rainfall Index rows (Parker 2015-2021 and 2025; Torrance 2016 and 2019-2021), which
+  may contain non-PRF commodities. PRF-only rows (commodity 0088) give Parker 1.08 (2022-2025 only) and
+  Torrance 0.71 (2017-2025), the figures doc 02 uses. Both versions reproduce from the RMA files.*
 - **Hardee FL haying is an outlier:** 59,897 acres were insured as haying in 2026 (79% of county
   liability), 7.4 times the 8,070 acres the 2022 Census counted as harvested for hay. The haying
   base value ($333) is 6.6 times the grazing value ($50.30).
@@ -106,7 +111,7 @@ Grouped rows cover every cell of the named table.
 | Pasture acres per beef cow (Table A3) | 3.7 (Dade) to 95.1 (Torrance) | acres/cow | 2022 | Census "AG LAND, PASTURELAND - ACRES" / beef cows (size-class sum where total withheld) | DERIVED |
 | Hay acres per hay operation | Parker 33, Atascosa 63, Grady 178, Dade 128, Elbert 108, Torrance 98, Hardee 134, Kane 37 | acres | 2022 | Census hay acres / "HAY - OPERATIONS WITH AREA HARVESTED" | DERIVED |
 | Census county hay yield | Parker 1.49 ... Hardee 3.75 (Table B) | tons/acre | 2022 | Census hay tons / hay acres | DERIVED |
-| Hay price received, marketing year 2025: other hay / alfalfa (Table B) | TX 130/232, OK 88/164, MO 113/170, CO 153/164, NM 185/246, FL 120/-, IL 106/161; US 137/172 | $/ton | state, MY 2025 | NASS Quick Stats, SURVEY, HAY, PRICE RECEIVED, period MARKETING YEAR | CONFIRMED |
+| Hay price received, marketing year 2025: other hay / alfalfa (Table B) | TX 130/232, OK 88/164, MO 113/170, CO 153/164, NM 185/246, FL 120/-, IL 106/161; US 137/172 | $/ton | state, MY 2025 | NASS Quick Stats, SURVEY, HAY, PRICE RECEIVED, period MARKETING YEAR; the same values are the final 2025 MYA prices in NASS Agricultural Prices (Aug 31 2026) p.33, https://release.nass.usda.gov/reports/agpr0826.pdf (re-checked 2026-11-01; the Crop Values 2025 Summary's TX 136 / OK 90 / MO 114 are the earlier preliminary values) | CONFIRMED |
 | Other-hay yield 2016-2025 (Table B) | TX 1.92, OK 1.69, MO 1.90, FL 2.72 mean (min-max in table) | tons/acre | state | NASS Quick Stats, SURVEY, "HAY, (EXCL ALFALFA) - YIELD" | CONFIRMED (means DERIVED) |
 | County other-hay yield | Grady 0.9-2.15 (2010-2018), Dade 1.5-2.6 (2010-2018) | tons/acre | county | NASS Quick Stats county survey (no TX or FL county estimates in 2010-2025; OK, MO, CO county series end in 2018) | CONFIRMED |
 | Pasture cash rent (Table B) | county: Parker 13.5 (2024), Atascosa 15.5, Grady 24.5, Dade 35, Elbert 6.1, Torrance 1.7 (2025), Hardee 11 (2024); state 2025: TX 7.7, OK 18, MO 38.5, CO 7.0, NM 4.1, FL 20, IL 49 | $/acre/yr | as listed | NASS Quick Stats, SURVEY, "RENT, CASH, PASTURELAND - EXPENSE, MEASURED IN $ / ACRE" | CONFIRMED |
@@ -635,7 +640,8 @@ reason buyers favor them: a two-month index far below normal is more likely ther
   (`data/processed/prf_actuarial_study_grids.csv`); we checked base values and protection against our
   own pull and the DST, but not each premium rate.
 - **Hay prices** are state averages; local Parker or Hardee prices may differ. The 2025 marketing-year
-  price is NASS's latest published value as of 2026-10-29.
+  price is NASS's final value (Agricultural Prices, Aug 31 2026, p.33; re-checked 2026-11-01). It
+  supersedes the preliminary Crop Values 2025 Summary figures (TX $136, OK $90, MO $114).
 - **Herd sizes** in the farm descriptions are acres / county pasture acres per beef cow and are
   approximate.
 
@@ -694,3 +700,18 @@ Project files from other workstreams (read, not modified)
 - `data/processed/study_grids.csv` (farm and station PRF grid IDs).
 - `data/processed/prf_actuarial_study_grids.csv` (ADM 2025/2026 premium rates, base values, limits).
 - `data/processed/cpc_monthly_precip_grids.parquet` (CPC monthly precipitation by grid).
+
+## Fact-check log
+
+Independent fact-check run 2026-11-01 (branch `run/factcheck-2`). Summary: [11_fact_check_summary.md](../analysis/11_fact_check_summary.md).
+
+| Claim in this doc | Source checked (2026-11-01) | Verdict |
+|---|---|---|
+| Hay price received, MY2025, other hay: TX 130, OK 88, MO 113, CO 153, NM 185, FL 120, IL 106; alfalfa TX 232, OK 164, MO 170, CO 164, NM 246, IL 161 | NASS Quick Stats re-queried (same public endpoints as `r8_pull_county_data.py`), period "MARKETING YEAR" | confirmed (all 13 state values) |
+| Same prices vs NASS Crop Values 2025 Summary (TX 136, OK 90, MO 114) | Crop Values 2025 Summary (2026-02-26) marks 2025 as "Preliminary". The hay marketing year ends April 30, 2026, so the February figure cannot be the final full-year average | not an error. Quick Stats holds the current value, so **no change to `farms.yaml`**. This settles overview next step 1: keep 130/88/113, or switch doc 03b to the Quick Stats values for consistency |
+| Subsidy 59/55/51; at least 2 intervals; at least 10% each; Jan-Feb 25% cap for 2027 | 7 U.S.C. 1508(e)(7); PM-26-053 | confirmed |
+| SOB pooled county loss ratios and returns (Hardee 1.57 / 3.20 ... Grady 0.50 / 1.04) | Parker and Torrance re-summed by the reviewer from `sobcov_2015..2025` (finding from `run/factcheck-1`): Parker 0.90 with masked 9999 rows, 1.08 PRF-only (2022-2025); Torrance PRF-only 0.71. Other counties not re-computed | Parker 0.90 confirmed with a **clarification** (includes masked rows; note added under Key findings). Others unverifiable (not re-checked) |
+| 2026 county base values, max-percent caps, implied productivity factors, Census 2022 county data, NRCS SSURGO production, cash rents | ADM 2026, the DST API (empty response to a plain request), Census and SSURGO not re-pulled | unverifiable (not re-checked) |
+| Station-to-farm distance and grid IDs | internal (repo `locations.py`, `study_grids.csv`) | out of scope (internal) |
+
+No number in this doc or in `farms.yaml` was changed.

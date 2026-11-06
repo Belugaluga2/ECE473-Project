@@ -49,7 +49,7 @@ import requests
 from agri_hedge.config import PROCESSED, RAW
 from agri_hedge.locations import STUDY_SITES
 from agri_hedge.prf import PREMIUM_SUBSIDY_BY_COVERAGE
-from agri_hedge.prf_intervals import CODE_TO_INTERVAL, INTERVAL_CODES
+from agri_hedge.prf_intervals import CODE_TO_INTERVAL
 
 ADM_BASE = "https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master"
 DST_API = "https://public-rma.fpac.usda.gov/apps/PrfWebApi"

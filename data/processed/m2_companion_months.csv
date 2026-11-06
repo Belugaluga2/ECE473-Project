@@ -1,0 +1,61 @@
+farm_id,name,month,he_out_of_sample,cost_per_dollar_expected,verdict
+DFW_hay,Jan,1,0.646,1.133,recommended
+DFW_hay,Feb,2,0.453,1.119,possible
+DFW_hay,Mar,3,0.653,1.179,recommended
+DFW_hay,Oct,10,0.635,1.132,recommended
+DFW_hay,Nov,11,0.632,1.11,recommended
+DFW_hay,Dec,12,0.73,1.139,recommended
+DFW_graze,Jan,1,0.646,1.133,recommended
+DFW_graze,Aug,8,0.465,1.11,possible
+DFW_graze,Nov,11,0.632,1.11,recommended
+DFW_graze,Dec,12,0.73,1.139,recommended
+SAT_graze,Jan,1,0.696,1.109,recommended
+SAT_graze,Feb,2,0.592,1.09,recommended
+SAT_graze,Jul,7,0.513,1.076,recommended
+SAT_graze,Aug,8,0.34,1.068,possible
+SAT_graze,Nov,11,0.544,1.09,recommended
+SAT_graze,Dec,12,0.519,1.076,recommended
+OKC_hay,Jan,1,0.601,1.091,recommended
+OKC_hay,Feb,2,0.635,1.091,recommended
+OKC_hay,Mar,3,0.748,1.15,recommended
+OKC_hay,Oct,10,0.584,1.134,recommended
+OKC_hay,Nov,11,0.694,1.086,recommended
+OKC_hay,Dec,12,0.68,1.109,recommended
+OKC_graze,Jan,1,0.601,1.091,recommended
+OKC_graze,Feb,2,0.635,1.091,recommended
+OKC_graze,Nov,11,0.694,1.086,recommended
+OKC_graze,Dec,12,0.68,1.109,recommended
+SGF_hay,Jan,1,0.708,1.148,recommended
+SGF_hay,Feb,2,0.695,1.115,recommended
+SGF_hay,Jul,7,0.402,1.172,possible
+SGF_hay,Aug,8,0.393,1.131,possible
+SGF_hay,Nov,11,0.757,1.131,recommended
+SGF_hay,Dec,12,0.736,1.128,recommended
+SGF_graze,Jan,1,0.708,1.148,recommended
+SGF_graze,Feb,2,0.695,1.115,recommended
+SGF_graze,Jul,7,0.402,1.172,possible
+SGF_graze,Dec,12,0.736,1.128,recommended
+DEN_graze,Jan,1,0.052,1.03,poor match
+DEN_graze,Feb,2,0.079,1.031,poor match
+DEN_graze,Mar,3,0.269,1.054,poor match
+DEN_graze,Oct,10,0.325,1.059,possible
+DEN_graze,Nov,11,0.269,1.042,poor match
+DEN_graze,Dec,12,0.104,1.03,poor match
+ABQ_graze,Jan,1,0.047,1.03,poor match
+ABQ_graze,Feb,2,0.054,1.036,poor match
+ABQ_graze,Mar,3,0.077,1.038,poor match
+ABQ_graze,Oct,10,0.492,1.065,possible
+ABQ_graze,Nov,11,0.077,1.044,poor match
+ABQ_graze,Dec,12,0.09,1.048,poor match
+TPA_graze,Jan,1,0.525,1.119,recommended
+TPA_graze,Feb,2,0.521,1.094,recommended
+TPA_graze,Jul,7,0.239,1.295,poor match
+TPA_graze,Aug,8,0.036,1.199,poor match
+TPA_graze,Sep,9,0.303,1.166,possible
+TPA_graze,Dec,12,0.4,1.076,possible
+TPA_hay,Jan,1,0.525,1.119,recommended
+TPA_hay,Feb,2,0.521,1.094,recommended
+TPA_hay,Jul,7,0.239,1.295,poor match
+TPA_hay,Aug,8,0.036,1.199,poor match
+TPA_hay,Nov,11,0.22,1.058,poor match
+TPA_hay,Dec,12,0.4,1.076,possible

@@ -20,7 +20,7 @@ Status labels used here:
   - at least 2 intervals, with no month in two selected intervals;
   - at least 10% of value in each selected interval;
   - at most 50%, 60% or 70% per interval, depending on the state;
-  - **Jan-Feb is newly capped at 25%** (California keeps 50%).
+  - **Jan-Feb is newly capped at 25%** (California keeps 50%; the 25% cap is confirmed in PM-26-053, but PM-26-053 states no California exception, so the 50% rests on ADM27 A00810 and was not re-checked in the 2026-11-01 fact-check).
 - **Coverage, productivity and subsidy:**
   - Coverage levels are 70-90% in 5-point steps, and the productivity factor runs from 60% to 150%.
   - Premium subsidy is 59% at 70-75% coverage, 55% at 80-85%, and 51% at 90%. It is identical in the 2025, 2026 and 2027 ADM.
@@ -63,7 +63,7 @@ Status labels used here:
 | Minimum intervals selected | 2 | intervals | all | HB26 ¶32C, p.12; [CP27](#sources) §2(a), p.1 | CONFIRMED |
 | Max non-overlapping intervals | 6 | intervals | all | from CP27 §2(b) non-overlap rule | DERIVED |
 | Minimum percent of value per selected interval | 10 | % | all | CP27 §2(a), p.1; ADM27 A00810 (every record) | CONFIRMED |
-| Max percent of value, Jan-Feb (625) | 25 (California: 50) | % | 2027, all states | [PM26053](#sources); ADM27 A00810 | CONFIRMED |
+| Max percent of value, Jan-Feb (625) | 25 (California: 50) | % | 2027, all states | [PM26053](#sources) (25% confirmed in fact-check: "Limit the percent of value for the January-February interval to 25 percent"); ADM27 A00810 (California 50%) | CONFIRMED (25%); California exception UNVERIFIED in fact-check |
 | Max percent of value, other intervals | 50 (11 states incl. TX, NM, FL); 60 (21 states incl. OK, MO, CO); 70 (17 states) | % | 2027 | ADM27 A00810 "Maximum Acre Percent" | CONFIRMED |
 | Coverage levels | 70, 75, 80, 85, 90 | % | all | CP27 §5(a)(1), p.2; ADM27 A00070; DST validation | CONFIRMED |
 | Productivity factor range | 60-150, 1% steps | % | PRF (Hawaii 60-120) | CP27 §5(a)(2), p.2; HB26 ¶13, p.5 | CONFIRMED |
@@ -122,7 +122,7 @@ Status labels used here:
 
 ### 1. What PRF is, in one paragraph
 
-PRF (Pasture, Rangeland, Forage) is the USDA Risk Management Agency's (RMA) only rainfall-index insurance. It is sold by private "approved insurance providers" (AIPs), which must offer it to everyone in the offer area (HB26 ¶1E, p.2).
+PRF (Pasture, Rangeland, Forage) is by far the largest product under the USDA Risk Management Agency's (RMA) Rainfall Index plan (plan code 13). It is not the only one: the same plan also insures Annual Forage and Apiculture ($1,222.1 million and $461.8 million of 2025 liability, against $6,547.0 million for PRF; RMA Summary of Business `sobcov_2025`). *[Corrected 2026-11-01: earlier text said PRF was RMA's "only rainfall-index insurance".]* It is sold by private "approved insurance providers" (AIPs), which must offer it to everyone in the offer area (HB26 ¶1E, p.2).
 
 It is an **area index plan**. The rancher is not paid for their own loss. They are paid when an official rainfall index for the surrounding grid cell falls below a trigger.
 
@@ -551,3 +551,24 @@ Local copies are under `data/raw/rma_docs/` (gitignored; re-downloadable from th
 - **[FACTSHEET]** RMA. *Pasture, Rangeland, Forage Pilot Insurance Program* fact sheet, September 2025. https://www.rma.usda.gov/sites/default/files/2024-02/Pasture-Rangeland-Forage-Pilot-Insurance-Program-Fact-Sheet.pdf
 - RMA. *Rainfall Index* policy page (current document links). https://www.rma.usda.gov/policy-procedure/general-policies/rainfall-index
 - RMA. *Summary Overview of Rainfall Index Insurance plan for PRF* (CPC-era background). https://www.rma.usda.gov/sites/default/files/2024-05/risummary.pdf
+
+## Fact-check log
+
+Independent fact-check run 2026-11-01 (branch `run/factcheck-2`) against primary sources. Summary and downstream impact: [11_fact_check_summary.md](../analysis/11_fact_check_summary.md). "Confirmed" means the checker re-read the number in the named source on 2026-11-01. "Unverifiable" means the checker could not open or parse the source with the tools available; it does not mean the number is wrong.
+
+| Claim in this doc | Source checked (2026-11-01) | Verdict |
+|---|---|---|
+| PRF is RMA's "only rainfall-index insurance" (§1) | RMA Summary of Business `sobcov_2025.zip`, plan 13 (Rainfall Index) liability by commodity: PRF 0088 $6,547.0M, Annual Forage 0332 $1,222.1M, Apiculture 1191 $461.8M, masked 9999 $432.7M (found by `run/factcheck-1`; re-summed by the reviewer on 2026-11-01) | **corrected** in §1: PRF is the largest Rainfall Index product, not the only one. The overview repeats the error ("USDA's only rainfall-index policy") |
+| Premium subsidy 59% (70-75% coverage), 55% (80-85%), 51% (90%) | 7 U.S.C. 1508(e)(7), Cornell LII text: tiers 70-<80% = 59%, 80-<90% = 55%, ≥90% = 51% | confirmed |
+| Administrative fee $30 per crop per county; CAT fee $655 | 7 U.S.C. 1508(c)(10)(A) and (b)(5)(A) | confirmed |
+| Beginning farmer extra subsidy +15 / +13 / +11 / +10 points | 7 U.S.C. 1508(e)(8) (+10 points) plus (e)(9)(B)(i) (+5 in years 1-2, +3 in year 3, +1 in year 4) | confirmed |
+| Beginning farmer = up to 10 crop years | 7 U.S.C. 1502 not opened | unverifiable (not re-checked) |
+| Jan-Feb capped at 25% of value from 2027; grazing needs livestock ≥ 25% of an average stocking rate; records kept 3 years; PM-26-053 dated 2026-09-08 | PM-26-053 web page | confirmed |
+| California keeps 50% Jan-Feb cap | PM-26-053 states no exception; the claim rests on ADM27 A00810, which was not downloaded | unverifiable (flagged in the numbers table) |
+| PRF switches from CPC to NCEI data on 2026-08-31 (crop year 2027); "overall loss ratios remain nearly identical" | RMA news release 2026-04-30 | confirmed |
+| NCEI-era baseline 1951 to CY−2 (2027: 1951-2025); final index rounded to 3 decimals; CPC era started 1948 | RMA "Rainfall Index Data - 2027 and Beyond" PDF (text extracted) | confirmed |
+| CPC analysis released on a 0.25° grid | CPC "Conceptual Description of the CPC Gauge Analysis Procedure" (2021), sec. 1 | confirmed |
+| Handbook Exhibit 5 inputs and outputs (protection 10,692; premium 1,114; indemnities 167 / 1,332 / 1,705) | HB26 PDF downloaded; Exhibit 5 tables could not be extracted (no PDF renderer available). The repo's unit tests reproduce these values from `prf_rules.yaml`, but that is not an independent read | unverifiable |
+| State caps (11 states at 50%, 21 at 60%, 17 at 70%), study-grid premium rates, county base values, 3,000/3,000 payment-factor fit, CPC vs NCEI gap on 49 grids | ADM27 / ADM26 daily files and the DST API were not re-pulled (DST API returned empty bodies to a plain request) | unverifiable (not re-checked) |
+
+No number in this doc was changed; one sentence in §1 was corrected (PRF is not RMA's only rainfall-index product). No change to `prf_rules.yaml`.

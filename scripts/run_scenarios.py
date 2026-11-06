@@ -72,6 +72,12 @@ from agri_hedge.prf import (  # noqa: E402
     summarize_years,
     validate_election,
 )
+from agri_hedge.loss_model import (  # noqa: E402  (shared with the rain-to-loss model, doc 13)
+    elasticity_for,
+    forage_loss_proxy,
+    load_farms,
+    weighted_index,
+)
 from agri_hedge.prf_grid import latlon_to_grid_id  # noqa: E402
 from agri_hedge.prf_intervals import INTERVAL_MONTHS, INTERVAL_NAMES  # noqa: E402
 
@@ -98,15 +104,6 @@ INK, INK2, GRID = "#0b0b0b", "#52514e", "#d9d8d4"
 # Inputs
 # ---------------------------------------------------------------------------------------------
 
-def load_farms(path: Path) -> list[dict]:
-    with open(path, encoding="utf-8") as fh:
-        data = yaml.safe_load(fh)
-    farms = data["farms"] if isinstance(data, dict) else data
-    if not farms:
-        raise ValueError(f"no farms in {path}")
-    return farms
-
-
 def load_index(path: Path = INDEX_CSV) -> pd.DataFrame:
     """Official final grid indices, on the 100 scale (fractions are converted)."""
     idx = pd.read_csv(path, dtype={"grid_id": str})
@@ -122,23 +119,6 @@ def index_wide(idx: pd.DataFrame, grid_id: str, col: str = "index_value") -> pd.
         raise LookupError(f"grid {grid_id} not in the official index file")
     w = g.pivot_table(index="year", columns="interval_name", values=col, aggfunc="first")
     return w.reindex(columns=INTERVAL_NAMES)
-
-
-def elasticity_for(ref, sens: pd.DataFrame | None) -> tuple[float, str]:
-    """Elasticity of forage value to seasonal rainfall shortfall for a farm (default 1.0)."""
-    if sens is None or ref in (None, "", "none"):
-        return 1.0, "default 1.0 (no sensitivity row)"
-    if "row_key" not in sens.columns:
-        return 1.0, "default 1.0 (sensitivity file has no row_key column)"
-    row = sens[sens["row_key"].astype(str) == str(ref)]
-    if row.empty:
-        return 1.0, f"default 1.0 (row_key {ref!r} not found)"
-    cols = [c for c in sens.columns if "elastic" in c.lower()]
-    for c in cols:
-        v = pd.to_numeric(row.iloc[0][c], errors="coerce")
-        if pd.notna(v):
-            return float(abs(v)), f"{SENS_CSV.name} row_key={ref}, column {c}"
-    return 1.0, f"default 1.0 (row_key {ref!r} has no numeric elasticity column)"
 
 
 def _get(farm: dict, *keys, default=None):
@@ -212,20 +192,6 @@ def build_election(farm: dict, cbv: float | None = None) -> PRFElection:
 # Scenario arithmetic
 # ---------------------------------------------------------------------------------------------
 
-def weighted_index(index_by_year: pd.DataFrame, allocation: dict, cap: float | None = None) -> pd.Series:
-    """W = sum of percent-of-value x final index over the selected intervals (100 = normal).
-
-    cap=100 caps each interval's index at 100 before weighting, so a wet interval cannot offset a
-    dry one (the "no-offset" sensitivity case).
-    """
-    names = [k for k, v in allocation.items() if v > 0]
-    w = np.array([allocation[k] for k in names])
-    vals = index_by_year[names].to_numpy(dtype=float)
-    if cap is not None:
-        vals = np.minimum(vals, cap)
-    return pd.Series(vals @ (w / w.sum()), index=index_by_year.index, name="weighted_index")
-
-
 def span_intervals(allocation: dict) -> list[str]:
     """All intervals lying inside the span from the first to the last insured month."""
     months = [m for k, v in allocation.items() if v > 0 for m in INTERVAL_MONTHS[k]]
@@ -245,15 +211,6 @@ def span_index(precip: pd.DataFrame | None, expected: pd.DataFrame | None, index
         den = expected[names].sum(axis=1, min_count=len(names))
         return (100 * num / den).rename("span_index")
     return index_by_year[names].mean(axis=1).rename("span_index")
-
-
-def forage_loss_proxy(value_per_acre: float, acres: float, seasonal_index, elasticity: float = 1.0):
-    """value_per_acre x acres x max(0, 1 - index/100) x elasticity. Vectorized over years."""
-    s = np.asarray(seasonal_index, dtype=float)
-    loss = value_per_acre * acres * np.clip(1.0 - s / 100.0, 0.0, None) * elasticity
-    if isinstance(seasonal_index, pd.Series):
-        return pd.Series(loss, index=seasonal_index.index)
-    return loss
 
 
 def run_farm(farm: dict, idx: pd.DataFrame, act: pd.DataFrame, sens: pd.DataFrame | None,

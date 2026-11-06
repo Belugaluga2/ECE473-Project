@@ -1,6 +1,6 @@
 # Kalshi monthly-rain markets: data pipeline, liquidity, order-book depth, and calibration
 
-**Proposal cell:** W2 Kalshi weather markets: cost and trading (data workstream B2)  |  **Status:** DRAFT  |  **Last updated:** 2026-10-29
+**Proposal cell:** W2 Kalshi weather markets: cost and trading (data workstream B2)  |  **Status:** DRAFT  |  **Last updated:** 2026-11-02 (post-rewards order-book snapshot added; see also [12_post_rewards_liquidity.md](12_post_rewards_liquidity.md))
 
 This document measures how much trading actually happens in Kalshi's monthly-rainfall contracts,
 how much a farmer could buy today, and whether the prices behave like fair probabilities. All
@@ -51,11 +51,14 @@ Terms used below:
   snapshot at 2026-10-29 09:30 UTC, a farmer could buy only $436 of DFW November drought payout
   across all seven strikes at prices of $0.95 or less, with at most $120 at any one strike. The
   same figure was $428 at ORD and $4,017 at DEN, all of it at the 1-inch strike.
-- **New-listing books look deep, but rewards pay for that depth.** The just-listed sites show
-  $7,431 (TPA) to $39,859 (SGF) of drought payout at $0.95 or less. Every one of their November
-  markets carries a Kalshi "new_event" liquidity reward of $170. Those rewards end 2026-11-01
-  03:59 UTC. DFW, DEN and ORD markets showed similar rewards in October, and their depth is now in
-  the hundreds of dollars.
+- **New-listing books looked deep only while rewards paid for that depth.** On 2026-10-29 the
+  just-listed sites showed $7,431 (TPA) to $39,859 (SGF) of drought payout at $0.95 or less, while
+  every one of their November markets carried a Kalshi "new_event" liquidity reward of $170 ending
+  2026-11-01 03:59 UTC. **In a second snapshot at 2026-11-02 01:34 UTC, about 22 hours after the
+  rewards ended, that depth was gone:** $416 (OKC) to $1,680 (TPA), 3-23% of the earlier amount
+  (Table 4b). All 20 series whose rewards ended on 2026-11-01 lost depth (median ratio 0.05),
+  while 13 of the 16 series without rewards at either snapshot gained (median ratio 1.44).
+  No new reward program had been listed by then. Details: [doc 12](12_post_rewards_liquidity.md).
 - **Prices show a clear favorite-longshot bias.** Seven days before the scheduled close, YES
   contracts last traded under $0.20 averaged $0.047, but only 1.6% of them resolved YES. That gap
   of -3.1 cents has an event-clustered 95% CI of [-4.2, -1.7] cents, and it holds at 1, 3 and 14
@@ -118,10 +121,15 @@ calculation from those primary API records. The calculation is reproducible with
 | Longshot gap at 1 / 3 / 14 / 21 days (last trade) | -0.027 / -0.028 / -0.040 / -0.024 | dollars | same | Table 5 | CONFIRMED (computed) |
 | Brier score of last traded price at 1 / 7 / 21 days | 0.015 / 0.049 / 0.099 | squared prob. | same | Table 5 | CONFIRMED (computed) |
 | Order-book snapshot | 353 open markets at 2026-10-29T09:30:56Z | count | all open monthly-rain markets | `GET /markets/{ticker}/orderbook`; `data/raw/kalshi/orderbooks_20261029T093056Z.json` | CONFIRMED |
-| Drought payout buyable at <= $0.95, Nov 2026, all strikes: DFW / DEN / ORD | 436 / 4,017 / 428 | $ payout | snapshot | `kalshi_rain_hedge_capacity_nov2026.csv`; Table 4 | CONFIRMED (computed) |
+| Drought payout buyable at <= $0.95, Nov 2026, all strikes: DFW / DEN / ORD | 436 / 4,017 / 428 | $ payout | snapshot | `kalshi_rain_hedge_capacity_nov2026_20261029.csv`; Table 4 | CONFIRMED (computed) |
 | Same, max at any one strike: DFW / DEN / ORD | 120 / 4,017 / 135 | $ payout | snapshot | same | CONFIRMED (computed) |
 | Same, all strikes: SAT / OKC / SGF / ABQ / TPA | 18,810 / 12,836 / 39,859 / 10,456 / 7,431 | $ payout | snapshot | same | CONFIRMED (computed) |
 | Median of same for the 28 non-study cities with Nov 2026 events | 9,504 | $ payout | snapshot | same | CONFIRMED (computed) |
+| Second order-book snapshot (after rewards ended) | 269 open markets at 2026-11-02T01:34:56Z | count | all open monthly-rain markets | `scripts/pull_kalshi.py --orderbooks-only`; `kalshi_rain_orderbook_summary_20261102.csv`; raw `orderbooks_20261102T013456Z.json` (not committed) | CONFIRMED |
+| Drought payout buyable at <= $0.95, Nov 2026, all strikes, 2026-11-02: DFW / DEN / ORD / SAT / OKC / SGF / ABQ / TPA | 663 / 2,878 / 497 / 859 / 416 / 1,237 / 1,585 / 1,680 | $ payout | 2026-11-02 snapshot | `kalshi_rain_hedge_capacity_nov2026_20261102.csv`; Table 4b | CONFIRMED (computed) |
+| Same, max at any one strike, 2026-11-02: DFW / DEN / ORD / SAT / OKC / SGF / ABQ / TPA | 285 / 2,878 / 221 / 551 / 267 / 454 / 799 / 716 | $ payout | same | same | CONFIRMED (computed) |
+| Median drought payout <= $0.95, 28 non-study cities, 2026-11-02 | 1,466 | $ payout | same | same | CONFIRMED (computed) |
+| Reward programs listed after 2026-11-01 03:59 UTC on monthly-rain markets | 0 (latest end date still 2026-11-01T03:59:59Z; 762 programs, same IDs as 2026-10-29) | count | re-pulled 2026-11-02 | `GET /incentive_programs`; `kalshi_rain_incentive_programs.csv` | CONFIRMED |
 | Current best bid-ask spread (median over 7 strikes), Nov 2026: DFW / DEN / ORD / SAT / OKC / SGF / ABQ / TPA | 17 / 9 / 17 / 12 / 14 / 9 / 1 / 14 | cents | snapshot | same | CONFIRMED (computed) |
 | "new_event" liquidity reward per Nov 2026 market at the 20 new series | 170 | $ per market, 2026-10-26 to 2026-11-01 03:59 UTC | Nov 2026 | `GET /incentive_programs` (`period_reward` in centi-cents / 10,000); `kalshi_rain_incentive_programs.csv` | CONFIRMED |
 | Liquidity reward programs on monthly-rain markets: new_event / long_dated | 619 programs, $61,005 / 110 programs, $11,775 | count, $ | 2026-04-29 to 2026-11-01 | same | CONFIRMED (computed) |
@@ -161,9 +169,9 @@ everything from scratch in about 15 minutes.
 | `data/processed/kalshi_rain_daily_candles.parquet` | 29,153 daily candles for the 1,133 markets with volume > 0 |
 | `data/processed/kalshi_rain_trades.parquet` | 90,269 trades for the 8 study-site series (SGF has none) |
 | `data/processed/kalshi_rain_monthly_outcomes.csv` | one row per event: ladder bounds on the monthly total, `expiration_value`, quality flags |
-| `data/processed/kalshi_rain_orderbook_summary.csv` | parsed books of the 353 open markets (raw: `data/raw/kalshi/orderbooks_20261029T093056Z.json`) |
+| `data/processed/kalshi_rain_orderbook_summary_<YYYYMMDD>.csv` | parsed books, one file per snapshot day: `_20261029` (353 open markets, raw `orderbooks_20261029T093056Z.json`) and `_20261102` (269 open markets, raw `orderbooks_20261102T013456Z.json`). `kalshi_rain_orderbook_summary.csv` is a copy of the latest one, which other scripts read |
 | `data/processed/kalshi_rain_incentive_programs.csv` | 762 liquidity-reward programs on monthly-rain markets (619 new_event, 110 long_dated, 33 unlabeled) |
-| `data/processed/kalshi_rain_liquidity_by_series.csv`, `kalshi_rain_calibration.csv`, `kalshi_rain_hedge_capacity_nov2026.csv` | tables behind this document (`--stats`) |
+| `data/processed/kalshi_rain_liquidity_by_series.csv`, `kalshi_rain_calibration.csv`, `kalshi_rain_hedge_capacity_nov2026_<YYYYMMDD>.csv` | tables behind this document (`--stats`; the capacity file is named for the order-book snapshot used, `--stats --orderbook <file>` picks an earlier one) |
 
 Method choices:
 - **Which markets count.** "Monthly-rain" means tickers matching `(KX)RAIN<city>M`. Napa's
@@ -275,7 +283,7 @@ on the November 2026 ladders in the 2026-10-29 09:30 UTC snapshot. We count only
 the NO costs $0.95 or less, because paying 99 cents for $1 of cover is not insurance. Premium
 includes the 7% taker fee.
 
-Table 4. Hedge capacity, November 2026 events (dollars of payout = contracts).
+Table 4. Hedge capacity, November 2026 events, 2026-10-29 snapshot, rewards still running (dollars of payout = contracts).
 
 | Site | Series | Strikes two-sided | Median spread (cents) | Drought payout <= $0.95, all strikes | Premium for it | Net cover (payout - premium) | Max at one strike | Wet payout (buy YES) <= $0.95 |
 |---|---|---|---|---|---|---|---|---|
@@ -295,21 +303,50 @@ Answer to "how much could a farmer hedge per month per city at current depth":
   is the open interest. The median DFW event held 32,984 contracts at close, which is about
   $33,000 of payout. Taking all of it would mean being the counterparty to the whole market. The
   realistic size is far smaller, and buying it would push prices up.
-- **SAT, OKC, SGF, ABQ, TPA:** $7,000 to $40,000 today, but this depth is tied to the
-  liquidity-reward programs. Each November market pays $170 to liquidity providers through
-  2026-11-01 03:59 UTC. Two facts suggest the depth may not last. First, DFW, DEN and ORD markets
-  carried the same "new_event" rewards: in October 2026 they were $55 per market and ended
-  2026-10-04 (7 programs per series). Second, those books are now down to hundreds of dollars. Without a second snapshot
-  this remains a hypothesis. Rerunning `pull_kalshi.py` after November 1 tests it directly.
+- **SAT, OKC, SGF, ABQ, TPA:** $7,000 to $40,000 on 2026-10-29, while each November market paid
+  $170 to liquidity providers through 2026-11-01 03:59 UTC. DFW, DEN and ORD markets had carried
+  the same "new_event" rewards in October ($55 per market, ended 2026-10-04), and their books were
+  down to hundreds of dollars, so we expected this depth to go when the rewards ended.
 
-The 28 other cities with November 2026 ladders show a median $9,504 of drought payout at $0.95
-or less. Most of them are also new listings with rewards.
+The 28 other cities with November 2026 ladders showed a median $9,504 of drought payout at $0.95
+or less on 2026-10-29. Most of them were also new listings with rewards.
 
-![Order-book depth](../figures/b2_orderbook_depth_study_sites.png)
+**After the rewards ended (2026-11-02 snapshot).** We re-pulled every open book at 2026-11-02
+01:34 UTC (`python scripts/pull_kalshi.py --orderbooks-only`, then `--stats`), about 22 hours after
+the rewards ended and with no new reward program listed.
+
+Table 4b. Hedge capacity, November 2026 events, 2026-11-02 snapshot, after the rewards ended.
+
+| Site | Series | Strikes two-sided | Median spread (cents) | Drought payout <= $0.95, all strikes | Premium for it | Net cover (payout - premium) | Max at one strike | Wet payout (buy YES) <= $0.95 |
+|---|---|---|---|---|---|---|---|---|
+| DFW | KXRAINDALM | 7 of 7 | 9 | $663 | $353 | $310 | $285 | $1,572 |
+| DEN | KXRAINDENM | 4 of 7 | 4 | $2,878 | $2,467 | $411 | $2,878 | $2,549 |
+| ORD | KXRAINCHIM | 6 of 7 | 8 | $497 | $221 | $277 | $221 | $1,350 |
+| SAT | KXRAINSATXM | 7 of 7 | 13 | $859 | $615 | $243 | $551 | $1,384 |
+| OKC | KXRAINOKCM | 7 of 7 | 12 | $416 | $206 | $210 | $267 | $1,111 |
+| SGF | KXRAINSGFM | 7 of 7 | 14 | $1,237 | $642 | $596 | $454 | $932 |
+| ABQ | KXRAINABQM | 4 of 7 | 8 | $1,585 | $1,152 | $433 | $799 | $3,890 |
+| TPA | KXRAINTPAM | 5 of 7 | 8 | $1,680 | $652 | $1,028 | $716 | $1,132 |
+
+- **The reward-supported depth did not survive.** Drought payout at $0.95 or less fell 77-97% at
+  the five new sites (to $416-$1,680) and wet-side depth fell 97-98%. The new-site books now look
+  like the established ones: hundreds to low thousands of dollars per month.
+- **The established books did not lose depth.** DFW (+52%) and ORD (+16%) grew; DEN fell 28%
+  but is still the deepest study book at $2,878, all at the 1-inch strike.
+- **It is market-wide.** The median over the 28 other cities fell from $9,504 to $1,466. Every one
+  of the 20 series whose rewards ended on 2026-11-01 lost depth (median ratio 0.05). Of the 16
+  series with no reward at either snapshot, 13 gained (median ratio 1.44). See doc 12.
+- **Caveat:** the second snapshot is one day into November, so a little of the month's rain may
+  already be known; this moves prices but cannot explain a 95% drop in resting size.
+
+![Order-book depth, 2026-10-29](../figures/b2_orderbook_depth_study_sites_20261029.png)
+
+![Order-book depth, 2026-11-02](../figures/b2_orderbook_depth_study_sites_20261102.png)
 
 *Figure 3. Resting contracts available at $0.95 or less, by strike, for the November 2026
-ladders. Blue is buy-NO depth (pays if dry); hatched is buy-YES depth (pays if wet). The y-axis is
-symlog: linear below 10, log above.*
+ladders, on 2026-10-29 (rewards running, top) and 2026-11-02 (after they ended, bottom). Blue is
+buy-NO depth (pays if dry); hatched is buy-YES depth (pays if wet). The y-axis is symlog: linear
+below 10, log above.*
 
 ### 6. Calibration and favorite-longshot bias
 
@@ -441,9 +478,11 @@ its premium. So a hedger should buy in round lots of 100 or more.
 - **Current maker fee rate (0.0175).** The current fee schedule PDF and kalshi.com/fee-schedule
   both returned HTTP 429 on 2026-10-29. The 0.0175 maker coefficient comes from secondary
   summaries. It does not affect rain series today, which are `quadratic` (taker-only).
-- **Why the new books are deep.** We attribute the depth at the five new PRF sites to the
-  $170-per-market rewards, which matches the pattern at DFW/DEN/ORD after their rewards ended. A
-  second order-book snapshot after 2026-11-01 is needed to confirm it.
+- **Why the new books were deep.** The 2026-11-02 snapshot confirms that the depth at the five
+  new PRF sites disappeared when the $170-per-market rewards ended (Table 4b). That the rewards
+  *caused* it is still an inference from timing and from the unrewarded control series; we did not
+  see who placed or pulled the orders. One post-rewards snapshot cannot show whether depth comes
+  back later in the month.
 - **Undocumented liquidity-reward details.** We take `period_reward` in centi-cents
   ($ = value / 10,000) from the OpenAPI description. We could not find public documentation of how
   the reward is split among liquidity providers, `discount_factor_bps` or `target_size_fp`.
