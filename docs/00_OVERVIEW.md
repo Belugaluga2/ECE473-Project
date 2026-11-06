@@ -177,6 +177,9 @@ All numbers: 11 farms, NCEI PRF index, 1951-2025, hedge effectiveness (HE) out o
   - Kalshi lists each day's market about a day ahead, priced off the forecast, so the same ladder bought day by day has median HE 0.03. The missing piece is a monthly or seasonal heat-days contract listed in spring.
 - **Winter-cover caveat (2026-11-06):** PRF already offers winter intervals; ranchers skip them because Nov-Feb carries 1-15% of forage value in our loss model (median 6%). The companion's HE 0.61 is for tracking winter rain, not covering much loss (doc 21 caveats).
 
+## Final-project direction (proposed 2026-11-06)
+[FINAL_PROJECT_PROPOSAL.md](FINAL_PROJECT_PROPOSAL.md): "Insure before you know". A prediction market can only insure the risk still unresolved when its contract lists (a listing-horizon bound, the Hirshleifer effect). Measured from opening prices: 95-99% of a month's rain risk is open at listing, only 4-6% of a day's heat risk. Rain fails on geography, heat on timing, PRF wins on subsidy; pooling and earlier listing are the fixes. Pilot: `scripts/experiments/insurability_pilot.py`.
+
 ## Next steps
 The full roadmap (wet-side cover, two-month mock market, national coverage, loss-based target, temperature, demo-exchange orders, liquidity plan) is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Near-term:
 

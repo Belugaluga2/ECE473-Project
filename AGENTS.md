@@ -14,7 +14,7 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 |---|---|---|
 | 2026-11-12 | Milestone II write-up | `docs/milestone2/milestone2.tex` / `.pdf` (Overleaf-ready; build locally with `tectonic -X compile milestone2.tex`) |
 | 2026-11-17 | Slides and presentations | Deck linked from [docs/DEMO.md](docs/DEMO.md) |
-| 2026-12-15 | Final paper | not started; roadmap in DEMO.md |
+| 2026-12-15 | Final paper | proposed direction and plan in [docs/FINAL_PROJECT_PROPOSAL.md](docs/FINAL_PROJECT_PROPOSAL.md); roadmap in DEMO.md |
 
 ## Where things are
 
