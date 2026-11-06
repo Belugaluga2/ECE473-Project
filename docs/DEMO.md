@@ -32,7 +32,7 @@
    - ladders listed 6-12 months ahead;
    - a drought-side market maker (depth is 5-28x too thin);
    - grid-index contracts (0.98, but that is unsubsidized PRF).
-5. **Close (30 s).** Every number on screen comes from the same code as the analysis docs (doc 19 checks the app reproduces them to the cent), with 393 automated tests.
+5. **Close (30 s).** Every number on screen comes from the same code as the analysis docs (doc 19 checks the app reproduces them to the cent), with 402 automated tests.
 
 ## Roadmap: expanding on the showcase (Milestone III and beyond)
 

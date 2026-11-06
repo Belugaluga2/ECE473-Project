@@ -35,6 +35,7 @@ Every research document has a numbers table that gives a source for each number.
 | M2 showcase: PRF Companion (app tab) | team | [analysis/21_prf_companion.md](analysis/21_prf_companion.md), [DEMO.md](DEMO.md) | working prototype |
 | M2 showcase follow-up: liquidity, cover design, excess rain, two-month what-if | team | [analysis/22_making_it_better.md](analysis/22_making_it_better.md) | done 2026-11-05 |
 | Per-farmer price check: can Kalshi replace PRF for less? (`/compare` page) | Jack | [analysis/23_farmer_price_comparison.md](analysis/23_farmer_price_comparison.md) | done 2026-11-06 |
+| New exposure: dairy heat stress with Kalshi daily-high contracts | Jack | [analysis/24_dairy_heat_stress.md](analysis/24_dairy_heat_stress.md) | done 2026-11-06 |
 
 ## Study sites
 
@@ -170,6 +171,10 @@ All numbers: 11 farms, NCEI PRF index, 1951-2025, hedge effectiveness (HE) out o
   - Coverage is not the same: median holdout HE 0.21 and 76.5% of PRF dollars recovered in the same year. A station-only portfolio cannot equal a grid-index payout in every weather outcome, so no arbitrage exists.
   - A live check on 2026-11-06 found only November 2026 contracts listed, so none of the 2027 hedge is fillable today.
   - Buying PRF and selling the Kalshi hedge against it lowers mean P&L at all 11 farms (median $2,699 to $1,384 a year) and more than doubles the worst year. Kalshi is priced near PRF's *unsubsidized* premium; the only edge is the subsidy, which a farmer gets just by buying PRF.
+- **Dairy heat stress (doc 24, 2026-11-06):** USDA has no heat cover for dairies; Kalshi lists daily highs at about 25 airports.
+  - Temperature has the opposite problem from rain: location is fine (median farm-vs-airport R² 0.66 for seasonal heat load), timing is not.
+  - Stacking daily "high above k" contracts into a summer-long ladder gives holdout HE 0.44-0.64 at Erath TX, Weld CO and Lancaster PA, if it could be bought before summer.
+  - Kalshi lists each day's market about a day ahead, priced off the forecast, so the same ladder bought day by day has median HE 0.03. The missing piece is a monthly or seasonal heat-days contract listed in spring.
 - **Winter-cover caveat (2026-11-06):** PRF already offers winter intervals; ranchers skip them because Nov-Feb carries 1-15% of forage value in our loss model (median 6%). The companion's HE 0.61 is for tracking winter rain, not covering much loss (doc 21 caveats).
 
 ## Next steps
@@ -203,18 +208,19 @@ Open loose ends from Milestone 1 (low priority):
   - `rowcrop.py`: corn/soy farm exposure and hedge backtest (doc 14)
 - `scripts/` runnable entry points that pull data and regenerate every result
 - `data/processed/` small derived datasets (committed); `data/raw/` downloads (gitignored, recreated by scripts)
-- `tests/` pytest checks (393 passing)
+- `tests/` pytest checks (402 passing)
 
 ## How to reproduce
 
 ```bash
 .venv/bin/python -m pip install -e .
-.venv/bin/python -m pytest                        # 393 tests, ~10 s
+.venv/bin/python -m pytest                        # 402 tests, ~10 s
 # Milestone 1
 .venv/bin/python scripts/run_basis_risk.py        # doc 07
 .venv/bin/python scripts/run_replication.py       # doc 08
 .venv/bin/python scripts/run_scenarios.py         # doc 04b
 .venv/bin/python scripts/run_payout_comparison.py # doc 09
 .venv/bin/python scripts/run_farmer_comparison.py  # doc 23 (add --live for current books)
+.venv/bin/python scripts/run_dairy_heat.py         # doc 24 (scripts/pull_dairy_temps.py re-downloads its data)
 ```
 Milestone 2 and companion scripts (docs 15-22) and their run times are listed in [MILESTONE_2.md](MILESTONE_2.md#reproduce).
