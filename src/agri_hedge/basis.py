@@ -29,7 +29,6 @@ from __future__ import annotations
 from collections.abc import Sequence
 
 import numpy as np
-import pandas as pd
 from scipy import optimize, stats
 
 from agri_hedge.prf_intervals import INTERVAL_NAMES

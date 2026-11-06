@@ -21,9 +21,11 @@
 3. **Live demo (2 min).** Open `?demo`. Point out:
    - the 12-month strip: grey = covered by PRF; green = a month where a Kalshi hedge tracks well enough to recommend;
    - the recommendation sentence and the hedge-effectiveness number, scored on years the hedge never saw;
+   - the depth check: today's books keep a fit of 0.18 against 0.67 with unlimited depth, and the app suggests the order size that keeps 90% of the fit (doc 22);
    - the backtest: PRF payouts next to the gap cover wanted and what the Kalshi companion paid, 1951-2025;
    - the order ticket: real Kalshi tickers, contracts, limit prices, fees, and whether each price is live or estimated;
-   - the excess-rain table: today's contracts are not good enough, which leads to our proposal.
+   - the excess-rain table: Jun-Jul tracks well enough to offer (0.58), while Apr-May and Aug-Sep need two-month contracts;
+   - the two-month what-if for this rancher's own intervals, which leads to our proposal.
    Then click somewhere far from a station (e.g. 120 miles out) and run it again to show the app saying "poor match".
 4. **What would make it better (1 min).** Doc 17:
    - two-month contracts (no new data needed) take PRF-interval HE from 0.34 to 0.48 and excess-rain HE from 0.22 to 0.40;
@@ -50,6 +52,9 @@ Ordered by how directly each builds on what exists. Each item names the module i
 
 | Claim | Number | Doc |
 |---|---|---|
+| Farms where the PRF Companion is recommended | 9 of 11 | 21 |
+| Companion median HE on unseen years (2001-2025 holdout), vs hedging PRF's own intervals | 0.66 (0.61) vs 0.38 (0.23) | 21 |
+| Companion HE at today's order-book depth; depth that restores it | 0.67 to 0.18; 5-10x | 22 |
 | Months PRF leaves open, median HE of a Kalshi hedge | 0.52 (Dec 0.68) | 20 |
 | Hedging the PRF intervals themselves, median HE | 0.34-0.37 | 15-17 |
 | Kalshi cost vs subsidized PRF per $1 of expected payout | about $1.10 vs $0.61 | 09, 15 |

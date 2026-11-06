@@ -29,7 +29,7 @@ This milestone follows the Milestone II table and the "Refinements to our plan" 
 | W5 Farmer screen | Maya | [analysis/18_platform.md](analysis/18_platform.md), `webapp/` | Map + months + cover → verdict, frontier, 75-year backtest, ticket, PRF comparison, live market check. `python scripts/run_app.py`. |
 | Refinements from the M1 update: complement PRF, non-binary payouts, CPC as-paid backtest | team | [analysis/20_complementing_prf.md](analysis/20_complementing_prf.md) | Uncovered months (Nov-Feb) hedge best: median HE 0.52, Dec 0.68. Top-up above 90% copies poorly (0.14). Excess rain needs two-month contracts (0.22 to 0.40). CPC as paid gives the same picture, slightly lower. |
 | Showcase: PRF Companion | team | [analysis/21_prf_companion.md](analysis/21_prf_companion.md), `platform.companion`, app tab | 9 of 11 farms; HE 0.66 (LOYO), 0.61 on the 2001-2025 holdout, vs 0.38 / 0.23 for hedging PRF intervals. |
-| W5 Test the app vs USDA | Evan | [analysis/19_app_test.md](analysis/19_app_test.md) | App matches the analysis exactly. Hedges cost 1.47x PRF producer premiums (median), median HE 0.36. HE 0.44 within 25 mi of a station, 0.14 beyond 100 mi. |
+| W5 Test the app vs USDA | Evan | [analysis/19_app_test.md](analysis/19_app_test.md) | App matches the analysis exactly. Hedges cost 1.71x PRF producer premiums (median), median HE 0.38. HE 0.47 within 25 mi of a station, 0.15 beyond 100 mi. |
 
 ## What we learned
 

@@ -48,7 +48,6 @@ import pandas as pd
 from agri_hedge.prf_intervals import (
     CODE_TO_INTERVAL,
     INTERVAL_CODES,
-    INTERVAL_MONTHS,
     INTERVAL_NAMES,
     overlaps,
 )

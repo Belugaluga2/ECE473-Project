@@ -147,6 +147,10 @@ All numbers: 11 farms, NCEI PRF index, 1951-2025, hedge effectiveness (HE) out o
   - A farmer clicks a location and picks any months.
   - The app prices from live Kalshi books where listed and estimates elsewhere (flagged).
   - It returns a verdict, frontier, backtest, order ticket and PRF comparison.
+- **App test (doc 19):**
+  - Recommended hedges cost 1.71x PRF producer premiums (median) and copy a bit over a third of PRF's swings (median HE 0.38).
+  - Median HE is 0.47 within 25 miles of a station and 0.15 beyond 100 miles.
+  - On 2026-11-05 no month after the current one was listed, so no real season could be priced live.
 - **Complementing PRF (doc 20):**
   - Months PRF leaves uncovered (mostly Nov-Feb) hedge best: median HE 0.52, December 0.68.
   - A top-up above PRF's 90% cap copies poorly (0.14).
@@ -156,11 +160,6 @@ All numbers: 11 farms, NCEI PRF index, 1951-2025, hedge effectiveness (HE) out o
   - Keeps PRF and covers the months it leaves open.
   - Recommended for 9 of 11 farms.
   - Median HE 0.66 on unseen years (0.61 on the 2001-2025 holdout), against 0.38 / 0.23 for hedging PRF's own intervals.
-- **App test (doc 19):**
-  - Recommended hedges cost 1.47x PRF producer premiums (median) and copy about a third of PRF's swings (median HE 0.36).
-  - Median HE is 0.44 within 25 miles of a station and 0.14 beyond 100 miles.
-  - On 2026-11-05 no month after the current one was listed, so no real season could be priced live.
-
 - **Making it better (doc 22):**
   - Liquidity is now the binding limit: capped at today's near-fair depth, companion HE falls from 0.67 to 0.18; 5-10x today's depth restores it.
   - Today a rancher keeps 90% of the fit on about a fifth of the requested cover; the app shows the depth check and suggested size.

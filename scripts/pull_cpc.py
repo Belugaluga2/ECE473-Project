@@ -40,7 +40,7 @@ from agri_hedge.config import PROCESSED, RAW
 from agri_hedge.cpc import (MM_PER_INCH, NCLIMGRID_MONTHLY_URL, PSL_DAILY_RT, PSL_MONTHLY_OPENDAP,
                             cpc_daily_url, days_in_month, fine_grid_to_prf, read_cpc_daily_binary)
 from agri_hedge.locations import ALL_SITES
-from agri_hedge.prf_grid import N_COLS, grid_id_to_rowcol, grid_ids_within_radius
+from agri_hedge.prf_grid import grid_id_to_rowcol, grid_ids_within_radius
 
 RAW_CPC = RAW / "cpc"
 RAW_NCEI = RAW / "nclimgrid"
