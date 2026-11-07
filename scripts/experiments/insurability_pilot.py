@@ -57,17 +57,24 @@ def _acis_maxt(sid: str, start: str, end: str) -> pd.Series:
     return pd.to_numeric(s, errors="coerce").dropna()
 
 
-def _first_quote(bids, asks):
+MAX_SPREAD = 0.2
+
+
+def _first_quote(bids, asks, max_spread=None):
+    max_spread = MAX_SPREAD if max_spread is None else max_spread
     for b, a in zip(bids, asks):
-        if pd.notna(b) and pd.notna(a) and 0 < a - b <= 0.2:
+        if pd.notna(b) and pd.notna(a) and 0 < a - b <= max_spread:
             return (a + b) / 2
     return None
 
 
-def rain_listing() -> pd.DataFrame:
+def rain_listing(max_spread: float | None = None) -> pd.DataFrame:
     sm = pd.read_csv(PROCESSED / "station_monthly_precip.csv")
     m = pd.read_parquet(PROCESSED / "kalshi_rain_markets.parquet")
     c = pd.read_parquet(PROCESSED / "kalshi_rain_daily_candles.parquet")
+    # NYC markets carry no CLI code in the market record; they settle on Central Park (CLINYC).
+    m["cli_code"] = m.cli_code.where(m.cli_code.fillna("") != "",
+                                     m.series_ticker.map({"KXRAINNYCM": "CLINYC"}))
     m = m[(m.status == "finalized") & m.is_single_month & m.result.isin(["yes", "no"])
           & m.cli_code.isin(sm.cli_code.unique())]
     rows = []
@@ -75,7 +82,7 @@ def rain_listing() -> pd.DataFrame:
         y, mo = map(int, str(mk.contract_month).split("-"))
         hist = sm[(sm.cli_code == mk.cli_code) & (sm.month == mo) & sm.year.between(1991, 2020)].precip_in
         cs = c[(c.ticker == mk.ticker) & (pd.to_datetime(c.date) < pd.Timestamp(y, mo, 1))].sort_values("date")
-        p = _first_quote(cs.yes_bid_close, cs.yes_ask_close)
+        p = _first_quote(cs.yes_bid_close, cs.yes_ask_close, max_spread)
         if p is None:
             continue
         rows.append({"ticker": mk.ticker, "cli_code": mk.cli_code, "contract_month": mk.contract_month,
@@ -235,12 +242,20 @@ def pooling(radius_mi: float = 75, reps: int = 30, seed: int = 473) -> pd.DataFr
 
 
 def main() -> int:
+    def rain_line(name, r):
+        v = r.clim_p * (1 - r.clim_p)
+        print(f"Monthly rain {name}: {len(r)} markets, {r.cli_code.nunique()} cities; "
+              f"H(price) {(r.open_mid * (1 - r.open_mid)).sum() / v.sum():.2f}, "
+              f"H(outcome) {((r.open_mid - r.outcome) ** 2).sum() / v.sum():.2f}, Brier skill of opening price "
+              f"{1 - ((r.open_mid - r.outcome) ** 2).mean() / ((r.clim_p - r.outcome) ** 2).mean():.2f}")
+
     rain = rain_listing()
     rain.to_csv(PROCESSED / "insurability_pilot_rain.csv", index=False)
-    v = rain.clim_p * (1 - rain.clim_p)
-    print(f"Monthly rain: {len(rain)} markets; H(price) {(rain.open_mid * (1 - rain.open_mid)).sum() / v.sum():.2f}, "
-          f"H(outcome) {((rain.open_mid - rain.outcome) ** 2).sum() / v.sum():.2f}, Brier skill of opening price "
-          f"{1 - ((rain.open_mid - rain.outcome) ** 2).mean() / ((rain.clim_p - rain.outcome) ** 2).mean():.2f}")
+    rain_line("all", rain)
+    for yr, g in rain.groupby(rain.contract_month.astype(str).str[:4]):
+        rain_line(yr, g)
+    for spread in (0.1, 0.3):
+        rain_line(f"(first quote with spread <= {spread:.1f})", rain_listing(spread))
     highs = highs_listing()
     highs.to_csv(PROCESSED / "insurability_pilot_highs.csv", index=False)
     groups = (list(highs.groupby("series")) + [(f"season {k}", g) for k, g in highs.groupby("season")]
