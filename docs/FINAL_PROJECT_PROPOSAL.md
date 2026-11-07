@@ -18,21 +18,53 @@ the share of the contract's risk still unresolved at listing. Geography, binning
 
 **Corollary (aggregation makes it worse).** For a seasonal exposure built by buying many short-dated contracts, each at its own listing, the persistent part of the season (a heat wave, a wet pattern) is priced into every listing price, and only the day-to-day surprises are paid out. Those surprises are nearly independent and cancel over a season. So a season's H can be far below a single day's H. This is why the dairy ladder has HE 0.32-0.64 if bought before summer but 0.03 bought day by day (doc 24).
 
-## 2. Pilot evidence (2026-11-06; `scripts/experiments/insurability_pilot.py`, about 6 s, outputs `data/processed/insurability_pilot_*.csv`)
+## 2. Pilot evidence (2026-11-06; `scripts/experiments/insurability_pilot.py`, under a minute with the cached Kalshi quotes (needs internet for ACIS station data), outputs `data/processed/insurability_pilot_*.csv`)
 
 | Market family | Listing lead | Sample | H from prices | H from outcomes | Opening Brier skill vs climatology |
 |---|---|---:|---:|---:|---:|
 | Kalshi monthly rain, 9 cities, 2024-2026 | about 30 days | 129 | 0.99 | 0.95 | 0.09 |
-| Kalshi daily high, NYC / PHX / DFW, Sep 27 - Nov 5 2026 | about 40 hours to close | 120 days (720 markets) | 0.06 | 0.04 | n/a (brackets move with the forecast) |
+| Kalshi daily high, NYC (Sep 2024 - Nov 2026), PHX and DFW (Feb - Nov 2026) | about 39 hours to close | 351 days, all seasons | 0.08 | 0.05 | n/a (brackets move with the forecast) |
+| ... of which summer (Jun-Aug) | | 73 days | 0.14 | 0.12 | |
+| ... of which winter (Dec-Feb) | | 45 days | 0.06 | 0.02 | |
 
-Rain uses each market's opening price against its 1991-2020 climatological probability. Daily highs need a different unit: Kalshi centers each day's six 2 F brackets on the forecast, so judging a bracket against climatology is biased (the naive per-bracket H comes out above 1). Instead, each day's six opening prices give the market's implied forecast of the high and its spread, compared with the 1991-2020 spread of the high for that date. At listing the market already pins the high to about 2 F (typical miss 1.6 F), against 8 F for climatology. Doc 24 assumed a 3.5 F forecast error, so its day-ahead result (HE 0.03) is if anything optimistic.
+Rain uses each market's opening price against its 1991-2020 climatological probability. Daily highs need a different unit: Kalshi centers each day's six 2 F brackets on the forecast, so judging a bracket against climatology is biased (the naive per-bracket H comes out above 1). Instead, each day's six opening prices give the market's implied forecast of the high and its spread, compared with the 1991-2020 spread of the high for that date. At listing the market already pins the high to about 2 F (typical miss 1.9 F), against 8 F for climatology. Summer has the most risk left (H 0.12-0.14) only because summer highs vary less, so climatology's spread is smaller (5.9 F). Doc 24 assumed a 3.5 F forecast error, so its day-ahead result (HE 0.03) is if anything optimistic.
 
-**Roughly a 20-fold gap: 95-99% of a month's rain risk is still open when the contract lists, but only 4-6% of a day's heat risk.**
+**At least a tenfold gap in every season: 95-99% of a month's rain risk is still open when the contract lists, but only 5-8% of a day's heat risk (12-14% in summer).**
 
 - **Rain: timing is fine, geography binds.** Almost all of a month's rain risk is still open when the contract lists, so the bound is not the problem. The problem is that the airport is 30-55 miles from the farm (docs 07, 16).
 - **Temperature: geography is fine, timing binds.** Farm and airport seasonal heat load track closely (median R² 0.66, doc 24), but the contract lists after the forecast knows the answer.
 - **Pooling fixes geography where the airport sees the regional weather.** Averaging PRF payouts over every grid within 75 miles of the airport raises holdout HE from 0.35 to 0.53 (Denver), 0.36 to 0.51 (Tampa), 0.40 to 0.56 (San Antonio) and 0.18 to 0.25 (Albuquerque). It does not help where summer storms are local (Dallas 0.16 to 0.15, Oklahoma City 0.14 to 0.08, Springfield below 0). A pool also removes the "which grid am I on" lottery: the spread of single-grid HE (interquartile 0.18-0.45 at Tampa) collapses.
 - **Money is a separate, third limit.** The subsidy makes PRF about half price; Kalshi is priced near PRF's unsubsidized premium, and buying PRF while selling Kalshi loses money at all 11 farms (doc 23).
+
+## 2b. What is new, checked against the literature (searched 2026-11-06)
+
+| Prior work | What it shows | What it does not do (as far as we can read it) |
+|---|---|---|
+| Luo (2026), "Prediction Markets as Weather Hedges", SSRN 7138562 (**the course's own reference for 3a**; abstract only, doc 10) | For Kalshi daily temperature markets, geography is the first-order hedge error; building degree days from bins costs about 1% of variance | Treats the bin strip as if it could be held for the whole season. **Our pilot says the opposite ranking for temperature: geography is second-order (median farm-airport R² 0.66), and timing binds, because 92-95% of a day's risk is priced before the contract lists (351 days)** |
+| Iturbide (2026), basis risk of a Kalshi daily rain contract for NYC rooftop bars, SSRN (abstract only, doc 10) | Settlement window and definition dominate; gains vanish under realistic execution | Single venue type, single contract; no listing-horizon measure |
+| Crosier (2026), "Prediction Markets Beat the Weather Forecast on Tomorrow's High Temperature", [arXiv 2609.23969](https://arxiv.org/abs/2609.23969) | Kalshi's implied next-day high beats the National Blend of Models within the first hour of trading | Forecasting only; does not ask what that accuracy means for hedging. It is the mechanism behind our small H for daily highs |
+| Hirshleifer (1971), AER; Ball (2013), J. Accounting Research | Public information arriving before trade destroys risk sharing; tested on earnings announcements | Never applied to prediction-market insurance or measured from contract prices |
+| Luo, Skees & Marchant (1994), Review of Agricultural Economics; Carriquiry & Osgood (2012), J. Risk and Insurance; PRF climate-forecast study, J. Agricultural and Applied Economics | Weather forecasts before a crop-insurance sales closing date create intertemporal adverse selection; forecast-conditional premiums fix it | The insurer's side of the same coin: a fixed price set early is exploitable. A market that reprices continuously is not exploitable, but then cannot insure. Nobody has put the two side by side |
+| Campbell & Diebold (2003), NBER w10141 | Weather risk is the unpredictable component of weather | Conceptual; no measure tied to a contract's listing date |
+| Four Pillars Research (2026), turnover study of 1,265 Kalshi markets | Weather contracts show some hedging demand (low turnover, held to expiry) | Behavioral; no hedge-effectiveness or timing analysis |
+
+We found no paper that (1) treats listing horizon as a component of event-contract hedge error, (2) estimates the unresolved share from opening prices, (3) shows that summing short-dated contracts cannot build seasonal cover, or (4) puts prediction markets and fixed-premium insurance on one timing trade-off. That is a literature search, not proof of novelty: SSRN full texts were blocked (HTTP 403), so Luo and Iturbide are judged from abstracts.
+
+**The timing trade-off, in one line.** PRF sells cover by December 1 of the prior year (doc 01), so nearly all its risk is still open when it "lists", but a fixed price set that early invites buyers with forecasts. A prediction market reprices continuously, so it cannot be gamed that way, but by listing time the insurable risk is gone. Insurance needs a contract that is *priced* early; a market *lists* late.
+
+## 2c. How the proposal meets the instructor's 3a criteria
+
+Quoted from the course project list ("Tokenized Finance Projects Fall26"), idea 3a.
+
+| Criterion (verbatim) | Where we meet it |
+|---|---|
+| "identify a real exposure and settlement rule" | USDA PRF grid-index payouts for 11 farms (docs 04b, 08); dairy milk loss from heat (doc 24); settlement on NWS CLI reports (doc 06c) |
+| "build an executable replicating portfolio using bid/ask prices" | Optimizer and live order-book walk with fees and capital cost (docs 15, 18, 23); fill checks against fresh books only |
+| "decompose hedge error into binning, geography, settlement source, liquidity, and capital cost" | Doc 16 already does all five; the final paper adds **listing horizon** as a sixth term |
+| "study which types of insurance exposures can be replicated well and which require new contracts or market mechanisms" | The space-versus-time map (rain: space binds; heat: time binds), with the fixes tested: earlier listing, pooling, priced vault |
+| "theory is useful for spanning bounds or an optimal parametric payout" | The listing-horizon bound is a spanning bound in time: no portfolio bought at listing can exceed H |
+
+The rubric is the instructor's written criteria; we have not seen a grading scheme beyond it.
 
 ## 3. What the final paper would show
 
@@ -70,4 +102,5 @@ Rain uses each market's opening price against its 1991-2020 climatological proba
 - **Kalshi history is short (2024-2026).** H needs only cross-sectional opening prices, not long histories; climatology comes from 1991-2020 station records.
 - **Climatology vs a moving climate.** Report H with a 1991-2020 and a recent-15-year climatology.
 - **Daily-high brackets move with the forecast.** Handled by working with the implied distribution of the high, not single brackets (Section 2). Other bracketed families (daily lows, snow) need the same treatment.
-- **Only 40 days of daily-high history in the pilot, all in autumn.** The full study pulls every settled day since the series launched and reports H by season.
+- **Daily-high sample.** 351 days: every 5th settled day for NYC since Sep 2024 plus Kalshi's 2026 Phoenix and Dallas series (they launched in Feb 2026), and the last 40 days for all three. The full study uses every settled day for every city.
+- **Rain sample.** 129 monthly markets with a quote before the month began, 9 cities, 2024-2026: small but enough for a 0.95-0.99 vs 0.05-0.08 contrast. The full study adds the remaining stations' climatology (30 Kalshi rain cities).

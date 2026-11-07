@@ -16,8 +16,8 @@ Three computations:
    miles of each site's airport (each site's first farm's elections), N = 1 ... all.
 
 Writes data/processed/insurability_pilot_{rain,highs,pool}.csv and caches the Kalshi opening
-quotes in data/processed/kalshi_high_opening_quotes.csv. Run time: under a minute offline,
-about 5 minutes when it has to pull the daily-high quotes.
+quotes in data/processed/kalshi_high_opening_quotes{,_history}.csv. Needs internet for ACIS station data. Run time: under a minute with those caches,
+about 20 minutes when it has to pull the daily-high quotes (two caches).
 """
 from __future__ import annotations
 
@@ -37,6 +37,7 @@ from agri_hedge.config import PROCESSED
 
 HIGH_SERIES = {"KXHIGHNY": "NYC", "KXHIGHTPHX": "PHX", "KXHIGHTDAL": "DFW"}
 QUOTES = PROCESSED / "kalshi_high_opening_quotes.csv"
+QUOTES_HIST = PROCESSED / "kalshi_high_opening_quotes_history.csv"
 MON = {m: i + 1 for i, m in enumerate("JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split())}
 
 
@@ -117,20 +118,69 @@ def _pull_high_quotes(n_days: int = 40) -> pd.DataFrame:
     return out
 
 
+def _candle_mid(cs):
+    bids, asks = [], []
+    for cd in cs:
+        yb, ya = cd.get("yes_bid") or {}, cd.get("yes_ask") or {}
+        try:
+            b = float(yb.get("close_dollars") or yb.get("close"))
+            a = float(ya.get("close_dollars") or ya.get("close"))
+        except (TypeError, ValueError):
+            continue
+        if b > 1:
+            b, a = b / 100, a / 100
+        bids.append(b), asks.append(a)
+    return _first_quote(bids, asks)
+
+
+def _pull_high_history(start: str = "2024-09-07", step_days: int = 5) -> pd.DataFrame:
+    """Every `step_days`-th settled day from `start` to Kalshi's historical cutoff (all seasons)."""
+    from agri_hedge.kalshi import KalshiClient
+    k = KalshiClient(timeout=30, max_retries=3)
+    rows = []
+    for series in HIGH_SERIES:
+        ms = k.list_historical_markets(series)
+        ms = ms if isinstance(ms, list) else ms.get("markets", [])
+        by_event = {}
+        for m in ms:
+            by_event.setdefault(m["event_ticker"], []).append(m)
+        days = sorted((e for e in by_event if re.search(r"-(\d{2}[A-Z]{3}\d{2})$", e)),
+                      key=lambda e: _event_day(e))
+        days = [e for e in days if _event_day(e) >= pd.Timestamp(start)][::step_days]
+        for ev in days:
+            for m in by_event[ev]:
+                ot = int(datetime.fromisoformat(m["open_time"].replace("Z", "+00:00")).timestamp())
+                try:
+                    cs = k.get_historical_candlesticks(m["ticker"], ot, ot + 6 * 3600, period_interval=60)
+                except Exception:
+                    cs = []
+                rows.append({"series": series, "ticker": m["ticker"], "event": ev,
+                             "open_time": m["open_time"], "close_time": m["close_time"],
+                             "strike_type": m.get("strike_type"), "floor": m.get("floor_strike"),
+                             "cap": m.get("cap_strike"), "result": m.get("result"),
+                             "open_mid": _candle_mid(cs)})
+        print(f"{series}: {len(days)} days pulled", flush=True)
+    out = pd.DataFrame(rows)
+    out.to_csv(QUOTES_HIST, index=False)
+    return out
+
+
+def _event_day(ev: str) -> pd.Timestamp:
+    g = re.search(r"-(\d{2})([A-Z]{3})(\d{2})$", ev)
+    return pd.Timestamp(2000 + int(g.group(1)), MON[g.group(2)], int(g.group(3)))
+
+
 def highs_listing() -> pd.DataFrame:
-    q = pd.read_csv(QUOTES) if QUOTES.exists() else _pull_high_quotes()
-
-    def day(ev):
-        g = re.search(r"-(\d{2})([A-Z]{3})(\d{2})$", ev)
-        return pd.Timestamp(2000 + int(g.group(1)), MON[g.group(2)], int(g.group(3)))
-
-    q["day"] = q.event.map(day)
+    recent = pd.read_csv(QUOTES) if QUOTES.exists() else _pull_high_quotes()
+    hist = pd.read_csv(QUOTES_HIST) if QUOTES_HIST.exists() else _pull_high_history()
+    q = pd.concat([hist.assign(tier="historical"), recent.assign(tier="recent")], ignore_index=True)
+    q["day"] = q.event.map(_event_day)
     lo, hi = q.day.min(), q.day.max()
     rows = []
     for series, sid in HIGH_SERIES.items():
         clim = _acis_maxt(sid, "1991-01-01", "2020-12-31")
-        actual = _acis_maxt(sid, lo.strftime("%Y-%m-%d"), hi.strftime("%Y-%m-%d"))
         doy = clim.index.day_of_year
+        actual = _acis_maxt(sid, lo.strftime("%Y-%m-%d"), hi.strftime("%Y-%m-%d"))
         for ev, g in q[q.series == series].groupby("event"):
             g = g.dropna(subset=["open_mid"])
             if len(g) < 3:
@@ -142,7 +192,8 @@ def highs_listing() -> pd.DataFrame:
             var = float(p @ (v - mu) ** 2) + 4 / 12          # plus the spread inside a 2 F bracket
             d = g.day.iloc[0]
             near = clim[(abs(doy - d.day_of_year) <= 7) | (abs(doy - d.day_of_year) >= 358)]
-            rows.append({"series": series, "day": d.date(), "implied_mean_f": mu, "implied_var": var,
+            rows.append({"series": series, "day": d.date(), "season": "DJF MAM JJA SON".split()[(d.month % 12) // 3],
+                         "implied_mean_f": mu, "implied_var": var,
                          "actual_f": actual.get(d, np.nan), "clim_mean_f": float(near.mean()),
                          "clim_var": float(near.var()), "sum_open_mids": float(g.open_mid.sum()),
                          "lead_hours": (pd.to_datetime(g.close_time.iloc[0]) - pd.to_datetime(g.open_time.iloc[0]))
@@ -192,7 +243,9 @@ def main() -> int:
           f"{1 - ((rain.open_mid - rain.outcome) ** 2).mean() / ((rain.clim_p - rain.outcome) ** 2).mean():.2f}")
     highs = highs_listing()
     highs.to_csv(PROCESSED / "insurability_pilot_highs.csv", index=False)
-    for name, g in list(highs.groupby("series")) + [("all", highs)]:
+    groups = (list(highs.groupby("series")) + [(f"season {k}", g) for k, g in highs.groupby("season")]
+              + [("all", highs)])
+    for name, g in groups:
         err = (g.actual_f - g.implied_mean_f) ** 2
         print(f"Daily high {name}: {len(g)} days; implied sd {np.sqrt(g.implied_var.mean()):.1f} F, "
               f"miss RMSE {np.sqrt(err.mean()):.1f} F, climatology sd {np.sqrt(g.clim_var.mean()):.1f} F; "
