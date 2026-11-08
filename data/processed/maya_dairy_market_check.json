@@ -1,0 +1,48 @@
+{
+  "observed_at_utc": "2026-11-08T02:35:32.181437+00:00",
+  "rows": [
+    {
+      "site": "CO_weld",
+      "series": "KXHIGHDEN",
+      "source_url": "https://api.elections.kalshi.com/trade-api/v2/markets?series_ticker=KXHIGHDEN&status=open&limit=1000",
+      "open_markets": 12,
+      "open_event_dates": [
+        "2026-11-07",
+        "2026-11-08"
+      ],
+      "target_summer_year": 2027,
+      "listed_summer_days": 0,
+      "fully_bookable_before_summer": false
+    },
+    {
+      "site": "PA_lancaster",
+      "series": "KXHIGHPHIL",
+      "source_url": "https://api.elections.kalshi.com/trade-api/v2/markets?series_ticker=KXHIGHPHIL&status=open&limit=1000",
+      "open_markets": 12,
+      "open_event_dates": [
+        "2026-11-07",
+        "2026-11-08"
+      ],
+      "target_summer_year": 2027,
+      "listed_summer_days": 0,
+      "fully_bookable_before_summer": false
+    },
+    {
+      "site": "TX_erath",
+      "series": "KXHIGHTDAL",
+      "source_url": "https://api.elections.kalshi.com/trade-api/v2/markets?series_ticker=KXHIGHTDAL&status=open&limit=1000",
+      "open_markets": 12,
+      "open_event_dates": [
+        "2026-11-07",
+        "2026-11-08"
+      ],
+      "target_summer_year": 2027,
+      "listed_summer_days": 0,
+      "fully_bookable_before_summer": false
+    }
+  ],
+  "limitations": [
+    "Only daily-high series checked; no orders submitted.",
+    "No future contract price or depth is inferred from today's books."
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "17167": {
+    "version": "maya-research-v1",
+    "status": "hypothetical offline demonstration",
+    "fips": "17167",
+    "county": "Sangamon",
+    "state": "IL",
+    "source": "ACIS NRCC GridData grid=1",
+    "latitude": 39.756886,
+    "longitude": -89.662435,
+    "covered_months": [
+      6,
+      7
+    ],
+    "days_required": 61,
+    "fit_end": 2009,
+    "rain_trigger_in": 7.005000000000001,
+    "heat_trigger_c_days": 23.365765965089935,
+    "rain_scale_in": 6.340000000000002,
+    "heat_scale_c_days": 33.70044881064522,
+    "heat_threshold_c": 29.0,
+    "coefficient": 0.10700902149239477,
+    "maximum_payout_fraction": 0.10700902149239477,
+    "modeled_premium_fraction": 0.01,
+    "formula": "E * coefficient * min(clipped drought severity, clipped heat severity)",
+    "notional": "declared expected crop value, not verified farm revenue",
+    "future_template": {
+      "buy_before": "June 1 observation period starts; historical replay is not a purchase",
+      "illustrative_snapshot": "August 15 12:00 UTC of coverage year; not an implemented oracle schedule",
+      "missing_data": "pending; do not interpolate or settle as zero",
+      "revisions_disputes": "not implemented; no claim of production-ready insurance terms"
+    },
+    "limitations": [
+      "No verified counterparty or market quote.",
+      "No chain deployment or oracle truth attestation.",
+      "Gridded point weather differs from farm losses and listed airport/TWC settlement sources.",
+      "Cents rounding in this Python replay is not a Solidity fixed-point implementation."
+    ],
+    "spec_sha256": "e432363dea39c176d4a0972ce1b4af7f0f7a14ac802bba94ebd4571d069cc426"
+  },
+  "19169": {
+    "version": "maya-research-v1",
+    "status": "hypothetical offline demonstration",
+    "fips": "19169",
+    "county": "Story",
+    "state": "IA",
+    "source": "ACIS NRCC GridData grid=1",
+    "latitude": 42.037538,
+    "longitude": -93.466093,
+    "covered_months": [
+      6,
+      7
+    ],
+    "days_required": 61,
+    "fit_end": 2009,
+    "rain_trigger_in": 8.645,
+    "heat_trigger_c_days": 12.480279477250665,
+    "rain_scale_in": 9.433000000000007,
+    "heat_scale_c_days": 20.452398669949133,
+    "heat_threshold_c": 29.0,
+    "coefficient": 0.10700902149239477,
+    "maximum_payout_fraction": 0.10700902149239477,
+    "modeled_premium_fraction": 0.01,
+    "formula": "E * coefficient * min(clipped drought severity, clipped heat severity)",
+    "notional": "declared expected crop value, not verified farm revenue",
+    "future_template": {
+      "buy_before": "June 1 observation period starts; historical replay is not a purchase",
+      "illustrative_snapshot": "August 15 12:00 UTC of coverage year; not an implemented oracle schedule",
+      "missing_data": "pending; do not interpolate or settle as zero",
+      "revisions_disputes": "not implemented; no claim of production-ready insurance terms"
+    },
+    "limitations": [
+      "No verified counterparty or market quote.",
+      "No chain deployment or oracle truth attestation.",
+      "Gridded point weather differs from farm losses and listed airport/TWC settlement sources.",
+      "Cents rounding in this Python replay is not a Solidity fixed-point implementation."
+    ],
+    "spec_sha256": "86f63b3e3e1dd57af4ada50cd14529fba960e6b5bbba765d1596b2a222d1b47c"
+  },
+  "18157": {
+    "version": "maya-research-v1",
+    "status": "hypothetical offline demonstration",
+    "fips": "18157",
+    "county": "Tippecanoe",
+    "state": "IN",
+    "source": "ACIS NRCC GridData grid=1",
+    "latitude": 40.389133,
+    "longitude": -86.893554,
+    "covered_months": [
+      6,
+      7
+    ],
+    "days_required": 61,
+    "fit_end": 2009,
+    "rain_trigger_in": 8.649999999999999,
+    "heat_trigger_c_days": 13.973958418163747,
+    "rain_scale_in": 7.51,
+    "heat_scale_c_days": 24.651271917582754,
+    "heat_threshold_c": 29.0,
+    "coefficient": 0.10700902149239477,
+    "maximum_payout_fraction": 0.10700902149239477,
+    "modeled_premium_fraction": 0.01,
+    "formula": "E * coefficient * min(clipped drought severity, clipped heat severity)",
+    "notional": "declared expected crop value, not verified farm revenue",
+    "future_template": {
+      "buy_before": "June 1 observation period starts; historical replay is not a purchase",
+      "illustrative_snapshot": "August 15 12:00 UTC of coverage year; not an implemented oracle schedule",
+      "missing_data": "pending; do not interpolate or settle as zero",
+      "revisions_disputes": "not implemented; no claim of production-ready insurance terms"
+    },
+    "limitations": [
+      "No verified counterparty or market quote.",
+      "No chain deployment or oracle truth attestation.",
+      "Gridded point weather differs from farm losses and listed airport/TWC settlement sources.",
+      "Cents rounding in this Python replay is not a Solidity fixed-point implementation."
+    ],
+    "spec_sha256": "77342a6d9dea05b750c527baaaf416f0b7a5eef85f7b5dfb191ef6b7bd0bbd48"
+  }
+}

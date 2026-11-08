@@ -1,0 +1,145 @@
+{
+  "checked_utc": "2026-11-08T03:03:12.573809+00:00",
+  "scope": "Public series metadata and all currently open markets, not historical quotes.",
+  "series": {
+    "KXHIGHCHI": {
+      "metadata_url": "https://api.elections.kalshi.com/trade-api/v2/series/KXHIGHCHI",
+      "metadata": {
+        "additional_prohibitions": [
+          "Persons who are employed by any of the Source Agencies are not permitted to trade on the Contract.",
+          "Persons who hold any material, non-public information on the Underlying are not permitted to trade on the Contract."
+        ],
+        "categories": [
+          "Climate and Weather"
+        ],
+        "category": "Climate and Weather",
+        "contract_terms_url": "https://assets.kalshi.com/contract_terms/GLOBALTEMPERATURE.pdf",
+        "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/GLOBALTEMPERATURE.pdf",
+        "exchange_index": 0,
+        "fee_multiplier": 1,
+        "fee_type": "quadratic",
+        "frequency": "daily",
+        "last_updated_ts": "2026-11-03T18:56:57.311193Z",
+        "product_metadata": {
+          "important_info": {
+            "id": "GLOBALTEMPERATURE-bulk-2026-09-02",
+            "markdown": "**Important information:** If it is determined in the sole discretion of the Exchange that there is a material error in the initial non-preliminary publication, Expiration may be held until the publication of a non-materially-erroneous data revision or until the Expiration Date, whichever comes first. If no data is available at the end of this period, all markets will resolve to the last fair price determined by Kalshi. Please note, a status of \"Final\" on weather.com/kalshi is provided for convenience only, and does not guarantee data to be error-free and thus exempt from the above.",
+            "message": "",
+            "title": ""
+          }
+        },
+        "settlement_sources": [
+          {
+            "name": "The Weather Company",
+            "url": "https://weather.com/kalshi"
+          }
+        ],
+        "tags": [
+          "Daily temperature"
+        ],
+        "ticker": "KXHIGHCHI",
+        "title": "Highest temperature in Chicago"
+      },
+      "open_market_count": 12,
+      "open_event_tickers": [
+        "KXHIGHCHI-26NOV07",
+        "KXHIGHCHI-26NOV08"
+      ],
+      "sample_markets": [
+        {
+          "ticker": "KXHIGHCHI-26NOV08-T64",
+          "event_ticker": "KXHIGHCHI-26NOV08",
+          "title": "Will the maximum temperature be >64\u00b0 on Nov 8, 2026?",
+          "subtitle": null,
+          "rules_primary": "If the maximum temperature recorded at Chicago (CLIMDW) for Nov 8, 2026, is greater than 64\u00b0 fahrenheit according to The Weather Company, then the market resolves to Yes.",
+          "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market is the maximum/minimum temperature as reported by the Weather Company.\n\nReading weather data\nPreliminary Weather Company data may be subject to rounding and conversion differences from the final reported value.\nUse caution when interpreting preliminary Weather Company readings.\n\nIf it is determined in the sole discretion of the Exchange that there is a material error in the initial non-preliminary publication, Expiration may be held until the publication of a non-materially-erroneous data revision or until the Expiration Date, whichever comes first. If no data is available at the end of this period, all markets will resolve to the last fair price determined by Kalshi. Please note, a status of \"Final\" on weather.com/kalshi is provided for convenience only, and does not guarantee data to be error-free and thus exempt from the above.",
+          "close_time": "2026-11-09T07:00:00Z",
+          "expected_expiration_time": "2026-11-09T20:00:00Z"
+        },
+        {
+          "ticker": "KXHIGHCHI-26NOV08-T57",
+          "event_ticker": "KXHIGHCHI-26NOV08",
+          "title": "Will the maximum temperature be <57\u00b0 on Nov 8, 2026?",
+          "subtitle": null,
+          "rules_primary": "If the maximum temperature recorded at Chicago (CLIMDW) for Nov 8, 2026, is less than 57\u00b0 fahrenheit according to The Weather Company, then the market resolves to Yes.",
+          "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market is the maximum/minimum temperature as reported by the Weather Company.\n\nReading weather data\nPreliminary Weather Company data may be subject to rounding and conversion differences from the final reported value.\nUse caution when interpreting preliminary Weather Company readings.\n\nIf it is determined in the sole discretion of the Exchange that there is a material error in the initial non-preliminary publication, Expiration may be held until the publication of a non-materially-erroneous data revision or until the Expiration Date, whichever comes first. If no data is available at the end of this period, all markets will resolve to the last fair price determined by Kalshi. Please note, a status of \"Final\" on weather.com/kalshi is provided for convenience only, and does not guarantee data to be error-free and thus exempt from the above.",
+          "close_time": "2026-11-09T07:00:00Z",
+          "expected_expiration_time": "2026-11-09T20:00:00Z"
+        }
+      ]
+    },
+    "KXRAINCHIM": {
+      "metadata_url": "https://api.elections.kalshi.com/trade-api/v2/series/KXRAINCHIM",
+      "metadata": {
+        "additional_prohibitions": [
+          "Persons who are employed by any of the Source Agencies are not permitted to trade on the Contract.",
+          "Persons who hold any material, non-public information on the Underlying are not permitted to trade on the Contract."
+        ],
+        "categories": [
+          "Climate and Weather"
+        ],
+        "category": "Climate and Weather",
+        "contract_terms_url": "https://assets.kalshi.com/contract_terms/RAINM.pdf",
+        "contract_url": "https://assets.kalshi.com/regulatory/product-certifications/RAINM.pdf",
+        "exchange_index": 0,
+        "fee_multiplier": 1,
+        "fee_type": "quadratic",
+        "frequency": "monthly",
+        "last_updated_ts": "2026-10-22T23:34:49.851313Z",
+        "product_metadata": {
+          "important_info": {
+            "id": "KXRAINCHIM-2026-09-01",
+            "markdown": "**Important information:** Please note that effective September 4th, an amendment to the contract terms will change the Source Agencies for this event to include The Weather Company.",
+            "message": "",
+            "title": ""
+          }
+        },
+        "settlement_sources": [
+          {
+            "name": "The Weather Company",
+            "url": "https://weather.com/kalshi"
+          },
+          {
+            "name": "National Oceanic and Atmospheric Administration",
+            "url": "https://www.noaa.gov/"
+          },
+          {
+            "name": "National Weather Service",
+            "url": "https://www.weather.gov/"
+          }
+        ],
+        "tags": [
+          "Snow and rain"
+        ],
+        "ticker": "KXRAINCHIM",
+        "title": "Rain Chicago"
+      },
+      "open_market_count": 7,
+      "open_event_tickers": [
+        "KXRAINCHIM-26NOV"
+      ],
+      "sample_markets": [
+        {
+          "ticker": "KXRAINCHIM-26NOV-7",
+          "event_ticker": "KXRAINCHIM-26NOV",
+          "title": "Rain in Chicago in Nov 2026?",
+          "subtitle": null,
+          "rules_primary": "If the total precipitation at CLIORD in Chicago in Nov 2026 is strictly greater than 7 inches, then the market resolves to Yes.",
+          "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market as reported by the corresponding TWC Report (Daily).\n\nNotice: The Contract for this market has been amended. The market rules have been updated to reflect the amended terms, which provide clarification in the case of materially erroneous data. The market will settle in accordance with the rules of the amended Contract.",
+          "close_time": "2026-12-01T04:59:59Z",
+          "expected_expiration_time": "2026-12-02T04:59:59Z"
+        },
+        {
+          "ticker": "KXRAINCHIM-26NOV-6",
+          "event_ticker": "KXRAINCHIM-26NOV",
+          "title": "Rain in Chicago in Nov 2026?",
+          "subtitle": null,
+          "rules_primary": "If the total precipitation at CLIORD in Chicago in Nov 2026 is strictly greater than 6 inches, then the market resolves to Yes.",
+          "rules_secondary": "Not all weather data is the same. While checking a source like AccuWeather or Google Weather may help guide your decision, the official and final value used to determine this market as reported by the corresponding TWC Report (Daily).\n\nNotice: The Contract for this market has been amended. The market rules have been updated to reflect the amended terms, which provide clarification in the case of materially erroneous data. The market will settle in accordance with the rules of the amended Contract.",
+          "close_time": "2026-12-01T04:59:59Z",
+          "expected_expiration_time": "2026-12-02T04:59:59Z"
+        }
+      ]
+    }
+  }
+}

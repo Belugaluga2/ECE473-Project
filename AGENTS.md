@@ -2,6 +2,12 @@
 
 Read this first, then [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) (index of every doc, headline numbers, next steps).
 
+**Local experimental work (2026-11-07):** `maya-experiments` branches from merged `main`
+(`dd0c464`). It preserves rainfall and selectively reuses Jack's dairy files from `8577aa6`.
+Read doc 25 before interpreting dairy results: observed-production validation does not establish
+an improvement. No change to the team's direction is implied. On Windows use
+`.venv/Scripts/python.exe`; `scripts/run_dairy_validation.py` runs offline from committed inputs.
+
 ## What the project is now (2026-11-05)
 
 ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall insurance (PRF) with Kalshi monthly-rain contracts". That failed: Kalshi costs about 1.8x subsidized PRF, airport gauges sit 30-55 miles from the farm, and order books are thin (docs 08-09, 16).
@@ -36,7 +42,10 @@ In the Claude desktop app, `.claude/launch.json` defines the `agrihedge` preview
 
 ## Git state
 
-- Work happens on `milestone-2`. It is pushed and open as GitHub PR 3 into `main`, and it already contains the branches of PRs 1 and 2. Merging is the team's call, not an agent's.
+- This clone's `main` is at `dd0c464`, the 2026-11-06 merge of PR 3. Experimental work here is on `maya-experiments`; merging or publishing it is the team's call.
+- This branch also contains the observed-milk validation (doc 25) and compound heat/drought corn pilot (doc 26). They preserve the rainfall work and do not change the companion app or the team's approved direction. Reproduce the new pilot offline with `.venv/Scripts/python.exe scripts/run_compound.py`; do not retune on its final-test years.
+- Doc 27 is the fixed multi-county extension: `.venv/Scripts/python.exe scripts/run_compound_panel.py` runs offline. Read its reserved-county results, missing-year audit and failed interaction evidence checks before making claims. Its test results are now inspected; future selection needs a separate confirmation sample. `docs/MAYA_PROJECT_GUIDE.md` is the beginner recap.
+- Doc 28 diagnoses that frozen policy and audits contract replication; it is exploratory, not fresh validation. `experiments/maya/README.md` is the entry guide. `.venv/Scripts/python.exe scripts/run_maya_demo.py` serves the isolated offline demo; `--settle` replays daily inputs. `.venv/Scripts/python.exe scripts/run_maya_diagnostics.py` regenerates the new outputs only. No live orders, actual oracle, blockchain deployment or guaranteed arbitrage.
 - `main` is shared: never commit to it directly. Branch per piece of work and open a PR; CI runs pytest.
 - Local branches `run/datafix-2`, `run/factcheck-1`, `run/lossmodel-2`, `run/rowcrop-2` are the losing alternates of reviewed two-run comparisons (see doc 11 and the 2026-11-01 merge commits). Kept only for reference.
 

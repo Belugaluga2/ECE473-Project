@@ -1,0 +1,60 @@
+{
+  "url": "https://zenodo.org/records/4818011/files/ClimateDairy.zip?download=1",
+  "members": [
+    {
+      "member": "DataGenerated/panel_final.rds",
+      "bytes": 1569259,
+      "sha256": "3767c58b60d0226a75eb4145a9a5160c6fccef7a7e42485ad114f4c2e50f6ce1"
+    },
+    {
+      "member": "DataRaw/milk_state.xlsx",
+      "bytes": 276240,
+      "sha256": "62cadf56d9812fe71b9cd640d3ffceb490fd6c53a696fdd9ccb20e7f09180905"
+    },
+    {
+      "member": "PreparePanelFinal.R",
+      "bytes": 4242,
+      "sha256": "1d6a8e89abb14bf8e856bb617b3735e537f77afbaa2beca839f9fa707c51937d"
+    },
+    {
+      "member": "PreparePanelTHI.R",
+      "bytes": 2873,
+      "sha256": "000113cb1443089f4347930284ab632dcede34eea356a1472a997822d164c69d"
+    },
+    {
+      "member": "PrepareMilkData.R",
+      "bytes": 1360,
+      "sha256": "38887db909c387dad00f34e2b0e5b86076640bc1b794a3739b6f0c87cb869edd"
+    },
+    {
+      "member": "PrepareWeatherData.R",
+      "bytes": 3232,
+      "sha256": "12c19193ecb8d6f45e5d09fde0aa3ff6001806c40df17d028a1c96b3e2ae0cee"
+    },
+    {
+      "member": "CalcFrequenciesTHI_Temp.R",
+      "bytes": 537,
+      "sha256": "314cb559dce7711ae078bdc91815205637854394089fc705c42f81beba8fc101"
+    },
+    {
+      "member": "CreateFigure2a.R",
+      "bytes": 4161,
+      "sha256": "cec9d7e2f19940aa4f1bcc8ed82eb40c71ba133ca8b2dbba6327f72ea75fca9d"
+    }
+  ],
+  "rows": 1125,
+  "states": [
+    "COLORADO",
+    "PENNSYLVANIA",
+    "TEXAS"
+  ],
+  "milk_units": "kg/cow/day",
+  "study_doi": "10.1038/s43016-021-00372-z",
+  "record_doi": "10.5281/zenodo.4818011",
+  "source_conversion_max_abs_error": 0.0,
+  "limitations": [
+    "State averages are not individual-farm records.",
+    "Published exposure weights use 2002-2012 cow inventories as fixed geographic weights.",
+    "THI 69.4/79.3 cutoffs follow the publication's bin edges, not universal cow thresholds."
+  ]
+}

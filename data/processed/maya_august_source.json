@@ -1,0 +1,50 @@
+[
+  {
+    "fips": "17167",
+    "url": "https://data.rcc-acis.org/GridData",
+    "payload": {
+      "sdate": "1980-01-01",
+      "edate": "2024-12-31",
+      "elems": [
+        "pcpn",
+        "maxt",
+        "mint"
+      ],
+      "grid": "1",
+      "loc": "-89.662435,39.756886"
+    },
+    "sha256": "67d7fec0133da9d88849b8c9d9ec250f236ee4b94ba1839fb7b22f8d8c7a6d1c"
+  },
+  {
+    "fips": "19169",
+    "url": "https://data.rcc-acis.org/GridData",
+    "payload": {
+      "sdate": "1980-01-01",
+      "edate": "2024-12-31",
+      "elems": [
+        "pcpn",
+        "maxt",
+        "mint"
+      ],
+      "grid": "1",
+      "loc": "-93.466093,42.037538"
+    },
+    "sha256": "1ffdb06dbb2b6655c475ed2b59368e1667c8f9d2757ece4610a1244c5269882f"
+  },
+  {
+    "fips": "18157",
+    "url": "https://data.rcc-acis.org/GridData",
+    "payload": {
+      "sdate": "1980-01-01",
+      "edate": "2024-12-31",
+      "elems": [
+        "pcpn",
+        "maxt",
+        "mint"
+      ],
+      "grid": "1",
+      "loc": "-86.893554,40.389133"
+    },
+    "sha256": "fc255841a346d844b4dd9097c52bd662e15e5850641c98ba203dd733d5a6949a"
+  }
+]

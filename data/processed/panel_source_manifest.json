@@ -1,0 +1,436 @@
+{
+  "first_prepared_utc": "2026-11-08T06:19:19.267142+00:00",
+  "coordinate_source": "committed rowcrop_county_station_distance.csv, Census Gazetteer internal points",
+  "requests": [
+    {
+      "fips": "17019",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IL&county_code=019&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "78b82714e295f6410649cf3c6b74ccc3e070b9edd48181d9eadbc0818cafc8ec"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/DC617864-3A8E-38F8-AFA8-09A4EC2C674B.csv",
+        "payload": null,
+        "sha256": "d4e19ef0214199c9ee6ca0fbece26580aee55a8c280d90408905b81469f556cb"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-88.196975,40.138985"
+        },
+        "sha256": "ddc03b1e80bd83f6be83bbf38d2de97fd37bbe27de1b296520a20bbef3c6a595"
+      },
+      "n_yield_rows": 84,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    },
+    {
+      "fips": "17099",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IL&county_code=099&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "d589e960310358280ab64862f9a13daf35c5ad96c365d18042b0e849716715dd"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/9A1036D6-DFE9-3115-AE3B-BD3DF98DCC40.csv",
+        "payload": null,
+        "sha256": "0ee218a1ee0d1d961bd80be089a38e299a95a55e448855140c3c37be91d814a7"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-88.885931,41.343341"
+        },
+        "sha256": "156ccee79b8e082b39cf49b1753aa2510652b3fc6407f261e0f64131702d6ca0"
+      },
+      "n_yield_rows": 84,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    },
+    {
+      "fips": "17113",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IL&county_code=113&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "984b66dfd4cc1d73685a2eb587a941ec64746986952aae95de5001674586850e"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/2C2BF725-F90F-3343-A5AA-65C7969B84C8.csv",
+        "payload": null,
+        "sha256": "7666dc92588b8af2ba3bcdf019ea06c98c995d2c085844c1d27adccc06f9a2b2"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-88.844539,40.494559"
+        },
+        "sha256": "a36cc234dba5dd65afd9237685c56400135a750f237135aa3f707179b0869e10"
+      },
+      "n_yield_rows": 85,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    },
+    {
+      "fips": "17167",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IL&county_code=167&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "0f79b5843ccd952e9425f06f00ccbc9923ef99cf4c7f570351f8fa09ea03a1fd"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/51C45E58-3851-37B5-8DF2-55BA4F73ADA9.csv",
+        "payload": null,
+        "sha256": "138648363c8fac0725d5b85f2b82b71dc5c3da781789a2d2933db327aa60ff25"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-89.662435,39.756886"
+        },
+        "sha256": "67d7fec0133da9d88849b8c9d9ec250f236ee4b94ba1839fb7b22f8d8c7a6d1c"
+      },
+      "n_yield_rows": 85,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    },
+    {
+      "fips": "19015",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IA&county_code=015&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "b579254ba08887018131349dcf236ac68145f4e13ac10e32b121d435e8ed0666"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/69A49DD2-0567-3DD6-B104-D7E88BA54640.csv",
+        "payload": null,
+        "sha256": "344733ebd4b8dd2648b5a76983a386543217df3d0080841dca919845a7767517"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-93.938605,42.038623"
+        },
+        "sha256": "3beeb47ee775faf8beb3fd2d0d3544d1e708bc67026f48eac7302e81a1345406"
+      },
+      "n_yield_rows": 85,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    },
+    {
+      "fips": "19153",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IA&county_code=153&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "09f7ebf584857f50f18d79f8d8b2760c6e3d55248caa266b9c4274ec712342d4"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/59E23554-E2A3-356E-B6A2-CDDDAB11D7DC.csv",
+        "payload": null,
+        "sha256": "14ff19c9ccb4f2bc3033524ea2aba28e38f3a68ef0fc1b3197721e0d2d0f0cc8"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-93.568971,41.684816"
+        },
+        "sha256": "0bc2ad2846830822a8d7267fa5b901a6fdb508ec18501227f562c29670dbd75e"
+      },
+      "n_yield_rows": 85,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    },
+    {
+      "fips": "19187",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IA&county_code=187&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "c240670865cb8cf2594847eb56077e3266a17d31b51170df20227d5a681f7152"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/D26C11B4-B874-37F8-A171-5DF1D1E8C167.csv",
+        "payload": null,
+        "sha256": "be1dde0587fd0a031b337541c4976f93d72fc8ddf5c1092319dab845109f8e28"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-94.175831,42.433579"
+        },
+        "sha256": "5c5906da21dc331247cefae06d762d750dc6634af923c3aec503f6565d577e72"
+      },
+      "n_yield_rows": 85,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    },
+    {
+      "fips": "19169",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IA&county_code=169&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "a63a8be6cf2eabb9c748edfe1dbcb1194fcce113caaed7943495a3aa60c1752e"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/43A40BB4-B52A-305B-AFEE-59ECD9676A7C.csv",
+        "payload": null,
+        "sha256": "ce885bf4be2d493cd17cc956569ef6955ae9757554a218e5d9d865abf771990e"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-93.466093,42.037538"
+        },
+        "sha256": "1ffdb06dbb2b6655c475ed2b59368e1667c8f9d2757ece4610a1244c5269882f"
+      },
+      "n_yield_rows": 85,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    },
+    {
+      "fips": "18007",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IN&county_code=007&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "02c1ad0be85ab971fd4fbf8be605c1a409728d49eb173d4e7760e59fa17edfd3"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/CF005170-B815-3145-9760-006AD6817556.csv",
+        "payload": null,
+        "sha256": "311c987508d03c61e63a664f3fb4765d14d9e04b81b9a8e29eb54c61ca7bc65f"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-87.314786,40.600939"
+        },
+        "sha256": "65f5907edd929d6705ec16bb386d7be9631ca081e47929d7ff6927be221a52f3"
+      },
+      "n_yield_rows": 85,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    },
+    {
+      "fips": "18023",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IN&county_code=023&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "fc3001e8268e22c38d4c0d527aaae5c39600111b2212a2c6ffd96fa738931f6b"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/44E6AD1A-17C4-33E6-9E5A-4A17AA417E87.csv",
+        "payload": null,
+        "sha256": "d3e24d605037012e2deaa8406423d49c272f7a5c1bbe0d853f5ad59e0f7749a6"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-86.477567,40.305944"
+        },
+        "sha256": "045dbf989fd0ada00d6876d5aea6dd362fabdc4d3e9b86db8630a851a42d200b"
+      },
+      "n_yield_rows": 84,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    },
+    {
+      "fips": "18181",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IN&county_code=181&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "fdbf5c400c6b41ffa8d03e10a13768eedc791c1c4a2b8fb7a943c8036ee1f427"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/F701D769-6222-32B6-BD92-49336218FD32.csv",
+        "payload": null,
+        "sha256": "ca86f2b1ca88b640bccc8fd15247000a67ea230f1f80e83c79a8645c2b7ada2c"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-86.864293,40.75095"
+        },
+        "sha256": "8c18895fc7ab4bcd88c791782079e6d85c0e864223e1d9df8d81177bf943a21d"
+      },
+      "n_yield_rows": 83,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    },
+    {
+      "fips": "18157",
+      "query": {
+        "url": "https://quickstats.nass.usda.gov/uuid/encode?source_desc=SURVEY&agg_level_desc=COUNTY&state_alpha=IN&county_code=157&short_desc=CORN%2C%20GRAIN%20-%20YIELD%2C%20MEASURED%20IN%20BU%20%2F%20ACRE&domain_desc=TOTAL&prodn_practice_desc=ALL%20PRODUCTION%20PRACTICES&reference_period_desc=YEAR&freq_desc=ANNUAL&year__GE=1940",
+        "payload": null,
+        "sha256": "17582cdfabb7ecdc4acdc701a2bb9f4f5740cc56f1ca4116916bee4ee26450ce"
+      },
+      "yields": {
+        "url": "https://quickstats.nass.usda.gov/data/spreadsheet/3DDCAE6C-1F2F-3403-8FD6-4F15E53FFFAA.csv",
+        "payload": null,
+        "sha256": "1430221f4ca7f3c588bb0aebd28c87c74bdc3db3f80fbfd61de749fdd8db3d2d"
+      },
+      "weather": {
+        "url": "https://data.rcc-acis.org/GridData",
+        "payload": {
+          "sdate": "1980-01-01",
+          "edate": "2024-12-31",
+          "elems": [
+            "pcpn",
+            "maxt",
+            "mint"
+          ],
+          "grid": "1",
+          "loc": "-86.893554,40.389133"
+        },
+        "sha256": "fc255841a346d844b4dd9097c52bd662e15e5850641c98ba203dd733d5a6949a"
+      },
+      "n_yield_rows": 84,
+      "n_weather_rows": 5490,
+      "weather_missing": {
+        "rain_in": 0,
+        "tmax_f": 0,
+        "tmin_f": 0
+      }
+    }
+  ],
+  "prepared_sha256": {
+    "panel_counties.csv": "da5677febfc5a002de704ab43d2507987bc64fe4d39d620d303489f915f1c7ad",
+    "panel_yields.csv": "38b31f18675f14454f91945aeee409a8d5d9d1b77455898b3660150521bf4339",
+    "panel_daily_weather.csv": "6bca3ee0b9f0d3773cc419fa7681cbd44c83d7e748111c0b057a7fab74b3e94d"
+  },
+  "limitations": [
+    "Revised NASS history, not vintage releases or individual-farm claims.",
+    "NRCC gridded point weather is not a county cropland average or exchange settlement series.",
+    "Convenience sample fixed in doc 27; nearby counties share weather shocks."
+  ]
+}
