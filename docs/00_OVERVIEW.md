@@ -4,6 +4,7 @@
 > **Current direction (2026-11-05): the PRF Companion.** Replacing PRF with Kalshi does not work (Milestone 1, docs 08-09: costlier than the subsidized policy, loose fit, thin books). Complementing it does: Kalshi hedges for the months PRF leaves open track the rancher's rain index with HE 0.61 on held-out years (doc 21). The rest of the project expands on the companion; the roadmap is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). For a short handoff (status, deadlines, how to work here) read [../AGENTS.md](../AGENTS.md).
 
 **Timeline:**
+- 2026-11-07 (`maya-experiments`, experimental): [doc 26](analysis/26_compound_heat_drought.md) tests joint heat/drought corn payouts against observed county yields with temporal tuning. Some individual formulas improve on rain alone, but the validation-selected station family fails in the final period; an exotic advantage over additive cover is not established. Prior studies and the companion app are retained.
 - 2026-11-07 (`maya-experiments`, experimental): [doc 25](analysis/25_maya_dairy_validation.md) checks simple seasonal heat cover against observed state milk-production shortfalls. It finds no demonstrated improvement; the stronger-looking earlier [dairy pilot](analysis/24_dairy_heat_stress.md) uses temperature-defined losses. Rainfall results are retained. This branch does not change the team's approved direction.
 - 2026-10-29: Milestone 1 done (all 9 proposal cells plus two extra research questions, docs 01-10).
 - 2026-11-02: Milestone 2 prep (docs 11-14: fact-check, post-rewards liquidity, rain-to-loss model, row crops). The team agreed to stop trying to *replace* PRF with Kalshi; docs 01-14 are background for that decision.
@@ -36,6 +37,7 @@ Every research document has a numbers table that gives a source for each number.
 | M2 showcase: PRF Companion (app tab) | team | [analysis/21_prf_companion.md](analysis/21_prf_companion.md), [DEMO.md](DEMO.md) | working prototype |
 | M2 showcase follow-up: liquidity, cover design, excess rain, two-month what-if | team | [analysis/22_making_it_better.md](analysis/22_making_it_better.md) | done 2026-11-05 |
 | Experimental dairy pilot and observed-production validation | Maya; reuses Jack's dairy pilot | [analysis/24_dairy_heat_stress.md](analysis/24_dairy_heat_stress.md), [analysis/25_maya_dairy_validation.md](analysis/25_maya_dairy_validation.md) | experimental; no demonstrated production-risk improvement; see cohorts and limitations |
+| Experimental compound heat/drought corn cover | Maya | [analysis/26_compound_heat_drought.md](analysis/26_compound_heat_drought.md) | temporal tuning, observed yields; no established exotic advantage; hypothetical contracts |
 
 ## Study sites
 

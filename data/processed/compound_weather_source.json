@@ -1,0 +1,89 @@
+{
+  "sources": {
+    "mdw": {
+      "endpoint": "https://data.rcc-acis.org/StnData",
+      "payload": {
+        "sdate": "1980-01-01",
+        "edate": "2025-12-31",
+        "elems": [
+          "maxt",
+          "mint"
+        ],
+        "sid": "MDW"
+      },
+      "sha256": "3748f4795ec3b07ee091bb84b643b864cf74aa3398b4267090d879d98bc9e122"
+    },
+    "mdw_3sw": {
+      "endpoint": "https://data.rcc-acis.org/StnData",
+      "payload": {
+        "sdate": "1980-01-01",
+        "edate": "2025-12-31",
+        "elems": [
+          "maxt",
+          "mint"
+        ],
+        "sid": "USC00111577"
+      },
+      "sha256": "f37acdb78f560bf001f1b5476fc4c2bf105dd2d1e6fbcadf600843864054a7c7"
+    },
+    "kane": {
+      "endpoint": "https://data.rcc-acis.org/GridData",
+      "payload": {
+        "sdate": "1980-01-01",
+        "edate": "2025-12-31",
+        "elems": [
+          "maxt",
+          "mint"
+        ],
+        "grid": "1",
+        "loc": "-88.42804,41.939594"
+      },
+      "sha256": "a63ac8e322bad4109a5bfc748035fb9059e1a32abffcc1ae26f34fed89715043"
+    }
+  },
+  "station_meta": {
+    "uid": 29698,
+    "ll": [
+      -87.75514,
+      41.78412
+    ],
+    "sids": [
+      "14819 1",
+      "111577 2",
+      "MDW 3",
+      "72534 4",
+      "KMDW 5",
+      "USW00014819 6",
+      "USC00111577 6",
+      "MDW 7",
+      "USW00014819 32"
+    ],
+    "state": "IL",
+    "elev": 610.0,
+    "name": "CHICAGO MIDWAY AP"
+  },
+  "backup_meta": {
+    "uid": 29697,
+    "ll": [
+      -87.77734,
+      41.73727
+    ],
+    "sids": [
+      "111577 2",
+      "USC00111577 6",
+      "MDWI2 7"
+    ],
+    "state": "IL",
+    "elev": 620.0,
+    "name": "CHICAGO MIDWAY AP 3SW"
+  },
+  "grid_meta": null,
+  "units": "degrees Fahrenheit",
+  "prepared_rows": 4232,
+  "prepared_sha256": "9ec0f9c84f6cdf7d43e3f4a88ffd093c84a87dfdf92dd82fc7e365fcc61e4a0c",
+  "limitations": [
+    "Kane grid value is a point estimate, not an observed farm thermometer.",
+    "Missing Midway airport days use nearby COOP Midway AP 3SW; per-element substitutions are flagged.",
+    "Chicago heat and rain settle at different stations; the area diagnostic is hypothetical."
+  ]
+}

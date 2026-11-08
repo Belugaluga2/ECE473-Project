@@ -1,0 +1,460 @@
+{
+  "python": "3.11.9",
+  "numpy": "2.4.6",
+  "pandas": "3.1.1",
+  "scipy": "1.17.1",
+  "matplotlib": "3.11.2",
+  "inputs_sha256": {
+    "rowcrop_kane_yields.csv": "8bdcc54457e3728e44eb4610b29d879eee16ca441b7fe196c96b271179d2dba1",
+    "rowcrop_farm_year.csv": "f3222b74f1a1c4b84617670ab0027a902125e2cb23ae2c8cc249e9c92cadbf4b",
+    "compound_daily_temperature.csv": "9ec0f9c84f6cdf7d43e3f4a88ffd093c84a87dfdf92dd82fc7e365fcc61e4a0c"
+  },
+  "train_end": 2009,
+  "test_years": [
+    2010,
+    2011,
+    2012,
+    2013,
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "outputs": {
+    "station_rain": {
+      "model": {
+        "config": {
+          "family": "rain",
+          "window": "jun_jul",
+          "rain_q": 0.25,
+          "heat_q": 0.5,
+          "ridge": 0.0
+        },
+        "pair": "station",
+        "rain_trigger": 5.345000000000001,
+        "heat_trigger": 18.180258567077683,
+        "rain_scale": 4.69,
+        "heat_scale": 36.4386081569601,
+        "weights": [
+          0.3
+        ]
+      },
+      "validation": {
+        "family": "rain",
+        "window": "jun_jul",
+        "rain_q": 0.25,
+        "heat_q": 0.5,
+        "ridge": 0.0,
+        "pair": "station",
+        "cv_he_net": 0.529800993337725,
+        "cv_he_gross": 0.5178271329335677,
+        "cv_years": 14
+      }
+    },
+    "station_heat": {
+      "model": {
+        "config": {
+          "family": "heat",
+          "window": "jun_aug",
+          "rain_q": 0.5,
+          "heat_q": 0.25,
+          "ridge": 0.1
+        },
+        "pair": "station",
+        "rain_trigger": 10.780000000000001,
+        "heat_trigger": 14.196365701077978,
+        "rain_scale": 9.420000000000005,
+        "heat_scale": 47.08979416242053,
+        "weights": [
+          0.09332381207457459
+        ]
+      },
+      "validation": {
+        "family": "heat",
+        "window": "jun_aug",
+        "rain_q": 0.5,
+        "heat_q": 0.25,
+        "ridge": 0.1,
+        "pair": "station",
+        "cv_he_net": 0.22715018826857492,
+        "cv_he_gross": 0.10649174290220509,
+        "cv_years": 14
+      }
+    },
+    "station_additive": {
+      "model": {
+        "config": {
+          "family": "additive",
+          "window": "jun_jul",
+          "rain_q": 0.25,
+          "heat_q": 0.25,
+          "ridge": 0.0
+        },
+        "pair": "station",
+        "rain_trigger": 5.345000000000001,
+        "heat_trigger": 10.799592907973565,
+        "rain_scale": 4.69,
+        "heat_scale": 36.4386081569601,
+        "weights": [
+          0.21414394282573088,
+          0.08585605717426908
+        ]
+      },
+      "validation": {
+        "family": "additive",
+        "window": "jun_jul",
+        "rain_q": 0.25,
+        "heat_q": 0.25,
+        "ridge": 0.0,
+        "pair": "station",
+        "cv_he_net": 0.39292876510473895,
+        "cv_he_gross": 0.24486151521980126,
+        "cv_years": 14
+      }
+    },
+    "station_product": {
+      "model": {
+        "config": {
+          "family": "product",
+          "window": "jun_jul",
+          "rain_q": 0.5,
+          "heat_q": 0.25,
+          "ridge": 0.0
+        },
+        "pair": "station",
+        "rain_trigger": 6.75,
+        "heat_trigger": 10.799592907973565,
+        "rain_scale": 4.69,
+        "heat_scale": 36.4386081569601,
+        "weights": [
+          0.3
+        ]
+      },
+      "validation": {
+        "family": "product",
+        "window": "jun_jul",
+        "rain_q": 0.5,
+        "heat_q": 0.25,
+        "ridge": 0.0,
+        "pair": "station",
+        "cv_he_net": 0.5331386097533432,
+        "cv_he_gross": 0.5199865114686666,
+        "cv_years": 14
+      }
+    },
+    "station_weakest_link": {
+      "model": {
+        "config": {
+          "family": "weakest_link",
+          "window": "jul",
+          "rain_q": 0.5,
+          "heat_q": 0.25,
+          "ridge": 0.0
+        },
+        "pair": "station",
+        "rain_trigger": 3.73,
+        "heat_trigger": 6.787908600248436,
+        "rain_scale": 2.734,
+        "heat_scale": 29.23463546516466,
+        "weights": [
+          0.3
+        ]
+      },
+      "validation": {
+        "family": "weakest_link",
+        "window": "jul",
+        "rain_q": 0.5,
+        "heat_q": 0.25,
+        "ridge": 0.0,
+        "pair": "station",
+        "cv_he_net": 0.6318999426364946,
+        "cv_he_gross": 0.6266080461207353,
+        "cv_years": 14
+      }
+    },
+    "station_mixed": {
+      "model": {
+        "config": {
+          "family": "mixed",
+          "window": "jun_jul",
+          "rain_q": 0.25,
+          "heat_q": 0.25,
+          "ridge": 0.01
+        },
+        "pair": "station",
+        "rain_trigger": 5.345000000000001,
+        "heat_trigger": 10.799592907973565,
+        "rain_scale": 4.69,
+        "heat_scale": 36.4386081569601,
+        "weights": [
+          0.11892128016009461,
+          0.08692698446634398,
+          0.09415173537356138
+        ]
+      },
+      "validation": {
+        "family": "mixed",
+        "window": "jun_jul",
+        "rain_q": 0.25,
+        "heat_q": 0.25,
+        "ridge": 0.01,
+        "pair": "station",
+        "cv_he_net": 0.39610197363511124,
+        "cv_he_gross": 0.2559369557553177,
+        "cv_years": 14
+      }
+    },
+    "station_worst_peril": {
+      "model": {
+        "config": {
+          "family": "worst_peril",
+          "window": "jun_aug",
+          "rain_q": 0.5,
+          "heat_q": 0.75,
+          "ridge": 0.01
+        },
+        "pair": "station",
+        "rain_trigger": 10.780000000000001,
+        "heat_trigger": 46.31547312877477,
+        "rain_scale": 9.420000000000005,
+        "heat_scale": 47.08979416242053,
+        "weights": [
+          0.2171247682973193
+        ]
+      },
+      "validation": {
+        "family": "worst_peril",
+        "window": "jun_aug",
+        "rain_q": 0.5,
+        "heat_q": 0.75,
+        "ridge": 0.01,
+        "pair": "station",
+        "cv_he_net": 0.34510530898475833,
+        "cv_he_gross": 0.2806843817070145,
+        "cv_years": 14
+      }
+    },
+    "station_recommendation": "weakest_link",
+    "area_rain": {
+      "model": {
+        "config": {
+          "family": "rain",
+          "window": "jun_jul",
+          "rain_q": 0.5,
+          "heat_q": 0.5,
+          "ridge": 0.0
+        },
+        "pair": "area",
+        "rain_trigger": 8.01,
+        "heat_trigger": 10.436075920755144,
+        "rain_scale": 6.150000000000002,
+        "heat_scale": 26.948151116710907,
+        "weights": [
+          0.2616974321531424
+        ]
+      },
+      "validation": {
+        "family": "rain",
+        "window": "jun_jul",
+        "rain_q": 0.5,
+        "heat_q": 0.5,
+        "ridge": 0.0,
+        "pair": "area",
+        "cv_he_net": 0.7144839401614419,
+        "cv_he_gross": 0.7024982562796553,
+        "cv_years": 14
+      }
+    },
+    "area_heat": {
+      "model": {
+        "config": {
+          "family": "heat",
+          "window": "jun_jul",
+          "rain_q": 0.5,
+          "heat_q": 0.75,
+          "ridge": 0.0
+        },
+        "pair": "area",
+        "rain_trigger": 8.01,
+        "heat_trigger": 23.932347750789543,
+        "rain_scale": 6.150000000000002,
+        "heat_scale": 26.948151116710907,
+        "weights": [
+          0.3
+        ]
+      },
+      "validation": {
+        "family": "heat",
+        "window": "jun_jul",
+        "rain_q": 0.5,
+        "heat_q": 0.75,
+        "ridge": 0.0,
+        "pair": "area",
+        "cv_he_net": 0.5387805386782186,
+        "cv_he_gross": 0.5084819025424254,
+        "cv_years": 14
+      }
+    },
+    "area_additive": {
+      "model": {
+        "config": {
+          "family": "additive",
+          "window": "jun_jul",
+          "rain_q": 0.5,
+          "heat_q": 0.75,
+          "ridge": 0.0
+        },
+        "pair": "area",
+        "rain_trigger": 8.01,
+        "heat_trigger": 23.932347750789543,
+        "rain_scale": 6.150000000000002,
+        "heat_scale": 26.948151116710907,
+        "weights": [
+          0.19006613971121547,
+          0.10993386028878446
+        ]
+      },
+      "validation": {
+        "family": "additive",
+        "window": "jun_jul",
+        "rain_q": 0.5,
+        "heat_q": 0.75,
+        "ridge": 0.0,
+        "pair": "area",
+        "cv_he_net": 0.7319602123471447,
+        "cv_he_gross": 0.7336746859739803,
+        "cv_years": 14
+      }
+    },
+    "area_product": {
+      "model": {
+        "config": {
+          "family": "product",
+          "window": "jun_jul",
+          "rain_q": 0.5,
+          "heat_q": 0.25,
+          "ridge": 0.0
+        },
+        "pair": "area",
+        "rain_trigger": 8.01,
+        "heat_trigger": 5.301358816772279,
+        "rain_scale": 6.150000000000002,
+        "heat_scale": 26.948151116710907,
+        "weights": [
+          0.3
+        ]
+      },
+      "validation": {
+        "family": "product",
+        "window": "jun_jul",
+        "rain_q": 0.5,
+        "heat_q": 0.25,
+        "ridge": 0.0,
+        "pair": "area",
+        "cv_he_net": 0.8322607730136666,
+        "cv_he_gross": 0.8324385316973181,
+        "cv_years": 14
+      }
+    },
+    "area_weakest_link": {
+      "model": {
+        "config": {
+          "family": "weakest_link",
+          "window": "jun_jul",
+          "rain_q": 0.5,
+          "heat_q": 0.5,
+          "ridge": 0.0
+        },
+        "pair": "area",
+        "rain_trigger": 8.01,
+        "heat_trigger": 10.436075920755144,
+        "rain_scale": 6.150000000000002,
+        "heat_scale": 26.948151116710907,
+        "weights": [
+          0.3
+        ]
+      },
+      "validation": {
+        "family": "weakest_link",
+        "window": "jun_jul",
+        "rain_q": 0.5,
+        "heat_q": 0.5,
+        "ridge": 0.0,
+        "pair": "area",
+        "cv_he_net": 0.8669174769246691,
+        "cv_he_gross": 0.8749197599075518,
+        "cv_years": 14
+      }
+    },
+    "area_mixed": {
+      "model": {
+        "config": {
+          "family": "mixed",
+          "window": "jun_jul",
+          "rain_q": 0.75,
+          "heat_q": 0.5,
+          "ridge": 0.0
+        },
+        "pair": "area",
+        "rain_trigger": 9.36,
+        "heat_trigger": 10.436075920755144,
+        "rain_scale": 6.150000000000002,
+        "heat_scale": 26.948151116710907,
+        "weights": [
+          0.025953169919810257,
+          0.0,
+          0.2555027231879882
+        ]
+      },
+      "validation": {
+        "family": "mixed",
+        "window": "jun_jul",
+        "rain_q": 0.75,
+        "heat_q": 0.5,
+        "ridge": 0.0,
+        "pair": "area",
+        "cv_he_net": 0.7693399583945868,
+        "cv_he_gross": 0.7565223205981078,
+        "cv_years": 14
+      }
+    },
+    "area_worst_peril": {
+      "model": {
+        "config": {
+          "family": "worst_peril",
+          "window": "jun_jul",
+          "rain_q": 0.5,
+          "heat_q": 0.75,
+          "ridge": 0.0
+        },
+        "pair": "area",
+        "rain_trigger": 8.01,
+        "heat_trigger": 23.932347750789543,
+        "rain_scale": 6.150000000000002,
+        "heat_scale": 26.948151116710907,
+        "weights": [
+          0.27117959492693433
+        ]
+      },
+      "validation": {
+        "family": "worst_peril",
+        "window": "jun_jul",
+        "rain_q": 0.5,
+        "heat_q": 0.75,
+        "ridge": 0.0,
+        "pair": "area",
+        "cv_he_net": 0.6974968493768388,
+        "cv_he_gross": 0.6824248647034767,
+        "cv_years": 14
+      }
+    },
+    "area_recommendation": "weakest_link"
+  }
+}
