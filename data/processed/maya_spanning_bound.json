@@ -1,0 +1,7 @@
+{
+  "coefficient": 0.10700902149239477,
+  "rectangular_cross_difference": 0.10700902149239477,
+  "additive_global_worst_case_error_lower_bound_fraction": 0.026752255373098693,
+  "same_tmax_35c_daily_heat_if_tmin_15c": 1.4413178175178163,
+  "same_tmax_35c_daily_heat_if_tmin_25c": 2.123487819316327
+}

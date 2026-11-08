@@ -1,5 +1,10 @@
 # The project, in everyday language
 
+For the interactive demo, exact coefficient arithmetic and runnable commands, start with
+[experiments/maya/README.md](../experiments/maya/README.md). The new
+[diagnostic report](analysis/28_maya_diagnosis_and_demo.md) separates confirmed payment mechanics
+from possible explanations of crop losses.
+
 We are studying **how to turn weather-event contracts into useful insurance-like protection**,
 and where their limitations require a different contract. We are not claiming guaranteed profit.
 

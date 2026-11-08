@@ -1,0 +1,13 @@
+{
+  "input_sha256": {
+    "panel_models.json": "01447ee6e1c6d0a0b9f0fe209f9d295c6eb9f15d14ab6d9c873f95fe5c4df778",
+    "panel_annual.csv": "e3f77eb68382552559f629eceec0df6fbabd2e67e29a545b49cf728344de1e76",
+    "panel_yields.csv": "38b31f18675f14454f91945aeee409a8d5d9d1b77455898b3660150521bf4339",
+    "panel_daily_weather.csv": "6bca3ee0b9f0d3773cc419fa7681cbd44c83d7e748111c0b057a7fab74b3e94d",
+    "maya_august_context.csv": "4e5a1bf1fbe50b7d13caa458eec731d5516a11050dba8f7f2d505b319f1f41b0",
+    "maya_market_snapshot.json": "570fdcb19b94af4b36ff05f7fd0c0b08e93aa02bf00a3e6b6490ad4f2578a628",
+    "compound_daily_temperature.csv": "9ec0f9c84f6cdf7d43e3f4a88ffd093c84a87dfdf92dd82fc7e365fcc61e4a0c",
+    "rowcrop_farm_year.csv": "f3222b74f1a1c4b84617670ab0027a902125e2cb23ae2c8cc249e9c92cadbf4b"
+  },
+  "diagnostic_status": "already-inspected test outcomes; no crop refitting or new validation claims"
+}

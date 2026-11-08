@@ -4,6 +4,10 @@
 
 Team: Maya, Evan, Jack.
 
+**Maya's experimental branch:** start with [experiments/maya/README.md](experiments/maya/README.md)
+for the new offline demo, formula/coefficient explanations, diagnosis and runnable commands.
+The experiments preserve the existing PRF Companion and do not change the team's approved direction.
+
 We set out to build a platform that lets a farmer approximate USDA rainfall-index insurance
 (Pasture, Rangeland, Forage, or PRF) with a portfolio of Kalshi weather event contracts, and
 to measure where the remaining coverage error comes from.
