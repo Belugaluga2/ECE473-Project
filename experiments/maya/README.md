@@ -1,5 +1,8 @@
 # Maya's experiments — start here
 
+For the full group update, branch/PR integration notes and proposed decisions, read
+[TEAM_HANDOFF.md](TEAM_HANDOFF.md).
+
 This folder is the entry point for the work on **`maya-experiments`**. It preserves the original
 rainfall/PRF work and the dairy attempt. The new work asks whether proposed weather payments
 can offset crop shortfalls and whether separate event contracts could reproduce those payments.
