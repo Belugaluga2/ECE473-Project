@@ -1,0 +1,13 @@
+fips,state,county,role,lat,lon
+17019,IL,Champaign,development,40.138985,-88.196975
+17099,IL,La Salle,development,41.343341,-88.885931
+17113,IL,McLean,development,40.494559,-88.844539
+17167,IL,Sangamon,held_out,39.756886,-89.662435
+19015,IA,Boone,development,42.038623,-93.938605
+19153,IA,Polk,development,41.684816,-93.568971
+19187,IA,Webster,development,42.433579,-94.175831
+19169,IA,Story,held_out,42.037538,-93.466093
+18007,IN,Benton,development,40.600939,-87.314786
+18023,IN,Clinton,development,40.305944,-86.477567
+18181,IN,White,development,40.75095,-86.864293
+18157,IN,Tippecanoe,held_out,40.389133,-86.893554

@@ -44,6 +44,7 @@ In the Claude desktop app, `.claude/launch.json` defines the `agrihedge` preview
 
 - This clone's `main` is at `dd0c464`, the 2026-11-06 merge of PR 3. Experimental work here is on `maya-experiments`; merging or publishing it is the team's call.
 - This branch also contains the observed-milk validation (doc 25) and compound heat/drought corn pilot (doc 26). They preserve the rainfall work and do not change the companion app or the team's approved direction. Reproduce the new pilot offline with `.venv/Scripts/python.exe scripts/run_compound.py`; do not retune on its final-test years.
+- Doc 27 is the fixed multi-county extension: `.venv/Scripts/python.exe scripts/run_compound_panel.py` runs offline. Read its reserved-county results, missing-year audit and failed interaction evidence checks before making claims. Its test results are now inspected; future selection needs a separate confirmation sample. `docs/MAYA_PROJECT_GUIDE.md` is the beginner recap.
 - `main` is shared: never commit to it directly. Branch per piece of work and open a PR; CI runs pytest.
 - Local branches `run/datafix-2`, `run/factcheck-1`, `run/lossmodel-2`, `run/rowcrop-2` are the losing alternates of reviewed two-run comparisons (see doc 11 and the 2026-11-01 merge commits). Kept only for reference.
 
