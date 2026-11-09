@@ -32,7 +32,7 @@
    - ladders listed 6-12 months ahead;
    - a drought-side market maker (depth is 5-28x too thin);
    - grid-index contracts (0.98, but that is unsubsidized PRF).
-5. **Close (30 s).** Every number on screen comes from the same code as the analysis docs (doc 19 checks the app reproduces them to the cent), with 353 automated tests.
+5. **Close (30 s).** Every number on screen comes from the same code as the analysis docs (doc 19 checks the app reproduces them to the cent), with 364 automated tests.
 
 ## Roadmap: expanding on the showcase (Milestone III and beyond)
 
@@ -47,6 +47,7 @@ Ordered by how directly each builds on what exists. Each item names the module i
 | 5 | **Temperature risk** (the Milestone I "if time permits" item): Kalshi daily/monthly temperature markets for heat stress on hay and cattle | `kalshi.py` client, `optimizer` | Weather risk PRF does not cover at all. |
 | 6 | **Order placement in Kalshi's demo environment** | `platform.order_ticket`, Kalshi authenticated API | Closes the loop from quote to trade. |
 | 7 | **Liquidity plan**: simulate a market maker or pooled orders across many ranches | `optimizer` tranches, doc 12 depth data | Depth is the binding constraint after geography. |
+| 8 | **Exotic payoffs in the app** (done in the backend, doc 23): a shape picker (convex, tiers, loss curve) with the term sheet and exact ticket from `platform.exotic_quote` | `exotic.py`, `POST /api/exotic` | Convex contracts need a third of the contracts, so today's books fill more of them; the issuer's hedge is exact. |
 
 ## Key numbers to quote
 
@@ -60,4 +61,7 @@ Ordered by how directly each builds on what exists. Each item names the module i
 | Kalshi cost vs subsidized PRF per $1 of expected payout | about $1.10 vs $0.61 | 09, 15 |
 | Waterfall: geography / settlement / monthly / binning / depth | -0.35 / -0.13 / -0.19 / ~0 / -0.16 | 16 |
 | Two-month contracts: PRF intervals; excess rain | 0.34 to 0.48; 0.22 to 0.40 | 17, 20 |
+| Exotic shapes: pooled HE at Kalshi strikes, linear / quadratic / exponential; at today's depth | 0.36 / 0.26 / 0.19; 0.19 / 0.20 / 0.18 | 23 |
+| Whole-inch strikes span the linear / quadratic / exponential shape on station rain | 89% / 80% / 63% (half-inch: 97 / 94 / 86%) | 23 |
+| Dallas Nov 2026 $6,000 quadratic contract: fair premium; book fills; largest fillable | $1,205; 13%; $595 | 23 |
 | US PRF grids within 50 miles of a Kalshi station | 7.4% | 07 |

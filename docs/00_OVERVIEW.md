@@ -1,12 +1,13 @@
 # Project Overview: Milestone 1 (Research Foundation), Milestone 2 (Contract Design & Platform), and the PRF Companion
 
 **Project:** Agricultural Risk Management & Weather Derivative Replicating Platform (ECE473, Maya / Evan / Jack)
-> **Current direction (2026-11-05): the PRF Companion.** Replacing PRF with Kalshi does not work (Milestone 1, docs 08-09: costlier than the subsidized policy, loose fit, thin books). Complementing it does: Kalshi hedges for the months PRF leaves open track the rancher's rain index with HE 0.61 on held-out years (doc 21). The rest of the project expands on the companion; the roadmap is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). For a short handoff (status, deadlines, how to work here) read [../AGENTS.md](../AGENTS.md).
+> **Current direction (2026-11-05): the PRF Companion.** Replacing PRF with Kalshi does not work (Milestone 1, docs 08-09: costlier than the subsidized policy, loose fit, thin books). Complementing it does: Kalshi hedges for the months PRF leaves open track the rancher's rain index with HE 0.61 on held-out years (doc 21). The rest of the project expands on the companion; the roadmap is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Since 2026-11-08 the work extends the companion with an **insurance derivative layer**: exotic payoff shapes (convex, step-up, two-tailed, the farm's own loss curve) built from the same binary contracts, with the replicating portfolio in closed form ([analysis/23_exotic_payouts.md](analysis/23_exotic_payouts.md)). For a short handoff (status, deadlines, how to work here) read [../AGENTS.md](../AGENTS.md).
 
 **Timeline:**
 - 2026-10-29: Milestone 1 done (all 9 proposal cells plus two extra research questions, docs 01-10).
 - 2026-11-02: Milestone 2 prep (docs 11-14: fact-check, post-rewards liquidity, rain-to-loss model, row crops). The team agreed to stop trying to *replace* PRF with Kalshi; docs 01-14 are background for that decision.
 - 2026-11-05: Milestone 2 built as planned in the submitted Milestone I (docs 15-20) plus the PRF Companion showcase (docs 21-22). Summary and write-up: [MILESTONE_2.md](MILESTONE_2.md); see [Milestone 2 results](#milestone-2-results-2026-11-05).
+- 2026-11-08: Exotic payoffs (doc 23): nine payoff shapes replicated from the ladder, their error waterfall, executable prices on the 2026-11-02 book, and a product designer (`platform.exotic_quote`, `POST /api/exotic`). See [Exotic payoffs](#exotic-payoffs-2026-11-08).
 
 Every research document has a numbers table that gives a source for each number. Documents marked **VERIFIED** were re-checked line by line by an independent fact-checking pass. The others were not fact-checked because the run was trimmed to save usage, so check their key numbers before presenting.
 
@@ -34,6 +35,7 @@ Every research document has a numbers table that gives a source for each number.
 | M2 refinements from the submitted M1 update: complement PRF, CPC as-paid backtest | team | [analysis/20_complementing_prf.md](analysis/20_complementing_prf.md) | done 2026-11-05 |
 | M2 showcase: PRF Companion (app tab) | team | [analysis/21_prf_companion.md](analysis/21_prf_companion.md), [DEMO.md](DEMO.md) | working prototype |
 | M2 showcase follow-up: liquidity, cover design, excess rain, two-month what-if | team | [analysis/22_making_it_better.md](analysis/22_making_it_better.md) | done 2026-11-05 |
+| M3 direction: exotic payoffs (insurance derivative layer on binary contracts) | team | [analysis/23_exotic_payouts.md](analysis/23_exotic_payouts.md) | done 2026-11-08 |
 
 ## Study sites
 
@@ -165,6 +167,16 @@ All numbers: 11 farms, NCEI PRF index, 1951-2025, hedge effectiveness (HE) out o
   - Today a rancher keeps 90% of the fit on about a fifth of the requested cover; the app shows the depth check and suggested size.
   - Payout design matters little (keep PRF-style linear at 90%). Excess-rain cover is offered where its HE is at least 0.5.
 
+## Exotic payoffs (2026-11-08)
+Doc 23. Nine payoff shapes (linear, layered escalator, quadratic, exponential, step-up tiers, capped, drought plus excess rain, the farm's doc-13 loss curve, a persistent-drought bonus), same farms and years, HE out of sample.
+
+- **Any single-month shape is a long-only portfolio of today's NO and YES contracts** (spanning), exact up to the strike grid. The issuer of a contract settled on the station keeps no rain risk.
+- **Binning is the only replication error for such products and it hits convex shapes hardest:** whole-inch strikes span 89% of the linear shape's variance, 80% of the quadratic, 63% of the exponential; half-inch strikes give 97 / 94 / 86%.
+- **The data-optimal station payout is convex even for a linear farm payoff** (first drop 2.3x the next ones; 52 of 62 months), because a very dry airport month almost surely means a dry farm while a 2-3 inch month says little.
+- **Farm-settled, convex shapes lose more to geography and the monthly split** (pooled HE at Kalshi strikes 0.36 linear, 0.26 quadratic, 0.19 exponential) **but a third of the contracts means a third of the depth problem:** at today's depth they beat the linear shape (0.22 layered vs 0.19 linear; layered wins 31 of 36 windows) and need less issuer capital (19% vs 30% of protection).
+- **Executable now, small:** a $6,000 quadratic November contract at Dallas (pays $3,727 at 1 inch or less, $862 at 1-2 inches) is 3,727 contracts; the 2026-11-02 book fills 13%; the largest fully fillable size is $595; all-in cost 1.32 per $1 expected (linear 1.20).
+- `platform.exotic_quote` / `POST /api/exotic` writes the term sheet, the replicating ticket from live or saved books, and the farmer's basis risk.
+
 ## Next steps
 The full roadmap (wet-side cover, two-month mock market, national coverage, loss-based target, temperature, demo-exchange orders, liquidity plan) is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Near-term:
 
@@ -172,6 +184,7 @@ The full roadmap (wet-side cover, two-month mock market, national coverage, loss
 2. **Slides (due 2026-11-17):** the deck is linked from [DEMO.md](DEMO.md). Rehearse the live demo; keep `docs/figures/m2_companion_full.png` as an offline fallback.
 3. **Second post-rewards order-book snapshot**, to confirm doc 12's one-day result and refresh doc 22's depth numbers (`scripts/pull_kalshi.py`, `scripts/compare_orderbook_snapshots.py`).
 4. **Pick the first roadmap items for the final paper (due 2026-12-15).** Doc 22 points to the liquidity plan (roadmap 7) and the two-month mock market (roadmap 2) as the most direct wins.
+5. **Exotic payoffs (doc 23, roadmap 8):** add the product designer to the app screen, choose the shape per farm from the loss curve, and put half-inch strikes ahead of two-month contracts in the exchange pitch if convex products are the goal.
 
 Open loose ends from Milestone 1 (low priority):
 - **Luo SSRN numbers** (doc 10) are still unverified; download the PDF in a browser.
@@ -193,16 +206,17 @@ Open loose ends from Milestone 1 (low priority):
   - `optimizer.py`, `hedge_builder.py`, `error_budget.py`: Milestone 2 optimizer and error breakdown
   - `platform.py`, `webapp/`: Milestone 2 live-price backend and farmer screen
   - `loss_model.py`: rain-to-dollar-loss model for each farm (doc 13)
+  - `exotic.py`: exotic payoff shapes, closed-form spanning by NO/YES ladders, order-book execution (doc 23)
   - `rowcrop.py`: corn/soy farm exposure and hedge backtest (doc 14)
 - `scripts/` runnable entry points that pull data and regenerate every result
 - `data/processed/` small derived datasets (committed); `data/raw/` downloads (gitignored, recreated by scripts)
-- `tests/` pytest checks (353 passing)
+- `tests/` pytest checks (364 passing)
 
 ## How to reproduce
 
 ```bash
 .venv/bin/python -m pip install -e .
-.venv/bin/python -m pytest                        # 353 tests, ~10 s
+.venv/bin/python -m pytest                        # 364 tests, ~10 s
 # Milestone 1
 .venv/bin/python scripts/run_basis_risk.py        # doc 07
 .venv/bin/python scripts/run_replication.py       # doc 08

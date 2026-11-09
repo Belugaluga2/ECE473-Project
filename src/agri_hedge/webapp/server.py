@@ -8,6 +8,7 @@ Routes
   GET  /api/coverage     PRF grid centers the app can serve (for the map)
   POST /api/quote        JSON body -> agri_hedge.platform.quote(...)
   POST /api/companion    JSON body -> agri_hedge.platform.companion(...) (PRF Companion mode)
+  POST /api/exotic       JSON body -> agri_hedge.platform.exotic_quote(...) (exchange-settled exotic payoff, doc 23)
 """
 from __future__ import annotations
 
@@ -67,7 +68,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):  # noqa: N802
         route = self.path.split("?", 1)[0]
-        handlers = {"/api/quote": pf.quote, "/api/companion": pf.companion}
+        handlers = {"/api/quote": pf.quote, "/api/companion": pf.companion, "/api/exotic": pf.exotic_quote}
         if route not in handlers:
             return self._json(404, {"error": "not found"})
         try:

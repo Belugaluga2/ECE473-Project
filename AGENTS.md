@@ -8,6 +8,8 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 
 **Current direction: the PRF Companion.** Keep PRF, and use Kalshi contracts to cover the months PRF leaves open (mostly Nov-Feb), where the airport gauge tracks the farm's rain index well. Holdout HE 0.61 vs 0.23 for copying PRF's own intervals; recommended for 9 of 11 farms (doc 21). The binding limit is now order-book liquidity: 5-10x today's depth is needed (doc 22). The rest of the course builds on the companion.
 
+**Added 2026-11-08: exotic payoffs (doc 23).** An insurance derivative layer on the same contracts: nine payoff shapes (convex, step-up, two-tailed, the farm's loss curve), the replicating NO/YES portfolio in closed form (any single-month shape is spanned exactly up to the strike grid), the error waterfall per shape, executable prices on the saved book, and `platform.exotic_quote` / `POST /api/exotic` (term sheet + ticket + farmer basis risk). Headline: convex shapes lose more to geography but need a third of the contracts, so at today's depth they hedge better than PRF's linear shape and need less issuer capital; the data-optimal station payout is convex even for a linear farm payoff; half-inch strikes matter for convex products.
+
 ## Deadlines
 
 | Date | Deliverable | Where |
@@ -24,13 +26,16 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 - `src/agri_hedge/`: the package. The app's single entry point is `platform.quote` (custom hedge) and `platform.companion` (PRF Companion). Fitting is in `optimizer.py` + `hedge_builder.py`.
 - `scripts/run_*.py` regenerate each analysis doc's numbers, CSVs and figures. `scripts/pull_*.py` download raw data into `data/raw/` (gitignored, currently empty; committed `data/processed/` is enough for tests, the app and the Milestone 2 scripts).
 - `scripts/experiments/`: two one-off experiments cited in doc 21's numbers table. Keep them.
+- `src/agri_hedge/exotic.py` + `scripts/run_exotic_payouts.py`: exotic payoff shapes and their replication (doc 23). The full run takes about 30 minutes; `--tables-only` redoes figures and doc tables from the saved CSVs, `--quick` runs two farms.
 
 ## Run it
 
 ```bash
-.venv/bin/python -m pytest              # 353 tests, ~10 s
+.venv/bin/python -m pytest              # 364 tests, ~10 s (~35 s on Windows)
 .venv/bin/python scripts/run_app.py     # http://localhost:8473/?demo  (PRF Companion, Dallas hay farm)
 ```
+
+On Windows the venv's interpreter is `.venv\Scripts\python.exe` (create it with `python -m venv .venv` and `.venv\Scripts\python.exe -m pip install -e .`).
 
 In the Claude desktop app, `.claude/launch.json` defines the `agrihedge` preview server on port 8473.
 
@@ -54,3 +59,4 @@ In the Claude desktop app, `.claude/launch.json` defines the `agrihedge` preview
 1. Pick up a roadmap item from DEMO.md. Most direct: the liquidity plan (simulate a market maker / pooled orders across ranches) and the two-month contract mock market.
 2. Take a second post-rewards order-book snapshot and refresh doc 12 / doc 22 depth numbers.
 3. Start the final-paper outline from the Milestone II tex, framed as problem, Milestone I "no", diagnosis, companion, liquidity limit.
+4. Put the exotic product designer (doc 23, `POST /api/exotic`) on the app screen: a shape picker, the term sheet, the ticket and the basis-risk verdict. The backend and tests exist; `webapp/static/index.html` does not call it yet.

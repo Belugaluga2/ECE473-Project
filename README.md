@@ -14,6 +14,12 @@ your USDA rainfall insurance and use Kalshi contracts to cover the months it lea
 for 9 of 11 farms and tracks rain-index cover with hedge effectiveness 0.61 on held-out years (doc 21).
 Order-book depth is the remaining limit (doc 22). Demo script and roadmap: [docs/DEMO.md](docs/DEMO.md).
 
+**Update (2026-11-08):** the project now also designs **exotic payoffs** on the same contracts
+([docs/analysis/23_exotic_payouts.md](docs/analysis/23_exotic_payouts.md)): convex, step-up, two-tailed and
+loss-matched shapes, each replicated exactly (up to the strike grid) by a long-only portfolio of NO and YES
+contracts. Convex shapes need a third of the contracts, so today's thin books fill more of them, and
+`platform.exotic_quote` writes the term sheet and the ticket.
+
 **Try the app:**
 
 ```bash

@@ -46,13 +46,14 @@ This milestone follows the Milestone II table and the "Refinements to our plan" 
 ## Reproduce
 
 ```bash
-.venv/bin/python -m pytest                       # 353 tests
+.venv/bin/python -m pytest                       # 364 tests
 .venv/bin/python scripts/run_optimizer.py        # doc 15 (about 2 min)
 .venv/bin/python scripts/run_error_budget.py     # docs 16-17 (under 1 min)
 .venv/bin/python scripts/run_prf_gaps.py         # doc 20 (under 1 min)
 .venv/bin/python scripts/run_companion_study.py  # doc 21 (about 6 min)
 .venv/bin/python scripts/run_companion_holdout.py  # doc 21 holdout (about 1 min)
 .venv/bin/python scripts/run_companion_improve.py  # doc 22 (about 5 min)
+.venv/bin/python scripts/run_exotic_payouts.py     # doc 23, exotic payoffs (about 30 min; --tables-only reuses the CSVs)
 .venv/bin/python scripts/run_app_test.py --live  # doc 19 (about 5 min; --live needs internet)
 .venv/bin/python scripts/run_app.py              # the app, http://localhost:8473 (?demo runs the PRF Companion, ?demo=custom the custom hedge)
 ```

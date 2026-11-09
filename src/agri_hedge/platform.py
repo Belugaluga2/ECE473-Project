@@ -516,6 +516,191 @@ def companion(params: dict, live: LiveQuotes | None = None, today: date | None =
     return out
 
 
+# ---------------------------------------------------------------------------------------------
+# Exotic payoffs: exchange-settled products built in closed form from the ladder (doc 23)
+# ---------------------------------------------------------------------------------------------
+
+DEFAULT_ELASTICITY = 0.5     # doc 03b scen_* values run 0.14-0.89; 0.5 is a round central value
+
+
+def exotic_quote(params: dict, live: LiveQuotes | None = None, today: date | None = None) -> dict:
+    """Design and price an exchange-settled exotic rain contract for one calendar month.
+
+    The contract pays a function of the station's monthly rain total (Kalshi's settlement variable), so
+    it is replicated exactly by long NO and YES contracts (doc 23, spanning), up to the strike grid.
+
+    params: station_key or lat/lon (nearest station), month (1-12), shape (one of exotic.SHAPES except
+    'persistence'), max_payout ($, paid when the month's rain is 0), coverage (trigger / 100, default 0.9),
+    price_source ('auto' = live book, else saved snapshot, else estimate; 'model' = estimate only),
+    elasticity and curvature for the 'loss' shape (defaults: 0.5 and doc 13's pooled curvature).
+    """
+    from agri_hedge import exotic as ex
+    from agri_hedge.loss_model import load_sensitivity, pooled_curvature
+    from agri_hedge.pricing import capital_cost, leg_probability, no_asks_from_yes_bids, walk_no_book
+
+    t0 = time.time()
+    shape = str(params.get("shape", "convex2"))
+    if shape not in ex.SHAPES or shape == "persistence":
+        raise ValueError(f"shape must be one of {[s for s in ex.SHAPES if s != 'persistence']}")
+    month = int(params["month"])
+    if not 1 <= month <= 12:
+        raise ValueError("month must be 1-12")
+    max_payout = float(params.get("max_payout", 0) or 0)
+    if max_payout <= 0:
+        raise ValueError("max_payout must be positive")
+    cov = float(params.get("coverage", 0.9))
+    if not 0.5 <= cov <= 1.0:
+        raise ValueError("Coverage level must be between 50% and 100%.")
+    lat = params.get("lat")
+    lon = params.get("lon")
+    if params.get("station_key"):
+        st = hb.station_table().set_index("station_key").loc[params["station_key"]].to_dict()
+        st["station_key"] = params["station_key"]
+        dist = haversine(lat, lon, st) if lat is not None and lon is not None else None
+    elif lat is not None and lon is not None:
+        nn = hb.nearest_stations(float(lat), float(lon), 1).iloc[0]
+        st, dist = nn.to_dict(), float(nn["distance_mi"])
+    else:
+        raise ValueError("give a station_key or a lat/lon")
+    key, series = st["station_key"], st["series_ticker"]
+    lp = None
+    if shape == "loss":
+        g = params.get("curvature")
+        lp = (float(params.get("elasticity", DEFAULT_ELASTICITY)),
+              float(g) if g is not None else float(pooled_curvature(load_sensitivity())))
+
+    rain_all = hb.station_rain(key)
+    R = rain_all[month]
+    normal = float(R[(R.index >= hb.NORMAL_YEARS[0]) & (R.index <= hb.NORMAL_YEARS[1])].mean())
+    Rv = R.to_numpy(float)
+    gidx = 100.0 * Rv / normal
+    f = ex.payoff(shape, gidx, cov, lp)
+    ok = ~np.isnan(f) & ~np.isnan(Rv)
+
+    # the ladder: the listed month's strikes if a book exists, else the strikes Kalshi has listed for this month
+    live = live or _DEFAULT_LIVE
+    price_source = params.get("price_source", "auto")
+    cm = contract_month_for(month, today)
+    books_all = live.series_books(series) if price_source != "model" else {}
+    listed = {k: b for (c, k), b in books_all.items() if c == cm}
+    strikes = sorted(listed) if listed else list(hb.listed_strikes(series)[month])
+    fair_no = {float(k): leg_probability(rain_all, month, k, hb.FAIR_WINDOW) for k in strikes}
+
+    vals = ex.binned_values(f[ok], Rv[ok], strikes,
+                            lambda rr: float(ex.payoff(shape, np.array([100.0 * rr / normal]), cov, lp)[0]))
+    port = ex.span_step(vals, strikes)
+    hp = port.payout(Rv)
+    fw = np.asarray((R.index >= hb.FAIR_WINDOW[0]) & (R.index <= hb.FAIR_WINDOW[1])) & ok
+    fair_rate = float(np.mean(hp[fw])) if fw.any() else float("nan")
+
+    # term sheet: what the contract pays in each rain bin
+    edges = [0.0] + [float(k) for k in strikes]
+    terms = []
+    for j, v in enumerate(vals):
+        lo = edges[j]
+        hi = edges[j + 1] if j + 1 < len(edges) else None
+        rng = (f"{hi:g} in or less" if j == 0 else f"more than {lo:g} in" if hi is None else f"{lo:g} to {hi:g} in")
+        yrs = int(((ex.rain_bins(Rv[ok], strikes) == j)).sum())
+        terms.append({"bin": j, "rain": rng, "payout_usd": round(float(v) * max_payout, 2),
+                      "years_in_bin": yrs, "years_total": int(ok.sum())})
+
+    # the order: one leg per strike and side, priced from the book where listed, else estimated
+    ticket, n_live = [], 0
+    for k, v, w in zip(port.strikes, port.no_weights, port.yes_weights):
+        for side, wt in (("NO", v), ("YES", w)):
+            n = int(round(wt * max_payout))
+            if n <= 0:
+                continue
+            fq = fair_no[float(k)]
+            fair = fq if side == "NO" else 1.0 - fq
+            b = listed.get(float(k))
+            tick = b["ticker"] if b else f"{event_ticker(series, cm)}-{int(k) if float(k).is_integer() else k}"
+            if b is not None:
+                levels = b["yes_bids"] if side == "NO" else b.get("no_bids", [])
+                asks = no_asks_from_yes_bids(levels)
+                fill = walk_no_book(levels, n, max_price=fair + SENSIBLE_TOL)
+                filled = int(round(fill["filled"]))
+                price = fill["vwap"] if filled else None
+                src = b["source"]
+                n_live += 1
+            else:
+                asks, filled, price, src = [], n, float(np.clip(fair + HALF_SPREAD, 0.01, 0.99)), "estimated"
+            prem = (price or 0.0) * (filled if b is not None else n)
+            fee = float(taker_fee([filled if b is not None else n], [price or fair], tick=FEE_TICK_RETAIL)[0]) if (price or 0) > 0 else 0.0
+            ticket.append({"ticker": tick, "contract_month": cm, "side": side, "strike_in": float(k),
+                           "meaning": (f"pays $1 per contract if {hb.MONTH_ABBR[month - 1]} rain at {key} is "
+                                       f"{'at most' if side == 'NO' else 'above'} {k:g} in"),
+                           "contracts": n, "contracts_filled": filled if b is not None else None,
+                           "fair_probability": round(float(fair), 3), "avg_price": None if price is None else round(float(price), 4),
+                           "premium_usd": round(float(prem), 2), "fee_usd": round(fee, 2), "price_source": src,
+                           "depth_sensible": float(sum(s for pr, s in asks if pr <= fair + SENSIBLE_TOL)) if b is not None else None})
+    prem_paid = sum(r["premium_usd"] for r in ticket)
+    fees = sum(r["fee_usd"] for r in ticket)
+    want = sum(r["contracts"] for r in ticket)
+    got = sum((r["contracts_filled"] if r["contracts_filled"] is not None else r["contracts"]) for r in ticket)
+    fair_prem = sum(r["fair_probability"] * (r["contracts_filled"] if r["contracts_filled"] is not None else r["contracts"])
+                    for r in ticket)
+    fill_share = got / want if want else None
+    cap = float(capital_cost(prem_paid + fees))
+
+    # the farmer's basis risk: the same shape on their own grid for this month, vs the exchange-settled product
+    basis = None
+    if lat is not None and lon is not None:
+        try:
+            p1 = hb.build_problem(hb.CoverageRequest(float(lat), float(lon), [hb.Window((month,), 1.0)], cov, max_payout,
+                                                     station_key=key))
+            y = ex.shape_target(p1, shape, lp)
+            h = pd.Series(hp * max_payout, index=R.index).reindex(p1.years).to_numpy(float)
+            m = ~np.isnan(y) & ~np.isnan(h)
+            he = op.hedge_effectiveness(y[m], h[m]) if m.sum() > 10 and np.var(y[m]) > 0 else None
+            basis = {"grid_id": p1.grid_id, "distance_mi": round(p1.distance_mi, 1), "years": int(m.sum()),
+                     "he_exchange_vs_farm": None if he is None else round(he, 3),
+                     "tail_capture": round(ex.tail_capture(y[m], h[m]), 3) if m.any() else None,
+                     "farm_expected_payout_usd": round(float(np.mean(y[m])), 2) if m.any() else None,
+                     "verdict": (None if he is None else "good match" if he >= GOOD_HE else
+                                 "partial match" if he >= OK_HE else "poor match")}
+        except (KeyError, ValueError):
+            basis = None
+    yrs_ok = R.index.to_numpy()[ok]
+    return {
+        "product": {"shape": shape, "shape_label": ex.SHAPES[shape], "station": key, "series": series,
+                    "station_name": st.get("name"), "distance_mi": None if dist is None else round(float(dist), 1),
+                    "month": hb.MONTH_ABBR[month - 1], "contract_month": cm, "coverage": cov,
+                    "trigger_in": round(normal * cov, 2), "normal_in": round(normal, 2), "max_payout_usd": max_payout,
+                    "loss_params": lp, "settles_on": f"{hb.MONTH_ABBR[month - 1]} rain total at {key} (NWS climate report)"},
+        "term_sheet": terms,
+        "replication": {"contracts_per_dollar": round(port.contracts_per_dollar, 4), "cash_leg": round(port.cash, 6),
+                        "quasi_convex": ex.is_quasi_convex(vals), "exact_on_bins": True,
+                        "strikes": [float(k) for k in strikes]},
+        "pricing": {"fair_rate": round(fair_rate, 4), "fair_premium_usd": round(fair_rate * max_payout, 2),
+                    "premium_filled_fair_usd": round(float(fair_prem), 2), "premium_paid_usd": round(prem_paid, 2),
+                    "spread_cost_usd": round(prem_paid - fair_prem, 2), "fee_usd": round(fees, 2),
+                    "capital_usd": round(cap, 2), "all_in_usd": round(prem_paid + fees + cap, 2),
+                    "cost_per_dollar_expected": (round((prem_paid + fees + cap) / (fair_rate * max_payout * fill_share), 3)
+                                                 if fill_share and fair_rate > 0 else None),
+                    "fill_share": None if fill_share is None else round(fill_share, 3),
+                    "legs_priced_from_order_book": n_live},
+        "ticket": ticket,
+        "backtest": {"years": yrs_ok.tolist(), "rain_in": np.round(Rv[ok], 2).tolist(),
+                     "payout_usd": np.round(hp[ok] * max_payout, 0).tolist(),
+                     "years_paid": int((hp[ok] > 0).sum())},
+        "farm_basis_risk": basis,
+        "notes": [
+            "The contract pays the step function in the term sheet on the station's official monthly total; the ticket "
+            "replicates it exactly, so the issuer keeps no rain risk (only unfilled legs and the spread).",
+            "Payouts in each bin are the shape's average over the years that fell in that bin (1951-2025 where the "
+            "record allows); finer strikes would track the smooth shape more closely (doc 23).",
+            "farm_basis_risk compares this exchange-settled product with the same shape on the farmer's own PRF grid: "
+            "that mismatch is the farmer's to bear, not the issuer's."],
+        "elapsed_s": round(time.time() - t0, 2),
+    }
+
+
+def haversine(lat, lon, st: dict) -> float:
+    from agri_hedge.locations import haversine_miles
+    return float(haversine_miles(float(lat), float(lon), float(st["lat"]), float(st["lon"])))
+
+
 def live_reference(p: hb.HedgeProblem, books: dict) -> list[dict]:
     """Today's open ladder(s) for the station: best NO ask vs fair value and depth near fair value."""
     from agri_hedge.pricing import leg_probability, no_asks_from_yes_bids
