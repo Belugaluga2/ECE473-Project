@@ -34,7 +34,7 @@ Every research document has a numbers table that gives a source for each number.
 | M2 refinements from the submitted M1 update: complement PRF, CPC as-paid backtest | team | [analysis/20_complementing_prf.md](analysis/20_complementing_prf.md) | done 2026-11-05 |
 | M2 showcase: PRF Companion (app tab) | team | [analysis/21_prf_companion.md](analysis/21_prf_companion.md), [DEMO.md](DEMO.md) | working prototype |
 | M2 showcase follow-up: liquidity, cover design, excess rain, two-month what-if | team | [analysis/22_making_it_better.md](analysis/22_making_it_better.md) | done 2026-11-05 |
-| Candidate topic: sports injury hedging with player props | team review | [research/sports_injury_hedge_feasibility.md](research/sports_injury_hedge_feasibility.md) | feasibility note, 2026-11-11; no historical sports backtest |
+| Candidate topic: sports injury hedging with player props | team review | [research/sports_injury_hedge_feasibility.md](research/sports_injury_hedge_feasibility.md), [research/sports_kalshi_legal_roadmap.md](research/sports_kalshi_legal_roadmap.md) | feasibility and legal notes, 2026-11-11; no historical sports backtest |
 
 ## Study sites
 
@@ -168,7 +168,7 @@ All numbers: 11 farms, NCEI PRF index, 1951-2025, hedge effectiveness (HE) out o
 
 ## Candidate topic: can a sports bet insure a star's absence? (2026-11-11)
 
-[Sports injury hedge feasibility](research/sports_injury_hedge_feasibility.md) examines NO on a player scoring 30+ points. The player cannot trade their own prop, and a did-not-play result settles at a fair price rather than an injury payout. A transparent four-state model shows the payoff mismatch, but its probabilities are hypothetical, not a measured hedge result. A possible sports pivot would test an eligible independent sponsor's or broadcaster's documented loss against actual pregame quotes and held-out games. The team has not selected this topic.
+[Sports injury hedge feasibility](research/sports_injury_hedge_feasibility.md) examines NO on a player scoring 30+ points. The player cannot trade their own prop, and a did-not-play result settles at a fair price rather than an injury payout. A transparent four-state model shows the payoff mismatch, but its probabilities are hypothetical, not a measured hedge result. The [legal roadmap](research/sports_kalshi_legal_roadmap.md) separates player, team, treating-provider, and licensed-insurer paths. A possible sports pivot would test an eligible independent sponsor's or broadcaster's documented loss against actual pregame quotes and held-out games. The team has not selected this topic.
 
 ## Next steps
 The full roadmap (wet-side cover, two-month mock market, national coverage, loss-based target, temperature, demo-exchange orders, liquidity plan) is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Near-term:
