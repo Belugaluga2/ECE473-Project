@@ -10,6 +10,8 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 
 **Added 2026-11-08: exotic payoffs (doc 23).** An insurance derivative layer on the same contracts: nine payoff shapes (convex, step-up, two-tailed, the farm's loss curve), the replicating NO/YES portfolio in closed form (any single-month shape is spanned exactly up to the strike grid), the error waterfall per shape, executable prices on the saved book, and `platform.exotic_quote` / `POST /api/exotic` (term sheet + ticket + farmer basis risk). Headline: convex shapes lose more to geography but need a third of the contracts, so at today's depth they hedge better than PRF's linear shape and need less issuer capital; the data-optimal station payout is convex even for a linear farm payoff; half-inch strikes matter for convex products.
 
+**Added 2026-11-09: contract design and the advisor (doc 24).** Doc 23's shapes re-compared at equal premium (the convex depth advantage was a same-payout artefact: 0 of 36 windows at equal premium), a holdout term sheet (stable; the farmer's basis risk is worse on 2001-2025), and the expected-utility-optimal payout on the ladder (`design.py`): doc 23's convex ladder at a fair price, a deep-drought digital at Kalshi's 20% load; the exponential and quadratic shapes capture 90%+ of its value, PRF's linear shape two thirds, and the raw optimum overfits. In the app: the "Design a contract" tab (nine shapes incl. `optimal`, term sheet, exact ticket, fill, basis risk, compare-every-shape at equal payout and premium) and the "Ask the advisor" tab (`advisor.py`: a Claude tool-use loop over geocode / crop / location / compare / design when `ANTHROPIC_API_KEY` is set or a key is pasted in the tab, a rule-based parser otherwise). The Claude mode has not yet been run against the live API (no key in that session); the tests use a scripted fake client.
+
 ## Deadlines
 
 | Date | Deliverable | Where |
@@ -26,16 +28,19 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 - `src/agri_hedge/`: the package. The app's single entry point is `platform.quote` (custom hedge) and `platform.companion` (PRF Companion). Fitting is in `optimizer.py` + `hedge_builder.py`.
 - `scripts/run_*.py` regenerate each analysis doc's numbers, CSVs and figures. `scripts/pull_*.py` download raw data into `data/raw/` (gitignored, currently empty; committed `data/processed/` is enough for tests, the app and the Milestone 2 scripts).
 - `scripts/experiments/`: two one-off experiments cited in doc 21's numbers table. Keep them.
-- `src/agri_hedge/exotic.py` + `scripts/run_exotic_payouts.py`: exotic payoff shapes and their replication (doc 23). The full run takes about 30 minutes; `--tables-only` redoes figures and doc tables from the saved CSVs, `--quick` runs two farms.
+- `src/agri_hedge/exotic.py` + `scripts/run_exotic_payouts.py`: exotic payoff shapes and their replication (doc 23). The full run takes about 30 minutes; `--tables-only` redoes figures and doc tables from the saved CSVs, `--quick` runs two farms, `--only=months,execution` recomputes named parts.
+- `src/agri_hedge/design.py` + `scripts/run_exotic_design.py`: equal-premium comparison, holdout term sheet, utility-optimal payout (doc 24; about 5 minutes, same flags). `src/agri_hedge/advisor.py`: the prompt-driven designer (crop table, geocoders, tool schemas, system prompt, rule-based fallback). The app's exotic entry points are `platform.exotic_quote`, `platform.exotic_compare` and `advisor.advise`.
 
 ## Run it
 
 ```bash
-.venv/bin/python -m pytest              # 364 tests, ~10 s (~35 s on Windows)
-.venv/bin/python scripts/run_app.py     # http://localhost:8473/?demo  (PRF Companion, Dallas hay farm)
+.venv/bin/python -m pytest              # 379 tests, ~10 s (~35 s on Windows)
+.venv/bin/python scripts/run_app.py     # http://localhost:8473/?demo  (PRF Companion, Dallas hay farm); ?demo=exotic, ?demo=advisor
 ```
 
 On Windows the venv's interpreter is `.venv\Scripts\python.exe` (create it with `python -m venv .venv` and `.venv\Scripts\python.exe -m pip install -e .`).
+
+The advisor uses Claude (`claude-opus-5-5`, Anthropic SDK) when `ANTHROPIC_API_KEY` is set in the server's environment or a key is pasted into the tab; otherwise it runs a rule-based parser. Geocoding (Census, Nominatim) needs internet.
 
 In the Claude desktop app, `.claude/launch.json` defines the `agrihedge` preview server on port 8473.
 
@@ -59,4 +64,4 @@ In the Claude desktop app, `.claude/launch.json` defines the `agrihedge` preview
 1. Pick up a roadmap item from DEMO.md. Most direct: the liquidity plan (simulate a market maker / pooled orders across ranches) and the two-month contract mock market.
 2. Take a second post-rewards order-book snapshot and refresh doc 12 / doc 22 depth numbers.
 3. Start the final-paper outline from the Milestone II tex, framed as problem, Milestone I "no", diagnosis, companion, liquidity limit.
-4. Put the exotic product designer (doc 23, `POST /api/exotic`) on the app screen: a shape picker, the term sheet, the ticket and the basis-risk verdict. The backend and tests exist; `webapp/static/index.html` does not call it yet.
+4. Run the advisor (doc 24) against the live API with a key, read a dozen transcripts for real farmer phrasings, and tune `advisor.SYSTEM_PROMPT` and the crop table (`advisor.CROPS`, rough values, unverified). Then add a second month and the wet side to what it can design.

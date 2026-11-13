@@ -17,8 +17,16 @@ Order-book depth is the remaining limit (doc 22). Demo script and roadmap: [docs
 **Update (2026-11-08):** the project now also designs **exotic payoffs** on the same contracts
 ([docs/analysis/23_exotic_payouts.md](docs/analysis/23_exotic_payouts.md)): convex, step-up, two-tailed and
 loss-matched shapes, each replicated exactly (up to the strike grid) by a long-only portfolio of NO and YES
-contracts. Convex shapes need a third of the contracts, so today's thin books fill more of them, and
+contracts. Convex shapes need a third of the contracts per dollar of limit, and
 `platform.exotic_quote` writes the term sheet and the ticket.
+
+**Update (2026-11-09):** [docs/analysis/24_contract_design.md](docs/analysis/24_contract_design.md) re-tests the shapes at
+equal premium (the convex depth advantage disappears), holds out the term sheet (stable), and solves for the
+**utility-optimal payout** a risk-averse farmer should buy on the ladder: the convex ladder at a fair price, a
+deep-drought digital at Kalshi's load, with the exponential and quadratic shapes capturing 90%+ of its value. The app
+gained a "Design a contract" tab (nine shapes, term sheet, exact ticket, compare-every-shape) and an "Ask the advisor"
+tab that designs a contract from a sentence (Claude with the project's tools when `ANTHROPIC_API_KEY` is set, a
+rule-based parser otherwise).
 
 **Try the app:**
 

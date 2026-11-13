@@ -1,13 +1,14 @@
 # Project Overview: Milestone 1 (Research Foundation), Milestone 2 (Contract Design & Platform), and the PRF Companion
 
 **Project:** Agricultural Risk Management & Weather Derivative Replicating Platform (ECE473, Maya / Evan / Jack)
-> **Current direction (2026-11-05): the PRF Companion.** Replacing PRF with Kalshi does not work (Milestone 1, docs 08-09: costlier than the subsidized policy, loose fit, thin books). Complementing it does: Kalshi hedges for the months PRF leaves open track the rancher's rain index with HE 0.61 on held-out years (doc 21). The rest of the project expands on the companion; the roadmap is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Since 2026-11-08 the work extends the companion with an **insurance derivative layer**: exotic payoff shapes (convex, step-up, two-tailed, the farm's own loss curve) built from the same binary contracts, with the replicating portfolio in closed form ([analysis/23_exotic_payouts.md](analysis/23_exotic_payouts.md)). For a short handoff (status, deadlines, how to work here) read [../AGENTS.md](../AGENTS.md).
+> **Current direction (2026-11-05): the PRF Companion.** Replacing PRF with Kalshi does not work (Milestone 1, docs 08-09: costlier than the subsidized policy, loose fit, thin books). Complementing it does: Kalshi hedges for the months PRF leaves open track the rancher's rain index with HE 0.61 on held-out years (doc 21). The rest of the project expands on the companion; the roadmap is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Since 2026-11-08 the work extends the companion with an **insurance derivative layer**: exotic payoff shapes (convex, step-up, two-tailed, the farm's own loss curve) built from the same binary contracts, with the replicating portfolio in closed form ([analysis/23_exotic_payouts.md](analysis/23_exotic_payouts.md)), and since 2026-11-09 with the **utility-optimal payout**, an equal-premium re-test, the designer in the app and a prompt-driven advisor ([analysis/24_contract_design.md](analysis/24_contract_design.md)). For a short handoff (status, deadlines, how to work here) read [../AGENTS.md](../AGENTS.md).
 
 **Timeline:**
 - 2026-10-29: Milestone 1 done (all 9 proposal cells plus two extra research questions, docs 01-10).
 - 2026-11-02: Milestone 2 prep (docs 11-14: fact-check, post-rewards liquidity, rain-to-loss model, row crops). The team agreed to stop trying to *replace* PRF with Kalshi; docs 01-14 are background for that decision.
 - 2026-11-05: Milestone 2 built as planned in the submitted Milestone I (docs 15-20) plus the PRF Companion showcase (docs 21-22). Summary and write-up: [MILESTONE_2.md](MILESTONE_2.md); see [Milestone 2 results](#milestone-2-results-2026-11-05).
 - 2026-11-08: Exotic payoffs (doc 23): nine payoff shapes replicated from the ladder, their error waterfall, executable prices on the 2026-11-02 book, and a product designer (`platform.exotic_quote`, `POST /api/exotic`). See [Exotic payoffs](#exotic-payoffs-2026-11-08).
+- 2026-11-09: Contract design (doc 24): the shapes re-compared at equal premium (the convex depth advantage disappears), a holdout term sheet, the expected-utility-optimal payout on the ladder (a deep-drought digital at Kalshi's load; the exponential and quadratic shapes capture 90%+ of its value, linear two thirds), the designer and a shape comparison in the app, and an advisor that designs a contract from a sentence (`advisor.py`, Claude with the project's tools when a key is set). See [Contract design](#contract-design-and-the-advisor-2026-11-09).
 
 Every research document has a numbers table that gives a source for each number. Documents marked **VERIFIED** were re-checked line by line by an independent fact-checking pass. The others were not fact-checked because the run was trimmed to save usage, so check their key numbers before presenting.
 
@@ -36,6 +37,7 @@ Every research document has a numbers table that gives a source for each number.
 | M2 showcase: PRF Companion (app tab) | team | [analysis/21_prf_companion.md](analysis/21_prf_companion.md), [DEMO.md](DEMO.md) | working prototype |
 | M2 showcase follow-up: liquidity, cover design, excess rain, two-month what-if | team | [analysis/22_making_it_better.md](analysis/22_making_it_better.md) | done 2026-11-05 |
 | M3 direction: exotic payoffs (insurance derivative layer on binary contracts) | team | [analysis/23_exotic_payouts.md](analysis/23_exotic_payouts.md) | done 2026-11-08 |
+| M3: contract design (equal premium, holdout term sheet, utility-optimal payout), the designer tab and the advisor | team | [analysis/24_contract_design.md](analysis/24_contract_design.md) | done 2026-11-09 |
 
 ## Study sites
 
@@ -177,6 +179,14 @@ Doc 23. Nine payoff shapes (linear, layered escalator, quadratic, exponential, s
 - **Executable now, small:** a $6,000 quadratic November contract at Dallas (pays $3,727 at 1 inch or less, $862 at 1-2 inches) is 3,727 contracts; the 2026-11-02 book fills 13%; the largest fully fillable size is $595; all-in cost 1.32 per $1 expected (linear 1.20).
 - `platform.exotic_quote` / `POST /api/exotic` writes the term sheet, the replicating ticket from live or saved books, and the farmer's basis risk.
 
+## Contract design and the advisor (2026-11-09)
+Doc 24. Same farms and years; CRRA farmer with risk aversion 2, a 20% price load (Kalshi's all-in cost) and wealth of twice the month's insured value as the base case.
+
+- **At equal premium the convex shapes' depth advantage disappears.** Scaled to the linear shape's premium they beat it at today's depth in 0 of 36 windows (31 / 25 / 22 at the same maximum payout) and need more contracts and more issuer capital per premium dollar. Doc 23's result was about limit per contract, not fit per dollar.
+- **The term sheet is stable out of sample** (bin payouts move 0.02 per $1, premiums 1%); the farmer's basis risk is worse on 2001-2025 (linear 0.52 to 0.41, quadratic 0.43 to 0.25; Nov-Jan 0.65 to 0.56 and 0.56 to 0.48), the same whether the bins are fitted on the training years or on all years.
+- **The utility-optimal payout is doc 23's convex ladder at a fair price and a deep-drought digital at Kalshi's load:** 5 bins paying for 28% of the month's value with no load, 1 bin for 7% at a 20% load (CE gain 1.0% of value; 21 of 132 farm-months buy nothing). The exponential shape captures 93% of the optimum's value, the quadratic 90%, PRF's linear shape 67%; the raw optimum overfits (the exponential beats it out of sample in 42 of 132 farm-months), so the product is a smooth convex shape sized at about a quarter of the month's value for a 7-8% premium.
+- **In the app:** a "Design a contract" tab (nine shapes, term sheet, exact ticket, fill, basis risk, and a compare-every-shape table at equal payout and equal premium with the utility ranking) and an "Ask the advisor" tab (describe the farm in a sentence; Claude runs the project's tools when an API key is set, a rule-based parser otherwise; `?demo=exotic`, `?demo=advisor`).
+
 ## Next steps
 The full roadmap (wet-side cover, two-month mock market, national coverage, loss-based target, temperature, demo-exchange orders, liquidity plan) is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Near-term:
 
@@ -184,7 +194,7 @@ The full roadmap (wet-side cover, two-month mock market, national coverage, loss
 2. **Slides (due 2026-11-17):** the deck is linked from [DEMO.md](DEMO.md). Rehearse the live demo; keep `docs/figures/m2_companion_full.png` as an offline fallback.
 3. **Second post-rewards order-book snapshot**, to confirm doc 12's one-day result and refresh doc 22's depth numbers (`scripts/pull_kalshi.py`, `scripts/compare_orderbook_snapshots.py`).
 4. **Pick the first roadmap items for the final paper (due 2026-12-15).** Doc 22 points to the liquidity plan (roadmap 7) and the two-month mock market (roadmap 2) as the most direct wins.
-5. **Exotic payoffs (doc 23, roadmap 8):** add the product designer to the app screen, choose the shape per farm from the loss curve, and put half-inch strikes ahead of two-month contracts in the exchange pitch if convex products are the goal.
+5. **Contract design (docs 23-24):** the designer and the advisor are on the app screen. Next: run the advisor against the live API with a key and tune its prompt on real farmer phrasings, ask farmers about risk preference (the one input the utility model guesses), and pitch half-inch strikes plus a market maker for the 1-inch strike that every convex product loads.
 
 Open loose ends from Milestone 1 (low priority):
 - **Luo SSRN numbers** (doc 10) are still unverified; download the PDF in a browser.
@@ -207,16 +217,18 @@ Open loose ends from Milestone 1 (low priority):
   - `platform.py`, `webapp/`: Milestone 2 live-price backend and farmer screen
   - `loss_model.py`: rain-to-dollar-loss model for each farm (doc 13)
   - `exotic.py`: exotic payoff shapes, closed-form spanning by NO/YES ladders, order-book execution (doc 23)
+  - `design.py`: equal-premium scaling, holdout split, the utility-optimal step payout and certainty-equivalent comparison (doc 24)
+  - `advisor.py`: the prompt-driven contract designer (Claude tool loop with a rule-based fallback) and its crop table (doc 24)
   - `rowcrop.py`: corn/soy farm exposure and hedge backtest (doc 14)
 - `scripts/` runnable entry points that pull data and regenerate every result
 - `data/processed/` small derived datasets (committed); `data/raw/` downloads (gitignored, recreated by scripts)
-- `tests/` pytest checks (364 passing)
+- `tests/` pytest checks (379 passing)
 
 ## How to reproduce
 
 ```bash
 .venv/bin/python -m pip install -e .
-.venv/bin/python -m pytest                        # 364 tests, ~10 s
+.venv/bin/python -m pytest                        # 379 tests, ~10 s
 # Milestone 1
 .venv/bin/python scripts/run_basis_risk.py        # doc 07
 .venv/bin/python scripts/run_replication.py       # doc 08

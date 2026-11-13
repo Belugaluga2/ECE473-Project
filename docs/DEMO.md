@@ -12,6 +12,8 @@
 
 - `http://localhost:8473/?demo` runs the PRF Companion for the Dallas hay farm on load.
 - `?demo=custom` runs the stand-alone custom hedge.
+- `?demo=exotic` designs a quadratic November contract for the Dallas hay farm (term sheet, exact ticket, basis risk); the "Compare every shape" button prices all nine at equal payout and equal premium.
+- `?demo=advisor` sends "I grow hay on 150 acres at 32.7771, -97.8059 near Weatherford, TX. Cover November; I mostly worry about a deep drought." to the advisor. With `ANTHROPIC_API_KEY` set (or a key pasted into the tab) Claude answers; without one the rule-based designer does.
 - With no internet the app still works on estimated prices. The map tiles need internet.
 
 ## Five-minute walkthrough
@@ -32,7 +34,7 @@
    - ladders listed 6-12 months ahead;
    - a drought-side market maker (depth is 5-28x too thin);
    - grid-index contracts (0.98, but that is unsubsidized PRF).
-5. **Close (30 s).** Every number on screen comes from the same code as the analysis docs (doc 19 checks the app reproduces them to the cent), with 364 automated tests.
+5. **Close (30 s).** Every number on screen comes from the same code as the analysis docs (doc 19 checks the app reproduces them to the cent), with 379 automated tests.
 
 ## Roadmap: expanding on the showcase (Milestone III and beyond)
 
@@ -47,7 +49,8 @@ Ordered by how directly each builds on what exists. Each item names the module i
 | 5 | **Temperature risk** (the Milestone I "if time permits" item): Kalshi daily/monthly temperature markets for heat stress on hay and cattle | `kalshi.py` client, `optimizer` | Weather risk PRF does not cover at all. |
 | 6 | **Order placement in Kalshi's demo environment** | `platform.order_ticket`, Kalshi authenticated API | Closes the loop from quote to trade. |
 | 7 | **Liquidity plan**: simulate a market maker or pooled orders across many ranches | `optimizer` tranches, doc 12 depth data | Depth is the binding constraint after geography. |
-| 8 | **Exotic payoffs in the app** (done in the backend, doc 23): a shape picker (convex, tiers, loss curve) with the term sheet and exact ticket from `platform.exotic_quote` | `exotic.py`, `POST /api/exotic` | Convex contracts need a third of the contracts, so today's books fill more of them; the issuer's hedge is exact. |
+| 8 | **Exotic payoffs in the app** (done 2026-11-09, docs 23-24): the "Design a contract" tab with nine shapes, the term sheet, the exact ticket, the basis-risk verdict and a compare-every-shape table | `exotic.py`, `design.py`, `POST /api/exotic`, `POST /api/exotic_compare` | The issuer's hedge is exact; the exponential and quadratic shapes capture 90%+ of a risk-averse farmer's best contract at Kalshi's load. |
+| 9 | **Advisor** (done 2026-11-09, doc 24): describe the farm in a sentence, get a designed contract; Claude with the project's tools when a key is set, a rule-based parser otherwise | `advisor.py`, `POST /api/advise` | Next: test against the live API with a key, tune the prompt on real farmer phrasings, verify the crop table. |
 
 ## Key numbers to quote
 
@@ -64,4 +67,8 @@ Ordered by how directly each builds on what exists. Each item names the module i
 | Exotic shapes: pooled HE at Kalshi strikes, linear / quadratic / exponential; at today's depth | 0.36 / 0.26 / 0.19; 0.19 / 0.20 / 0.18 | 23 |
 | Whole-inch strikes span the linear / quadratic / exponential shape on station rain | 89% / 80% / 63% (half-inch: 97 / 94 / 86%) | 23 |
 | Dallas Nov 2026 $6,000 quadratic contract: fair premium; book fills; largest fillable | $1,205; 13%; $595 | 23 |
+| Convex shapes beating linear at today's depth: same max payout; same premium (layered / quadratic / exponential) | 31 / 25 / 22 of 36; 0 / 0 / 0 of 36 | 24 |
+| Utility-optimal payout at a fair price; at Kalshi's 20% load (bins paying, premium as % of the month's value) | 5 bins, 28%; 1 bin, 7% | 24 |
+| Share of the optimal contract's value captured: exponential / quadratic / linear | 93% / 90% / 67% | 24 |
+| Exchange-settled basis risk, Nov-Jan, in sample vs 2001-2025 holdout: linear; quadratic | 0.65 vs 0.56; 0.56 vs 0.48 | 24 |
 | US PRF grids within 50 miles of a Kalshi station | 7.4% | 07 |

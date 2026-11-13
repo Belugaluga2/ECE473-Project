@@ -9,6 +9,9 @@ Routes
   POST /api/quote        JSON body -> agri_hedge.platform.quote(...)
   POST /api/companion    JSON body -> agri_hedge.platform.companion(...) (PRF Companion mode)
   POST /api/exotic       JSON body -> agri_hedge.platform.exotic_quote(...) (exchange-settled exotic payoff, doc 23)
+  POST /api/exotic_compare  JSON body -> agri_hedge.platform.exotic_compare(...) (every shape, equal payout and premium, doc 24)
+  POST /api/advise       JSON body -> agri_hedge.advisor.advise(...) (prompt-driven contract designer; Claude if a key is set)
+  GET  /api/advisor      which advisor mode is active (claude or rules) and the crops it knows
 """
 from __future__ import annotations
 
@@ -64,11 +67,16 @@ class Handler(BaseHTTPRequestHandler):
             if _COVERAGE_CACHE is None:
                 _COVERAGE_CACHE = pf.coverage_points()
             return self._json(200, _COVERAGE_CACHE)
+        if path == "/api/advisor":
+            from agri_hedge import advisor
+            return self._json(200, advisor.status())
         return self._json(404, {"error": "not found"})
 
     def do_POST(self):  # noqa: N802
+        from agri_hedge import advisor
         route = self.path.split("?", 1)[0]
-        handlers = {"/api/quote": pf.quote, "/api/companion": pf.companion, "/api/exotic": pf.exotic_quote}
+        handlers = {"/api/quote": pf.quote, "/api/companion": pf.companion, "/api/exotic": pf.exotic_quote,
+                    "/api/exotic_compare": pf.exotic_compare, "/api/advise": advisor.advise}
         if route not in handlers:
             return self._json(404, {"error": "not found"})
         try:
