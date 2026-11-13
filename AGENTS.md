@@ -2,29 +2,31 @@
 
 Read this first, then [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) (index of every doc, headline numbers, next steps).
 
-## What the project is now (2026-11-05)
+## What the project is now (2026-11-13)
 
 ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall insurance (PRF) with Kalshi monthly-rain contracts". That failed: Kalshi costs about 1.8x subsidized PRF, airport gauges sit 30-55 miles from the farm, and order books are thin (docs 08-09, 16).
 
-**Current direction: the PRF Companion.** Keep PRF, and use Kalshi contracts to cover the months PRF leaves open (mostly Nov-Feb), where the airport gauge tracks the farm's rain index well. Holdout HE 0.61 vs 0.23 for copying PRF's own intervals; recommended for 9 of 11 farms (doc 21). The binding limit is now order-book liquidity: 5-10x today's depth is needed (doc 22). The rest of the course builds on the companion.
+**Current direction: the PRF Companion and drought-weighted contract design.** Keep PRF, and use Kalshi contracts for months the sample farmers did not select (mostly Nov-Feb), where airport rain tracks their farm grids better. The companion's holdout HE is 0.61 versus 0.23 for copying selected PRF intervals; the app recommends it for 9 of 11 farms (doc 21). These are rain-index payout fits, not demonstrated farm-income protection. Order-book liquidity limits size: 5-10x the saved depth would be needed to restore the uncapped fit (doc 22). The newer design study asks which payout shape a modeled risk-averse farmer would prefer (docs 23-24).
 
-**Added 2026-11-08: exotic payoffs (doc 23).** An insurance derivative layer on the same contracts: nine payoff shapes (convex, step-up, two-tailed, the farm's loss curve), the replicating NO/YES portfolio in closed form (any single-month shape is spanned exactly up to the strike grid), the error waterfall per shape, executable prices on the saved book, and `platform.exotic_quote` / `POST /api/exotic` (term sheet + ticket + farmer basis risk). Headline: convex shapes lose more to geography but need a third of the contracts, so at today's depth they hedge better than PRF's linear shape and need less issuer capital; the data-optimal station payout is convex even for a linear farm payoff; half-inch strikes matter for convex products.
+**Added 2026-11-08: exotic payoffs (doc 23).** Nine payout shapes, a replicating NO/YES portfolio, a saved-book execution check, and `platform.exotic_quote` / `POST /api/exotic` (term sheet + ticket + farmer basis risk). A fully filled portfolio reproduces a station-settled payout on Kalshi's strike bins; it does not remove station-to-farm basis risk. Doc 23's apparent convex-shape depth advantage compares equal maximum payouts. Doc 24 shows that advantage disappears at equal premium.
 
-**Added 2026-11-09: contract design and the advisor (doc 24).** Doc 23's shapes re-compared at equal premium (the convex depth advantage was a same-payout artefact: 0 of 36 windows at equal premium), a holdout term sheet (stable; the farmer's basis risk is worse on 2001-2025), and the expected-utility-optimal payout on the ladder (`design.py`): doc 23's convex ladder at a fair price, a deep-drought digital at Kalshi's 20% load; the exponential and quadratic shapes capture 90%+ of its value, PRF's linear shape two thirds, and the raw optimum overfits. In the app: the "Design a contract" tab (nine shapes incl. `optimal`, term sheet, exact ticket, fill, basis risk, compare-every-shape at equal payout and premium) and the "Ask the advisor" tab (`advisor.py`: a Claude tool-use loop over geocode / crop / location / compare / design when `ANTHROPIC_API_KEY` is set or a key is pasted in the tab, a rule-based parser otherwise). The Claude mode has not yet been run against the live API (no key in that session); the tests use a scripted fake client.
+**Added 2026-11-09: contract design and the advisor (doc 24).** At equal premium, convex shapes beat linear in 0 of 36 insured windows at the saved book's depth. Under a modeled farmer with risk aversion 2, wealth twice the month's insured value and a 20% price load, smooth exponential and quadratic shapes capture 93% and 90% of the utility-optimal contract's modeled value, versus 67% for linear. The raw optimum overfits; these are modeled utility results, not observed income gains. The app has a contract designer and advisor. The rule-based advisor runs in the demo; the Claude path has scripted-client tests but no live API test yet.
 
 ## Deadlines
 
 | Date | Deliverable | Where |
 |---|---|---|
-| 2026-11-12 | Milestone II write-up | `docs/milestone2/milestone2.tex` / `.pdf` (Overleaf-ready; build locally with `tectonic -X compile milestone2.tex`) |
-| 2026-11-17 | Slides and presentations | Deck linked from [docs/DEMO.md](docs/DEMO.md) |
+| 2026-11-12 | Milestone II write-up and update | `docs/milestone2/milestone2.tex` / `.pdf`, `milestone2_update.tex` / `.pdf` |
+| 2026-11-16 11:59pm | Slides due | Deck linked from [docs/DEMO.md](docs/DEMO.md) |
+| From 2026-11-17 | Presentations | 10-minute talk plus 5-minute Q&A |
 | 2026-12-15 | Final paper | not started; roadmap in DEMO.md |
 
 ## Where things are
 
-- `docs/DEMO.md`: five-minute demo script, **roadmap of next steps** (7 items, each naming the module it extends), key numbers to quote.
+- `docs/DEMO.md`: demo guide, presentation links, roadmap, and key numbers to quote.
 - `docs/MILESTONE_2.md`: Milestone II summary table and reproduce commands with run times.
-- `docs/research/` (sourced background, docs 01-10), `docs/analysis/` (our results, docs 04b-22, numbered in the order they were done).
+- `docs/research/` (sourced background, docs 01-10), `docs/analysis/` (our results, docs 04b-24, numbered in the order they were done).
+- `archive/`: alternative-topic research kept for provenance, outside the current TA reading path.
 - `src/agri_hedge/`: the package. The app's single entry point is `platform.quote` (custom hedge) and `platform.companion` (PRF Companion). Fitting is in `optimizer.py` + `hedge_builder.py`.
 - `scripts/run_*.py` regenerate each analysis doc's numbers, CSVs and figures. `scripts/pull_*.py` download raw data into `data/raw/` (gitignored, currently empty; committed `data/processed/` is enough for tests, the app and the Milestone 2 scripts).
 - `scripts/experiments/`: two one-off experiments cited in doc 21's numbers table. Keep them.
@@ -46,7 +48,7 @@ In the Claude desktop app, `.claude/launch.json` defines the `agrihedge` preview
 
 ## Git state
 
-- Work happens on `milestone-2`. It is pushed and open as GitHub PR 3 into `main`, and it already contains the branches of PRs 1 and 2. Merging is the team's call, not an agent's.
+- `main` already contains Milestone II through merged PR 3. The newer exotic payout work began on `exotic-payouts` and is being organized for review separately. PRs 4-8 are parallel work; see [archive/README.md](archive/README.md).
 - `main` is shared: never commit to it directly. Branch per piece of work and open a PR; CI runs pytest.
 - Local branches `run/datafix-2`, `run/factcheck-1`, `run/lossmodel-2`, `run/rowcrop-2` are the losing alternates of reviewed two-run comparisons (see doc 11 and the 2026-11-01 merge commits). Kept only for reference.
 

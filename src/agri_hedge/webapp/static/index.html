@@ -102,7 +102,7 @@
   </div>
   <div class="card" id="card-exotic" style="display:none">
     <h2>2. The contract</h2>
-    <p class="hint">One calendar month, settled on the station's official rain total. Any payout shape is replicated exactly by Kalshi NO and YES contracts (doc 23), so the issuer keeps no rain risk; you keep the gap between the airport's rain and your land's.</p>
+    <p class="hint">One calendar month, settled on the station's official rain total. A fully filled Kalshi portfolio matches the term sheet on the listed rain bins. You still bear the gap between airport rain and your land's rain.</p>
     <div class="row">
       <div><label for="xmonth">Month</label><select id="xmonth"></select></div>
       <div><label for="xcov">Coverage</label><select id="xcov"><option value="0.7">70%</option><option value="0.8">80%</option><option value="0.85">85%</option><option value="0.9" selected>90%</option><option value="1">100%</option></select></div>
@@ -153,7 +153,7 @@
     <button class="btn secondary" id="gocmp" style="display:none">Compare every shape for this month</button>
   </div>
 </section>
-<section id="results"><div class="card"><h2>How it works</h2><p class="hint"><b>PRF Companion:</b> enter where your land is and the PRF intervals you insure. We test, month by month, how well Kalshi rain contracts at the nearest settlement station track rain on your PRF grid in the months PRF leaves open, recommend the months that track well, and build one order for them. <b>Custom cover:</b> pick any months and build a stand-alone hedge. <b>Design a contract:</b> choose a payout shape (linear like PRF, convex, step-up tiers, your farm's loss curve, or the data-optimal shape) for one month and get the term sheet, the exact replicating order and your basis risk. <b>Ask the advisor:</b> describe your farm in a sentence and let the advisor pick and design the contract.</p><p class="hint">Each answer takes a few seconds: every hedge is refit 75 times to test it on years it has not seen.</p></div></section>
+<section id="results"><div class="card"><h2>How it works</h2><p class="hint"><b>PRF Companion:</b> enter where your land is and the PRF intervals you insure. We test, month by month, how well Kalshi rain contracts at the nearest settlement station track rain on your PRF grid in the months PRF leaves open, recommend the months that track well, and build one order for them. <b>Custom cover:</b> pick any months and build a stand-alone hedge. <b>Design a contract:</b> choose a payout shape (linear like PRF, convex, step-up tiers, your farm's loss curve, or the data-optimal shape) for one month and get the term sheet, the exact replicating order and your basis risk. <b>Ask the advisor:</b> describe your farm in a sentence and let the advisor pick and design the contract.</p><p class="hint">Companion and custom hedge fit is tested on years left out of training. Contract design shows its station payout, order fill and farm basis risk separately.</p></div></section>
 </main>
 <script>
 const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -163,7 +163,7 @@ const OPTIONS = PRF.map(x => [x, x + " (PRF interval)"]).concat(MONTHS.map(m => 
 const PRESETS = { hay: [["Apr-May",40],["Jun-Jul",35],["Aug-Sep",25]], spring: [["Mar-Apr",50],["May-Jun",50]], july: [["Jul",100]] };
 const SHAPES = [
   ["optimal", "Data-optimal for this land (utility-based, doc 24)", "The step payout that maximizes a risk-averse farmer's expected utility over 75 years of station rain and your land's shortfall, at the stated load. At today's load it usually pays only in the one or two driest bins."],
-  ["convex2", "Quadratic (convex): pays extra for worse events", "Payout grows with the square of the shortfall. Cheaper per $1 of limit and fewer contracts, so today's books fill more of it."],
+  ["convex2", "Quadratic (convex): pays extra for worse events", "Payout grows with the square of the shortfall. It costs less per $1 of maximum payout; compare shapes at the same premium to judge a fixed budget."],
   ["linear", "Linear (like PRF)", "Payout proportional to the shortfall below the trigger, PRF's own rule."],
   ["layered", "Layered escalator", "A cheap first layer up to half the shortfall, then a steep catastrophe layer."],
   ["exponential", "Exponential (catastrophe only)", "Almost nothing until a deep drought, then everything."],

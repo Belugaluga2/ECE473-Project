@@ -1,12 +1,12 @@
 # Milestone II: Contract Design & Platform Architecture
 
-**Team:** Maya, Evan, Jack  |  **Due:** 2026-11-12  |  **Built:** 2026-11-05 on branch `milestone-2`
+**Team:** Maya, Evan, Jack  |  **Due:** 2026-11-12  |  **Baseline built:** 2026-11-05 on branch `milestone-2` (merged as PR 3)
 
-Write-up for submission: [milestone2/milestone2.tex](milestone2/milestone2.tex) (Overleaf-ready, figures in `milestone2/figures/`), compiled as [milestone2/milestone2.pdf](milestone2/milestone2.pdf).
+Original write-up: [TeX](milestone2/milestone2.tex) (Overleaf-ready, figures in `milestone2/figures/`) and [PDF](milestone2/milestone2.pdf). The later November 12 course update is [TeX](milestone2/milestone2_update.tex) and [PDF](milestone2/milestone2_update.pdf). For the presentation, read that update with [doc 23](analysis/23_exotic_payouts.md), [doc 24](analysis/24_contract_design.md), and the [demo guide](DEMO.md).
 
 ## Showcase: the PRF Companion ([doc 21](analysis/21_prf_companion.md), demo guide [DEMO.md](DEMO.md))
 
-Keep your USDA rainfall insurance (PRF), and use Kalshi weather contracts to cover the months it leaves open. The app scores each open month at the rancher's location, recommends the months a Kalshi hedge tracks well, builds one order, and backtests it next to PRF's payouts.
+Keep your USDA rainfall insurance (PRF), and use Kalshi weather contracts for months a farmer did not select. The app scores each open month at the rancher's location, recommends the months a Kalshi hedge tracks well, builds one order, and backtests it next to PRF's payouts. PRF offers winter intervals; this result does not show that winter risk is uninsurable under PRF or that farm income improves.
 
 - Recommended for **9 of 11** farms. Median hedge effectiveness (HE) on unseen years is **0.66**, against 0.38 for hedging PRF's own intervals.
 - Holdout with no peeking (months chosen and fit on 1951-2000, scored on 2001-2025): **0.61 vs 0.23**. The companion wins on 7 of 10 farms.
@@ -42,6 +42,10 @@ This milestone follows the Milestone II table and the "Refinements to our plan" 
    - contracts on a gridded rain index (near-perfect, but PRF without the subsidy).
 4. **The best complement to PRF is the months it leaves uncovered.** Cool-season single-month cover near a station tracks well (doc 20).
 5. **Who the platform can serve today:** producers within about 25-50 miles of a Kalshi rain station, in spring or fall windows, who want cover PRF does not offer (single months, above PRF caps, fast settlement, no PRF eligibility).
+
+## November 12 extension: payout design
+
+The team used the companion's liquidity problem to ask whether different payout shapes would serve a farmer better. [Doc 23](analysis/23_exotic_payouts.md) builds station-settled shapes from Kalshi's rain ladder and shows the remaining basis risk and limited executable size. [Doc 24](analysis/24_contract_design.md) adds the essential equal-premium check: convex shapes beat the linear benchmark in **0 of 36** insured windows at the saved book's depth. Under its stated modeled risk preferences and price load, smooth convex shapes capture more of the utility-optimal contract's value, but the study does not establish actual farm-income protection. A fully filled station-settled portfolio can match the payout on listed strike bins; today's books generally cannot fill the modeled full-size orders.
 
 ## Reproduce
 

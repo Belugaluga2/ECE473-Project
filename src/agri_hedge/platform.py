@@ -755,7 +755,7 @@ def exotic_quote(params: dict, live: LiveQuotes | None = None, today: date | Non
         "design": design,
         "notes": [
             "The contract pays the step function in the term sheet on the station's official monthly total; the ticket "
-            "replicates it exactly, so the issuer keeps no rain risk (only unfilled legs and the spread).",
+            "matches it on the listed rain bins if every leg fills; unfilled legs leave the issuer exposed, and the farmer still bears basis risk.",
             ("The data-optimal shape maximizes the expected utility of a risk-averse farmer over the 1951-2025 history of "
              "station rain and this land's shortfall, priced with the stated load (doc 24)." if shape == OPTIMAL else
              "Payouts in each bin are the shape's average over the years that fell in that bin (1951-2025 where the "
