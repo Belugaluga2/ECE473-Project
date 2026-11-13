@@ -1,8 +1,8 @@
 # AgriHedge demo guide (Milestone II showcase)
 
-**One-line pitch:** keep your USDA rainfall insurance (PRF), and use Kalshi weather contracts to cover the months PRF leaves open. The app tells you, month by month, where that works at your location, and builds the order.
+**One-line pitch:** keep USDA rainfall insurance (PRF), use Kalshi where a sample farmer left months unselected, then design a drought-weighted payout where the station signal and available book support it.
 
-**Slides (11/17):** [Rain Insurance on Prediction Markets](https://claude.ai/artifact/1542eCG6kPUgw4itzm9N4P), a 16-slide deck with speaker notes. It tells the story from the problem through Milestone I's "no", the diagnosis, the turn to complementing PRF, the PRF Companion and its holdout test, to the liquidity limit and the road to the final paper.
+**Current presentation:** [PowerPoint](presentation/AgriHedge_Journey_2026-11-17.pptx) and [PDF](presentation/AgriHedge_Journey_2026-11-17.pdf). Slides are due **November 16 at 11:59pm**; presentations start November 17. The 10-minute talk follows the project's decisions: attempted PRF replacement, measured reasons it failed, the companion pivot, the liquidity limit, drought-weighted design, and the equal-premium correction. The [November 12 Milestone II update](milestone2/milestone2_update.pdf) is the written source for that arc.
 
 ## Start it
 
@@ -12,9 +12,11 @@
 
 - `http://localhost:8473/?demo` runs the PRF Companion for the Dallas hay farm on load.
 - `?demo=custom` runs the stand-alone custom hedge.
+- `?demo=exotic` designs a quadratic November contract for the Dallas hay farm (term sheet, exact ticket, basis risk); the "Compare every shape" button prices all nine at equal payout and equal premium.
+- `?demo=advisor` sends "I grow hay on 150 acres at 32.7771, -97.8059 near Weatherford, TX. Cover November; I mostly worry about a deep drought." to the rule-based advisor. The optional Claude tool-use path has scripted-client tests but has not been run against the live API.
 - With no internet the app still works on estimated prices. The map tiles need internet.
 
-## Five-minute walkthrough
+## Five-minute app walkthrough (separate from the 10-minute talk)
 
 1. **The problem (30 s).** PRF pays ranchers when rain on their 0.25-degree grid is below normal, but only in the two-month intervals they choose, at most 90% coverage, with a 51-59% federal subsidy. Milestone I showed that copying PRF with Kalshi costs about 1.8x and tracks poorly (docs 08-09).
 2. **What we found (1 min).** Docs 16-17: the hedge loses most of its fit to geography (the airport is 30-55 miles away) and to monthly-vs-two-month contracts. Doc 20: the months PRF leaves open are where the airport gauge tracks the farm well. Cool-season frontal rain is spread evenly, and those months score HE 0.5-0.7 out of sample.
@@ -32,7 +34,7 @@
    - ladders listed 6-12 months ahead;
    - a drought-side market maker (depth is 5-28x too thin);
    - grid-index contracts (0.98, but that is unsubsidized PRF).
-5. **Close (30 s).** Every number on screen comes from the same code as the analysis docs (doc 19 checks the app reproduces them to the cent), with 353 automated tests.
+5. **Close (30 s).** Every number on screen comes from the same code as the analysis docs (doc 19 checks the app reproduces them to the cent), with 379 automated tests.
 
 ## Roadmap: expanding on the showcase (Milestone III and beyond)
 
@@ -47,8 +49,12 @@ Ordered by how directly each builds on what exists. Each item names the module i
 | 5 | **Temperature risk** (the Milestone I "if time permits" item): Kalshi daily/monthly temperature markets for heat stress on hay and cattle | `kalshi.py` client, `optimizer` | Weather risk PRF does not cover at all. |
 | 6 | **Order placement in Kalshi's demo environment** | `platform.order_ticket`, Kalshi authenticated API | Closes the loop from quote to trade. |
 | 7 | **Liquidity plan**: simulate a market maker or pooled orders across many ranches | `optimizer` tranches, doc 12 depth data | Depth is the binding constraint after geography. |
+| 8 | **Exotic payoffs in the app** (done 2026-11-09, docs 23-24): the "Design a contract" tab with nine shapes, the term sheet, the ticket, the basis-risk verdict and a compare-every-shape table | `exotic.py`, `design.py`, `POST /api/exotic`, `POST /api/exotic_compare` | A fully filled ladder matches the station's binned payout. Exponential and quadratic shapes capture 90%+ of the modeled optimum under doc 24's stated assumptions. |
+| 9 | **Advisor** (done 2026-11-09, doc 24): describe the farm in a sentence, get a designed contract; Claude with the project's tools when a key is set, a rule-based parser otherwise | `advisor.py`, `POST /api/advise` | Next: test against the live API with a key, tune the prompt on real farmer phrasings, verify the crop table. |
 
 ## Key numbers to quote
+
+HE below measures fit to a rain-index payout, not observed farm-income protection. For the shape comparison, keep the denominator visible: doc 23's depth advantage is at the same maximum payout. Doc 24 finds no convex advantage at equal premium. Its utility shares assume risk aversion 2, wealth twice the month's insured value and a 20% price load. The Dallas full-size contract has a modeled fair premium; the saved book fills only 13% near fair value.
 
 | Claim | Number | Doc |
 |---|---|---|
@@ -60,4 +66,11 @@ Ordered by how directly each builds on what exists. Each item names the module i
 | Kalshi cost vs subsidized PRF per $1 of expected payout | about $1.10 vs $0.61 | 09, 15 |
 | Waterfall: geography / settlement / monthly / binning / depth | -0.35 / -0.13 / -0.19 / ~0 / -0.16 | 16 |
 | Two-month contracts: PRF intervals; excess rain | 0.34 to 0.48; 0.22 to 0.40 | 17, 20 |
+| Exotic shapes: pooled HE at Kalshi strikes, linear / quadratic / exponential; at today's depth | 0.36 / 0.26 / 0.19; 0.19 / 0.20 / 0.18 | 23 |
+| Whole-inch strikes span the linear / quadratic / exponential shape on station rain | 89% / 80% / 63% (half-inch: 97 / 94 / 86%) | 23 |
+| Dallas Nov 2026 $6,000 quadratic contract: fair premium; book fills; largest fillable | $1,205; 13%; $595 | 23 |
+| Convex shapes beating linear at today's depth: same max payout; same premium (layered / quadratic / exponential) | 31 / 25 / 22 of 36; 0 / 0 / 0 of 36 | 24 |
+| Utility-optimal payout at a fair price; at Kalshi's 20% load (bins paying, premium as % of the month's value) | 5 bins, 28%; 1 bin, 7% | 24 |
+| Share of the optimal contract's value captured: exponential / quadratic / linear | 93% / 90% / 67% | 24 |
+| Exchange-settled basis risk, Nov-Jan, in sample vs 2001-2025 holdout: linear; quadratic | 0.65 vs 0.56; 0.56 vs 0.48 | 24 |
 | US PRF grids within 50 miles of a Kalshi station | 7.4% | 07 |

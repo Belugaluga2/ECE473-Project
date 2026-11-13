@@ -18,25 +18,28 @@
   .card { background:#fff; border:1px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:14px; }
   .card h2 { font-size:14px; margin:0 0 10px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); }
   label { display:block; font-weight:600; margin:8px 0 3px; }
-  input, select, button { font:inherit; }
-  input[type=number], input[type=text], select { width:100%; padding:6px 8px; border:1px solid var(--line); border-radius:5px; background:#fff; }
+  input, select, button, textarea { font:inherit; }
+  input[type=number], input[type=text], input[type=password], select, textarea { width:100%; padding:6px 8px; border:1px solid var(--line); border-radius:5px; background:#fff; }
+  textarea { min-height:74px; resize:vertical; }
   .row { display:flex; gap:8px; align-items:center; }
   .row > * { flex:1; }
   #map { height:260px; border-radius:6px; border:1px solid var(--line); }
   .win { display:grid; grid-template-columns: 1fr 80px 28px; gap:6px; margin-bottom:6px; }
   .win button { border:1px solid var(--line); background:#fff; border-radius:5px; cursor:pointer; }
-  .btn { background:var(--accent); color:#fff; border:none; border-radius:6px; padding:9px 14px; cursor:pointer; font-weight:600; width:100%; margin-top:12px; }
+  .btn { width:100%; margin-top:12px; padding:10px; background:var(--accent); color:#fff; border:0; border-radius:6px; font-weight:600; cursor:pointer; }
+  .btn.secondary { background:#fff; color:var(--accent); border:1px solid var(--accent); margin-top:8px; }
   .btn:disabled { opacity:.6; cursor:wait; }
-  .link { background:none; border:none; color:var(--accent); cursor:pointer; padding:0; font-weight:600; }
-  .hint { color:var(--muted); font-size:12.5px; }
-  .stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap:10px; }
-  .stat { border:1px solid var(--line); border-radius:6px; padding:9px 11px; }
+  .link { background:none; border:0; color:var(--accent); cursor:pointer; padding:0; font-size:13px; }
+  .hint { color:var(--muted); font-size:12.5px; margin:4px 0 0; }
+  .stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:10px; margin:10px 0; }
+  .stat { background:var(--bg); border-radius:6px; padding:10px 12px; }
   .stat b { display:block; font-size:19px; }
   .stat span { color:var(--muted); font-size:12px; }
   table { width:100%; border-collapse:collapse; font-size:13px; }
-  th, td { text-align:left; padding:5px 6px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th, td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
   th { color:var(--muted); font-weight:600; }
   td.num, th.num { text-align:right; font-variant-numeric: tabular-nums; }
+  tr.pick { background:#eef5fa; }
   .tag { display:inline-block; padding:1px 6px; border-radius:9px; font-size:11.5px; }
   .tag.live { background:#e3f2e8; color:var(--good); }
   .tag.est { background:#fbefe2; color:var(--warn); }
@@ -45,8 +48,8 @@
   svg text { font-size:11px; fill:var(--muted); }
   #results { min-height: 300px; }
   .verdict { padding:10px 12px; border-radius:6px; margin-bottom:10px; }
-  .tabs { display:flex; gap:6px; margin-bottom:14px; }
-  .tabs button { flex:1; padding:9px 10px; border:1px solid var(--line); background:#fff; border-radius:6px; cursor:pointer; font-weight:600; color:var(--muted); }
+  .tabs { display:flex; gap:6px; margin-bottom:14px; flex-wrap:wrap; }
+  .tabs button { flex:1; padding:9px 6px; border:1px solid var(--line); background:#fff; border-radius:6px; cursor:pointer; font-weight:600; color:var(--muted); font-size:12.5px; }
   .tabs button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
   .months { display:grid; grid-template-columns: repeat(12, 1fr); gap:5px; margin:6px 0 4px; }
   .mo { border-radius:6px; padding:7px 2px; text-align:center; font-size:12px; border:1px solid var(--line); }
@@ -55,13 +58,20 @@
   .legend span { display:inline-block; margin-right:12px; font-size:12px; color:var(--muted); }
   .legend i { display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:4px; vertical-align:-1px; }
   .verdict.good { background:#e3f2e8; } .verdict.mid { background:#fdf3e1; } .verdict.bad { background:#fbe4e4; }
+  #chat { max-height:360px; overflow-y:auto; border:1px solid var(--line); border-radius:6px; padding:8px; background:var(--bg); margin-bottom:8px; }
+  .msg { padding:8px 10px; border-radius:8px; margin-bottom:8px; white-space:pre-wrap; font-size:13px; }
+  .msg.user { background:#dfe9f3; margin-left:30px; }
+  .msg.bot { background:#fff; border:1px solid var(--line); margin-right:20px; }
+  .msg.tools { background:none; color:var(--muted); font-size:11.5px; padding:0 4px; }
+  .pill { display:inline-block; padding:2px 8px; border-radius:10px; font-size:11.5px; background:#e8ebee; color:var(--muted); }
+  .pill.claude { background:#e3f2e8; color:var(--good); }
 </style>
 </head>
 <body>
-<header><h1>AgriHedge</h1><span>Keep your USDA rainfall insurance, and use Kalshi weather contracts to cover the months it leaves open.</span></header>
+<header><h1>AgriHedge</h1><span>Keep your USDA rainfall insurance, use Kalshi weather contracts for the months it leaves open, or design your own rain contract.</span></header>
 <main>
 <section>
-  <div class="tabs"><button id="tab-comp" class="on">PRF Companion</button><button id="tab-custom">Custom cover</button></div>
+  <div class="tabs"><button id="tab-comp" class="on">PRF Companion</button><button id="tab-custom">Custom cover</button><button id="tab-exotic">Design a contract</button><button id="tab-advisor">Ask the advisor</button></div>
   <div class="card">
     <h2>1. Where is the land?</h2>
     <div id="map"></div>
@@ -73,7 +83,7 @@
     <label for="station">Settlement station</label>
     <select id="station"><option value="">Nearest station (automatic)</option></select>
   </div>
-  <div class="card">
+  <div class="card" id="card-win">
     <h2 id="h2win">2. Your PRF policy</h2>
     <p class="hint" id="winhint"></p>
     <div id="windows"></div>
@@ -90,7 +100,40 @@
     <select id="coverage"><option value="0.7">70%</option><option value="0.75">75%</option><option value="0.8">80%</option><option value="0.85">85%</option><option value="0.9" selected>90%</option></select>
     <p class="hint" id="protline"></p>
   </div>
-  <div class="card">
+  <div class="card" id="card-exotic" style="display:none">
+    <h2>2. The contract</h2>
+    <p class="hint">One calendar month, settled on the station's official rain total. A fully filled Kalshi portfolio matches the term sheet on the listed rain bins. You still bear the gap between airport rain and your land's rain.</p>
+    <div class="row">
+      <div><label for="xmonth">Month</label><select id="xmonth"></select></div>
+      <div><label for="xcov">Coverage</label><select id="xcov"><option value="0.7">70%</option><option value="0.8">80%</option><option value="0.85">85%</option><option value="0.9" selected>90%</option><option value="1">100%</option></select></div>
+    </div>
+    <label for="xshape">Payout shape</label>
+    <select id="xshape"></select>
+    <p class="hint" id="xshapehint"></p>
+    <div class="row">
+      <div><label for="xmax">Maximum payout ($, at zero rain)</label><input id="xmax" type="number" value="6000"></div>
+      <div><label for="xvar">Value at risk this month ($)</label><input id="xvar" type="number" value="20000"></div>
+    </div>
+    <div class="row">
+      <div><label for="xgamma">Your risk attitude</label><select id="xgamma"><option value="1">tolerant (risk aversion 1)</option><option value="2" selected>moderate (2)</option><option value="4">cautious (4)</option></select></div>
+      <div><label for="xload">Price load over fair value</label><select id="xload"><option value="0">0% (fair)</option><option value="0.1">10%</option><option value="0.2" selected>20% (Kalshi today)</option><option value="0.3">30%</option></select></div>
+    </div>
+    <p class="hint">Risk attitude and load only matter for the data-optimal shape and the utility ranking in the comparison (doc 24).</p>
+  </div>
+  <div class="card" id="card-advisor" style="display:none">
+    <h2>2. Tell the advisor about your farm</h2>
+    <p class="hint">Say where the land is, what you grow or graze, and how big it is. Example: <i>"I'm growing corn at 1234 FM 51, Weatherford, TX on 300 acres. I mostly worry about a July drought."</i> It will ask for anything it still needs, then design a contract. <span id="advstatus" class="pill">checking…</span></p>
+    <div id="chat"></div>
+    <textarea id="prompt" placeholder="Describe your farm and what you want covered…"></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="btn" id="send" style="margin-top:0">Send</button>
+      <button class="btn secondary" id="chatreset" style="margin-top:0">Start over</button>
+    </div>
+    <label for="apikey">Anthropic API key (optional, kept in this browser only)</label>
+    <input id="apikey" type="password" placeholder="sk-ant-… leave empty to use the server's key or the rule-based designer">
+    <p class="hint">With a key, Claude runs the project's tools (geocode, crop lookup, location check, shape comparison, contract design) and writes the answer. Without one, a rule-based parser handles common phrasings.</p>
+  </div>
+  <div class="card" id="card-price">
     <h2>3. Price and fit</h2>
     <div id="compbox"><label for="gapprot">Cover per gap month ($)</label><input id="gapprot" type="number" value="6100">
     <label for="minhe">Recommend a month if the hedge tracks at least</label>
@@ -107,9 +150,10 @@
     <label for="pricesrc">Prices</label>
     <select id="pricesrc"><option value="auto">Live Kalshi order books where listed, estimates elsewhere</option><option value="model">Estimates only (fair value + typical spread)</option></select>
     <button class="btn" id="go">Build my hedge</button>
+    <button class="btn secondary" id="gocmp" style="display:none">Compare every shape for this month</button>
   </div>
 </section>
-<section id="results"><div class="card"><h2>How it works</h2><p class="hint"><b>PRF Companion:</b> enter where your land is and the PRF intervals you insure. We test, month by month, how well Kalshi rain contracts at the nearest settlement station track rain on your PRF grid in the months PRF leaves open, recommend the months that track well, and build one order for them. <b>Custom cover:</b> pick any months and build a stand-alone hedge.</p><p class="hint">Each answer takes a few seconds: every hedge is refit 75 times to test it on years it has not seen.</p></div></section>
+<section id="results"><div class="card"><h2>How it works</h2><p class="hint"><b>PRF Companion:</b> enter where your land is and the PRF intervals you insure. We test, month by month, how well Kalshi rain contracts at the nearest settlement station track rain on your PRF grid in the months PRF leaves open, recommend the months that track well, and build one order for them. <b>Custom cover:</b> pick any months and build a stand-alone hedge. <b>Design a contract:</b> choose a payout shape (linear like PRF, convex, step-up tiers, your farm's loss curve, or the data-optimal shape) for one month and get the term sheet, the exact replicating order and your basis risk. <b>Ask the advisor:</b> describe your farm in a sentence and let the advisor pick and design the contract.</p><p class="hint">Companion and custom hedge fit is tested on years left out of training. Contract design shows its station payout, order fill and farm basis risk separately.</p></div></section>
 </main>
 <script>
 const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -117,9 +161,21 @@ const PRF = ["Jan-Feb","Feb-Mar","Mar-Apr","Apr-May","May-Jun","Jun-Jul","Jul-Au
 const OPTIONS = PRF.map(x => [x, x + " (PRF interval)"]).concat(MONTHS.map(m => [m, m + " only"]))
   .concat([["Jun-Aug","Jun-Aug (3 months)"],["Apr-Jun","Apr-Jun (3 months)"]]);
 const PRESETS = { hay: [["Apr-May",40],["Jun-Jul",35],["Aug-Sep",25]], spring: [["Mar-Apr",50],["May-Jun",50]], july: [["Jul",100]] };
+const SHAPES = [
+  ["optimal", "Data-optimal for this land (utility-based, doc 24)", "The step payout that maximizes a risk-averse farmer's expected utility over 75 years of station rain and your land's shortfall, at the stated load. At today's load it usually pays only in the one or two driest bins."],
+  ["convex2", "Quadratic (convex): pays extra for worse events", "Payout grows with the square of the shortfall. It costs less per $1 of maximum payout; compare shapes at the same premium to judge a fixed budget."],
+  ["linear", "Linear (like PRF)", "Payout proportional to the shortfall below the trigger, PRF's own rule."],
+  ["layered", "Layered escalator", "A cheap first layer up to half the shortfall, then a steep catastrophe layer."],
+  ["exponential", "Exponential (catastrophe only)", "Almost nothing until a deep drought, then everything."],
+  ["tiers", "Step-up tiers", "Fixed payments of 25%, 50% and 100% at three shortfall levels: easy to explain."],
+  ["capped", "Capped (stop-loss)", "Full payment once the shortfall reaches half; the concave mirror image, for comparison."],
+  ["loss", "Your farm's loss curve (doc 13)", "The modeled forage response: dry hurts more than wet helps, a mild convex shape."],
+  ["both_tails", "Drought plus excess rain", "Pays on both tails: drought below the trigger and rain above 130% of normal."],
+];
 const $ = id => document.getElementById(id);
 const fmt = (v, d=0) => v == null ? "–" : Number(v).toLocaleString(undefined, {maximumFractionDigits:d, minimumFractionDigits:d});
 const usd = v => v == null ? "–" : "$" + fmt(v);
+const pct = v => v == null ? "–" : fmt(v*100) + "%";
 
 function addWindow(label="Apr-May", share=50) {
   const div = document.createElement("div"); div.className = "win";
@@ -141,11 +197,17 @@ $("addwin").onclick = () => addWindow("Jul", 20);
 document.querySelectorAll("[data-preset]").forEach(b => b.onclick = () => setPreset(b.dataset.preset));
 $("budgetmode").onchange = () => $("budgetbox").style.display = $("budgetmode").value === "custom" ? "" : "none";
 setPreset("hay");
+MONTHS.forEach((m,i) => { const o = document.createElement("option"); o.value = i+1; o.textContent = m; if (i === 10) o.selected = true; $("xmonth").appendChild(o); });
+SHAPES.forEach(([k, label]) => { const o = document.createElement("option"); o.value = k; o.textContent = label; $("xshape").appendChild(o); });
+$("xshape").value = "convex2";
+function shapeHint() { const s = SHAPES.find(x => x[0] === $("xshape").value); $("xshapehint").textContent = s ? s[2] : ""; }
+$("xshape").onchange = shapeHint; shapeHint();
 
 const map = L.map("map").setView([33.5, -98], 5);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 12, attribution: "© OpenStreetMap"}).addTo(map);
 let pin = L.marker([Number($("lat").value), Number($("lon").value)]).addTo(map);
-map.on("click", e => { pin.setLatLng(e.latlng); $("lat").value = e.latlng.lat.toFixed(4); $("lon").value = e.latlng.lng.toFixed(4); });
+function setPin(lat, lon) { pin.setLatLng([lat, lon]); $("lat").value = Number(lat).toFixed(4); $("lon").value = Number(lon).toFixed(4); }
+map.on("click", e => setPin(e.latlng.lat, e.latlng.lng));
 ["lat","lon"].forEach(id => $(id).onchange = () => pin.setLatLng([Number($("lat").value), Number($("lon").value)]));
 fetch("/api/coverage").then(r => r.json()).then(pts => pts.forEach(p => L.circleMarker([p.lat,p.lon], {radius:2, stroke:false, fillOpacity:.25, color:"#2a6f97"}).addTo(map)));
 fetch("/api/stations").then(r => r.json()).then(st => {
@@ -154,18 +216,36 @@ fetch("/api/stations").then(r => r.json()).then(st => {
     const o = document.createElement("option"); o.value = s.station_key; o.textContent = `${s.station_key} (${s.series_ticker})`; $("station").appendChild(o);
   });
 });
+fetch("/api/advisor").then(r => r.json()).then(s => {
+  $("advstatus").textContent = s.mode === "claude" ? `Claude (${s.model}) is answering` : "rule-based designer (no API key on the server)";
+  $("advstatus").className = "pill " + (s.mode === "claude" ? "claude" : "");
+}).catch(() => { $("advstatus").textContent = "advisor status unknown"; });
 
 let MODE = "companion";
 function setMode(m) {
   MODE = m;
-  $("tab-comp").classList.toggle("on", m === "companion"); $("tab-custom").classList.toggle("on", m === "custom");
+  for (const [id, mode] of [["tab-comp","companion"],["tab-custom","custom"],["tab-exotic","exotic"],["tab-advisor","advisor"]]) $(id).classList.toggle("on", m === mode);
+  const hedge = m === "companion" || m === "custom";
+  $("card-win").style.display = hedge ? "" : "none";
+  $("card-exotic").style.display = m === "exotic" ? "" : "none";
+  $("card-advisor").style.display = m === "advisor" ? "" : "none";
+  $("card-price").style.display = m === "advisor" ? "none" : "";
   $("h2win").textContent = m === "companion" ? "2. Your PRF policy" : "2. Which months, how much cover?";
   $("winhint").textContent = m === "companion" ? "The PRF intervals you insure and their shares. Protection = acres × county base value × coverage × productivity." : "";
   $("compbox").style.display = m === "companion" ? "" : "none"; $("custbox").style.display = m === "custom" ? "" : "none";
-  $("go").textContent = m === "companion" ? "Find my gaps" : "Build my hedge";
+  $("gocmp").style.display = m === "exotic" ? "" : "none";
+  $("go").textContent = m === "companion" ? "Find my gaps" : m === "custom" ? "Build my hedge" : "Design this contract";
 }
 $("tab-comp").onclick = () => setMode("companion"); $("tab-custom").onclick = () => setMode("custom");
+$("tab-exotic").onclick = () => setMode("exotic"); $("tab-advisor").onclick = () => setMode("advisor");
 setMode("companion");
+
+async function post(url, body) {
+  const r = await fetch(url, {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
+  const j = await r.json();
+  if (!r.ok) throw new Error(j.error || r.statusText);
+  return j;
+}
 
 async function runCompanion() {
   const body = { lat: Number($("lat").value), lon: Number($("lon").value), prf_intervals: windows(), coverage: Number($("coverage").value),
@@ -173,36 +253,90 @@ async function runCompanion() {
     gap_protection_per_month: Number($("gapprot").value), min_he: Number($("minhe").value) };
   $("go").disabled = true; $("go").textContent = "Testing every month…";
   $("results").innerHTML = `<div class="card"><h2>Your PRF gaps</h2><p class="hint">Scoring each uncovered month out of sample…</p></div>`;
-  try {
-    const r = await fetch("/api/companion", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
-    const c = await r.json();
-    if (!r.ok) throw new Error(c.error || r.statusText);
-    renderCompanion(c);
-  } catch (e) {
-    $("results").innerHTML = `<div class="card"><h2>Your PRF gaps</h2><p class="err">${e.message}</p></div>`;
-  } finally { $("go").disabled = false; setMode(MODE); }
+  try { renderCompanion(await post("/api/companion", body)); }
+  catch (e) { $("results").innerHTML = `<div class="card"><h2>Your PRF gaps</h2><p class="err">${e.message}</p></div>`; }
+  finally { $("go").disabled = false; setMode(MODE); }
 }
+
+function exoticBody(extra) {
+  return Object.assign({ lat: Number($("lat").value), lon: Number($("lon").value), station_key: $("station").value || null,
+    month: Number($("xmonth").value), shape: $("xshape").value, max_payout: Number($("xmax").value), value_at_risk: Number($("xvar").value),
+    coverage: Number($("xcov").value), risk_aversion: Number($("xgamma").value), load: Number($("xload").value), price_source: $("pricesrc").value }, extra || {});
+}
+
+async function runExotic() {
+  $("go").disabled = true; $("go").textContent = "Designing…";
+  $("results").innerHTML = `<div class="card"><h2>Your contract</h2><p class="hint">Binning the shape, building the replicating order, pricing it on the book…</p></div>`;
+  try { renderExotic(await post("/api/exotic", exoticBody())); }
+  catch (e) { $("results").innerHTML = `<div class="card"><h2>Your contract</h2><p class="err">${e.message}</p></div>`; }
+  finally { $("go").disabled = false; setMode(MODE); }
+}
+
+async function runCompare() {
+  $("gocmp").disabled = true; $("gocmp").textContent = "Pricing every shape…";
+  $("results").innerHTML = `<div class="card"><h2>Every shape, this month</h2><p class="hint">Pricing nine contracts at the same maximum payout and at the same premium…</p></div>`;
+  try { renderCompare(await post("/api/exotic_compare", exoticBody({shape: undefined}))); }
+  catch (e) { $("results").innerHTML = `<div class="card"><h2>Every shape, this month</h2><p class="err">${e.message}</p></div>`; }
+  finally { $("gocmp").disabled = false; $("gocmp").textContent = "Compare every shape for this month"; }
+}
+$("gocmp").onclick = runCompare;
 
 $("go").onclick = async () => {
   if (MODE === "companion") return runCompanion();
+  if (MODE === "exotic") return runExotic();
   const body = { lat: Number($("lat").value), lon: Number($("lon").value), windows: windows(), coverage: Number($("coverage").value),
     protection: protection(), station_key: $("station").value || null, price_source: $("pricesrc").value,
     budget: $("budgetmode").value === "custom" ? Number($("budget").value) : $("budgetmode").value };
   $("go").disabled = true; $("go").textContent = "Building…";
   $("results").innerHTML = `<div class="card"><h2>Your hedge</h2><p class="hint">Fitting and testing…</p></div>`;
-  try {
-    const r = await fetch("/api/quote", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(body)});
-    const q = await r.json();
-    if (!r.ok) throw new Error(q.error || r.statusText);
-    render(q);
-  } catch (e) {
-    $("results").innerHTML = `<div class="card"><h2>Your hedge</h2><p class="err">${e.message}</p></div>`;
-  } finally { $("go").disabled = false; $("go").textContent = "Build my hedge"; }
+  try { render(await post("/api/quote", body)); }
+  catch (e) { $("results").innerHTML = `<div class="card"><h2>Your hedge</h2><p class="err">${e.message}</p></div>`; }
+  finally { $("go").disabled = false; $("go").textContent = "Build my hedge"; }
 };
+
+// ---------------- advisor chat ----------------
+let HISTORY = [];          // the API conversation (user turns, assistant turns with tool blocks), kept by the server's format
+try { $("apikey").value = localStorage.getItem("agrihedge_api_key") || ""; } catch (e) {}
+$("apikey").onchange = () => { try { localStorage.setItem("agrihedge_api_key", $("apikey").value.trim()); } catch (e) {} };
+function addMsg(cls, text) { const d = document.createElement("div"); d.className = "msg " + cls; d.textContent = text; $("chat").appendChild(d); $("chat").scrollTop = $("chat").scrollHeight; return d; }
+$("chatreset").onclick = () => { HISTORY = []; $("chat").innerHTML = ""; };
+async function sendPrompt() {
+  const text = $("prompt").value.trim();
+  if (!text) return;
+  $("prompt").value = ""; addMsg("user", text);
+  HISTORY = HISTORY.concat([{role: "user", content: text}]);
+  const thinking = addMsg("bot", "…");
+  $("send").disabled = true;
+  try {
+    const key = $("apikey").value.trim();
+    const out = await post("/api/advise", { messages: HISTORY, api_key: key || undefined, price_source: $("pricesrc").value });
+    HISTORY = out.history || HISTORY;
+    thinking.textContent = out.reply || "(no reply)";
+    const tools = (out.tool_calls || []).map(c => c.name).join(", ");
+    const tag = (out.mode === "claude" ? "Claude" : "rule-based designer") + (out.fallback_reason ? " (Claude unavailable: " + out.fallback_reason + ")" : "");
+    addMsg("tools", tag + (tools ? " · used: " + tools : "") + ` · ${out.elapsed_s}s`);
+    if (out.contract) {
+      const p = out.contract.product;
+      if (p.farm_lat != null) setPin(p.farm_lat, p.farm_lon);
+      $("xmonth").value = p.month_number; $("xshape").value = p.shape; $("xmax").value = p.max_payout_usd; shapeHint();
+      let html = renderExoticHtml(out.contract);
+      if (out.comparison) html = renderCompareHtml(out.comparison) + html;
+      $("results").innerHTML = html;
+    }
+  } catch (e) { thinking.textContent = "Error: " + e.message; thinking.classList.add("err"); }
+  finally { $("send").disabled = false; }
+}
+$("send").onclick = sendPrompt;
+$("prompt").onkeydown = e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) sendPrompt(); };
 
 // ?demo builds the default quote on load (for class demos and screenshots)
 const DEMO = new URLSearchParams(location.search).get("demo");
-if (DEMO !== null) { if (DEMO === "custom") setMode("custom"); setTimeout(() => $("go").click(), 300); }
+if (DEMO !== null) {
+  if (DEMO === "custom") setMode("custom");
+  if (DEMO === "exotic") setMode("exotic");
+  if (DEMO === "advisor") { setMode("advisor"); $("prompt").value = "I grow hay on 150 acres at 32.7771, -97.8059 near Weatherford, TX. Cover November; I mostly worry about a deep drought."; setTimeout(sendPrompt, 400); }
+  else setTimeout(() => $("go").click(), 300);
+}
 
 function verdict(he) {
   if (he == null) return ["mid", ""];
@@ -296,6 +430,90 @@ function renderCompanion(c) {
     c.two_month_whatif.map(w => `<tr><td>${w.interval}</td>${cell(w.drought_today, w.drought_two_month)}${cell(w.wet_today, w.wet_two_month)}</tr>`).join("") + `</table></div>`;
   html += `<div class="card"><h2>Notes</h2>${c.notes.map(n => `<p class="note">• ${n}</p>`).join("")}<p class="note">Computed in ${c.elapsed_s}s. Research prototype for ECE 473, not investment advice.</p></div>`;
   $("results").innerHTML = html;
+}
+
+// ---------------- exotic contract ----------------
+function renderExotic(q) { $("results").innerHTML = renderExoticHtml(q); }
+function renderExoticHtml(q) {
+  const p = q.product, pr = q.pricing, fb = q.farm_basis_risk, d = q.design;
+  const he = fb ? fb.he_exchange_vs_farm : null;
+  let [cls, msg] = verdict(he);
+  if (!fb) { cls = "mid"; msg = "No farm location given: the fit against your own land was not scored (the issuer's hedge is exact regardless)."; }
+  else if (p.shape === "optimal") {
+    msg = `Utility-optimal for a farmer with risk aversion ${d.risk_aversion} facing a ${pct(d.load)} load: it buys ${d.recommended_max_payout_usd > 0 ? "cover worth " + usd(d.recommended_max_payout_usd) + " of maximum payout for " + usd(d.recommended_premium_usd) + " a year" : "nothing"} and is worth ${fmt(d.ce_gain_pct_of_value,2)}% of the month's value beyond its premium. Its payout concentrates in the driest bins, so the variance-based fit (${fmt(he,2)}, ${fb.verdict}) understates it.`;
+    cls = d.ce_gain_pct_of_value > 1 ? "good" : d.ce_gain_pct_of_value > 0.25 ? "mid" : "bad";
+  }
+  const booked = pr.legs_priced_from_order_book > 0;
+  let html = `<div class="card"><h2>Your contract · ${p.shape_label}</h2>
+    <div class="verdict ${cls}">${msg}</div>
+    <div class="stats">
+      <div class="stat"><b>${usd(pr.fair_premium_usd)}</b><span>fair premium (1991-2025 odds)</span></div>
+      <div class="stat"><b>${usd(pr.all_in_usd)}</b><span>all-in: premium paid + fees + 31 days of carry${booked ? "" : " (estimated prices)"}</span></div>
+      <div class="stat"><b>${fmt(pr.cost_per_dollar_expected,2)}</b><span>cost per $1 of expected payout</span></div>
+      <div class="stat"><b>${booked ? pct(pr.fill_share) : "no book yet"}</b><span>${booked ? "of the order today's Kalshi books fill at a sensible price" : "Kalshi lists each month about 30 days ahead"}</span></div>
+      <div class="stat"><b>${booked && pr.largest_fillable_max_payout_usd != null ? usd(pr.largest_fillable_max_payout_usd) : "–"}</b><span>largest maximum payout the books fill in full</span></div>
+      <div class="stat"><b>${fmt(q.replication.contracts_per_dollar,2)}</b><span>contracts per $1 of maximum payout (${fmt(q.ticket.reduce((a,t)=>a+t.contracts,0))} in total)</span></div>
+      <div class="stat"><b>${p.station} · ${fmt(p.distance_mi)} mi</b><span>settles on ${p.month} rain at ${p.station_name} (${p.series}); normal ${p.normal_in} in, trigger ${p.trigger_in} in</span></div>
+      <div class="stat"><b>${fb ? fmt(he,2) : "–"}</b><span>fit against your land's own ${fb ? fb.farm_shape : ""} payoff (PRF grid ${fb ? fb.grid_id : "–"}); tail capture ${fb ? pct(fb.tail_capture) : "–"}</span></div>
+    </div></div>`;
+  html += `<div class="card"><h2>Term sheet: what it pays</h2>${termSvg(q)}
+    <table><tr><th>${p.month} rain at ${p.station}</th><th class="num">Payout</th><th class="num">Years in this bin (of ${q.term_sheet[0].years_total})</th></tr>` +
+    q.term_sheet.map(t => `<tr><td>${t.rain}</td><td class="num">${usd(t.payout_usd)}</td><td class="num">${t.years_in_bin}</td></tr>`).join("") +
+    `</table><p class="note">The contract pays exactly these amounts on the official monthly total. ${p.shape === "optimal" ? "The amounts maximize a risk-averse farmer's expected utility over the 1951-2025 history of station rain and this land's shortfall (doc 24)." : "Each amount is the shape's average over the years that fell in that bin; finer strikes would follow the smooth shape more closely (doc 23)."} It paid in ${q.backtest.years_paid} of ${q.backtest.years.length} years.</p></div>`;
+  html += `<div class="card"><h2>Backtest: what it would have paid each year</h2>${payoutSvg(q.backtest, p.max_payout_usd)}</div>`;
+  html += `<div class="card"><h2>The replicating order (exact)</h2><table><tr><th>Contract</th><th>What it pays</th><th class="num">Contracts</th><th class="num">Filled</th><th class="num">Fair</th><th class="num">Avg price</th><th class="num">Premium</th><th class="num">Fee</th><th>Price</th></tr>` +
+    q.ticket.map(t => `<tr><td>${t.ticker}</td><td>${t.meaning}</td><td class="num">${fmt(t.contracts)}</td><td class="num">${t.contracts_filled == null ? "–" : fmt(t.contracts_filled)}</td><td class="num">${fmt(t.fair_probability,2)}</td><td class="num">${fmt(t.avg_price,3)}</td><td class="num">${usd(t.premium_usd)}</td><td class="num">${usd(t.fee_usd)}</td><td><span class="tag ${t.price_source==="live"||t.price_source==="snapshot"?"live":"est"}">${t.price_source}</span></td></tr>`).join("") +
+    `</table><p class="note">Long NO contracts where the payout drops, long YES where it rises${q.replication.cash_leg ? `, plus a cash leg of ${fmt(q.replication.cash_leg,4)} per $1` : "; no cash leg"}. ${pr.legs_priced_from_order_book} of ${q.ticket.length} legs are priced from a Kalshi book; the rest are estimates (fair value plus a typical half spread).</p></div>`;
+  html += `<div class="card"><h2>Notes</h2>${q.notes.map(n => `<p class="note">• ${n}</p>`).join("")}<p class="note">Computed in ${q.elapsed_s}s. Research prototype for ECE 473, not insurance or investment advice.</p></div>`;
+  return html;
+}
+
+function renderCompare(c) { $("results").innerHTML = renderCompareHtml(c); }
+function renderCompareHtml(c) {
+  const rec = c.recommendation, f = c.farmer;
+  const cls = rec.worth_buying === false ? "bad" : "good";
+  let html = `<div class="card"><h2>Every shape · ${c.product.month} at ${c.product.station} · ${usd(c.product.max_payout_usd)} maximum payout</h2>
+    <div class="verdict ${cls}">${rec.why}</div>
+    <table><tr><th>Shape</th><th class="num">Fair premium</th><th class="num">Cost per $1 expected</th><th class="num">Contracts</th><th class="num">Books fill, same payout</th><th class="num">Payout at linear's premium</th><th class="num">Books fill, same premium</th><th class="num">Fit to your land</th><th class="num">Worst-years capture</th><th class="num">Utility share</th><th class="num">Size the model farmer buys</th><th></th></tr>` +
+    c.rows.map(r => `<tr class="${r.shape === rec.shape ? "pick" : ""}"><td>${r.shape_label}</td><td class="num">${usd(r.fair_premium_usd)}</td><td class="num">${fmt(r.cost_per_dollar_expected,2)}</td><td class="num">${fmt(r.contracts)}</td><td class="num">${r.fill_share == null ? "–" : pct(r.fill_share)}</td><td class="num">${usd(r.max_payout_equal_premium_usd)}</td><td class="num">${r.fill_share_equal_premium == null ? "–" : pct(r.fill_share_equal_premium)}</td><td class="num">${fmt(r.farm_he,2)} ${r.farm_verdict ? "<span class='pill'>" + r.farm_verdict + "</span>" : ""}</td><td class="num">${pct(r.tail_capture)}</td><td class="num">${r.ce_share_of_optimal == null ? "–" : pct(r.ce_share_of_optimal)}</td><td class="num">${usd(r.utility_best_max_payout_usd)}</td><td><button class="link" data-shape="${r.shape}">design</button></td></tr>`).join("") +
+    `</table><p class="note">Same payout = every shape at ${usd(c.product.max_payout_usd)} of maximum payout. Same premium = each shape scaled to the linear shape's fair premium (${usd(c.reference_fair_premium_usd)}), which is the fair comparison for a fixed budget. Utility share = the certainty-equivalent gain of the shape at its best size, as a share of the best possible contract on this ladder, for a farmer with risk aversion ${f.risk_aversion} and a ${pct(f.load)} load (doc 24). Fit = hedge effectiveness against your land's own payoff (a variance measure; the utility-optimal shape scores low on it by design).</p>
+    <p class="note">${c.bins.length} rain bins: ${c.bins.join(" · ")}.</p></div>`;
+  setTimeout(() => document.querySelectorAll("[data-shape]").forEach(b => b.onclick = () => { $("xshape").value = b.dataset.shape; shapeHint(); setMode("exotic"); runExotic(); }), 0);
+  return html;
+}
+
+function termSvg(q) {
+  const W=900, H=190, L=64, B=34, T=16, R=16;
+  const ts = q.term_sheet, n = ts.length, vmax = Math.max(1, ...ts.map(t => t.payout_usd));
+  const bw = (W-L-R)/n, y = v => T + (H-T-B)*(1 - v/vmax);
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%"><line x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}" stroke="#ccc"/>`;
+  ts.forEach((t,i) => {
+    const x0 = L + i*bw;
+    s += `<rect x="${x0+2}" y="${y(t.payout_usd)}" width="${bw-4}" height="${H-B-y(t.payout_usd)}" fill="${t.payout_usd > 0 ? "#2a6f97" : "#dfe4e8"}"/>`;
+    if (t.payout_usd > 0) s += `<text x="${x0+bw/2}" y="${y(t.payout_usd)-3}" text-anchor="middle">${usd(t.payout_usd)}</text>`;
+    s += `<text x="${x0+bw/2}" y="${H-B+14}" text-anchor="middle">${t.rain.replace(" in or less","″ or less").replace(" in","″")}</text>`;
+    s += `<text x="${x0+bw/2}" y="${H-B+27}" text-anchor="middle" fill="#9aa">${t.years_in_bin} yrs</text>`;
+  });
+  s += `<text x="${L-6}" y="${y(vmax)+4}" text-anchor="end">${usd(vmax)}</text><text x="${L-6}" y="${H-B}" text-anchor="end">$0</text></svg>`;
+  return s;
+}
+
+function payoutSvg(b, maxp) {
+  const W=900, H=230, L=64, B=28, T=36, R=8, n=b.years.length;
+  const vmax = Math.max(1, ...b.payout_usd), rmax = Math.max(1, ...b.rain_in);
+  const bw = (W-L-R)/n, y = v => T + (H-T-B)*(1 - v/vmax), yr = v => T + (H-T-B)*(1 - v/rmax);
+  let s = `<svg viewBox="0 0 ${W} ${H}" width="100%"><line x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}" stroke="#ccc"/>`;
+  b.years.forEach((yrv,i) => {
+    const x0 = L + i*bw;
+    s += `<rect x="${x0}" y="${y(b.payout_usd[i])}" width="${bw*0.8}" height="${H-B-y(b.payout_usd[i])}" fill="#2a6f97"/>`;
+    if (yrv % 10 === 0) s += `<text x="${x0}" y="${H-B+15}">${yrv}</text>`;
+  });
+  const pts = b.years.map((_,i) => `${L + i*bw + bw*0.4},${yr(b.rain_in[i])}`).join(" ");
+  s += `<polyline points="${pts}" fill="none" stroke="#b5651d" stroke-width="1.2" opacity=".8"/>`;
+  s += `<text x="${L-6}" y="${y(vmax)+4}" text-anchor="end">${usd(vmax)}</text><text x="${L-6}" y="${H-B}" text-anchor="end">$0</text>`;
+  s += `<rect x="${L}" y="4" width="10" height="10" fill="#2a6f97"/><text x="${L+14}" y="13">contract payout</text>`;
+  s += `<line x1="${L+140}" y1="9" x2="${L+160}" y2="9" stroke="#b5651d" stroke-width="2"/><text x="${L+164}" y="13">station rain (inches, right scale max ${fmt(rmax,1)})</text></svg>`;
+  return s;
 }
 
 function companionSvg(b) {

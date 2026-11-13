@@ -1,0 +1,135 @@
+\documentclass[10pt]{article}
+
+\usepackage[margin=0.52in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{enumitem}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1pt}
+\setlist{leftmargin=1.1em, itemsep=0pt, parsep=0pt, topsep=0pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\head}[1]{\par\vspace{2pt}{\large\bfseries #1}\par\vspace{0pt}}
+\newcommand{\person}[2]{\par\vspace{1pt}\textbf{#1} \textit{(planned: #2)}}
+
+\begin{document}
+
+\begin{center}
+  {\large\bfseries ECE473 Milestone II Update: New Rain Insurance Payouts and
+  the AgriHedge App}\\[1pt]
+  Maya, Evan, and Jack \quad\textbullet\quad November 12, 2026
+\end{center}
+\vspace{-8pt}
+
+\textbf{Summary.} Milestone I showed that today's Kalshi rain contracts copy
+USDA's rainfall insurance (PRF) poorly and at a higher cost. In Milestone II we
+found out why, used that to design new insurance payouts from Kalshi's
+listed rain contracts, and built an app that quotes them for a farm.
+Below, \emph{fit} is the share of a farm's year-to-year insurance payout swings
+that a hedge reproduces, measured on years it was not trained on.
+
+% ---------------------------------------------------------------------------
+\head{1. Planned vs.\ actual progress}
+
+\person{Jack}{find the cheapest Kalshi portfolio that matches a farm's PRF
+payout; live pricing for the app}
+\begin{itemize}
+  \item \textbf{W4:} built an optimizer that picks contracts while accounting
+    for fees, cash tied up until settlement, and how many contracts are
+    actually for sale. Even the best portfolio reaches a fit of only about one
+    third, so a better optimizer cannot fix the problem on its own.
+  \item \textbf{W5:} built the backend that turns a farmer's plan into an
+    order. It uses live Kalshi prices where contracts are listed and labels
+    estimates for months without a live book.
+\end{itemize}
+
+\person{Maya}{explain where the remaining hedge error comes from; farmer
+screen}
+\begin{itemize}
+  \item \textbf{W4:} added real-world limits one at a time to measure each.
+    Geography costs the most: Kalshi settles on an airport gauge 30 to 55
+    miles from the farm. Monthly contracts (PRF insures two-month windows)
+    and thin order books come next. This separates what better contracts
+    could fix from what they cannot.
+  \item \textbf{W5:} built the farmer screen: click your land, see the nearest
+    station, how well it tracks your farm, and the cost. Covering months
+    outside a farmer's PRF selection reached median holdout fit 0.61,
+    versus 0.23 for copying selected intervals; the app recommends that
+    companion at 9 of 11 farms.
+\end{itemize}
+
+\person{Evan}{find the risks today's contracts cannot cover and propose fixes;
+test the app against PRF}
+\begin{itemize}
+  \item \textbf{W4:} distance to the airport gauge decides whether a hedge
+    works. Across 150 random locations, fit is 0.47 within 25 miles of a
+    Kalshi station but 0.15 beyond 100 miles, and only 7.4\% of US PRF grids
+    lie within 50 miles of one. Summer storm rain is too local for the
+    tested airport gauges, so only 3 of the 36 two-month windows our farms insure can
+    be copied well.
+  \item \textbf{W5:} researched exotic payouts, such as exponential ones that
+    pay little until a deep drought. For the exponential station payout,
+    one-inch strikes reproduce 63\% of variance; half-inch strikes would give 86\%.
+\end{itemize}
+
+\textbf{Beyond the plan (shared equally):} new payouts and the advisor.
+\begin{itemize}
+  \item \textbf{Payouts built to order.} Kalshi's listed monthly-rain ladder
+    lets a portfolio pay a chosen amount on each listed strike bin.
+    We designed insurance that pays little in a mild dry spell and a lot in a
+    severe drought, instead of PRF's straight-line payout. Since it is built
+    from listed contracts, a fully filled portfolio matches the payout on
+    the station's rain bins. The farmer still bears station-to-farm risk.
+  \item \textbf{Why drought-weighted.} The best contract for a risk-averse
+    farmer under our stated wealth, risk-aversion and 20\% price-load
+    assumptions puts most payout into the driest months. Smooth
+    drought-weighted shapes retain 90 to 93\% of the modeled optimum's value;
+    PRF's straight-line shape retains 67\%. A \$6,000 November contract at
+    Dallas has a modeled fair premium of \$1,205 and pays \$3,727 if the
+    airport gets at most 1 inch, \$862 at 1 to 2 inches, and almost nothing
+    above. The saved order book fills only 13\% of that order near fair value.
+  \item \textbf{Advisor.} A farmer types one sentence (``150 acres of hay near
+    Weatherford, TX''), and Claude uses our tools to locate the land, check
+    the nearest station, and design and explain a contract. The rule-based
+    path runs in the demo; the Claude path has scripted-client tests but
+    has not been tested against the live API.
+\end{itemize}
+
+% ---------------------------------------------------------------------------
+\head{2. Are the final results ready?}
+Almost, but not yet. We have enough for the presentation: the app designs
+and quotes payouts. A formal report needs more research on what these
+contracts are worth to real farms and how they compare with subsidized
+insurance. Our plan:
+
+{\small
+\begin{tabularx}{\textwidth}{@{}lY@{}}
+\toprule
+Owner & Research for the final report (due 12/15) \\
+\midrule
+Jack & Model real-world farms accurately and backtest them: what each would
+  pay for this insurance, and what it would have paid out in past years \\
+Maya & Formalize the gap between our insurance and subsidized PRF: how much
+  of it is the subsidy, how much is basis risk, and how much is liquidity \\
+Evan & Clean up the app and research more exotic contract ideas, such as
+  two-month and combined drought-and-flood contracts \\
+\bottomrule
+\end{tabularx}
+}
+\par\vspace{1pt}
+All three of us will build the slides for 11/17 and write the final report.
+
+% ---------------------------------------------------------------------------
+\head{3. Refinements to our plan}
+\begin{itemize}
+  \item \textbf{Scope:} instead of copying PRF, we are testing drought-weighted
+    cover for months a farmer left unselected. Limited depth, basis risk,
+    and price remain constraints.
+  \item \textbf{Responsibilities:} updated to the roles in Section 2.
+\end{itemize}
+
+\end{document}
