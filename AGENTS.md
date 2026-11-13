@@ -48,7 +48,7 @@ In the Claude desktop app, `.claude/launch.json` defines the `agrihedge` preview
 
 ## Git state
 
-- `main` already contains Milestone II through merged PR 3. The newer exotic payout work began on `exotic-payouts` and is being organized for review separately. PRs 4-8 are parallel work; see [archive/README.md](archive/README.md).
+- `main` contains Milestone II through merged PR 3 and the exotic payout study, corrected update, presentation, and archive through merged PR 9. PRs 4-8 are parallel work; see [archive/README.md](archive/README.md).
 - `main` is shared: never commit to it directly. Branch per piece of work and open a PR; CI runs pytest.
 - Local branches `run/datafix-2`, `run/factcheck-1`, `run/lossmodel-2`, `run/rowcrop-2` are the losing alternates of reviewed two-run comparisons (see doc 11 and the 2026-11-01 merge commits). Kept only for reference.
 
