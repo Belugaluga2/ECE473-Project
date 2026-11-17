@@ -22,6 +22,9 @@ Every research document has a numbers table that gives a source for each number.
 | Extra: how rainfall moves crop yields ($ per inch) | team | [research/03a_rain_yield_corn_soybean.md](research/03a_rain_yield_corn_soybean.md), [research/03b_rain_yield_forage_and_other_crops.md](research/03b_rain_yield_forage_and_other_crops.md) | corn/soy VERIFIED; forage and other crops done, not fact-checked |
 | Extra: how farmers buy weather insurance today | team | [research/02_how_farmers_buy_weather_insurance.md](research/02_how_farmers_buy_weather_insurance.md) | done, not fact-checked |
 | Literature review and prior art | team | [research/10_literature_review.md](research/10_literature_review.md), [references.bib](research/references.bib) | VERIFIED |
+| Follow-up (2026-11-15): fair prices for third-inch strikes at all 37 Kalshi rain stations | Evan | [analysis/27_third_inch_fair_pricing.md](analysis/27_third_inch_fair_pricing.md), `third_inch_fair_prices.csv` | done, not fact-checked |
+| Follow-up (2026-11-15): viability of exotic rain payouts as farm insurance | Evan | [analysis/28_exotic_payouts_viability.md](analysis/28_exotic_payouts_viability.md) | done, not fact-checked |
+| Follow-up (2026-11-15): Kalshi against private rain cover for commercial crops (corn, soybeans, wheat, sorghum, cotton), with third-inch strikes | Evan | [analysis/29_row_crop_rain_benchmark.md](analysis/29_row_crop_rain_benchmark.md) | done, not fact-checked |
 
 ## Study sites
 
@@ -97,9 +100,29 @@ Seven PRF sites pair a Kalshi monthly-rain settlement station with a PRF-heavy c
 - Luo studies Kalshi temperature contracts and finds basis risk rises with distance. Iturbide studies New York City daily rain and finds the contract is well calibrated, but 69% of payouts land on days with no loss.
 - Neither study covers monthly rain ladders, agriculture, or a PRF benchmark. That is our gap.
 
+### 9. Third-inch strikes and exotic payouts (docs 27, 28, added 2026-11-15)
+- **Fair prices for third-inch strikes** (0.33, 0.67, 1.00, 1.33, ...) are tabulated for all 37 Kalshi rain stations and 12 months from station history (`data/processed/third_inch_fair_prices.csv`), with 1991-2025 and 1951-2025 windows, a smoothed gamma fit, and 90% confidence intervals.
+- Third-inch strikes triple the number of strikes priced between 5 and 95 cents (5.3 to 15.7 per station-month). The gain is almost all in dry months: where more than half of months end at 1 inch or less, today's ladder copies 25% of a monthly put's variance and a third-inch ladder 67%. Albuquerque and Denver go from 9 and 5 unusable months to none. Humid stations gain little (90-97% to 99%).
+- The prices are less precise than the spacing: a single strike's climatological price has a 90% interval about 21 cents wide from 35 years of data, adjacent third-inch strikes differ by 3 cents, and prices drifted 5 cents on average between 1951-1990 and 1991-2025. Quote from a smoothed curve, not raw frequencies.
+- Kalshi's rules already allow 0.01-inch strikes, and New York traded half-inch strikes in 2024 at about 20% less volume per market than whole-inch strikes.
+- **Exotic payouts (doc 28), assuming enough volume.** Against PRF at the farm grid, today's monthly ladder removes 36% of payout variance out of sample. A contract on the two-month total removes 52% at whole-inch strikes and 57% at third-inch strikes, equal to an ideal contract on the station's own index (58%); it also halves false alarms and costs less. Nothing more exotic beats it, because what remains is geography.
+- Joint "both months dry" digitals are a usable fallback (51%). Worst-month lookbacks (26%), dry-spell barriers (17%) and one-day-maximum flood digitals (10% of the excess-rain index) are not PRF replicas; they are different perils without a loss model here.
+- Against the farms' forage-loss proxy, a single season-total contract does best (57%, 7 of 11 farms at or above 0.5) and is the cheapest to carry. That is the candidate that beats PRF on simplicity and fit to loss rather than on price. Row crops need a two-sided collar (0.58 of the Illinois corn loss curve on Chicago rain, no geography).
+- All exotic families price at loads of 1.07-1.14 per $1 of expected payout, the same as today's ladder; only wet-side tails rest on thin history (6-12% of fair cost on legs that paid fewer than five times since 1951).
+- **Convex (tail-heavy) cover**, which ignores a 10% shortfall and pays a lot at 70%, is where the new strikes matter most and work worst. Today's ladder copies 20% of an exponential payout's variance at the farm grid; third-inch strikes 32%, the two-month total at third-inch strikes 45%, the ideal station contract 55%. The 70% strike sits below 1 inch in most months at every site, deep shortfalls transfer poorly across 24-58 miles, and loads rise to 1.15-1.30 because the hedge lives on cheap, thinly-priced legs. PRF cannot offer this shape at all.
+
+### 10. Commercial crops: Kalshi against private rain cover (doc 29, added 2026-11-15)
+- PRF insures forage, so for corn, soybeans, wheat, sorghum and cotton the benchmark is private parametric rain cover. The test uses real losses: county yield shortfalls below trend, 1960-2025, at 1,048 county-crop pairs within 100 miles of a Kalshi rain station.
+- **What farmers can buy:** there is no off-the-shelf private rainfall policy for an ordinary row-crop farm. Cover is bespoke and sold through brokers (Arbol) or at agribusiness scale (Descartes, Sompo, Swiss Re). Climate Corporation's farm product ended in 2015, and CME's airport-station rainfall futures were delisted in 2014 with no open interest. No provider publishes its loading; we assume a premium of 1.5 to 2.5 times expected payout, which is an inference.
+- **Fit:** a policy on the county's own rain removes 24% of yield-loss variance out of sample (corn 29%, soybeans 28%, winter wheat 3%). Today's Kalshi contracts remove 9%: 12% within 25 miles of the station, 8% at 50-100 miles. Rain alone is a weak hedge for row-crop yield, and station distance takes most of what there is.
+- **Third-inch strikes:** they lift the Kalshi hedge from 8.6% to 9.1%, and exact payoffs reach 9.0%, so finer strikes have nothing more to give for row crops. This is the opposite of the forage result at dry stations (section 9).
+- **Coverage:** 6.5% of corn acres and 7.0% of soybean acres lie within 50 miles of a Kalshi rain station; about 1% lie within 25 miles.
+- **Cost:** Kalshi's load is 1.19-1.29 per $1 of expected payout, but per unit of risk removed it costs about 2.4-2.5 cents a year per cent of standard deviation. A private season-total policy with a deductible costs 0.72 at a 1.5 loading and 2.16 at 2.5, and removes twice the risk. For corn the third-inch Kalshi hedge costs about $10 an acre a year net and removes about $5 of a $96 standard deviation.
+- **Takeaway:** against private cover Kalshi wins on access (any size, no broker, no minimum) and loses on fit. For row crops the fix is more settlement locations, not finer strikes.
+
 ## What this means for Milestone 2
 - **Market gaps:** the biggest fixable gaps are contract design, not geography. Two-month or seasonal contracts would recover about 0.19 of effectiveness. Strikes below 1 inch, or 0.25-inch steps, would recover about 0.11 and matter most at arid sites.
-- **Subsidy:** Kalshi cannot beat subsidized PRF on cost for the same risk. Realistic niches are coverage above what PRF allows, periods or perils PRF leaves open, row-crop rain risk (especially excess rain), and producers who cannot buy PRF.
+- **Subsidy:** Kalshi cannot beat subsidized PRF on cost for the same risk. Realistic niches are coverage above what PRF allows, periods or perils PRF leaves open, and producers who cannot buy PRF. Row-crop rain risk is a weaker niche than it looked: doc 29 finds station rain removes only 9% of real county yield-loss variance.
 - **Liquidity:** today's books cannot fill even one small ranch's hedge. The platform needs a liquidity plan, such as market-maker partners or pooled orders.
 
 ## Next steps (left open by this run)
@@ -120,10 +143,12 @@ Seven PRF sites pair a Kalshi monthly-rain settlement station with a PRF-heavy c
   - `basis.py`: basis-risk metrics
   - `replicate.py`: hedge fitting
   - `pricing.py`: hedge pricing and order-book fills
+  - `exotics.py`: fine-strike fair pricing, ladder resolution, exotic payoff builders (docs 27, 28)
+  - `cropbench.py`: county yield loss, state payoff templates, binary ladders, break-even load (doc 29)
   - `locations.py`: study sites
 - `scripts/` runnable entry points that pull data and regenerate every result
 - `data/processed/` small derived datasets (committed); `data/raw/` downloads (gitignored, recreated by scripts)
-- `tests/` pytest checks (222 passing)
+- `tests/` pytest checks (248 passing)
 
 ## How to reproduce
 
@@ -134,4 +159,9 @@ python scripts/run_basis_risk.py      # doc 07
 python scripts/run_replication.py     # doc 08
 python scripts/run_scenarios.py       # doc 04b
 python scripts/run_payout_comparison.py  # doc 09
+python scripts/run_third_inch_pricing.py # doc 27
+python scripts/run_exotic_payouts.py     # doc 28
+python scripts/run_convex_payouts.py     # doc 28, convex section
+python scripts/pull_crop_county_data.py  # doc 29 inputs (network, about 50 minutes on the first run)
+python scripts/run_crop_rain_benchmark.py # doc 29
 ```
