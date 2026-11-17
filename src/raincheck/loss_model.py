@@ -40,8 +40,8 @@ import numpy as np
 import pandas as pd
 import yaml
 
-from agri_hedge.config import PROCESSED, SCENARIOS
-from agri_hedge.prf_intervals import INTERVAL_MONTHS, INTERVAL_NAMES, overlaps
+from raincheck.config import PROCESSED, SCENARIOS
+from raincheck.prf_intervals import INTERVAL_MONTHS, INTERVAL_NAMES, overlaps
 
 FARMS_YAML = SCENARIOS / "farms.yaml"
 SENS_OTHER_CSV = PROCESSED / "crop_rain_sensitivity_other.csv"

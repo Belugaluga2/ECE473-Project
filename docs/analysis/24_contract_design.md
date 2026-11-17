@@ -2,7 +2,7 @@
 
 **Proposal cell:** Milestone III direction (the insurance derivative layer of doc 23: "theory for spanning bounds / optimal parametric payout is useful but not required"). Owners: team  |  **Status:** DRAFT (numbers reproducible with `python scripts/run_exotic_design.py`, about 5 minutes; `--tables-only` redoes the tables and figure from the saved CSVs)  |  **Last updated:** 2026-11-09
 
-Code: `src/agri_hedge/design.py` (equal-premium scaling, holdout split, the utility-optimal step payout and the certainty-equivalent comparison), `platform.exotic_quote` (new shape `optimal`), `platform.exotic_compare` / `POST /api/exotic_compare` (every shape at equal payout and equal premium with the utility ranking), `src/agri_hedge/advisor.py` / `POST /api/advise` / `GET /api/advisor` (the prompt-driven designer), `scripts/run_exotic_design.py` (this study). Tests: `tests/test_design.py`, `tests/test_advisor.py`.
+Code: `src/raincheck/design.py` (equal-premium scaling, holdout split, the utility-optimal step payout and the certainty-equivalent comparison), `platform.exotic_quote` (new shape `optimal`), `platform.exotic_compare` / `POST /api/exotic_compare` (every shape at equal payout and equal premium with the utility ranking), `src/raincheck/advisor.py` / `POST /api/advise` / `GET /api/advisor` (the prompt-driven designer), `scripts/run_exotic_design.py` (this study). Tests: `tests/test_design.py`, `tests/test_advisor.py`.
 Data written: `data/processed/m2_design_equal_premium.csv`, `m2_design_holdout.csv`, `m2_design_optimal.csv`, `m2_design_shape_ce.csv`, `m2_design_execution.csv`; figure `docs/figures/m2_design_optimal.png`.
 
 ## Why this doc

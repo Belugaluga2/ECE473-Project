@@ -31,7 +31,7 @@ from collections.abc import Sequence
 import numpy as np
 from scipy import optimize, stats
 
-from agri_hedge.prf_intervals import INTERVAL_NAMES
+from raincheck.prf_intervals import INTERVAL_NAMES
 
 # Season split used for the distance-decay comparison. Warm = convective season (both months in
 # May-Sep); cool = frontal / winter season (both months in Oct-Mar). The three transition

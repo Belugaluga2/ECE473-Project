@@ -28,10 +28,10 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from agri_hedge import hedge_builder as hb  # noqa: E402
-from agri_hedge import optimizer as op  # noqa: E402
-from agri_hedge.config import DOCS, FIGURES, PROCESSED  # noqa: E402
-from agri_hedge.docs_util import write_auto_block  # noqa: E402
+from raincheck import hedge_builder as hb  # noqa: E402
+from raincheck import optimizer as op  # noqa: E402
+from raincheck.config import DOCS, FIGURES, PROCESSED  # noqa: E402
+from raincheck.docs_util import write_auto_block  # noqa: E402
 
 DOC = DOCS / "analysis" / "15_hedge_optimizer.md"
 TAG = "optimizer tables (scripts/run_optimizer.py)"

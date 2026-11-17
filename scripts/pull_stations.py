@@ -28,9 +28,9 @@ from datetime import date
 import numpy as np
 import pandas as pd
 
-from agri_hedge.config import FIGURES, PROCESSED
-from agri_hedge.locations import ALL_SITES
-from agri_hedge.stations import (RAW_STATIONS, event_month, fetch_acis_daily,
+from raincheck.config import FIGURES, PROCESSED
+from raincheck.locations import ALL_SITES
+from raincheck.stations import (RAW_STATIONS, event_month, fetch_acis_daily,
                                  fetch_ghcn_daily, is_monthly_rain_series, kalshi_get,
                                  kalshi_series_markets, latest_complete_month, month_end,
                                  monthly_totals, normalize_market, parse_settlement_location,

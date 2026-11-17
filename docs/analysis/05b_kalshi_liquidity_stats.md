@@ -5,7 +5,7 @@
 This document measures how much trading actually happens in Kalshi's monthly-rainfall contracts,
 how much a farmer could buy today, and whether the prices behave like fair probabilities. All
 numbers come from Kalshi's public market-data API, pulled on 2026-10-29 by
-`scripts/pull_kalshi.py` with the client in `src/agri_hedge/kalshi.py`. Research on rules and
+`scripts/pull_kalshi.py` with the client in `src/raincheck/kalshi.py`. Research on rules and
 fees in general is in [../research/05_kalshi_weather_markets.md](../research/05_kalshi_weather_markets.md).
 
 Terms used below:

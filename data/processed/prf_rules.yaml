@@ -373,10 +373,10 @@ rounding:
     status: CONFIRMED
   handbook_exhibit5_quirks: "Handbook subsidy is taken on the total premium (1,114 x 0.51 = 568), not per unit (sum would be 566). One indemnity (588) uses unrounded unit protection (2,116.80)."
   recommended_for_our_calculator: "Use the 'official' 3-decimal pcf for indemnities (from unrounded unit protection, as the handbook does) and round subsidy once on the policy total. Keep a 'dst' mode (cents ppa, whole-dollar unit protection/premium/subsidy, unrounded pcf) to check against the DST."
-  per_unit_subsidy_in_vectors: "worked_examples list per-unit subsidy rounded per unit (DST style: 501, 611). agri_hedge.prf 'official' mode keeps unit subsidy unrounded (500.82, 610.98) and rounds once on the total; the totals are identical in every vector here."
-  cross_check_agri_hedge_prf:
+  per_unit_subsidy_in_vectors: "worked_examples list per-unit subsidy rounded per unit (DST style: 501, 611). raincheck.prf 'official' mode keeps unit subsidy unrounded (500.82, 610.98) and rounds once on the total; the totals are identical in every vector here."
+  cross_check_raincheck_prf:
     date: "2026-10-29"
-    module: src/agri_hedge/prf.py (policy_table / policy_totals, read-only)
+    module: src/raincheck/prf.py (policy_table / policy_totals, read-only)
     result: "0 disagreements: all indemnities (official and dst modes), all dst-mode protection/premium/subsidy values, all official totals, and handbook Exhibit 5 (subsidy 568, producer 546, scenario-3 indemnity 1,705) reproduced."
     note_for_module_owner: "prf.py documents 2025-2026 caps. For 2027 the Jan-Feb (625) cap is 0.25 (0.50 in California) and 17 states allow 0.70; its fallback DEFAULT_MAX_PERCENT_OF_VALUE = 0.60 is too loose for TX/NM/FL (0.50) and too strict for 0.70 states."
 

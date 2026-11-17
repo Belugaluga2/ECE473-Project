@@ -1,4 +1,4 @@
-# AgriHedge demo guide (Milestone II showcase)
+# RainCheck demo guide (Milestone II showcase)
 
 **One-line pitch:** keep your USDA rainfall insurance (PRF), and use Kalshi weather contracts to cover the months PRF leaves open. The app tells you, month by month, where that works at your location, and builds the order.
 

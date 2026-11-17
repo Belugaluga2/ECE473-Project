@@ -1,12 +1,12 @@
-"""Tests for agri_hedge.prf_grid (no network)."""
+"""Tests for raincheck.prf_grid (no network)."""
 import json
 import random
 from pathlib import Path
 
 import pytest
 
-from agri_hedge.locations import ALL_SITES, haversine_miles
-from agri_hedge.prf_grid import (MAX_GRID_ID, grid_id_to_bounds, grid_id_to_center,
+from raincheck.locations import ALL_SITES, haversine_miles
+from raincheck.prf_grid import (MAX_GRID_ID, grid_id_to_bounds, grid_id_to_center,
                                  grid_id_to_rowcol, grid_ids_within_radius, latlon_to_grid_id,
                                  parse_index_values, rowcol_to_grid_id)
 

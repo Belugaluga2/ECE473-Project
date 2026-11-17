@@ -13,14 +13,14 @@ What it does (doc: docs/analysis/14_rowcrop_exploration.md)
    (b) observed: Kane County NASS yields minus a 1980-2025 linear trend, floored at zero.
    Both are valued at the WASDE-676 2026/27 prices used in doc 03a ($4.70 corn, $12.00 soybeans).
 2. Hedges. Long-only Kalshi "Above X in" contracts on KXRAINCHIM (NO = drought, YES = excess rain)
-   at the strikes Kalshi has listed for that month, sized by NNLS (agri_hedge.replicate.fit_ladder),
+   at the strikes Kalshi has listed for that month, sized by NNLS (raincheck.replicate.fit_ladder),
    scored by hedge effectiveness in sample and leave-one-year-out over 1980-2025.
 3. Cost per $1 of expected payout under the doc-09 pricing assumptions, plus the Chicago Jul/Aug
    (and May/Jun) 2026 listing quotes.
 4. Order-book capacity: the committed 2026-10-29 KXRAINCHIM book and (optionally) a live snapshot.
 5. Coverage: share of US corn + soybean acres within 25/50/100 miles of an active Kalshi rain station.
 
-Downloads (cached under $AGRI_HEDGE_RAW_DIR/rowcrop/): NASS Quick Stats county yields and acres
+Downloads (cached under $RAINCHECK_RAW_DIR/rowcrop/): NASS Quick Stats county yields and acres
 (keyless CSV export, as in scripts/r1_rain_yield_calcs.py) and the Census 2024 county Gazetteer.
 Outputs: data/processed/rowcrop_*.csv, docs/figures/rc_*.png, Markdown tables on stdout.
 """
@@ -43,14 +43,14 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 import requests  # noqa: E402
 
-from agri_hedge import pricing as pr  # noqa: E402
-from agri_hedge import rowcrop as rc  # noqa: E402
-from agri_hedge.config import FIGURES, PROCESSED, RAW  # noqa: E402
-from agri_hedge.replicate import kalshi_strike_sets  # noqa: E402
+from raincheck import pricing as pr  # noqa: E402
+from raincheck import rowcrop as rc  # noqa: E402
+from raincheck.config import FIGURES, PROCESSED, RAW  # noqa: E402
+from raincheck.replicate import kalshi_strike_sets  # noqa: E402
 
 RAW_RC = RAW / "rowcrop"
 RAW_RC.mkdir(parents=True, exist_ok=True)
-HEADERS = {"User-Agent": "Mozilla/5.0 (ECE473 agri-hedge research)"}
+HEADERS = {"User-Agent": "Mozilla/5.0 (ECE473 raincheck research)"}
 QS_URL = "https://quickstats.nass.usda.gov"
 GAZ_URL = "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2024_Gazetteer/2024_Gaz_counties_national.zip"
 CAG_DIV_URL = "https://www.ncei.noaa.gov/access/monitoring/climate-at-a-glance/divisional/time-series"
@@ -194,7 +194,7 @@ def gazetteer() -> pd.DataFrame:
 
 def live_book_snapshot() -> pd.DataFrame:
     """Snapshot every open KXRAINCHIM market's order book (public API, no key)."""
-    from agri_hedge import kalshi as k
+    from raincheck import kalshi as k
     c = k.default_client()
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     rows = []

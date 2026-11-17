@@ -14,12 +14,12 @@ import sys
 import numpy as np
 import pandas as pd
 
-from agri_hedge import hedge_builder as hb
-from agri_hedge import optimizer as op
-from agri_hedge.config import DOCS, PROCESSED
-from agri_hedge.docs_util import write_auto_block
-from agri_hedge.hedge_builder import CoverageRequest, Window
-from agri_hedge.platform import GOOD_HE, KNEE_SHARE
+from raincheck import hedge_builder as hb
+from raincheck import optimizer as op
+from raincheck.config import DOCS, PROCESSED
+from raincheck.docs_util import write_auto_block
+from raincheck.hedge_builder import CoverageRequest, Window
+from raincheck.platform import GOOD_HE, KNEE_SHARE
 
 TRAIN, TEST = (1951, 2000), (2001, 2025)
 

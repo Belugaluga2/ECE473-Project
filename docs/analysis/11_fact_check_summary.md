@@ -101,6 +101,6 @@ The overview flagged that `farms.yaml` uses TX $130, OK $88 and MO $113 per ton,
 ## Reproduce
 
 ```bash
-PYTHONPATH=src AGRI_HEDGE_RAW_DIR=<raw dir> python -I scripts/factcheck_sob.py   # re-derives every doc 02 PRF headline
+PYTHONPATH=src RAINCHECK_RAW_DIR=<raw dir> python -I scripts/factcheck_sob.py   # re-derives every doc 02 PRF headline
 PYTHONPATH=src python -m pytest -q tests/test_factcheck_sob.py
 ```

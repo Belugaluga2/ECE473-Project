@@ -25,10 +25,10 @@ from datetime import date, datetime, timezone
 import numpy as np
 import pandas as pd
 
-from agri_hedge import hedge_builder as hb
-from agri_hedge import optimizer as op
-from agri_hedge.config import PROCESSED
-from agri_hedge.pricing import FEE_TICK_RETAIL, taker_fee
+from raincheck import hedge_builder as hb
+from raincheck import optimizer as op
+from raincheck.config import PROCESSED
+from raincheck.pricing import FEE_TICK_RETAIL, taker_fee
 
 HALF_SPREAD = 0.0225           # half the 4.5-cent median contested spread (doc 05)
 SENSIBLE_TOL = 0.10            # doc 09: skip book levels more than 10 cents above fair value
@@ -78,7 +78,7 @@ class LiveQuotes:
 
     def _kalshi(self):
         if self._client is None:
-            from agri_hedge import kalshi
+            from raincheck import kalshi
             self._client = kalshi
         return self._client
 
@@ -357,7 +357,7 @@ def _wet_package(items, prot, req) -> dict:
             legs.append((m, k))
             q.append(1.0 - pw.q[j])
         y = yw if y is None else y + yw
-    from agri_hedge.error_budget import dedupe
+    from raincheck.error_budget import dedupe
     X, legs, q = dedupe(np.column_stack(cols), legs, q)   # strikes that paid in the same years are one contract
     ok = ~np.isnan(y) & ~np.isnan(X).any(axis=1)
     tr = op.model_tranches(q)
@@ -392,7 +392,7 @@ def _depth_check(req, rec: list, gap_prot: float) -> dict:
     is the same as buying 1/k of the cover at today's depth, so the largest cover per month that keeps 90% of
     the uncapped fit is gap_prot / (smallest k that reaches it).
     """
-    from agri_hedge import error_budget as eb
+    from raincheck import error_budget as eb
     months = [hb.MONTH_ABBR.index(m) + 1 for m in rec]
     p = hb.build_problem(hb.CoverageRequest(req.lat, req.lon, [hb.Window((m,), 1.0 / len(months)) for m in months],
                                             req.coverage, gap_prot * len(months), station_key=req.station_key,
@@ -450,7 +450,7 @@ def companion(params: dict, live: LiveQuotes | None = None, today: date | None =
         months.append(row)
     rec = [r["name"] for r in months if r.get("verdict") == "recommended"]
     # wet side (excess rain) and the two-month what-if, on each insured interval
-    from agri_hedge import error_budget as eb
+    from raincheck import error_budget as eb
     wet, whatif, wet_rec = [], [], []
     for w in req.windows:
         pw = hb.build_problem(hb.CoverageRequest(req.lat, req.lon, [hb.Window(w.months, 1.0)], req.coverage,
@@ -527,7 +527,7 @@ COMPARE_SHAPES = ("linear", "layered", "convex2", "exponential", "tiers", "cappe
 
 def exotic_shapes() -> dict:
     """Shape key -> label for the product designer (doc 23 shapes plus the doc 24 optimum)."""
-    from agri_hedge import exotic as ex
+    from raincheck import exotic as ex
     d = {k: v for k, v in ex.SHAPES.items() if k != "persistence"}
     d[OPTIMAL] = "Data-optimal for this land (utility-based)"
     return d
@@ -563,10 +563,10 @@ def exotic_quote(params: dict, live: LiveQuotes | None = None, today: date | Non
     loss_shape ('loss' = the doc-13 curve, 'linear' = PRF's payoff) for the farmer's loss.
     `_keep` (internal) receives the farm loss and station bins for `exotic_compare`.
     """
-    from agri_hedge import design as dg
-    from agri_hedge import exotic as ex
-    from agri_hedge.loss_model import load_sensitivity, pooled_curvature
-    from agri_hedge.pricing import capital_cost, leg_probability, no_asks_from_yes_bids, walk_no_book
+    from raincheck import design as dg
+    from raincheck import exotic as ex
+    from raincheck.loss_model import load_sensitivity, pooled_curvature
+    from raincheck.pricing import capital_cost, leg_probability, no_asks_from_yes_bids, walk_no_book
 
     t0 = time.time()
     shape = str(params.get("shape", "convex2"))
@@ -773,7 +773,7 @@ def exotic_compare(params: dict, live: LiveQuotes | None = None, today: date | N
     equivalent gain of each shape at its best size and the share of the utility-optimal contract's gain it
     captures (doc 24). params: as `exotic_quote` plus optional `shapes` (list of shape keys).
     """
-    from agri_hedge import design as dg
+    from raincheck import design as dg
 
     t0 = time.time()
     shapes = list(params.get("shapes") or COMPARE_SHAPES)
@@ -857,13 +857,13 @@ def exotic_compare(params: dict, live: LiveQuotes | None = None, today: date | N
 
 
 def haversine(lat, lon, st: dict) -> float:
-    from agri_hedge.locations import haversine_miles
+    from raincheck.locations import haversine_miles
     return float(haversine_miles(float(lat), float(lon), float(st["lat"]), float(st["lon"])))
 
 
 def live_reference(p: hb.HedgeProblem, books: dict) -> list[dict]:
     """Today's open ladder(s) for the station: best NO ask vs fair value and depth near fair value."""
-    from agri_hedge.pricing import leg_probability, no_asks_from_yes_bids
+    from raincheck.pricing import leg_probability, no_asks_from_yes_bids
     rows = []
     rain = hb.station_rain(p.station["station_key"])
     for (cm, k), b in sorted(books.items()):
@@ -880,7 +880,7 @@ def live_reference(p: hb.HedgeProblem, books: dict) -> list[dict]:
 
 def coverage_points() -> list[dict]:
     """Grid centers the app can serve (for the map), with the nearest station."""
-    from agri_hedge.prf_grid import grid_id_to_center
+    from raincheck.prf_grid import grid_id_to_center
     out = []
     for g in sorted(hb.covered_grids()):
         lat, lon = grid_id_to_center(g)

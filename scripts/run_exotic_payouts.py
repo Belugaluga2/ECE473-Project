@@ -34,14 +34,14 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from agri_hedge import exotic as ex  # noqa: E402
-from agri_hedge import hedge_builder as hb  # noqa: E402
-from agri_hedge import optimizer as op  # noqa: E402
-from agri_hedge.config import DOCS, FIGURES, PROCESSED  # noqa: E402
-from agri_hedge.docs_util import write_auto_block  # noqa: E402
-from agri_hedge.hedge_builder import FAIR_WINDOW, NORMAL_YEARS, CoverageRequest, Window  # noqa: E402
-from agri_hedge.loss_model import build_farm_model  # noqa: E402
-from agri_hedge.pricing import leg_probability  # noqa: E402
+from raincheck import exotic as ex  # noqa: E402
+from raincheck import hedge_builder as hb  # noqa: E402
+from raincheck import optimizer as op  # noqa: E402
+from raincheck.config import DOCS, FIGURES, PROCESSED  # noqa: E402
+from raincheck.docs_util import write_auto_block  # noqa: E402
+from raincheck.hedge_builder import FAIR_WINDOW, NORMAL_YEARS, CoverageRequest, Window  # noqa: E402
+from raincheck.loss_model import build_farm_model  # noqa: E402
+from raincheck.pricing import leg_probability  # noqa: E402
 
 DOC = DOCS / "analysis" / "23_exotic_payouts.md"
 BOOK = PROCESSED / "kalshi_rain_orderbook_summary_20261102.csv"

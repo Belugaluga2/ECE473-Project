@@ -222,7 +222,7 @@ PRF splits the year into 11 overlapping two-month **index intervals**. The ADM i
 | 629 | May-Jun | 635 | Nov-Dec |
 | 630 | Jun-Jul | | |
 
-The handbook's example uses "index interval 628 (April-May) and 631 (July-August)" (HB26 Exhibit 5, p.52). The DST's JavaScript hard-codes `IntervalCodeStart = 625; IntervalCodeEnd = 635`. **The guess in `src/agri_hedge/prf_intervals.py` (625 + i) is correct.**
+The handbook's example uses "index interval 628 (April-May) and 631 (July-August)" (HB26 Exhibit 5, p.52). The DST's JavaScript hard-codes `IntervalCodeStart = 625; IntervalCodeEnd = 635`. **The guess in `src/raincheck/prf_intervals.py` (625 + i) is correct.**
 
 **Allocation rules:**
 
@@ -470,7 +470,7 @@ Notes:
   - The scenario totals $167, $1,332 and $1,705 come out using the 3-decimal factor. The YAML records the two handbook quirks: subsidy on the total, and one line using unrounded protection.
 - **DST oracle cases** (YAML `dst_oracle_a` … `_d`): every protection, premium, subsidy, producer premium and indemnity the DST returned is reproduced by the DST rounding rules.
 - **ADM payment factors**: 3,000 of 3,000 sampled Jun-Jul 2026 offers are reproduced by `round_half_up((T − I)/T, 3)`.
-- **The project calculator `src/agri_hedge/prf.py`** was written by the calculator workstream; we ran it read-only on 2026-10-29. It agrees with every vector in the YAML:
+- **The project calculator `src/raincheck/prf.py`** was written by the calculator workstream; we ran it read-only on 2026-10-29. It agrees with every vector in the YAML:
   - both worked examples, the four DST oracle cases, and handbook Exhibit 5 (subsidy $568, producer premium $546, scenario-3 indemnity $1,705);
   - in its "official" and "dst" modes, with zero disagreements in indemnities or totals.
 - The one convention difference is per-unit subsidy. `prf.py`'s official mode keeps unit subsidy unrounded ($500.82, $610.98) and rounds once on the policy total, as the handbook does. The tables above round each unit ($501, $611). Totals are identical in every case.
@@ -502,7 +502,7 @@ Notes:
    - PRF locks choices 13 months ahead (Dec 1) and pays about 2-4 months after an interval ends: 62-68 days to publication in 2026, plus up to 60 days to payment.
    - Kalshi can be traded month by month and settles days after the month ends.
    - Both differences belong in the comparison.
-6. **Calculator spec.** `src/agri_hedge/prf.py` already implements the formulas with "official" and "dst" rounding modes, and it matches every vector in `prf_rules.yaml` (§11). Those vectors can serve directly as pytest cases. The allocation validator should use the 2027 caps: ≥ 2 intervals; whole percents summing to 100; ≥ 10% each; ≤ the state cap (50/60/70%; 25% for Jan-Feb, 50% in California); no shared months.
+6. **Calculator spec.** `src/raincheck/prf.py` already implements the formulas with "official" and "dst" rounding modes, and it matches every vector in `prf_rules.yaml` (§11). Those vectors can serve directly as pytest cases. The allocation validator should use the 2027 caps: ≥ 2 intervals; whole percents summing to 100; ≥ 10% each; ≤ the state cap (50/60/70%; 25% for Jan-Feb, 50% in California); no shared months.
 7. **IDs for joining.** Interval codes are 625-635. The grid ID is the ADM "Sub County Code." Commodity 0088 and plan 13. Grid IDs for all 16 study points are in §3, and the formula is in the YAML.
 
 ## Unverified claims and open questions

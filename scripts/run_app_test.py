@@ -2,7 +2,7 @@
 
 Run from the repo root:   python scripts/run_app_test.py [--live] [--n-grids 150]
 
-Everything goes through `agri_hedge.platform.quote`, the same function the web app calls.
+Everything goes through `raincheck.platform.quote`, the same function the web app calls.
 
 1. Farm scenarios. Each of the 11 representative farms types its own location, PRF intervals,
    coverage and protection into the app (station chosen automatically, estimated prices so the
@@ -34,11 +34,11 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from agri_hedge import hedge_builder as hb  # noqa: E402
-from agri_hedge import platform as pf  # noqa: E402
-from agri_hedge.config import DOCS, FIGURES, PROCESSED  # noqa: E402
-from agri_hedge.docs_util import write_auto_block  # noqa: E402
-from agri_hedge.prf_grid import grid_id_to_center  # noqa: E402
+from raincheck import hedge_builder as hb  # noqa: E402
+from raincheck import platform as pf  # noqa: E402
+from raincheck.config import DOCS, FIGURES, PROCESSED  # noqa: E402
+from raincheck.docs_util import write_auto_block  # noqa: E402
+from raincheck.prf_grid import grid_id_to_center  # noqa: E402
 
 DOC = DOCS / "analysis" / "19_app_test.md"
 HAY = [{"label": "Apr-May", "share": 0.40}, {"label": "Jun-Jul", "share": 0.35}, {"label": "Aug-Sep", "share": 0.25}]

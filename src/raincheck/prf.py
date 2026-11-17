@@ -45,7 +45,7 @@ from typing import Iterable, Mapping
 import numpy as np
 import pandas as pd
 
-from agri_hedge.prf_intervals import (
+from raincheck.prf_intervals import (
     CODE_TO_INTERVAL,
     INTERVAL_CODES,
     INTERVAL_NAMES,

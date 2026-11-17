@@ -58,7 +58,7 @@ import math
 import time
 from pathlib import Path
 
-from agri_hedge.locations import haversine_miles
+from raincheck.locations import haversine_miles
 
 # --- Grid geometry (CPC CONUS 0.25-degree grid) -------------------------------------------------
 CELL_DEG = 0.25
@@ -77,7 +77,7 @@ DST_GRID_LIST_URL = DST_API + "/PrfExternalNoaaGrids/GetContinentalUsGridList"
 DST_COUNTIES_FOR_GRID_URL = DST_API + "/PrfExternalStates/GetCountiesAndStatesFromGridId"
 DST_PROXY_URL = "https://public-rma.fpac.usda.gov/apps/prf/proxy/proxy.ashx"
 ARCGIS_GRID_LAYER = "https://pdgis.rm.usda.net/arcgis/rest/services/PRF/PRF_GRID/MapServer/0"
-USER_AGENT = "agri-hedge ECE473 research (Princeton); contact via repo"
+USER_AGENT = "raincheck ECE473 research (Princeton); contact via repo"
 
 
 # =================================================================================================

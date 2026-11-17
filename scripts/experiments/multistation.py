@@ -1,7 +1,7 @@
 """Doc 21 experiment: hedges using contracts from 1-3 nearby stations. Run: python scripts/experiments/multistation.py"""
 import numpy as np, pandas as pd
-from agri_hedge import hedge_builder as hb, optimizer as op
-from agri_hedge.pricing import no_pays, leg_probability
+from raincheck import hedge_builder as hb, optimizer as op
+from raincheck.pricing import no_pays, leg_probability
 rows=[]
 for F in hb.load_farm_requests():
     r=F['request']; prot=F['protection']

@@ -3,7 +3,7 @@
 Run from the repo root:   python scripts/run_loss_model.py            (add --offline to skip NASS)
 
 Steps
-1. Builds the rain-to-loss model (src/agri_hedge/loss_model.py) for the 11 farms in
+1. Builds the rain-to-loss model (src/raincheck/loss_model.py) for the 11 farms in
    data/scenarios/farms.yaml, in four variants: timing = PRF allocation or NRCS growth curve, and
    value basis = rent (farms.yaml) or replacement hay (grazing farms only differ).
 2. Runs it on the CPC "as paid" interval index of each farm's PRF grid
@@ -35,9 +35,9 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from agri_hedge import loss_model as lm  # noqa: E402
-from agri_hedge.config import DOCS, FIGURES, PROCESSED, RAW  # noqa: E402
-from agri_hedge.prf_intervals import INTERVAL_NAMES  # noqa: E402
+from raincheck import loss_model as lm  # noqa: E402
+from raincheck.config import DOCS, FIGURES, PROCESSED, RAW  # noqa: E402
+from raincheck.prf_intervals import INTERVAL_NAMES  # noqa: E402
 
 BACKTEST = (2015, 2025)
 HISTORY = (1969, 2025)          # CPC as-paid regime available on the farm grids (doc 09)
@@ -90,7 +90,7 @@ def nass_state_hay(state: str) -> pd.Series | None:
                   "reference_period_desc": "YEAR", "state_name": state}
         try:
             q = urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
-            hdr = {"User-Agent": "agri_hedge research (ECE473)"}
+            hdr = {"User-Agent": "raincheck research (ECE473)"}
             uuid = requests.get(f"{NASS_QS}/uuid/encode?{q}", headers=hdr, timeout=60).text.strip().strip('"')
             txt = requests.get(f"{NASS_QS}/data/spreadsheet/{uuid}.csv", headers=hdr, timeout=120).text
         except Exception as exc:  # network optional

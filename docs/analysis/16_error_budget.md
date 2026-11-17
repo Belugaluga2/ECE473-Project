@@ -2,7 +2,7 @@
 
 **Proposal cell:** Milestone II, Week 4 / Maya ("decompose the remaining hedge error into contract binning, geography, settlement-source mismatch, liquidity, and capital constraints")  |  **Status:** DRAFT (numbers reproducible with `python scripts/run_error_budget.py`)  |  **Last updated:** 2026-11-05
 
-Code: `src/agri_hedge/error_budget.py` (instrument builders for every step, order-book depth), `scripts/run_error_budget.py` (study loop, figures, tables between the AUTO markers). Uses the optimizer of doc 15.
+Code: `src/raincheck/error_budget.py` (instrument builders for every step, order-book depth), `scripts/run_error_budget.py` (study loop, figures, tables between the AUTO markers). Uses the optimizer of doc 15.
 Data written: `data/processed/m2_error_budget_farm.csv`, `m2_error_budget_window.csv`; figures `docs/figures/m2_error_waterfall.png`, `m2_waterfall_by_farm.png`.
 
 ## Key findings

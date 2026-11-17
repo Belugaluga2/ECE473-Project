@@ -1,4 +1,4 @@
-"""Tests for agri_hedge.cpc: data readers, interval aggregation and the PRF index formula."""
+"""Tests for raincheck.cpc: data readers, interval aggregation and the PRF index formula."""
 import json
 from pathlib import Path
 
@@ -6,12 +6,12 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from agri_hedge.cpc import (MM_PER_INCH, comparison_stats, compute_index, dst_base_end,
+from raincheck.cpc import (MM_PER_INCH, comparison_stats, compute_index, dst_base_end,
                             fine_grid_to_prf, handbook_base_end, interval_totals,
                             mm_per_day_to_month_total_mm, read_cpc_daily_binary,
                             trigger_disagreement)
-from agri_hedge.prf_grid import grid_id_to_rowcol
-from agri_hedge.prf_intervals import INTERVAL_NAMES
+from raincheck.prf_grid import grid_id_to_rowcol
+from raincheck.prf_intervals import INTERVAL_NAMES
 
 FIX = Path(__file__).parent / "fixtures" / "b1"
 

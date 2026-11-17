@@ -55,12 +55,12 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
-from agri_hedge.config import PROCESSED
-from agri_hedge.error_budget import SENSIBLE_TOL, dedupe
-from agri_hedge.hedge_builder import (FAIR_WINDOW, NORMAL_YEARS, HedgeProblem, Window, grid_monthly, station_rain,
+from raincheck.config import PROCESSED
+from raincheck.error_budget import SENSIBLE_TOL, dedupe
+from raincheck.hedge_builder import (FAIR_WINDOW, NORMAL_YEARS, HedgeProblem, Window, grid_monthly, station_rain,
                                       window_index)
-from agri_hedge.loss_model import production_response
-from agri_hedge.pricing import (DEFAULT_LOCKUP_DAYS, DEFAULT_TBILL_RATE, capital_cost, leg_probability,
+from raincheck.loss_model import production_response
+from raincheck.pricing import (DEFAULT_LOCKUP_DAYS, DEFAULT_TBILL_RATE, capital_cost, leg_probability,
                                 no_asks_from_yes_bids, no_pays, walk_no_book)
 
 SHAPES = {

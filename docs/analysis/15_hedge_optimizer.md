@@ -2,7 +2,7 @@
 
 **Proposal cell:** Milestone II, Week 4 / Jack ("build the optimization method for choosing the lowest-error / lowest-cost portfolio of available event contracts")  |  **Status:** DRAFT (numbers reproducible with `python scripts/run_optimizer.py`)  |  **Last updated:** 2026-11-05
 
-Code: `src/agri_hedge/optimizer.py` (solver, frontier, order-book tranches), `src/agri_hedge/hedge_builder.py` (turns a location, months and coverage into a problem), `scripts/run_optimizer.py` (11-farm study, figures, the tables between the AUTO markers). Tests: `tests/test_optimizer.py`, `tests/test_platform.py`.
+Code: `src/raincheck/optimizer.py` (solver, frontier, order-book tranches), `src/raincheck/hedge_builder.py` (turns a location, months and coverage into a problem), `scripts/run_optimizer.py` (11-farm study, figures, the tables between the AUTO markers). Tests: `tests/test_optimizer.py`, `tests/test_platform.py`.
 Data written: `data/processed/m2_optimizer_frontier.csv`, `m2_optimizer_summary.csv`; figures `docs/figures/m2_frontiers.png`, `m2_he_by_budget.png`.
 
 ## Key findings

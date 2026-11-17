@@ -19,7 +19,7 @@ Inputs
 
 Method (per farm, per year)
   * The farm's election (coverage level, productivity factor, acres, interval allocation, intended
-    use, practice) is validated with agri_hedge.prf.validate_election against the actuarial
+    use, practice) is validated with raincheck.prf.validate_election against the actuarial
     min/max percent of value and the intervals offered for its grid.
   * Premium rates and county base value are those of one rate year (default crop year 2026, the
     latest complete actuarial filing) and are held fixed across all historical years: "what would
@@ -64,22 +64,22 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 import yaml  # noqa: E402
 
-from agri_hedge.config import DOCS, FIGURES, PROCESSED, RAW, ROOT, SCENARIOS  # noqa: E402
-from agri_hedge.prf import (  # noqa: E402
+from raincheck.config import DOCS, FIGURES, PROCESSED, RAW, ROOT, SCENARIOS  # noqa: E402
+from raincheck.prf import (  # noqa: E402
     PRFElection,
     PRFElectionError,
     simulate_years,
     summarize_years,
     validate_election,
 )
-from agri_hedge.loss_model import (  # noqa: E402  (shared with the rain-to-loss model, doc 13)
+from raincheck.loss_model import (  # noqa: E402  (shared with the rain-to-loss model, doc 13)
     elasticity_for,
     forage_loss_proxy,
     load_farms,
     weighted_index,
 )
-from agri_hedge.prf_grid import latlon_to_grid_id  # noqa: E402
-from agri_hedge.prf_intervals import INTERVAL_MONTHS, INTERVAL_NAMES  # noqa: E402
+from raincheck.prf_grid import latlon_to_grid_id  # noqa: E402
+from raincheck.prf_intervals import INTERVAL_MONTHS, INTERVAL_NAMES  # noqa: E402
 
 DEFAULT_FARMS = SCENARIOS / "farms.yaml"
 INDEX_CSV = PROCESSED / "prf_official_index.csv"
@@ -509,7 +509,7 @@ def grid_burn_table(idx: pd.DataFrame, act: pd.DataFrame, rate_year: int, covera
     historical payout); the producer pays (1 - subsidy) of the premium, so the producer's return
     per dollar paid is loss_ratio / (1 - subsidy).
     """
-    from agri_hedge.prf import payment_calculation_factor, trigger_grid_index
+    from raincheck.prf import payment_calculation_factor, trigger_grid_index
     a = act[(act["crop_year"] == rate_year) & np.isclose(act["coverage_level"], coverage)
             & (act["intended_use"] == "grazing")].drop_duplicates(["site", "grid_role", "interval_name"])
     rows = []

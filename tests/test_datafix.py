@@ -7,7 +7,7 @@ import pandas as pd
 import pytest
 import yaml
 
-from agri_hedge.config import PROCESSED, ROOT, SCENARIOS
+from raincheck.config import PROCESSED, ROOT, SCENARIOS
 
 
 def _load(name, rel):

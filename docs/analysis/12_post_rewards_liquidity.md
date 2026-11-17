@@ -202,7 +202,7 @@ How to read this:
 ## Reproduce
 
 ```bash
-# from the repo root; AGRI_HEDGE_RAW_DIR may point anywhere outside the repo
+# from the repo root; RAINCHECK_RAW_DIR may point anywhere outside the repo
 python scripts/pull_kalshi.py --orderbooks-only        # new dated snapshot + incentive list (network, ~430 requests)
 python scripts/pull_kalshi.py --stats                  # capacity for the latest snapshot
 python scripts/pull_kalshi.py --stats --orderbook data/processed/kalshi_rain_orderbook_summary_20261029.csv
@@ -221,7 +221,7 @@ kept.
 - Kalshi Trade API v2, public market-data endpoints `GET /markets`, `GET /markets/{ticker}/orderbook`,
   `GET /incentive_programs`, https://api.elections.kalshi.com/trade-api/v2 , retrieved 2026-10-29
   and 2026-11-02. Raw JSON for the 2026-11-02 pull: `orderbooks_20261102T013456Z.json` and
-  `incentive_programs_rain_monthly.json` under `$AGRI_HEDGE_RAW_DIR/kalshi/`. These are not
+  `incentive_programs_rain_monthly.json` under `$RAINCHECK_RAW_DIR/kalshi/`. These are not
   committed, as with all raw data.
 - Kalshi API documentation, "Get Incentives" (OpenAPI),
   https://docs.kalshi.com/api-reference/incentive-programs/get-incentives (centi-cent unit of

@@ -38,10 +38,11 @@ Every research document has a numbers table that gives a source for each number.
 | M2 showcase follow-up: liquidity, cover design, excess rain, two-month what-if | team | [analysis/22_making_it_better.md](analysis/22_making_it_better.md) | done 2026-11-05 |
 | M3 direction: exotic payoffs (insurance derivative layer on binary contracts) | team | [analysis/23_exotic_payouts.md](analysis/23_exotic_payouts.md) | done 2026-11-08 |
 | M3: contract design (equal premium, holdout term sheet, utility-optimal payout), the designer tab and the advisor | team | [analysis/24_contract_design.md](analysis/24_contract_design.md) | done 2026-11-09 |
+| M3: hedges fit to steady row-crop income (corn, soybeans, wheat, cotton, sorghum) instead of copying an index; heat contracts; county-settled proposal | Evan | [analysis/25_income_hedge.md](analysis/25_income_hedge.md) | draft 2026-11-13 |
 
 ## Study sites
 
-Seven PRF sites pair a Kalshi monthly-rain settlement station with a PRF-heavy county. Chicago is a row-crop contrast. Coordinates and IDs are in `src/agri_hedge/locations.py`; grid IDs are in `data/processed/study_grids.csv`.
+Seven PRF sites pair a Kalshi monthly-rain settlement station with a PRF-heavy county. Chicago is a row-crop contrast. Coordinates and IDs are in `src/raincheck/locations.py`; grid IDs are in `data/processed/study_grids.csv`.
 
 | Site | Kalshi series | Station | Farm county | Land use | Station-to-farm | Kalshi history |
 |---|---|---|---|---|---|---|
@@ -187,6 +188,14 @@ Doc 24. Same farms and years; CRRA farmer with risk aversion 2, a 20% price load
 - **The utility-optimal payout is doc 23's convex ladder at a fair price and a deep-drought digital at Kalshi's load:** 5 bins paying for 28% of the month's value with no load, 1 bin for 7% at a 20% load (CE gain 1.0% of value; 21 of 132 farm-months buy nothing). The exponential shape captures 93% of the optimum's value, the quadratic 90%, PRF's linear shape 67%; the raw optimum overfits (the exponential beats it out of sample in 42 of 132 farm-months), so the product is a smooth convex shape sized at about a quarter of the month's value for a 7-8% premium.
 - **In the app:** a "Design a contract" tab (nine shapes, term sheet, exact ticket, fill, basis risk, and a compare-every-shape table at equal payout and equal premium with the utility ranking) and an "Ask the advisor" tab (describe the farm in a sentence; Claude runs the project's tools when an API key is set, a rule-based parser otherwise; `?demo=exotic`, `?demo=advisor`).
 
+## Income-targeted hedges for row crops (2026-11-13)
+Doc 25. 128 county sites (corn, soybeans, winter wheat, cotton, sorghum) within 60 miles of a Kalshi rain station, 1971-2025; target = the county's revenue shortfall, scored leave one year out.
+
+- **Copying a rain index steadies income little:** Kalshi fit to a county rain-index payout removes a median 4% of income variance (corn 8%); even a perfect county rain index removes 17% (corn 26%, soybeans 30%, wheat 0%).
+- **Heat is the missing piece for corn:** adding hot-day counts from Kalshi's daily-high markets to per-inch rain lifts corn income HE from 0.04 to 0.27 at 26 sites (Chicago 0.27-0.46, Mid-Atlantic 0.27-0.46).
+- **County-settled rain and heat contracts (a proposal) do best:** 0.40 for corn, 0.26 soybeans, 0.21 overall; 87% of corn's worst-5-year shortfall recovered.
+- **Limits:** at Kalshi's ~12% markup a typical farmer buys little (CE gain about 0-0.5% of revenue; 3.4% for a thin-margin farm with county contracts); daily-high markets list a day ahead and books hold 140-1,300 contracts per strike against about 7,700 needed per day per 1,000 acres of corn.
+
 ## Next steps
 The full roadmap (wet-side cover, two-month mock market, national coverage, loss-based target, temperature, demo-exchange orders, liquidity plan) is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Near-term:
 
@@ -204,7 +213,7 @@ Open loose ends from Milestone 1 (low priority):
 - `docs/research/` sourced research documents, one topic each
 - `docs/analysis/` results from our own code
 - `docs/figures/` generated figures
-- `src/agri_hedge/` Python package:
+- `src/raincheck/` Python package:
   - `prf.py`: PRF calculator
   - `prf_grid.py`, `cpc.py`: grids and indexes
   - `kalshi.py`: market data client and fee function

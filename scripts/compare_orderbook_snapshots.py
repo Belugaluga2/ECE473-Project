@@ -28,7 +28,7 @@ import sys
 import numpy as np
 import pandas as pd
 
-from agri_hedge.config import PROCESSED
+from raincheck.config import PROCESSED
 
 CITY_METRICS = ["no_payout_all", "no_payout_useful", "no_net_useful", "max_strike_no_payout_useful",
                 "no_payout_5c", "yes_payout_useful", "median_spread_cents", "two_sided_strikes"]

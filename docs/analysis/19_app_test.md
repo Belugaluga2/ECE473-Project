@@ -2,7 +2,7 @@
 
 **Proposal cell:** Milestone II, Week 5 / Evan ("test the app by running farm scenarios and compare its hedge quality, cost, and remaining basis risk against a USDA insurance benchmark")  |  **Status:** DRAFT (numbers reproducible with `python scripts/run_app_test.py --live`)  |  **Last updated:** 2026-11-05
 
-Code: `scripts/run_app_test.py`. Every number goes through `agri_hedge.platform.quote`, the same function the web app calls (doc 18), so this tests the app, not a separate analysis.
+Code: `scripts/run_app_test.py`. Every number goes through `raincheck.platform.quote`, the same function the web app calls (doc 18), so this tests the app, not a separate analysis.
 Data written: `data/processed/m2_app_test_farms.csv`, `m2_app_test_sweep.csv`, `m2_app_live_smoke.json`; figures `docs/figures/m2_app_vs_prf.png`, `m2_app_sweep.png`.
 
 ## Key findings

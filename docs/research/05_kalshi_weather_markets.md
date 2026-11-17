@@ -429,7 +429,7 @@ the CFTC in September 2022
 The same filing says "Trading fees are only charged for orders that are immediately matched with
 orders sitting on the orderbook" (taker orders) and "There is no settlement fee". Burgi, Deng &
 Whelan describe the same rule for 2021 to April 2025 (p.6). B2 implements it as
-`agri_hedge.kalshi.fee()`, tested against the schedule's table.
+`raincheck.kalshi.fee()`, tested against the schedule's table.
 
 Key properties:
 - **No maker fee on weather.** Kalshi did roll out maker fees on some series from 2026-08-20 (API

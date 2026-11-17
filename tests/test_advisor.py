@@ -4,8 +4,8 @@ import json
 
 import pytest
 
-from agri_hedge import advisor as adv
-from agri_hedge import platform as pf
+from raincheck import advisor as adv
+from raincheck import platform as pf
 
 DFW = "32.7771, -97.8059"
 

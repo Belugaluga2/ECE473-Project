@@ -46,12 +46,12 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 import yaml  # noqa: E402
 
-from agri_hedge.config import DOCS, FIGURES, PROCESSED, RAW, SCENARIOS  # noqa: E402
-from agri_hedge.locations import ALL_SITES, STUDY_SITES  # noqa: E402
-from agri_hedge.prf import dollar_amount_of_protection_per_acre  # noqa: E402
-from agri_hedge.prf_grid import latlon_to_grid_id  # noqa: E402
-from agri_hedge.prf_intervals import INTERVAL_CODES, INTERVAL_MONTHS, INTERVAL_NAMES  # noqa: E402
-from agri_hedge.replicate import (  # noqa: E402
+from raincheck.config import DOCS, FIGURES, PROCESSED, RAW, SCENARIOS  # noqa: E402
+from raincheck.locations import ALL_SITES, STUDY_SITES  # noqa: E402
+from raincheck.prf import dollar_amount_of_protection_per_acre  # noqa: E402
+from raincheck.prf_grid import latlon_to_grid_id  # noqa: E402
+from raincheck.prf_intervals import INTERVAL_CODES, INTERVAL_MONTHS, INTERVAL_NAMES  # noqa: E402
+from raincheck.replicate import (  # noqa: E402
     evaluate,
     fine_strikes,
     kalshi_strike_sets,

@@ -2,7 +2,7 @@
 
 **Proposal cell:** Milestone II, Week 4 / Evan ("find which insurance exposures can't be replicated well with current contracts and propose what extra contracts or market mechanisms would be needed")  |  **Status:** DRAFT (numbers reproducible with `python scripts/run_error_budget.py`)  |  **Last updated:** 2026-11-05
 
-Code: `src/agri_hedge/error_budget.py` (builders for every proposed contract), `scripts/run_error_budget.py` (part 2). Uses the optimizer of doc 15 and the waterfall of doc 16.
+Code: `src/raincheck/error_budget.py` (builders for every proposed contract), `scripts/run_error_budget.py` (part 2). Uses the optimizer of doc 15 and the waterfall of doc 16.
 Data written: `data/processed/m2_contract_proposals.csv`, `m2_liquidity_needed.csv`; figure `docs/figures/m2_proposals.png`.
 
 ## Key findings

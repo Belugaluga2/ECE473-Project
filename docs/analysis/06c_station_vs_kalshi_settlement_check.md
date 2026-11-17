@@ -2,7 +2,7 @@
 
 **Proposal cell:** Milestone 1, workstream B3 (settlement stations and settlement check) / Evan  |  **Status:** DRAFT  |  **Last updated:** 2026-10-29
 
-Code: `src/agri_hedge/stations.py`, `scripts/pull_stations.py`, `scripts/check_kalshi_settlement.py`, tests in `tests/test_stations.py`.
+Code: `src/raincheck/stations.py`, `scripts/pull_stations.py`, `scripts/check_kalshi_settlement.py`, tests in `tests/test_stations.py`.
 Data: `data/processed/station_map.csv`, `station_monthly_precip.csv`, `station_daily_precip_study.parquet`, `kalshi_settlement_vs_station.csv`.
 
 ## Key findings
@@ -161,7 +161,7 @@ Ambiguous or surprising mappings:
 
 **Source and parsing.** Daily totals come from ACIS StnData (`elems=pcpn`) for the station's ACIS uid. ACIS uses these codes: a number (inches); "T" for a trace, stored as 0.0 and flagged; "M" for missing, stored as NaN; "S" when the amount is included in a later accumulated value, stored as NaN with an `n_subseq` count; and a trailing "A" for an accumulated multi-day total. In practice "A" and "S" appear only in 19th-century Newark data (plus one month each at ATL and MDW), so they do not matter for the modern record. Airport daily values cover midnight to midnight local standard time, the same day definition as the CLI report. The month-boundary test in the classifier (shifting the window one day) was never needed.
 
-**Monthly file** (`station_monthly_precip.csv`, 41,328 rows): columns `station_key, cli_code, ghcn, year, month, precip_in, n_days, n_missing, n_trace, n_accum, n_subseq, source`. `precip_in` is the sum over non-missing days, so **filter on `n_missing == 0`** before using a month. Since 1948, 97.2% of station-months are complete. The worst stations are Trenton (603 incomplete months), Midway (228) and Austin (60). `source` is `acis_station` or `acis_threaded:<sid>`. Each record starts at the single station's first full month. When that is after 1948-01 and a ThreadEx record exists, threaded months fill 1948-01 up to the switch (1,184 months in total; DEN 559, DFW 312, DTW 131, ORD 130, CLL 43, LAS 9). PRF two-month interval totals come from `agri_hedge.stations.interval_totals(monthly, by=["station_key"])`, which uses the names in `prf_intervals.py`.
+**Monthly file** (`station_monthly_precip.csv`, 41,328 rows): columns `station_key, cli_code, ghcn, year, month, precip_in, n_days, n_missing, n_trace, n_accum, n_subseq, source`. `precip_in` is the sum over non-missing days, so **filter on `n_missing == 0`** before using a month. Since 1948, 97.2% of station-months are complete. The worst stations are Trenton (603 incomplete months), Midway (228) and Austin (60). `source` is `acis_station` or `acis_threaded:<sid>`. Each record starts at the single station's first full month. When that is after 1948-01 and a ThreadEx record exists, threaded months fill 1948-01 up to the switch (1,184 months in total; DEN 559, DFW 312, DTW 131, ORD 130, CLL 43, LAS 9). PRF two-month interval totals come from `raincheck.stations.interval_totals(monthly, by=["station_key"])`, which uses the names in `prf_intervals.py`.
 
 **Daily study file** (`station_daily_precip_study.parquet`, 258,776 rows): the 8 study-site stations (7 PRF sites + ORD), spliced the same way, with `flag`, `raw` and `source` columns.
 

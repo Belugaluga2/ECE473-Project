@@ -5,7 +5,7 @@ Run from the repo root:  python scripts/pull_prf_actuarial.py [--years 2025 2026
 What it does
 1. Study grids. Uses data/processed/study_grids.csv if another workstream has written it
    (needs a grid_id column; site/role columns are used if present). Otherwise it locates, for every
-   PRF study site in agri_hedge.locations, the PRF grid containing the Kalshi settlement station
+   PRF study site in raincheck.locations, the PRF grid containing the Kalshi settlement station
    and the grid containing the farm point, by querying the PRF grid map layer that the RMA PRF
    Decision Support Tool (DST) uses (through the DST's public proxy). The county containing each
    point, and every county that overlaps each grid, come from the same map service and the DST
@@ -27,7 +27,7 @@ What it does
    400 MB.
 3. Premium subsidy. The subsidy share by coverage level comes from ADM A00070 (plan 13, record
    category 04, coverage type A) for each crop year, and is checked against
-   agri_hedge.prf.PREMIUM_SUBSIDY_BY_COVERAGE and the DST ("SubsidyLevel" in GetPricingRates).
+   raincheck.prf.PREMIUM_SUBSIDY_BY_COVERAGE and the DST ("SubsidyLevel" in GetPricingRates).
 4. Writes data/processed/prf_actuarial_study_grids.csv (long format, one row per crop year x
    site x grid role x county x intended use x practice x interval x coverage level).
 
@@ -46,10 +46,10 @@ from pathlib import Path
 import pandas as pd
 import requests
 
-from agri_hedge.config import PROCESSED, RAW
-from agri_hedge.locations import STUDY_SITES
-from agri_hedge.prf import PREMIUM_SUBSIDY_BY_COVERAGE
-from agri_hedge.prf_intervals import CODE_TO_INTERVAL
+from raincheck.config import PROCESSED, RAW
+from raincheck.locations import STUDY_SITES
+from raincheck.prf import PREMIUM_SUBSIDY_BY_COVERAGE
+from raincheck.prf_intervals import CODE_TO_INTERVAL
 
 ADM_BASE = "https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master"
 DST_API = "https://public-rma.fpac.usda.gov/apps/PrfWebApi"
@@ -70,7 +70,7 @@ IRR_NAMES = {"002": "irrigated", "003": "non-irrigated", "997": "not specified"}
 ORG_NAMES = {"997": "not organic", "001": "certified", "002": "transitional"}
 
 SESSION = requests.Session()
-SESSION.headers["User-Agent"] = "ECE473-agri-hedge research (Princeton)"
+SESSION.headers["User-Agent"] = "ECE473-raincheck research (Princeton)"
 
 
 # ---------------------------------------------------------------------------------------------
@@ -334,7 +334,7 @@ def pull_final_index_history(years: list[int], grid_ids: set[str], refresh: bool
 
 
 def check_interval_codes(interval_table: Path) -> None:
-    """Confirm agri_hedge.prf_intervals codes against ADM A00480 (e.g. 628 = 'APR - MAY INDEX INTERVAL')."""
+    """Confirm raincheck.prf_intervals codes against ADM A00480 (e.g. 628 = 'APR - MAY INDEX INTERVAL')."""
     t = read_adm(interval_table)
     t = t[t["Interval Code"].astype(int).between(625, 635)]
     month_abbr = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]

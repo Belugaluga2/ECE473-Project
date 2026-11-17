@@ -3,7 +3,7 @@
 **Proposal cell:** Week 1 / Evan ("Build example farmer scenarios showing the premiums, potential payouts, and uncovered losses under the USDA policy")  |  **Status:** DRAFT (calculator, actuarial data, grid analysis, and first farm results done; farm results use the 11 representative farms in `data/scenarios/farms.yaml` as of 2026-10-29)  |  **Last updated:** 2026-11-01 (hay-price check; no result changed)
 
 This document covers three things: (1) the PRF premium and indemnity calculator in
-`src/agri_hedge/prf.py` and the policy rules it implements, (2) the 2025 and 2026 actuarial data
+`src/raincheck/prf.py` and the policy rules it implements, (2) the 2025 and 2026 actuarial data
 (premium rates, county base values, subsidy) for our 14 study grids, and (3) the farm-scenario
 runner `scripts/run_scenarios.py` and its results for the 11 representative farms defined in
 `data/scenarios/farms.yaml` (see `docs/research/04_representative_farms.md`).
@@ -161,7 +161,7 @@ BP section 13). Terms:
 - **Unit**: one grid x interval x intended use x practice x share. Premium and indemnity are
   computed per unit (BP section 1, "Unit").
 
-| Step | Formula | Source | Function in `agri_hedge.prf` |
+| Step | Formula | Source | Function in `raincheck.prf` |
 |---|---|---|---|
 | Dollar amount of protection per acre | CBV x coverage level x productivity factor | BP 7(a); HB 14, Exhibit 5 E | `dollar_amount_of_protection_per_acre` |
 | Policy protection per unit | protection per acre x insured acres x percent of value x share | BP 7(c)(1); HB 14 | `policy_protection_per_unit` |

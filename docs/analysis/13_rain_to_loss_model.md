@@ -2,7 +2,7 @@
 
 **Proposal cell:** Milestone 2 foundation (loss model for hedge sizing and contract design)  |  **Status:** DRAFT (model and backtest done; not fact-checked by an independent pass)  |  **Last updated:** 2026-11-01
 
-Code: [`src/agri_hedge/loss_model.py`](../../src/agri_hedge/loss_model.py) (model), [`scripts/run_loss_model.py`](../../scripts/run_loss_model.py) (backtest), [`tests/test_loss_model.py`](../../tests/test_loss_model.py) (78 tests). Outputs: `data/processed/loss_model_parameters.csv`, `loss_model_farm_year.csv` (1969-2025, every variant, merged with PRF and Kalshi payouts), `loss_model_coverage.csv`, `loss_model_hay_validation.csv`, figure [`l1_loss_vs_payouts_2015_2025.png`](../figures/l1_loss_vs_payouts_2015_2025.png).
+Code: [`src/raincheck/loss_model.py`](../../src/raincheck/loss_model.py) (model), [`scripts/run_loss_model.py`](../../scripts/run_loss_model.py) (backtest), [`tests/test_loss_model.py`](../../tests/test_loss_model.py) (78 tests). Outputs: `data/processed/loss_model_parameters.csv`, `loss_model_farm_year.csv` (1969-2025, every variant, merged with PRF and Kalshi payouts), `loss_model_coverage.csv`, `loss_model_hay_validation.csv`, figure [`l1_loss_vs_payouts_2015_2025.png`](../figures/l1_loss_vs_payouts_2015_2025.png).
 
 ## Key findings
 
@@ -24,7 +24,7 @@ Code: [`src/agri_hedge/loss_model.py`](../../src/agri_hedge/loss_model.py) (mode
 
 ## The model
 
-### API (all in `agri_hedge.loss_model`)
+### API (all in `raincheck.loss_model`)
 
 | Call | What it does |
 |---|---|

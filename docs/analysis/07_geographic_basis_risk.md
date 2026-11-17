@@ -2,7 +2,7 @@
 
 **Proposal cell:** Week 3 / Jack (A1, "measure geographic basis risk by comparing the USDA rainfall-index location with the locations used to settle available prediction-market contracts")  |  **Status:** DRAFT (all numbers computed and reproducible; literature comparisons rest on other team docs)  |  **Last updated:** 2026-10-29
 
-Code: `src/agri_hedge/basis.py` (metric functions), `scripts/run_basis_risk.py` (analysis, tables, figures), `tests/test_basis.py`.
+Code: `src/raincheck/basis.py` (metric functions), `scripts/run_basis_risk.py` (analysis, tables, figures), `tests/test_basis.py`.
 Data written: `data/processed/basis_risk_pairs.csv` (one row per sample x data regime x site x grid, 6,505 rows), `data/processed/basis_risk_best_station.csv` (candidate stations, two-station mixes and cross-validation per farm grid).
 Inputs: station data from [06c](06c_station_vs_kalshi_settlement_check.md), PRF grid indexes from [06b](06b_index_validation.md).
 
@@ -34,7 +34,7 @@ Terms used throughout:
 
 | Quantity | Value | Units | Region / period | Source | Verification |
 |---|---|---|---|---|---|
-| Sites analysed | 8 (7 PRF + ORD) | sites | study sites | `agri_hedge.locations.ALL_SITES` | CONFIRMED (computed) |
+| Sites analysed | 8 (7 PRF + ORD) | sites | study sites | `raincheck.locations.ALL_SITES` | CONFIRMED (computed) |
 | Grids with data within 150 / 100 mi of a station | 143-316 / 71-141 per site | grids | 8 sites | `basis_risk_pairs.csv` | CONFIRMED (computed) |
 | Common sample | 1995-2025; 337-341 interval-years per station-grid pair | years; obs | 8 sites | this doc, Methods | CONFIRMED (computed) |
 | NCEI rebuild vs DST index | MAE 0.0077 | index points | 956 ring grids, 1995-2025 | `prf_official_index_ring100.parquet` vs `ncei_interval_index.parquet` | CONFIRMED (computed) |
@@ -89,14 +89,14 @@ Terms used throughout:
 | Station index base | Same years as the grid: 1951-2025 | Same rule as the grid: 1948 to Y-2, at least 20 base years |
 | Grids | Every cell with data within 150 mi of the station (143-309 per site; 277 at ORD because nClimGrid has no Lake Michigan cells) | Same rule (143-316 per site; CPC has 39 more cells at ORD, over Lake Michigan, and 5 fewer at SAT) |
 
-- **Station data:** `station_monthly_precip.csv`, months with `n_missing == 0` only. An interval needs both months complete (`agri_hedge.cpc.interval_totals`). This is the ACIS archive, which reproduced all 133 settled Kalshi months in 06c.
+- **Station data:** `station_monthly_precip.csv`, months with `n_missing == 0` only. An interval needs both months complete (`raincheck.cpc.interval_totals`). This is the ACIS archive, which reproduced all 133 settled Kalshi months in 06c.
 - **Chicago:** we use O'Hare (CLIORD), which settles KXRAINCHIM from the Sep 2026 contract on. Midway (MDW), which settled it through Aug 2026, appears in the candidate ranking but is flagged "no longer settles" and is left out of the pair and cross-validation tests. **Houston** is Hobby (CLIHOU).
 - **Common sample: calendar years 1995-2025, all 11 intervals.** This is the longest span in which all eight settlement stations are single-station records: Denver Intl starts 1994-07, so 1995 is its first full year. It gives 337-341 interval-years and 369-372 months per pair. 2026 is excluded because it is incomplete and because the DST's 2026 values come from an older nClimGrid vintage (06b).
 - **Long-sample check:** NCEI, 1951-2025. Base years and sample years before 1994-07 (DEN), 1974 (DFW) and 1958-11 (ORD) come from ACIS "threaded" predecessor sites, which are physically different gauges (06c).
 - **Matched-base check (suffix `_mb` in the CSV):** both indexes recomputed with base = the sample years 1995-2025, which removes any level difference between the two series.
 - **Distance:** great-circle distance from the station to the grid centre. The farm-grid distances (23.5-57.5 mi) are therefore grid-centre distances, slightly different from the station-to-farm-point distances in `locations.py`.
 
-### Metrics (all in `agri_hedge.basis`)
+### Metrics (all in `raincheck.basis`)
 
 For each station-grid pair:
 1. **Totals:** Pearson and Spearman correlation of monthly totals and of two-month interval totals, raw and as *anomalies* (each series minus its own mean for that calendar month or interval over the sample). Raw correlations of rain totals are inflated by the shared seasonal cycle, so the anomaly correlations are the honest measure of co-variation.
@@ -302,7 +302,7 @@ Picture a rancher in Atascosa County, Texas, 47 miles south of the San Antonio a
 4. **Use NCEI for forward-looking design.** PRF now settles on NCEI, which also tracks the airport gauges better than CPC did. Results calibrated on CPC history (2021-2026 payouts) will overstate basis risk for future intervals, by roughly 3 points of miss rate and 0.05 of residual risk.
 5. **Calibrate strikes on the station's own climatology over the same base years as the grid, and check for predecessor sites.** The choice of normal moves risk between misses and false alarms (DEN example). For DEN, DFW and ORD, pre-switch base years come from other gauges. Compute the station normal on the single-station years too, and report both.
 6. **Offer two-station mixes only with out-of-sample validation.** The gains are real but small (0.01-0.02 in payout correlation), with weights around 0.65-0.85 on the nearest station. A second station is worth it where two gauges sit near one farm (Tampa + St. Petersburg) or where a farm lies between two cities. In-sample weight optimisation should not be shown to users without a holdout.
-7. **Next steps for other workstreams.** These metrics use a continuous station index. A real Kalshi hedge pays on whole-inch strikes in each calendar month, while PRF uses two-month intervals. The replication workstream should reuse `agri_hedge.basis` (`index_metrics`, `trigger_table`, `payment_factor`, `portfolio_payout`) and add the ladder and month-to-interval steps on top, so that geographic and contract-design errors can be separated as in Luo (2026).
+7. **Next steps for other workstreams.** These metrics use a continuous station index. A real Kalshi hedge pays on whole-inch strikes in each calendar month, while PRF uses two-month intervals. The replication workstream should reuse `raincheck.basis` (`index_metrics`, `trigger_table`, `payment_factor`, `portfolio_payout`) and add the ladder and month-to-interval steps on top, so that geographic and contract-design errors can be separated as in Luo (2026).
 
 **Relation to the literature** (details and verification status in [10_literature_review](../research/10_literature_review.md)):
 - **Luo (2026)** finds, from its abstract only, that residual basis risk between a Kalshi temperature settlement station and another station "rises with station distance", with a mean of 0.386 over 30 pairs. Our rainfall result shows the same pattern with an explicit rate. Mean farm-grid residual (1 - r² of payouts) is 0.40 under NCEI and 0.45 under CPC, the same order as Luo's figure. Luo's exact definition of "residual basis risk" is not visible in the abstract, so the numbers should not be compared directly.

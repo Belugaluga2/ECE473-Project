@@ -43,12 +43,12 @@ import numpy as np
 import pandas as pd
 import requests
 
-from agri_hedge.config import FIGURES, KALSHI_BASE_URL, RAW
-from agri_hedge.locations import ALL_SITES
+from raincheck.config import FIGURES, KALSHI_BASE_URL, RAW
+from raincheck.locations import ALL_SITES
 
 R6 = RAW / "r6"
 OUT = R6 / "out"
-UA = {"User-Agent": "ECE473-agri-hedge-research (r6_spot_checks.py)"}
+UA = {"User-Agent": "ECE473-raincheck-research (r6_spot_checks.py)"}
 
 CPC_BASE = "https://ftp.cpc.ncep.noaa.gov/precip/CPC_UNI_PRCP/GAUGE_CONUS"
 NCEI_USDA = "https://www.ncei.noaa.gov/pub/data/cirs/usda"

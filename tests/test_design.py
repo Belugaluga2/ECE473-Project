@@ -2,9 +2,9 @@
 import numpy as np
 import pytest
 
-from agri_hedge import design as dg
-from agri_hedge import exotic as ex
-from agri_hedge import hedge_builder as hb
+from raincheck import design as dg
+from raincheck import exotic as ex
+from raincheck import hedge_builder as hb
 
 
 def test_certainty_equivalent_basics():

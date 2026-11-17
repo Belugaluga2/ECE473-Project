@@ -27,8 +27,8 @@ from datetime import date
 import numpy as np
 import pandas as pd
 
-from agri_hedge.config import FIGURES, PROCESSED
-from agri_hedge.stations import (RAW_STATIONS, cli_value_to_inches, event_month,
+from raincheck.config import FIGURES, PROCESSED
+from raincheck.stations import (RAW_STATIONS, cli_value_to_inches, event_month,
                                  fetch_acis_daily, fetch_iem_cli_day, infer_settled_range,
                                  kalshi_series_markets, latest_complete_month, market_yes,
                                  month_end, normalize_market, parse_settlement_location,

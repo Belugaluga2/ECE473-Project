@@ -1,7 +1,7 @@
 """Kalshi public market-data client, response parsers, fee model, and ladder helpers.
 
 Everything here uses Kalshi's unauthenticated REST market-data endpoints
-(https://docs.kalshi.com, base URL in ``agri_hedge.config.KALSHI_BASE_URL``). No API key is
+(https://docs.kalshi.com, base URL in ``raincheck.config.KALSHI_BASE_URL``). No API key is
 needed for any function in this module.
 
 Field-name migration (checked against live responses on 2026-10-29)
@@ -51,7 +51,7 @@ from pathlib import Path
 
 import requests
 
-from agri_hedge.config import KALSHI_BASE_URL
+from raincheck.config import KALSHI_BASE_URL
 
 RETRY_STATUSES = {429, 500, 502, 503, 504}
 PAGE_LIMITS = {"/events": 200}  # every other paginated endpoint accepts limit=1000

@@ -11,7 +11,7 @@ Inputs (built by other workstreams, see docs/analysis/06b and 06c):
 
 Design
 ------
-* Sites: the 7 PRF study sites + ORD (agri_hedge.locations.ALL_SITES).
+* Sites: the 7 PRF study sites + ORD (raincheck.locations.ALL_SITES).
 * Primary sample: calendar years 1995-2025, the longest span in which all 8 settlement stations
   are single-station records (Denver Intl starts 1994-07). Station months with any missing day
   are dropped; an interval needs both months complete.
@@ -49,13 +49,13 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from agri_hedge.basis import (SEASONS, TRIGGER_FIELDS, best_weight, bootstrap_decay_length,  # noqa: E402
+from raincheck.basis import (SEASONS, TRIGGER_FIELDS, best_weight, bootstrap_decay_length,  # noqa: E402
                               exp_decay, fit_exp_decay, index_metrics, loyo_station_selection,
                               payment_factor, pearson, rowwise_pearson, totals_metrics)
-from agri_hedge.config import FIGURES, PROCESSED, RAW  # noqa: E402
-from agri_hedge.cpc import compute_index, dst_base_end, handbook_base_end, interval_totals  # noqa: E402
-from agri_hedge.locations import ALL_SITES  # noqa: E402
-from agri_hedge.prf_intervals import INTERVAL_NAMES  # noqa: E402
+from raincheck.config import FIGURES, PROCESSED, RAW  # noqa: E402
+from raincheck.cpc import compute_index, dst_base_end, handbook_base_end, interval_totals  # noqa: E402
+from raincheck.locations import ALL_SITES  # noqa: E402
+from raincheck.prf_intervals import INTERVAL_NAMES  # noqa: E402
 
 SAMPLE = (1995, 2025)
 LONG_SAMPLE = (1951, 2025)
@@ -91,7 +91,7 @@ def haversine_vec(lat1, lon1, lat2, lon2):
 
 
 def grid_centres(grid_ids):
-    """Vectorised grid_id -> (centre lat, centre lon), same formula as agri_hedge.prf_grid."""
+    """Vectorised grid_id -> (centre lat, centre lon), same formula as raincheck.prf_grid."""
     row, col = np.divmod(np.asarray(grid_ids, dtype=int) - 1, 300)
     return 20.0 + (row + 0.5) * 0.25, -130.0 + (col + 0.5) * 0.25
 
@@ -128,7 +128,7 @@ def load_stations():
     iv = interval_totals(m, value_col="precip_in", id_col="station_key")
     # an interval is "threaded" if either month comes from a predecessor site
     thr = m.set_index(["station_key", "year", "month"])["threaded"]
-    from agri_hedge.prf_intervals import INTERVAL_MONTHS
+    from raincheck.prf_intervals import INTERVAL_MONTHS
     m1 = iv["interval_name"].map(lambda n: INTERVAL_MONTHS[n][0])
     m2 = iv["interval_name"].map(lambda n: INTERVAL_MONTHS[n][1])
     k1 = pd.MultiIndex.from_arrays([iv["station_key"], iv["year"], m1])

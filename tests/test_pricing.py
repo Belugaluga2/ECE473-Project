@@ -1,11 +1,11 @@
-"""Tests for agri_hedge.pricing (Kalshi hedge payouts and costs vs PRF). Synthetic data only, no network."""
+"""Tests for raincheck.pricing (Kalshi hedge payouts and costs vs PRF). Synthetic data only, no network."""
 import math
 
 import numpy as np
 import pandas as pd
 import pytest
 
-from agri_hedge import pricing as pr
+from raincheck import pricing as pr
 
 
 # ---------------------------------------------------------------------------------------------

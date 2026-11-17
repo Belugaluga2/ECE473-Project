@@ -38,9 +38,9 @@ from datetime import datetime, timezone
 import numpy as np
 import pandas as pd
 
-from agri_hedge import kalshi as K
-from agri_hedge.config import FIGURES, PROCESSED, RAW
-from agri_hedge.locations import ALL_SITES
+from raincheck import kalshi as K
+from raincheck.config import FIGURES, PROCESSED, RAW
+from raincheck.locations import ALL_SITES
 
 RAW_K = RAW / "kalshi"
 CATEGORY = "Climate and Weather"

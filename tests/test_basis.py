@@ -1,13 +1,13 @@
-"""Tests for agri_hedge.basis (geographic basis-risk metrics) on small synthetic arrays; no network."""
+"""Tests for raincheck.basis (geographic basis-risk metrics) on small synthetic arrays; no network."""
 import numpy as np
 import pytest
 
-from agri_hedge.basis import (COOL_INTERVALS, SEASONS, WARM_INTERVALS, anomalies, best_weight, bias,
+from raincheck.basis import (COOL_INTERVALS, SEASONS, WARM_INTERVALS, anomalies, best_weight, bias,
                               bootstrap_decay_length, exp_decay, finite_pair, fit_exp_decay,
                               index_from_totals, index_metrics, loyo_station_selection,
                               payment_factor, pearson, portfolio_payout, rmse, rowwise_pearson,
                               sd_ratio, spearman, totals_metrics, trigger_table)
-from agri_hedge.prf_intervals import INTERVAL_NAMES
+from raincheck.prf_intervals import INTERVAL_NAMES
 
 
 # ---------------------------------------------------------------- basic metrics

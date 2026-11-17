@@ -2,7 +2,7 @@
 
 **Proposal cells:** Milestone II, Week 5 / Jack ("build the behind-the-scenes code that pulls in live prices so farmers can see what their custom plan would cost") and Maya ("build the user screen where a farmer can type in their exact location and pick the months they want to be covered")  |  **Status:** WORKING PROTOTYPE (run `python scripts/run_app.py`, open http://localhost:8473)  |  **Last updated:** 2026-11-05
 
-Code: `src/agri_hedge/platform.py` (quote engine, live order books), `src/agri_hedge/webapp/server.py` (HTTP server, standard library only), `src/agri_hedge/webapp/static/index.html` (the screen), `scripts/run_app.py`. Tests: `tests/test_platform.py`. Testing against PRF: doc 19.
+Code: `src/raincheck/platform.py` (quote engine, live order books), `src/raincheck/webapp/server.py` (HTTP server, standard library only), `src/raincheck/webapp/static/index.html` (the screen), `scripts/run_app.py`. Tests: `tests/test_platform.py`. Testing against PRF: doc 19.
 
 ![The farmer screen](../figures/m2_app_screenshot.png)
 

@@ -1,4 +1,4 @@
-"""Offline tests for agri_hedge.stations (B3). Fixtures live in tests/fixtures/b3/.
+"""Offline tests for raincheck.stations (B3). Fixtures live in tests/fixtures/b3/.
 
 acis_dfw_2026_06_07.json  real ACIS StnData response, DFW airport, Jun-Jul 2026
 acis_flags_synthetic.json synthetic ACIS response with T, M, S and A codes and two absent days
@@ -14,7 +14,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from agri_hedge.stations import (acis_daily_from_json, event_month, infer_settled_range,
+from raincheck.stations import (acis_daily_from_json, event_month, infer_settled_range,
                                  interval_totals, latest_complete_month, market_yes, month_end,
                                  monthly_totals, normalize_market, parse_acis_precip,
                                  parse_ghcn_csv, parse_settlement_location, split_acis_sids,

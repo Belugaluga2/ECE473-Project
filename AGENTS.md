@@ -1,4 +1,4 @@
-# Agent handoff: ECE473 AgriHedge
+# Agent handoff: ECE473 RainCheck
 
 Read this first, then [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) (index of every doc, headline numbers, next steps).
 
@@ -25,11 +25,11 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 - `docs/DEMO.md`: five-minute demo script, **roadmap of next steps** (7 items, each naming the module it extends), key numbers to quote.
 - `docs/MILESTONE_2.md`: Milestone II summary table and reproduce commands with run times.
 - `docs/research/` (sourced background, docs 01-10), `docs/analysis/` (our results, docs 04b-22, numbered in the order they were done).
-- `src/agri_hedge/`: the package. The app's single entry point is `platform.quote` (custom hedge) and `platform.companion` (PRF Companion). Fitting is in `optimizer.py` + `hedge_builder.py`.
+- `src/raincheck/`: the package. The app's single entry point is `platform.quote` (custom hedge) and `platform.companion` (PRF Companion). Fitting is in `optimizer.py` + `hedge_builder.py`.
 - `scripts/run_*.py` regenerate each analysis doc's numbers, CSVs and figures. `scripts/pull_*.py` download raw data into `data/raw/` (gitignored, currently empty; committed `data/processed/` is enough for tests, the app and the Milestone 2 scripts).
 - `scripts/experiments/`: two one-off experiments cited in doc 21's numbers table. Keep them.
-- `src/agri_hedge/exotic.py` + `scripts/run_exotic_payouts.py`: exotic payoff shapes and their replication (doc 23). The full run takes about 30 minutes; `--tables-only` redoes figures and doc tables from the saved CSVs, `--quick` runs two farms, `--only=months,execution` recomputes named parts.
-- `src/agri_hedge/design.py` + `scripts/run_exotic_design.py`: equal-premium comparison, holdout term sheet, utility-optimal payout (doc 24; about 5 minutes, same flags). `src/agri_hedge/advisor.py`: the prompt-driven designer (crop table, geocoders, tool schemas, system prompt, rule-based fallback). The app's exotic entry points are `platform.exotic_quote`, `platform.exotic_compare` and `advisor.advise`.
+- `src/raincheck/exotic.py` + `scripts/run_exotic_payouts.py`: exotic payoff shapes and their replication (doc 23). The full run takes about 30 minutes; `--tables-only` redoes figures and doc tables from the saved CSVs, `--quick` runs two farms, `--only=months,execution` recomputes named parts.
+- `src/raincheck/design.py` + `scripts/run_exotic_design.py`: equal-premium comparison, holdout term sheet, utility-optimal payout (doc 24; about 5 minutes, same flags). `src/raincheck/advisor.py`: the prompt-driven designer (crop table, geocoders, tool schemas, system prompt, rule-based fallback). The app's exotic entry points are `platform.exotic_quote`, `platform.exotic_compare` and `advisor.advise`.
 
 ## Run it
 
@@ -42,7 +42,7 @@ On Windows the venv's interpreter is `.venv\Scripts\python.exe` (create it with 
 
 The advisor uses Claude (`claude-opus-5-5`, Anthropic SDK) when `ANTHROPIC_API_KEY` is set in the server's environment or a key is pasted into the tab; otherwise it runs a rule-based parser. Geocoding (Census, Nominatim) needs internet.
 
-In the Claude desktop app, `.claude/launch.json` defines the `agrihedge` preview server on port 8473.
+In the Claude desktop app, `.claude/launch.json` defines the `raincheck` preview server on port 8473.
 
 ## Git state
 

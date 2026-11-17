@@ -13,7 +13,7 @@ payout per $1 of policy protection in year t is
     P_t = max(0, (T - I_t) / T),   T = 100 c,
 
 where I_t is the final grid index (100 = normal). We use the unrounded payment calculation factor
-(`agri_hedge.prf.payment_calculation_factor(..., decimals=None)`); RMA's 3-decimal rounding moves
+(`raincheck.prf.payment_calculation_factor(..., decimals=None)`); RMA's 3-decimal rounding moves
 P_t by at most 0.0005.
 
 Contracts (what we can buy). A Kalshi market "Above X inches" for a station and month resolves
@@ -50,7 +50,7 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import nnls
 
-from agri_hedge.prf import payment_calculation_factor, trigger_grid_index
+from raincheck.prf import payment_calculation_factor, trigger_grid_index
 
 FINE_STEP_IN = 0.25
 #: Kalshi's standard monthly-rain ladder (whole inches 1-7) seen at every series in 2025-2026.

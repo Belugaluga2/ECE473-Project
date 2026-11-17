@@ -23,11 +23,11 @@ import json
 import numpy as np
 import pandas as pd
 
-from agri_hedge.config import PROCESSED
-from agri_hedge.hedge_builder import (FAIR_WINDOW, NORMAL_YEARS, HedgeProblem, grid_interval_index,
+from raincheck.config import PROCESSED
+from raincheck.hedge_builder import (FAIR_WINDOW, NORMAL_YEARS, HedgeProblem, grid_interval_index,
                                       grid_monthly, station_rain, window_target_per_dollar)
-from agri_hedge.pricing import leg_probability, no_asks_from_yes_bids, no_pays
-from agri_hedge.prf import payment_calculation_factor, trigger_grid_index
+from raincheck.pricing import leg_probability, no_asks_from_yes_bids, no_pays
+from raincheck.prf import payment_calculation_factor, trigger_grid_index
 
 SENSIBLE_TOL = 0.10   # doc 09: a "sensible" price is at most 10 cents above fair value
 

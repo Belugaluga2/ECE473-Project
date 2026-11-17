@@ -27,12 +27,12 @@ import urllib.request
 
 import numpy as np
 
-from agri_hedge import hedge_builder as hb
-from agri_hedge import platform as pf
+from raincheck import hedge_builder as hb
+from raincheck import platform as pf
 
 MODEL = "claude-opus-5-5"
 MAX_TURNS = 10
-USER_AGENT = "AgriHedge-research/0.3 (ECE473 course project)"
+USER_AGENT = "RainCheck-research/0.3 (ECE473 course project)"
 DEFAULT_COVERAGE = 0.9
 
 #: Approximate normal-year revenue per acre (USD) and the months whose rain sets the yield, with weights.
@@ -299,7 +299,7 @@ def run_tool(name: str, inp: dict, state: dict, live=None, today=None) -> dict:
 # Claude mode
 # ---------------------------------------------------------------------------------------------
 
-SYSTEM_PROMPT = """You are the contract advisor of AgriHedge, a research prototype built by an ECE 473 student team. You design a one-month rain insurance contract for a farmer or rancher. The contract pays a fixed amount for each rain bin (1 inch or less, 1 to 2 inches, ...) of the month's official rain total at the nearest Kalshi weather station, so the issuer can replicate it exactly with Kalshi monthly-rain contracts. The farmer bears the gap between the airport's rain and their own land (the tools report it as a hedge-effectiveness number from 0 to 1 and a verdict).
+SYSTEM_PROMPT = """You are the contract advisor of RainCheck, a research prototype built by an ECE 473 student team. You design a one-month rain insurance contract for a farmer or rancher. The contract pays a fixed amount for each rain bin (1 inch or less, 1 to 2 inches, ...) of the month's official rain total at the nearest Kalshi weather station, so the issuer can replicate it exactly with Kalshi monthly-rain contracts. The farmer bears the gap between the airport's rain and their own land (the tools report it as a hedge-effectiveness number from 0 to 1 and a verdict).
 
 Before designing you need: (1) where the land is (an address, a town and state, or coordinates), (2) what is grown or grazed, (3) the size: acres (with the farmer's own value per acre if they give one) or the dollar amount of production they want covered. If any of these is missing, ask for it in one short message and stop; do not design yet. Everything else you may assume and state: coverage 90% (the payout starts when the month's rain is below 90% of normal), the crop's key month from crop_profile unless the farmer names months, value per acre from crop_profile unless given, risk aversion 2 (use 4 if they want disaster cover only, 1 if they want frequent small payments).
 

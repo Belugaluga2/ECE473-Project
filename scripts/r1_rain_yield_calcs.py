@@ -44,13 +44,13 @@ import numpy as np
 import pandas as pd
 import requests
 
-from agri_hedge.config import FIGURES, PROCESSED, RAW
+from raincheck.config import FIGURES, PROCESSED, RAW
 
 RAW_DIR = RAW / "r1_rain_yield"
 RAW_DIR.mkdir(parents=True, exist_ok=True)
 DERIVED = PROCESSED / "crop_yield_aux"  # auxiliary tables (regenerated on every run, committed)
 DERIVED.mkdir(parents=True, exist_ok=True)
-HEADERS = {"User-Agent": "Mozilla/5.0 (ECE473 agri-hedge research; contact via Princeton)"}
+HEADERS = {"User-Agent": "Mozilla/5.0 (ECE473 raincheck research; contact via Princeton)"}
 
 OUT_CSV = PROCESSED / "crop_rain_sensitivity_corn_soy.csv"
 CSV_COLUMNS = [

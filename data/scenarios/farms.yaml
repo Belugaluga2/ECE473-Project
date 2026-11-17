@@ -26,7 +26,7 @@
 #   implied by RMA Summary of Business 2026 (1.28-1.50), rounded to 0.05.
 # - coverage_level = the most common coverage level (by insured acres) in the county, 2021-2025.
 # - irrigation_practice: PRF grazing has no irrigation practice (ADM code 997 = "not specified").
-# - lat/lon = county internal point from agri_hedge.locations (farm point). PRF grid for that
+# - lat/lon = county internal point from raincheck.locations (farm point). PRF grid for that
 #   point is in data/processed/study_grids.csv (role = farm).
 
 farms:

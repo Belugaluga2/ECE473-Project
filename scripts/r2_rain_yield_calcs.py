@@ -64,14 +64,14 @@ import pandas as pd
 import requests
 import yaml
 
-from agri_hedge.config import FIGURES, PROCESSED, RAW, ROOT, SCENARIOS
-from agri_hedge.prf_intervals import INTERVAL_MONTHS, INTERVAL_NAMES
+from raincheck.config import FIGURES, PROCESSED, RAW, ROOT, SCENARIOS
+from raincheck.prf_intervals import INTERVAL_MONTHS, INTERVAL_NAMES
 
 RAW_DIR = RAW / "r2_rain_yield"
 DERIVED = RAW_DIR / "derived"
 for _d in (RAW_DIR, DERIVED, RAW_DIR / "nass", RAW_DIR / "noaa", RAW_DIR / "grasscast"):
     _d.mkdir(parents=True, exist_ok=True)
-HEADERS = {"User-Agent": "Mozilla/5.0 (ECE473 agri-hedge research; Princeton)"}
+HEADERS = {"User-Agent": "Mozilla/5.0 (ECE473 raincheck research; Princeton)"}
 
 OUT_CSV = PROCESSED / "crop_rain_sensitivity_other.csv"
 CSV_COLUMNS = [

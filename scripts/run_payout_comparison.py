@@ -18,7 +18,7 @@ For each of the 11 representative farms in data/scenarios/farms.yaml this script
 
 Outputs: data/processed/payout_comparison_farm_year.csv, payout_comparison_summary.csv,
 docs/figures/a3_*.png, and the tables between the AUTO markers in
-docs/analysis/09_payout_comparison.md. Pure functions live in src/agri_hedge/pricing.py.
+docs/analysis/09_payout_comparison.md. Pure functions live in src/raincheck/pricing.py.
 Runs in about a minute; no network.
 """
 from __future__ import annotations
@@ -36,11 +36,11 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 import yaml  # noqa: E402
 
-from agri_hedge import pricing as pr  # noqa: E402
-from agri_hedge.config import DOCS, FIGURES, PROCESSED, SCENARIOS  # noqa: E402
-from agri_hedge.prf import (PRFElection, dollar_amount_of_protection_per_acre,  # noqa: E402
+from raincheck import pricing as pr  # noqa: E402
+from raincheck.config import DOCS, FIGURES, PROCESSED, SCENARIOS  # noqa: E402
+from raincheck.prf import (PRFElection, dollar_amount_of_protection_per_acre,  # noqa: E402
                             payment_calculation_factor, simulate_years, summarize_years)
-from agri_hedge.prf_intervals import INTERVAL_MONTHS, INTERVAL_NAMES  # noqa: E402
+from raincheck.prf_intervals import INTERVAL_MONTHS, INTERVAL_NAMES  # noqa: E402
 
 RATE_YEAR = 2026
 HEADLINE = (2015, 2025)

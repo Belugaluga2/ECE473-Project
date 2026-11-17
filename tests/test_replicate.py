@@ -1,4 +1,4 @@
-"""Tests for agri_hedge.replicate (PRF replication with monthly NO-contract ladders).
+"""Tests for raincheck.replicate (PRF replication with monthly NO-contract ladders).
 
 All synthetic data; no network and no files from data/processed are needed.
 """
@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from agri_hedge.replicate import (
+from raincheck.replicate import (
     DEFAULT_KALSHI_STRIKES,
     fair_cost,
     fine_strikes,
@@ -233,7 +233,7 @@ def test_replicate_interval_drops_missing_years_and_noise_lowers_h1():
 
 
 def test_he_guard_and_pooled_he():
-    from agri_hedge.replicate import pooled_he
+    from raincheck.replicate import pooled_he
     idx = np.array([120.0, 110.0, 85.0, 130.0, 100.0, 95.0])     # PRF pays in one year only
     prf = prf_payout(idx, 0.9)
     m = replication_metrics(prf, prf * 0.5, idx)

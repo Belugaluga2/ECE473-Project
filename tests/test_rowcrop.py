@@ -1,9 +1,9 @@
-"""Tests for agri_hedge.rowcrop (row-crop rain exposure and Kalshi hedges). Synthetic data only, no network."""
+"""Tests for raincheck.rowcrop (row-crop rain exposure and Kalshi hedges). Synthetic data only, no network."""
 import numpy as np
 import pandas as pd
 import pytest
 
-from agri_hedge import rowcrop as rc
+from raincheck import rowcrop as rc
 
 
 # ---------------------------------------------------------------------------------------------

@@ -2,8 +2,8 @@
 import numpy as np
 import pytest
 
-from agri_hedge import optimizer as op
-from agri_hedge.replicate import fit_ladder
+from raincheck import optimizer as op
+from raincheck.replicate import fit_ladder
 
 
 def _toy(n=60, seed=0):

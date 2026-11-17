@@ -36,10 +36,10 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from agri_hedge.config import FIGURES, PROCESSED, RAW  # noqa: E402
-from agri_hedge.cpc import (MM_PER_INCH, comparison_stats, compute_index, dst_base_end,  # noqa: E402
+from raincheck.config import FIGURES, PROCESSED, RAW  # noqa: E402
+from raincheck.cpc import (MM_PER_INCH, comparison_stats, compute_index, dst_base_end,  # noqa: E402
                             handbook_base_end, interval_totals)
-from agri_hedge.prf_grid import grid_id_to_rowcol  # noqa: E402
+from raincheck.prf_grid import grid_id_to_rowcol  # noqa: E402
 
 COVERAGE = 90.0
 KEY = ["grid_id", "year", "interval_name"]

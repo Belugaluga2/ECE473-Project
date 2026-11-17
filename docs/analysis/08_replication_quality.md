@@ -2,7 +2,7 @@
 
 **Proposal cell:** Week 3 / Maya (A2, "compare replication quality across a small set of representative locations to see how geography affects hedge performance")  |  **Status:** DRAFT (baseline; numbers reproducible with `python scripts/run_replication.py`)  |  **Last updated:** 2026-10-29
 
-Code: `src/agri_hedge/replicate.py` (fitting, payoffs, metrics), `scripts/run_replication.py` (study loop, figures, the tables between the AUTO markers), tests in `tests/test_replicate.py` (synthetic data, no network).
+Code: `src/raincheck/replicate.py` (fitting, payoffs, metrics), `scripts/run_replication.py` (study loop, figures, the tables between the AUTO markers), tests in `tests/test_replicate.py` (synthetic data, no network).
 Data written: `data/processed/replication_weights.csv`, `replication_backtest.csv`, `replication_summary.csv`; figures `docs/figures/a2_*.png`.
 
 ## Key findings
@@ -72,7 +72,7 @@ All headline numbers use 90% coverage, the NCEI-based PRF index (the data PRF se
 
 ### Terms
 
-- **PRF payout per dollar.** For one PRF grid, one two-month interval, and coverage level c, PRF pays max(0, (T - I) / T) per $1 of policy protection, where T = 100c is the trigger and I is the final grid index (100 = normal rain). We use the unrounded payment calculation factor from `agri_hedge.prf.payment_calculation_factor(..., decimals=None)` (see [01](../research/01_usda_prf_mechanics.md), [04b](04b_farm_scenario_results.md)).
+- **PRF payout per dollar.** For one PRF grid, one two-month interval, and coverage level c, PRF pays max(0, (T - I) / T) per $1 of policy protection, where T = 100c is the trigger and I is the final grid index (100 = normal rain). We use the unrounded payment calculation factor from `raincheck.prf.payment_calculation_factor(..., decimals=None)` (see [01](../research/01_usda_prf_mechanics.md), [04b](04b_farm_scenario_results.md)).
 - **NO contract.** Kalshi's market "Above X inches" for a city and month resolves YES if the settlement station's monthly total is strictly greater than X. Buying NO therefore pays $1 if the month ends at X inches or less. That is the drought-side contract a rancher would buy ([05b](05b_kalshi_liquidity_stats.md), [06c](06c_station_vs_kalshi_settlement_check.md)).
 - **Ladder / portfolio.** A set of NO contracts on one station's two calendar months (for Apr-May: April and May contracts) at several strikes, held in chosen amounts. The amount is the **weight**: the number of $1-notional contracts held per $1 of PRF policy protection.
 - **Hedge effectiveness (HE).** HE = 1 - Var(PRF - hedge) / Var(PRF). HE = 1 means the hedge removes all year-to-year variation in what PRF pays; HE = 0 means it removes none; negative means it adds noise. HE ignores a constant offset, so we also report the bias.
@@ -113,7 +113,7 @@ We kept to linear combinations of monthly contracts. Products of contracts or jo
   - **In sample:** train-window fit evaluated on the training years (an upper bound).
 - **Sensitivities:** a free-sign cash intercept (NCEI target); H1 with the station normal from 1951-2009 only; CPC targets; 70% and 85% coverage.
 - **Fair cost.** The expected payout of the portfolio under training-window climatology: the sum over legs of weight x (share of 1951-2009 months in which that NO paid). It is the price of the hedge at fair odds, before Kalshi's spread, fees, and the favorite-longshot pattern documented in 05b.
-- **Farm policies.** The farm's hedge is the allocation-weighted sum of its per-interval hedges, at the farm grid and the farm's coverage level. Dollars = per-dollar payout x the farm's total policy protection (county base value x coverage x productivity factor x acres, computed with `agri_hedge.prf`).
+- **Farm policies.** The farm's hedge is the allocation-weighted sum of its per-interval hedges, at the farm grid and the farm's coverage level. Dollars = per-dollar payout x the farm's total policy protection (county base value x coverage x productivity factor x acres, computed with `raincheck.prf`).
 
 ### Metrics (all in $ per $1 of policy protection unless marked $)
 
@@ -341,7 +341,7 @@ The order of the steps matters for how the loss is split, because the losses ove
 
 ## Sources
 
-- Data and code: this repository, `scripts/run_replication.py`, `src/agri_hedge/replicate.py`.
+- Data and code: this repository, `scripts/run_replication.py`, `src/raincheck/replicate.py`.
 - PRF payout formula and subsidy: [docs/research/01_usda_prf_mechanics.md](../research/01_usda_prf_mechanics.md) (FCIC-18150 Rainfall Index Handbook, 2026, https://www.rma.usda.gov/sites/default/files/2025-08/2026-18150-Rainfall-Index-Handbook.pdf; Basic Provisions sections 7-8).
 - PRF index series, grids, and the NCEI switch: [06b_index_validation.md](06b_index_validation.md); RMA news release 2026-04-30, https://www.rma.usda.gov/news-events/news/2026/washington-dc/usda-risk-management-agency-upgrades-rainfall-data-source.
 - Station data and Kalshi settlement rules: [06c_station_vs_kalshi_settlement_check.md](06c_station_vs_kalshi_settlement_check.md); Kalshi RAINM contract terms, https://assets.kalshi.com/contract_terms/RAINM.pdf.

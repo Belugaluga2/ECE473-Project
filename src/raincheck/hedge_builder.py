@@ -1,7 +1,7 @@
 """Turn "where is the farm, which months, how much cover" into an optimizer problem.
 
 Shared by the Milestone 2 analysis scripts (docs 15-17), the platform backend
-(`agri_hedge.platform`) and the app test (doc 19), so every number comes from one code path.
+(`raincheck.platform`) and the app test (doc 19), so every number comes from one code path.
 
 Coverage windows
 ----------------
@@ -28,13 +28,13 @@ from typing import Sequence
 import numpy as np
 import pandas as pd
 
-from agri_hedge.config import PROCESSED
-from agri_hedge.locations import haversine_miles
-from agri_hedge.pricing import leg_probability, no_pays, rain_wide
-from agri_hedge.prf import payment_calculation_factor, trigger_grid_index
-from agri_hedge.prf_grid import grid_id_to_center, latlon_to_grid_id
-from agri_hedge.prf_intervals import INTERVAL_MONTHS, INTERVAL_NAMES
-from agri_hedge.replicate import DEFAULT_KALSHI_STRIKES, kalshi_strike_sets
+from raincheck.config import PROCESSED
+from raincheck.locations import haversine_miles
+from raincheck.pricing import leg_probability, no_pays, rain_wide
+from raincheck.prf import payment_calculation_factor, trigger_grid_index
+from raincheck.prf_grid import grid_id_to_center, latlon_to_grid_id
+from raincheck.prf_intervals import INTERVAL_MONTHS, INTERVAL_NAMES
+from raincheck.replicate import DEFAULT_KALSHI_STRIKES, kalshi_strike_sets
 
 YEARS = (1951, 2025)            # backtest years (NCEI grids start in 1951)
 NORMAL_YEARS = (1951, 2025)     # normal for custom (non-PRF) windows
@@ -310,7 +310,7 @@ def load_farm_requests(strikes="kalshi") -> list[dict]:
     Decision Support Tool history) for comparison with the rebuilt target.
     """
     import yaml
-    from agri_hedge.config import SCENARIOS
+    from raincheck.config import SCENARIOS
     farms = yaml.safe_load((SCENARIOS / "farms.yaml").read_text(encoding="utf-8"))["farms"]
     sc = pd.read_csv(PROCESSED / "prf_scenario_results.csv", dtype={"grid_id": str, "county_fips": str})
     out = []

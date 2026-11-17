@@ -4,10 +4,10 @@ from datetime import date
 import numpy as np
 import pytest
 
-from agri_hedge import error_budget as eb
-from agri_hedge import hedge_builder as hb
-from agri_hedge import platform as pf
-from agri_hedge.webapp.server import _clean
+from raincheck import error_budget as eb
+from raincheck import hedge_builder as hb
+from raincheck import platform as pf
+from raincheck.webapp.server import _clean
 
 
 def test_window_labels():
@@ -44,7 +44,7 @@ def test_grid_index_binaries_nearly_replicate_prf():
     F = hb.load_farm_requests()[0]
     p = hb.build_problem(F["request"])
     X, _, q = eb.grid_index_ladder_cols(p, 5.0)
-    from agri_hedge import optimizer as op
+    from raincheck import optimizer as op
     ok = p.ok & ~np.isnan(X).any(axis=1)
     sol = op.solve_penalized(X[ok], p.target[ok], op.model_tranches(q), 0.0, F["protection"])
     assert op.hedge_effectiveness(p.target[ok], sol.payout) > 0.97
@@ -81,7 +81,7 @@ def test_json_clean():
 
 def test_cpc_index_target_matches_as_paid_prf():
     import pandas as pd
-    from agri_hedge.config import PROCESSED
+    from raincheck.config import PROCESSED
     F = hb.load_farm_requests()[0]
     r = F["request"]
     req = hb.CoverageRequest(r.lat, r.lon, r.windows, r.coverage, r.protection, station_key=r.station_key,

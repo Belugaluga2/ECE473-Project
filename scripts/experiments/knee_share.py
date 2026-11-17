@@ -1,7 +1,7 @@
 """Doc 21 experiment: which frontier share (knee) does best out of sample. Run: python scripts/experiments/knee_share.py"""
 import numpy as np, pandas as pd
-from agri_hedge import hedge_builder as hb, optimizer as op
-from agri_hedge.hedge_builder import CoverageRequest, Window
+from raincheck import hedge_builder as hb, optimizer as op
+from raincheck.hedge_builder import CoverageRequest, Window
 rows=[]
 def run(name,X,y,q,prot):
     ok=~np.isnan(y)&~np.isnan(X).any(1); X,y=X[ok],y[ok]

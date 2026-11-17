@@ -30,13 +30,13 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from agri_hedge import error_budget as eb  # noqa: E402
-from agri_hedge import hedge_builder as hb  # noqa: E402
-from agri_hedge import optimizer as op  # noqa: E402
-from agri_hedge.config import DOCS, FIGURES, PROCESSED  # noqa: E402
-from agri_hedge.docs_util import write_auto_block  # noqa: E402
-from agri_hedge.hedge_builder import CoverageRequest, Window  # noqa: E402
-from agri_hedge.pricing import no_pays  # noqa: E402
+from raincheck import error_budget as eb  # noqa: E402
+from raincheck import hedge_builder as hb  # noqa: E402
+from raincheck import optimizer as op  # noqa: E402
+from raincheck.config import DOCS, FIGURES, PROCESSED  # noqa: E402
+from raincheck.docs_util import write_auto_block  # noqa: E402
+from raincheck.hedge_builder import CoverageRequest, Window  # noqa: E402
+from raincheck.pricing import no_pays  # noqa: E402
 
 DOC = DOCS / "analysis" / "20_complementing_prf.md"
 EXCESS_START, EXCESS_SPAN = 130.0, 100.0

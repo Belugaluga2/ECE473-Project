@@ -47,12 +47,12 @@ from pathlib import Path
 import pandas as pd
 import requests
 
-from agri_hedge.config import RAW
-from agri_hedge.locations import ALL_SITES, STUDY_SITES
+from raincheck.config import RAW
+from raincheck.locations import ALL_SITES, STUDY_SITES
 
 R8 = RAW / "r8"
 DERIVED = R8 / "derived"
-UA = {"User-Agent": "ECE473-agri-hedge research script (Princeton course project)"}
+UA = {"User-Agent": "ECE473-raincheck research script (Princeton course project)"}
 
 SOB_BASE = "https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop"
 ADM_YTD_2026 = "https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/2026/2026_ADM_YTD.zip"
@@ -179,7 +179,7 @@ def _read_sob_zip(path: Path, cols: list[str]) -> pd.DataFrame:
 def interval_from_practice(code: str) -> str | None:
     """Map a PRF SOB/ADM practice code to an interval name. Grazing uses 625-635, haying
     non-irrigated 525-535, haying irrigated 425-435, organic variants 465/485/565/585 + 0..10."""
-    from agri_hedge.prf_intervals import INTERVAL_NAMES
+    from raincheck.prf_intervals import INTERVAL_NAMES
     try:
         p = int(code)
     except ValueError:
@@ -599,7 +599,7 @@ COVERAGE_LEVELS = (0.70, 0.75, 0.80, 0.85, 0.90)
 def load_farms(path: Path | None = None) -> list[dict]:
     """Load data/scenarios/farms.yaml as a list of farm dicts."""
     import yaml
-    from agri_hedge.config import SCENARIOS
+    from raincheck.config import SCENARIOS
     path = path or SCENARIOS / "farms.yaml"
     return yaml.safe_load(Path(path).read_text(encoding="utf-8"))["farms"]
 
@@ -618,7 +618,7 @@ def validate_farm(farm: dict, base_values: pd.DataFrame | None = None) -> list[s
     productivity factor 60-150%); handbook FCIC-18150 para. 14 (shares sum to 100%).
     """
     from itertools import combinations
-    from agri_hedge.prf_intervals import INTERVAL_NAMES, overlaps
+    from raincheck.prf_intervals import INTERVAL_NAMES, overlaps
     p = []
     if farm["site"] not in STUDY_SITES:
         p.append("site not in STUDY_SITES")

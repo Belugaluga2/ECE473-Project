@@ -29,14 +29,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from run_exotic_payouts import (BOOK, COLORS, MAX_PAYOUT, MONTH_SHAPES, SHAPES, SHORT, fit_scores,  # noqa: E402
                                 loss_params_for)
 
-from agri_hedge import design as dg  # noqa: E402
-from agri_hedge import exotic as ex  # noqa: E402
-from agri_hedge import hedge_builder as hb  # noqa: E402
-from agri_hedge import optimizer as op  # noqa: E402
-from agri_hedge import platform as pf  # noqa: E402
-from agri_hedge.config import DOCS, FIGURES, PROCESSED  # noqa: E402
-from agri_hedge.docs_util import write_auto_block  # noqa: E402
-from agri_hedge.hedge_builder import CoverageRequest, Window  # noqa: E402
+from raincheck import design as dg  # noqa: E402
+from raincheck import exotic as ex  # noqa: E402
+from raincheck import hedge_builder as hb  # noqa: E402
+from raincheck import optimizer as op  # noqa: E402
+from raincheck import platform as pf  # noqa: E402
+from raincheck.config import DOCS, FIGURES, PROCESSED  # noqa: E402
+from raincheck.docs_util import write_auto_block  # noqa: E402
+from raincheck.hedge_builder import CoverageRequest, Window  # noqa: E402
 
 DOC = DOCS / "analysis" / "24_contract_design.md"
 TAG = "contract design tables (scripts/run_exotic_design.py)"

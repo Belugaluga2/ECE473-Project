@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AgriHedge: build your own rain cover</title>
+<title>RainCheck: build your own rain cover</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -68,7 +68,7 @@
 </style>
 </head>
 <body>
-<header><h1>AgriHedge</h1><span>Keep your USDA rainfall insurance, use Kalshi weather contracts for the months it leaves open, or design your own rain contract.</span></header>
+<header><h1>RainCheck</h1><span>Keep your USDA rainfall insurance, use Kalshi weather contracts for the months it leaves open, or design your own rain contract.</span></header>
 <main>
 <section>
   <div class="tabs"><button id="tab-comp" class="on">PRF Companion</button><button id="tab-custom">Custom cover</button><button id="tab-exotic">Design a contract</button><button id="tab-advisor">Ask the advisor</button></div>
@@ -296,8 +296,8 @@ $("go").onclick = async () => {
 
 // ---------------- advisor chat ----------------
 let HISTORY = [];          // the API conversation (user turns, assistant turns with tool blocks), kept by the server's format
-try { $("apikey").value = localStorage.getItem("agrihedge_api_key") || ""; } catch (e) {}
-$("apikey").onchange = () => { try { localStorage.setItem("agrihedge_api_key", $("apikey").value.trim()); } catch (e) {} };
+try { $("apikey").value = localStorage.getItem("raincheck_api_key") || ""; } catch (e) {}
+$("apikey").onchange = () => { try { localStorage.setItem("raincheck_api_key", $("apikey").value.trim()); } catch (e) {} };
 function addMsg(cls, text) { const d = document.createElement("div"); d.className = "msg " + cls; d.textContent = text; $("chat").appendChild(d); $("chat").scrollTop = $("chat").scrollHeight; return d; }
 $("chatreset").onclick = () => { HISTORY = []; $("chat").innerHTML = ""; };
 async function sendPrompt() {

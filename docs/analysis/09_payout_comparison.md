@@ -2,7 +2,7 @@
 
 **Proposal cell:** Week 3 / Evan (A3, "Compare what farmers currently get paid by traditional insurance versus what they could get paid using the current weather betting markets")  |  **Status:** DRAFT (all numbers reproducible with `python scripts/run_payout_comparison.py`)  |  **Last updated:** 2026-11-02 (capacity rerun on the post-rewards order books; costs and payouts unchanged)
 
-Code: `src/agri_hedge/pricing.py` (hedge legs, payouts, prices, fees, capital cost, order-book walks, comparison metrics), `scripts/run_payout_comparison.py` (study loop, figures, and the tables between the AUTO markers), tests in `tests/test_pricing.py` (synthetic data, no network).
+Code: `src/raincheck/pricing.py` (hedge legs, payouts, prices, fees, capital cost, order-book walks, comparison metrics), `scripts/run_payout_comparison.py` (study loop, figures, and the tables between the AUTO markers), tests in `tests/test_pricing.py` (synthetic data, no network).
 Data written: `data/processed/payout_comparison_farm_year.csv` (one row per farm and year, 1951-2025), `data/processed/payout_comparison_summary.csv` (one row per farm); figures `docs/figures/a3_*.png`.
 Inputs: the 11 farms in `data/scenarios/farms.yaml`, PRF results from [04b](04b_farm_scenario_results.md), index regimes from [06b](06b_index_validation.md), hedge weights from [08](08_replication_quality.md), station rain from [06c](06c_station_vs_kalshi_settlement_check.md), Kalshi prices, books and calibration from [05b](05b_kalshi_liquidity_stats.md).
 
@@ -87,7 +87,7 @@ All dollar figures are per farm per year unless stated. "PRF" is each farm's 202
 | Size | policy protection $26,828-$175,950 | contracts = weight per $ of protection x interval share x total protection (`pricing.farm_hedge_legs`) |
 | Pays on | PRF grid index: CPC as paid (`cpc_interval_index.parquet`, `index_value_ours`, 1969-2025), or NCEI (`prf_official_index.csv`, 1951-2025) | settlement-station monthly totals (`station_monthly_precip.csv`, months with `n_missing == 0`; ThreadEx records fill DFW before 1974 and DEN before 1994) |
 | Cost to farmer | producer premium = full premium x (1 - subsidy), billed after coverage starts | contracts x price + taker fee + cash locked up until settlement |
-| Code | `agri_hedge.prf` (`simulate_years`, official rounding) | `agri_hedge.pricing` |
+| Code | `raincheck.prf` (`simulate_years`, official rounding) | `raincheck.pricing` |
 
 **Which hedge for which question.**
 
@@ -419,7 +419,7 @@ Checks: NCEI indemnity recomputed from `prf_official_index.csv` matches `prf_sce
 
 ## Sources
 
-- Data and code: this repository. `scripts/run_payout_comparison.py`, `src/agri_hedge/pricing.py`; inputs from `scripts/run_scenarios.py` (04b), `scripts/run_replication.py` (08), `scripts/pull_kalshi.py` (05b), `scripts/build_indices.py` (06b), `scripts/pull_stations.py` (06c).
+- Data and code: this repository. `scripts/run_payout_comparison.py`, `src/raincheck/pricing.py`; inputs from `scripts/run_scenarios.py` (04b), `scripts/run_replication.py` (08), `scripts/pull_kalshi.py` (05b), `scripts/build_indices.py` (06b), `scripts/pull_stations.py` (06c).
 - PRF rules, rates and subsidy: [01](../research/01_usda_prf_mechanics.md) and [04b](04b_farm_scenario_results.md) (FCIC-18150 Rainfall Index Handbook 2026, https://www.rma.usda.gov/sites/default/files/2025-08/2026-18150-Rainfall-Index-Handbook.pdf ; RMA Actuarial Data Master, https://pubfs-rma.fpac.usda.gov/pub/References/actuarial_data_master/).
 - PRF index regimes: [06b](06b_index_validation.md); RMA news release 2026-04-30, https://www.rma.usda.gov/news-events/news/2026/washington-dc/usda-risk-management-agency-upgrades-rainfall-data-source .
 - Hedge weights and replication quality: [08](08_replication_quality.md).

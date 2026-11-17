@@ -54,7 +54,7 @@ ACIS_SID_TYPES = {"1": "wban", "2": "coop", "3": "faa", "4": "wmo", "5": "icao",
 NAMED_LOCATIONS = {"central park": "NYC", "chicago midway": "MDW", "chicago o'hare": "ORD"}
 
 _SESSION = requests.Session()
-_SESSION.headers.update({"User-Agent": "agri-hedge ECE473 research (Princeton)"})
+_SESSION.headers.update({"User-Agent": "raincheck ECE473 research (Princeton)"})
 
 
 # ---------------------------------------------------------------------------------------------

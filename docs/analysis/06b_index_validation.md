@@ -81,7 +81,7 @@
 ### 1. Terms used here
 
 - **Grid index (final grid index).** For one grid and one two-month interval, it is 100 x (rain that fell in the interval) / (expected rain for that interval). The expected rain is the average over a **base period** of years. An index of 100 means normal rain.
-- **Interval.** One of PRF's 11 overlapping two-month windows (Jan-Feb, Feb-Mar, ..., Nov-Dec). Names and codes are in `agri_hedge.prf_intervals`.
+- **Interval.** One of PRF's 11 overlapping two-month windows (Jan-Feb, Feb-Mar, ..., Nov-Dec). Names and codes are in `raincheck.prf_intervals`.
 - **Trigger.** With coverage level c (70-90%), an interval pays when the final grid index is below 100c, for example below 90 at 90% coverage. The **payment calculation factor** is (trigger - index) / trigger. The indemnity is that factor times the policy protection.
 - **DST.** RMA's PRF Decision Support Tool web app, which shows historical indexes and estimates premiums and indemnities.
 - **ADM.** RMA's Actuarial Data Master, the bulk files that carry rates and the final index values used for payment.
@@ -95,7 +95,7 @@
 
 The handbook says CONUS PRF grids are the 0.25-degree cells "created by NOAA CPC" [1, sec. 32A]. We queried RMA's grid map, the ArcGIS layer behind the DST's Grid Locator. Moving one cell east adds 1 to the ID and moving one cell north adds 300. ID 1 is the cell centred at 20.125 N, 129.875 W. That is exactly the order CPC uses to store its files ("from west to east first, and then south to north") [6]. So the PRF grid ID is the 1-based position of the cell in the CPC array, and the CPC array index of a grid is `divmod(grid_id - 1, 300)`.
 
-`agri_hedge.prf_grid` implements `latlon_to_grid_id`, `grid_id_to_center`, `grid_id_to_bounds`, `grid_id_to_rowcol` and `grid_ids_within_radius`. Points exactly on a cell edge touch 2-4 polygons. RMA's map returned the southern one in our tests, while our function assigns the cell to the north and east. Edges matter only for points on exact quarter-degree lines.
+`raincheck.prf_grid` implements `latlon_to_grid_id`, `grid_id_to_center`, `grid_id_to_bounds`, `grid_id_to_rowcol` and `grid_ids_within_radius`. Points exactly on a cell edge touch 2-4 polygons. RMA's map returned the southern one in our tests, while our function assigns the cell to the north and east. Edges matter only for points on exact quarter-degree lines.
 
 | Site | Role | Grid ID | Grid centre (lat, lon) | Centre to station (mi) | Counties the DST lists for the grid |
 |---|---|---|---|---|---|
@@ -255,7 +255,7 @@ The gap is largest in the dry West (DEN, ABQ) and in rural Florida (TPA farm). I
 - **For long historical backtests**, use one fixed base so that every year is on the same scale. Use either `index_value_fixed_base` (CPC, base 1948-2025) or the NCEI series (base 1951-2025), and state which. Measured against each other, the source choice alone changes the trigger decision in 6-8% of grid-interval-years.
 - **For the Kalshi replication**, the NCEI source matters going forward. nClimGrid is built from GHCN station networks [9], and Kalshi's settlement airports are GHCN-Daily stations (DFW is USW00003927). The station-to-grid gap may therefore be smaller under NCEI than under CPC, but we have not measured that yet. The basis-risk work (W3) should compare station rainfall with both series. `prf_ring100_grids.csv` plus `prf_official_index_ring100.parquet` give the 956 grids within 100 miles for a basis-risk-vs-distance curve.
 - **Freeze data vintages.** Both CPC (RT to UPDATED) and nClimGrid (monthly revisions) change after the fact, while RMA's final index is fixed when published. Any payout comparison should record which vintage it used. Our caches record the source per month in the `source` column.
-- **The index formula is settled.** It is index = 100 x interval total / mean over the base years, rounded to 0.1, with intervals summed from calendar months. `agri_hedge.cpc.compute_index` with `handbook_base_end` (as-settled) or `dst_base_end` (DST display) reproduces both official series.
+- **The index formula is settled.** It is index = 100 x interval total / mean over the base years, rounded to 0.1, with intervals summed from calendar months. `raincheck.cpc.compute_index` with `handbook_base_end` (as-settled) or `dst_base_end` (DST display) reproduces both official series.
 
 ## Unverified claims and open questions
 

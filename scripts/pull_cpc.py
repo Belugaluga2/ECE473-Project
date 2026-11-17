@@ -7,7 +7,7 @@ Outputs (data/processed/):
   ncei_monthly_precip_grids.parquet  grid_id, year, month, precip_in, n_subcells, source
                                      (NCEI nClimGrid averaged to PRF grids, 1951-01 on)
 for all cells whose centres lie within --radius miles (default 150) of any settlement station in
-agri_hedge.locations.ALL_SITES and that have data (ocean cells are dropped).
+raincheck.locations.ALL_SITES and that have data (ocean cells are dropped).
 
 CPC route (smallest that reaches the latest complete month with the vintage RMA settled on):
   1. 1948-01 .. 2018-12: PSL monthly means precip.V1.0.mon.mean.nc (mm/day), OPeNDAP subset of a
@@ -36,11 +36,11 @@ import numpy as np
 import pandas as pd
 import requests
 
-from agri_hedge.config import PROCESSED, RAW
-from agri_hedge.cpc import (MM_PER_INCH, NCLIMGRID_MONTHLY_URL, PSL_DAILY_RT, PSL_MONTHLY_OPENDAP,
+from raincheck.config import PROCESSED, RAW
+from raincheck.cpc import (MM_PER_INCH, NCLIMGRID_MONTHLY_URL, PSL_DAILY_RT, PSL_MONTHLY_OPENDAP,
                             cpc_daily_url, days_in_month, fine_grid_to_prf, read_cpc_daily_binary)
-from agri_hedge.locations import ALL_SITES
-from agri_hedge.prf_grid import grid_id_to_rowcol, grid_ids_within_radius
+from raincheck.locations import ALL_SITES
+from raincheck.prf_grid import grid_id_to_rowcol, grid_ids_within_radius
 
 RAW_CPC = RAW / "cpc"
 RAW_NCEI = RAW / "nclimgrid"
@@ -256,7 +256,7 @@ def main(argv=None):
 
     print("CPC step 2: CPC daily files for later months")
     sess = requests.Session()
-    sess.headers["User-Agent"] = "agri-hedge ECE473 research"
+    sess.headers["User-Agent"] = "raincheck ECE473 research"
     y, m = last
     extra = []
     while True:

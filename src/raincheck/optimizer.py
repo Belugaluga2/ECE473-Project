@@ -39,7 +39,7 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
 
-from agri_hedge.pricing import (DEFAULT_LOCKUP_DAYS, DEFAULT_TBILL_RATE, PRICE_MAX, PRICE_MIN,
+from raincheck.pricing import (DEFAULT_LOCKUP_DAYS, DEFAULT_TBILL_RATE, PRICE_MAX, PRICE_MIN,
                                 no_asks_from_yes_bids)
 
 KALSHI_TAKER_RATE = 0.07

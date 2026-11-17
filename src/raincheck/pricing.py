@@ -35,7 +35,7 @@ import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
 
-from agri_hedge.kalshi import fee as kalshi_fee
+from raincheck.kalshi import fee as kalshi_fee
 
 #: 3-month Treasury bill rate (secondary market, discount basis), FRED series DTB3 on
 #: 2026-10-27: 4.05%. https://fred.stlouisfed.org/series/DTB3 (retrieved 2026-10-29).
@@ -172,7 +172,7 @@ def clip_price(p):
 def taker_fee(contracts, price, tick: float = FEE_TICK_RETAIL) -> np.ndarray:
     """Kalshi taker fee per order, 0.07 x C x P x (1 - P), rounded up to `tick` dollars.
 
-    Vectorized over legs (one order per leg). Uses `agri_hedge.kalshi.fee` for the formula and
+    Vectorized over legs (one order per leg). Uses `raincheck.kalshi.fee` for the formula and
     then rounds up to `tick` ($0.01 for FCM-cleared retail accounts, $0.0001 for direct members).
     Climate series have no maker fee, so a resting limit order pays nothing.
     """

@@ -5,7 +5,7 @@ Run from the repo root:   python scripts/run_error_budget.py
 Part 1 (doc 16). For each of the 11 farms, and for each farm's insured windows on their own,
 hedge effectiveness (HE) is measured after each restriction in turn: geography, settlement
 source, monthly contracts, whole-inch strikes, order-book depth, and a budget equal to the PRF
-producer premium (see `agri_hedge.error_budget`). Every step uses the optimizer's lowest-error
+producer premium (see `raincheck.error_budget`). Every step uses the optimizer's lowest-error
 fit (doc 15) on the same years, scored in-sample and leave-one-year-out (LOYO).
 
 Part 2 (doc 17). The same targets hedged with proposed contracts: half-inch monthly strikes,
@@ -29,12 +29,12 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from agri_hedge import error_budget as eb  # noqa: E402
-from agri_hedge import hedge_builder as hb  # noqa: E402
-from agri_hedge import optimizer as op  # noqa: E402
-from agri_hedge.config import DOCS, FIGURES, PROCESSED  # noqa: E402
-from agri_hedge.docs_util import write_auto_block  # noqa: E402
-from agri_hedge.hedge_builder import CoverageRequest  # noqa: E402
+from raincheck import error_budget as eb  # noqa: E402
+from raincheck import hedge_builder as hb  # noqa: E402
+from raincheck import optimizer as op  # noqa: E402
+from raincheck.config import DOCS, FIGURES, PROCESSED  # noqa: E402
+from raincheck.docs_util import write_auto_block  # noqa: E402
+from raincheck.hedge_builder import CoverageRequest  # noqa: E402
 
 DOC16 = DOCS / "analysis" / "16_error_budget.md"
 DOC17 = DOCS / "analysis" / "17_contract_gaps_and_proposals.md"

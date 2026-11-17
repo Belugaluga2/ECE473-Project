@@ -6,11 +6,11 @@ Routes
   GET  /                 the farmer screen (static/index.html)
   GET  /api/stations     Kalshi monthly-rain stations with rain records
   GET  /api/coverage     PRF grid centers the app can serve (for the map)
-  POST /api/quote        JSON body -> agri_hedge.platform.quote(...)
-  POST /api/companion    JSON body -> agri_hedge.platform.companion(...) (PRF Companion mode)
-  POST /api/exotic       JSON body -> agri_hedge.platform.exotic_quote(...) (exchange-settled exotic payoff, doc 23)
-  POST /api/exotic_compare  JSON body -> agri_hedge.platform.exotic_compare(...) (every shape, equal payout and premium, doc 24)
-  POST /api/advise       JSON body -> agri_hedge.advisor.advise(...) (prompt-driven contract designer; Claude if a key is set)
+  POST /api/quote        JSON body -> raincheck.platform.quote(...)
+  POST /api/companion    JSON body -> raincheck.platform.companion(...) (PRF Companion mode)
+  POST /api/exotic       JSON body -> raincheck.platform.exotic_quote(...) (exchange-settled exotic payoff, doc 23)
+  POST /api/exotic_compare  JSON body -> raincheck.platform.exotic_compare(...) (every shape, equal payout and premium, doc 24)
+  POST /api/advise       JSON body -> raincheck.advisor.advise(...) (prompt-driven contract designer; Claude if a key is set)
   GET  /api/advisor      which advisor mode is active (claude or rules) and the crops it knows
 """
 from __future__ import annotations
@@ -22,7 +22,7 @@ import traceback
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
-from agri_hedge import platform as pf
+from raincheck import platform as pf
 
 STATIC = Path(__file__).resolve().parent / "static"
 _COVERAGE_CACHE: list | None = None
@@ -42,7 +42,7 @@ def _clean(o):
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "AgriHedge/0.2"
+    server_version = "RainCheck/0.2"
 
     def _send(self, code: int, body: bytes, ctype: str) -> None:
         self.send_response(code)
@@ -68,12 +68,12 @@ class Handler(BaseHTTPRequestHandler):
                 _COVERAGE_CACHE = pf.coverage_points()
             return self._json(200, _COVERAGE_CACHE)
         if path == "/api/advisor":
-            from agri_hedge import advisor
+            from raincheck import advisor
             return self._json(200, advisor.status())
         return self._json(404, {"error": "not found"})
 
     def do_POST(self):  # noqa: N802
-        from agri_hedge import advisor
+        from raincheck import advisor
         route = self.path.split("?", 1)[0]
         handlers = {"/api/quote": pf.quote, "/api/companion": pf.companion, "/api/exotic": pf.exotic_quote,
                     "/api/exotic_compare": pf.exotic_compare, "/api/advise": advisor.advise}
@@ -94,12 +94,12 @@ class Handler(BaseHTTPRequestHandler):
 
 
 def main(argv=None) -> int:
-    ap = argparse.ArgumentParser(description="Run the AgriHedge farmer screen")
+    ap = argparse.ArgumentParser(description="Run the RainCheck farmer screen")
     ap.add_argument("--port", type=int, default=8473)
     ap.add_argument("--host", default="127.0.0.1")
     a = ap.parse_args(argv)
     srv = ThreadingHTTPServer((a.host, a.port), Handler)
-    print(f"AgriHedge running on http://{a.host}:{a.port}", flush=True)
+    print(f"RainCheck running on http://{a.host}:{a.port}", flush=True)
     try:
         srv.serve_forever()
     except KeyboardInterrupt:

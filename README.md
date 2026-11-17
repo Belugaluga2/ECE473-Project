@@ -47,7 +47,7 @@ rule-based parser otherwise).
 | `docs/research/` | Sourced research documents, one topic each |
 | `docs/analysis/` | Results produced by our own code |
 | `docs/figures/` | Generated figures |
-| `src/agri_hedge/` | Python package (data clients, PRF calculator, analysis) |
+| `src/raincheck/` | Python package (data clients, PRF calculator, analysis) |
 | `scripts/` | Runnable entry points that pull data and regenerate results |
 | `data/processed/` | Small derived datasets (committed) |
 | `data/scenarios/` | Representative farm definitions |
@@ -64,7 +64,7 @@ python3 -m venv .venv
 .venv/bin/python -m pytest
 ```
 
-Raw downloads default to `data/raw/`. Set `AGRI_HEDGE_RAW_DIR` to keep them outside OneDrive.
+Raw downloads default to `data/raw/`. Set `RAINCHECK_RAW_DIR` to keep them outside OneDrive.
 
 ## Workflow
 

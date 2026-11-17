@@ -1,4 +1,4 @@
-"""Offline tests for agri_hedge.kalshi (B2). Fixtures in tests/fixtures/b2/ are real API
+"""Offline tests for raincheck.kalshi (B2). Fixtures in tests/fixtures/b2/ are real API
 responses saved on 2026-10-29, except LEGACY_MARKET below, which is a hand-written example of
 the pre-migration integer-cent format."""
 import json
@@ -8,7 +8,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from agri_hedge import kalshi as K
+from raincheck import kalshi as K
 
 FIX = Path(__file__).parent / "fixtures" / "b2"
 

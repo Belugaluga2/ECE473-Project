@@ -35,7 +35,7 @@ import numpy as np
 import pandas as pd
 import requests
 
-from agri_hedge.config import FIGURES, PROCESSED, RAW
+from raincheck.config import FIGURES, PROCESSED, RAW
 
 SOB_URL = "https://pubfs-rma.fpac.usda.gov/pub/Web_Data_Files/Summary_of_Business/state_county_crop/"
 RAW_DIR = RAW / "rma_sob"
@@ -44,7 +44,7 @@ RAINFALL_INDEX_PLAN_CODE = 13
 YEARS = list(range(2015, 2027))  # 2026 is still incomplete (late intervals unpaid) as of 2026-10
 LATEST_COMPLETE_YEAR = 2025
 STUDY_STATES = ["TX", "OK", "MO", "CO", "NM", "FL"]
-# Farm counties of the study sites (state FIPS, county FIPS), from src/agri_hedge/locations.py.
+# Farm counties of the study sites (state FIPS, county FIPS), from src/raincheck/locations.py.
 STUDY_COUNTIES = {
     "DFW": ("48", "367"), "SAT": ("48", "013"), "OKC": ("40", "051"), "SGF": ("29", "057"),
     "DEN": ("08", "039"), "ABQ": ("35", "057"), "TPA": ("12", "049"),

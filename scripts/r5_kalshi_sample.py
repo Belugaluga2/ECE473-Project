@@ -42,8 +42,8 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 import requests  # noqa: E402
 
-from agri_hedge.config import FIGURES, KALSHI_BASE_URL, RAW  # noqa: E402
-from agri_hedge.locations import CONTRAST_SITES, STUDY_SITES  # noqa: E402
+from raincheck.config import FIGURES, KALSHI_BASE_URL, RAW  # noqa: E402
+from raincheck.locations import CONTRAST_SITES, STUDY_SITES  # noqa: E402
 
 OUT = RAW / "r5_kalshi"
 CACHE = OUT / "cache"

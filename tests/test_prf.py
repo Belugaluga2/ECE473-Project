@@ -1,4 +1,4 @@
-"""Tests for agri_hedge.prf, the PRF premium/indemnity calculator.
+"""Tests for raincheck.prf, the PRF premium/indemnity calculator.
 
 1. Every number in the worked examples of the 2026 Rainfall Index Handbook (FCIC-18150) para 14
    and Exhibit 5 is reproduced exactly ("official" rounding).
@@ -16,8 +16,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from agri_hedge import prf
-from agri_hedge.prf import (
+from raincheck import prf
+from raincheck.prf import (
     PRFElection,
     PRFElectionError,
     dollar_amount_of_protection_per_acre,
@@ -34,7 +34,7 @@ from agri_hedge.prf import (
     trigger_grid_index,
     validate_election,
 )
-from agri_hedge.prf_intervals import INTERVAL_CODES, INTERVAL_NAMES, VERIFIED
+from raincheck.prf_intervals import INTERVAL_CODES, INTERVAL_NAMES, VERIFIED
 
 FIX = Path(__file__).parent / "fixtures" / "b4"
 
@@ -325,7 +325,7 @@ def test_forage_loss_proxy_and_weighted_index():
 # ---------------------------------------------------------------------------------------------
 
 def test_state_caps_texas_is_fifty_percent():
-    from agri_hedge.prf import max_percent_of_value_for
+    from raincheck.prf import max_percent_of_value_for
     caps = max_percent_of_value_for("48", 2026)
     assert caps["Apr-May"] == 0.50
     e = _valid(allocation={"Apr-May": 0.6, "Jul-Aug": 0.4})
@@ -334,7 +334,7 @@ def test_state_caps_texas_is_fifty_percent():
 
 
 def test_2027_jan_feb_cap_and_california_exception():
-    from agri_hedge.prf import max_percent_of_value_for
+    from raincheck.prf import max_percent_of_value_for
     assert max_percent_of_value_for("40", 2027)["Jan-Feb"] == 0.25
     assert max_percent_of_value_for("40", 2027)["Mar-Apr"] == 0.60
     assert max_percent_of_value_for("06", 2027)["Jan-Feb"] == 0.50

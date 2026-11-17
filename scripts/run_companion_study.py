@@ -2,7 +2,7 @@
 
 Run from the repo root:   python scripts/run_companion_study.py [--n-grids 60]
 
-Everything goes through `agri_hedge.platform.companion`, the function behind the app's PRF Companion
+Everything goes through `raincheck.platform.companion`, the function behind the app's PRF Companion
 tab. For each representative farm it enters the farm's real PRF election; for the sweep it enters a
 standard hay-season election (Apr-May 40%, Jun-Jul 35%, Aug-Sep 25%, 90%, $36,585 protection) at
 random grids. Estimated prices (reproducible). Also records the two experiments that set the app's
@@ -24,11 +24,11 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-from agri_hedge import hedge_builder as hb  # noqa: E402
-from agri_hedge import platform as pf  # noqa: E402
-from agri_hedge.config import DOCS, FIGURES, PROCESSED  # noqa: E402
-from agri_hedge.docs_util import write_auto_block  # noqa: E402
-from agri_hedge.prf_grid import grid_id_to_center  # noqa: E402
+from raincheck import hedge_builder as hb  # noqa: E402
+from raincheck import platform as pf  # noqa: E402
+from raincheck.config import DOCS, FIGURES, PROCESSED  # noqa: E402
+from raincheck.docs_util import write_auto_block  # noqa: E402
+from raincheck.prf_grid import grid_id_to_center  # noqa: E402
 
 DOC = DOCS / "analysis" / "21_prf_companion.md"
 HAY = [{"label": "Apr-May", "share": 0.40}, {"label": "Jun-Jul", "share": 0.35}, {"label": "Aug-Sep", "share": 0.25}]

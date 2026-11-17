@@ -1,10 +1,10 @@
-"""Shared paths and constants. Raw data can be redirected off OneDrive with AGRI_HEDGE_RAW_DIR."""
+"""Shared paths and constants. Raw data can be redirected off OneDrive with RAINCHECK_RAW_DIR."""
 import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = ROOT / "data"
-RAW = Path(os.environ.get("AGRI_HEDGE_RAW_DIR", DATA / "raw"))
+RAW = Path(os.environ.get("RAINCHECK_RAW_DIR", DATA / "raw"))
 PROCESSED = DATA / "processed"
 SCENARIOS = DATA / "scenarios"
 DOCS = ROOT / "docs"

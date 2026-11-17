@@ -6,7 +6,7 @@ Steps (all network results are cached under data/raw/prf_official/, so reruns ar
  1. Download the DST grid list (which of the 36,000 CPC cells are CONUS PRF grids).
  2. For every site point in ALL_SITES (station and farm) plus extra check points, ask RMA's own
     grid map (ArcGIS layer behind the DST grid locator) for the grid ID and polygon, and check that
-    agri_hedge.prf_grid.latlon_to_grid_id / grid_id_to_bounds give the same answer.
+    raincheck.prf_grid.latlon_to_grid_id / grid_id_to_bounds give the same answer.
  3. Write data/processed/study_grids.csv.
  4. Pull GetIndexValues (all 11 intervals, every published year) for each study grid and, unless
     --skip-ring, every CONUS PRF grid whose centre is within 100 miles of a settlement station.
@@ -14,7 +14,7 @@ Steps (all network results are cached under data/raw/prf_official/, so reruns ar
     data/processed/prf_official_index_ring100.parquet (study + ring grids) and
     data/processed/prf_ring100_grids.csv (station-to-grid distances for the ring).
 
-Endpoints used are listed in src/agri_hedge/prf_grid.py and printed at the end of the run.
+Endpoints used are listed in src/raincheck/prf_grid.py and printed at the end of the run.
 """
 from __future__ import annotations
 
@@ -25,15 +25,15 @@ import sys
 
 import pandas as pd
 
-from agri_hedge.config import PROCESSED, RAW
-from agri_hedge.locations import ALL_SITES, haversine_miles
-from agri_hedge.prf_grid import (ARCGIS_GRID_LAYER, DST_API, DST_COUNTIES_FOR_GRID_URL,
+from raincheck.config import PROCESSED, RAW
+from raincheck.locations import ALL_SITES, haversine_miles
+from raincheck.prf_grid import (ARCGIS_GRID_LAYER, DST_API, DST_COUNTIES_FOR_GRID_URL,
                                  DST_GRID_LIST_URL, DST_INDEX_URL, DST_PROXY_URL, _session,
                                  cached_index_values, fetch_conus_grid_list,
                                  fetch_counties_for_grid, grid_id_to_bounds, grid_id_to_center,
                                  grid_ids_within_radius, latlon_to_grid_id, official_grid_lookup,
                                  parse_index_values)
-from agri_hedge.prf_intervals import CODE_TO_INTERVAL
+from raincheck.prf_intervals import CODE_TO_INTERVAL
 
 OUT_RAW = RAW / "prf_official"
 INDEX_CACHE = OUT_RAW / "index_json"

@@ -1,4 +1,4 @@
-"""Tests for the rain-to-loss model (src/agri_hedge/loss_model.py, doc 13). No network."""
+"""Tests for the rain-to-loss model (src/raincheck/loss_model.py, doc 13). No network."""
 import importlib.util
 import re
 
@@ -6,9 +6,9 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from agri_hedge import loss_model as lm
-from agri_hedge.config import PROCESSED, ROOT
-from agri_hedge.prf_intervals import INTERVAL_NAMES
+from raincheck import loss_model as lm
+from raincheck.config import PROCESSED, ROOT
+from raincheck.prf_intervals import INTERVAL_NAMES
 
 
 @pytest.fixture(scope="module")

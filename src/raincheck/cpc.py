@@ -3,7 +3,7 @@
 Two gridded data sources matter for PRF:
 * NOAA CPC Unified Gauge-Based Analysis of Daily Precipitation over CONUS (0.25 degree). This was
   PRF's official source through 2026-08-30 (FCIC-18150 handbook, section 33A). Its 0.25-degree
-  cells ARE the PRF grids (see agri_hedge.prf_grid). We read it from
+  cells ARE the PRF grids (see raincheck.prf_grid). We read it from
   - NOAA PSL's monthly-mean file precip.V1.0.mon.mean.nc (units mm/day; 1948-01 to 2024-05 as of
     2026-10-29; "Monthly Values after 2006 are from the real time files (RT)"), via OPeNDAP, and
   - CPC's own daily binary files (units 0.1 mm/day) from 2019 on: the reprocessed "UPDATED"
@@ -31,8 +31,8 @@ from typing import Callable
 import numpy as np
 import pandas as pd
 
-from agri_hedge.prf_grid import CELL_DEG, LAT_SOUTH, LON_WEST, N_COLS, N_ROWS
-from agri_hedge.prf_intervals import INTERVAL_CODES, INTERVAL_MONTHS, INTERVAL_NAMES
+from raincheck.prf_grid import CELL_DEG, LAT_SOUTH, LON_WEST, N_COLS, N_ROWS
+from raincheck.prf_intervals import INTERVAL_CODES, INTERVAL_MONTHS, INTERVAL_NAMES
 
 MM_PER_INCH = 25.4
 

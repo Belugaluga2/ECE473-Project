@@ -131,7 +131,7 @@ Grouped rows cover every cell of the named table.
 | Grazing base value / county pasture rent | 1.17 (Atascosa) to 6.76 (Torrance) | ratio | 2026 base value, 2024-2025 rent | Tables B and D | DERIVED |
 | Average insured acres per PRF policy, 2026 | Parker 603, Atascosa 1,235, Grady 658, Dade 533, Elbert 8,281, Torrance 15,230, Hardee 641, Kane 69 | acres/policy | 2026 | sobcov acres / policies earning premium | DERIVED |
 | Hardee haying insured acres / Census hay acres | 59,897 / 8,070 = 7.4 | ratio | 2026 vs 2022 | sobtpu 2026; Census 2022 | DERIVED |
-| Station-to-farm distance, ABQ | 53 | miles | Albuquerque Intl to Torrance farm point | `src/agri_hedge/locations.py` (project canonical sites) | CONFIRMED |
+| Station-to-farm distance, ABQ | 53 | miles | Albuquerque Intl to Torrance farm point | `src/raincheck/locations.py` (project canonical sites) | CONFIRMED |
 | Old Texas extension guidance example | "April-May for spring and August-September for Fall"; max 50% per interval in Texas | text | Texas, 2011 policies | Pena, J.G. (2010), AG-ECO News vol. 26 issue 25, Texas AgriLife Extension, https://agecoext.tamu.edu/wp-content/uploads/2013/08/09-02-2010.pdf p. 2 | CONFIRMED (dated) |
 
 ## Detail
@@ -173,7 +173,7 @@ Grouped rows cover every cell of the named table.
 | Percent of value must go to more than one interval (at least 2) | 26-RI-PRF sec. 2(a); FCIC-18150 para. 32C | every farm uses 3 or 4 intervals |
 | Each selected interval gets at least 10% | 26-RI-PRF sec. 2(a); ADM field 51 = 0.10 | smallest share is 10% (OKC_graze Sep-Oct) |
 | Each interval at most the county maximum: 50% (TX, NM, FL), 60% (OK, MO, CO, IL) | 26-RI-PRF sec. 2(a) points to the Special Provisions; ADM 2026 field 52, same value for every grid and interval in each county | largest shares: 50% ABQ Aug-Sep (NM max 50%), 45% DEN Apr-May (CO max 60%) |
-| The same month cannot be in two selected intervals | 26-RI-PRF sec. 2(b) (example: picking Apr-May rules out Mar-Apr and May-Jun) | checked pairwise with `agri_hedge.prf_intervals.overlaps` |
+| The same month cannot be in two selected intervals | 26-RI-PRF sec. 2(b) (example: picking Apr-May rules out Mar-Apr and May-Jun) | checked pairwise with `raincheck.prf_intervals.overlaps` |
 | Shares sum to 100% for each grid, use, practice and share | FCIC-18150 para. 14 | all sum to 1.00 |
 | Coverage level 70-90% | 26-RI-PRF sec. 5(a)(1) | 0.85 or 0.90 |
 | Productivity factor 60-150% in 1% steps | FCIC-18150 para. 13; 26-RI-PRF sec. 5(a)(2) | 1.30-1.50 |

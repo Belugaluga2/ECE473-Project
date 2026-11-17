@@ -2,9 +2,9 @@
 import numpy as np
 import pytest
 
-from agri_hedge import exotic as ex
-from agri_hedge import hedge_builder as hb
-from agri_hedge import optimizer as op
+from raincheck import exotic as ex
+from raincheck import hedge_builder as hb
+from raincheck import optimizer as op
 
 IDX = np.linspace(0.0, 250.0, 251)
 
@@ -129,7 +129,7 @@ def test_tail_metrics():
 
 
 def test_exotic_quote_builds_term_sheet_and_ticket():
-    from agri_hedge import platform as pf
+    from raincheck import platform as pf
     q = pf.exotic_quote({"lat": 32.7771, "lon": -97.8059, "month": 11, "shape": "convex2", "max_payout": 6000,
                          "price_source": "model"})
     assert q["product"]["station"] == "DFW" and q["product"]["max_payout_usd"] == 6000
@@ -144,7 +144,7 @@ def test_exotic_quote_builds_term_sheet_and_ticket():
 
 
 def test_exotic_quote_both_tails_uses_yes_legs_and_snapshot_books():
-    from agri_hedge import platform as pf
+    from raincheck import platform as pf
     from datetime import date
     q = pf.exotic_quote({"station_key": "DFW", "month": 11, "shape": "both_tails", "max_payout": 1000},
                         live=pf.LiveQuotes(offline=True), today=date(2026, 10, 20))

@@ -76,7 +76,7 @@ def read_sobcov(path: Path) -> pd.DataFrame:
 def main() -> None:
     import requests
 
-    from agri_hedge.config import RAW
+    from raincheck.config import RAW
 
     raw_dir = RAW / "rma_sob"
     raw_dir.mkdir(parents=True, exist_ok=True)

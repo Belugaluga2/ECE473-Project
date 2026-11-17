@@ -15,7 +15,7 @@ farm's *rain-driven revenue loss* instead, measured two ways:
 Hedges are long-only portfolios of Kalshi "Above X inches" contracts on one station-month. A NO pays
 $1 iff the monthly total is <= X (drought side); a YES pays $1 iff the total is > X (excess-rain
 side). Weights come from the same non-negative least squares used for PRF replication
-(`agri_hedge.replicate.fit_ladder`), with a free cash term so that no contract is bought only to
+(`raincheck.replicate.fit_ladder`), with a free cash term so that no contract is bought only to
 stand in for cash. Hedge effectiveness (HE) = 1 - Var(loss - payout) / Var(loss): the share of the
 variance of rain-driven revenue that the hedge removes.
 
@@ -30,9 +30,9 @@ from typing import Mapping, Sequence
 import numpy as np
 import pandas as pd
 
-from agri_hedge.locations import haversine_miles
-from agri_hedge.pricing import walk_no_book
-from agri_hedge.replicate import fit_ladder, no_payoff
+from raincheck.locations import haversine_miles
+from raincheck.pricing import walk_no_book
+from raincheck.replicate import fit_ladder, no_payoff
 
 SIDES = ("no", "yes")
 
