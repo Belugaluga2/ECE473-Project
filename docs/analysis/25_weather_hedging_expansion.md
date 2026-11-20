@@ -120,6 +120,8 @@ A US Farm Credit association already sells PRF ([Capital Farm Credit](https://ww
 
 ## Pairing mostly buys diversification; its real value is the worst year
 
+Doc 26 ([26_intermediary_capital.md](26_intermediary_capital.md)) prices the middle seat of this pairing in dollars: capital, capital cost, break-even load and 1996-2025 gains and losses for a Kalshi maker, a lean carrier and a fronted insurer/MGA.
+
 The netting backtest (`scripts/run_expansion_netting.py`) sells equal-premium linear contracts on each Kalshi station's 1951-2025 record. Puts pay below the 30th percentile and calls above the 70th, with a 20% load. The review added the missing baseline, a second independent contract:
 
 | Book (rain, monthly total) | Capital95 / premium | Worst year / premium | Source |
