@@ -9,6 +9,7 @@
 - 2026-11-05: Milestone 2 built as planned in the submitted Milestone I (docs 15-20) plus the PRF Companion showcase (docs 21-22). Summary and write-up: [MILESTONE_2.md](MILESTONE_2.md); see [Milestone 2 results](#milestone-2-results-2026-11-05).
 - 2026-11-08: Exotic payoffs (doc 23): nine payoff shapes replicated from the ladder, their error waterfall, executable prices on the 2026-11-02 book, and a product designer (`platform.exotic_quote`, `POST /api/exotic`). See [Exotic payoffs](#exotic-payoffs-2026-11-08).
 - 2026-11-09: Contract design (doc 24): the shapes re-compared at equal premium (the convex depth advantage disappears), a holdout term sheet, the expected-utility-optimal payout on the ladder (a deep-drought digital at Kalshi's load; the exponential and quadratic shapes capture 90%+ of its value, linear two thirds), the designer and a shape comparison in the app, and an advisor that designs a contract from a sentence (`advisor.py`, Claude with the project's tools when a key is set). See [Contract design](#contract-design-and-the-advisor-2026-11-09).
+- 2026-11-20: Intermediary economics (doc 26): what the middle seat of the two-way market costs, earns and loses for a Kalshi maker, a lean carrier and a fronted insurer/MGA. See [Intermediaries](#intermediaries-and-capital-2026-11-20).
 - 2026-11-20: Doc 25 second pass: lenders are distributors, not hedgers; Kalshi nets same-event collateral; head-to-head of 17 strategies finds a loose pack led by 508(h), structuring software and a snow Companion, with own-book pairings at #10 or lower. Three independent logic reviews: sound with fixes, applied.
 - 2026-11-19: Expansion research (doc 25): bridge insurance for uninsured farmers fails abroad and needs a wholesale buyer at home; pairing opposite weather hedgers mostly buys ordinary diversification, with its real value in the worst year and only on an insurer's own book (Kalshi fully collateralizes). Ranked: wholesale Companion to lenders/co-ops, a city snow book, then a south-central winter rain pairing. See [Expansion research](#expansion-research-2026-11-19-second-pass-2026-11-20).
 - 2026-11-12: Milestone II update ([TeX](milestone2/milestone2_update.tex), [PDF](milestone2/milestone2_update.pdf)) connects the original benchmark, companion and drought-weighted design for the course submission.
@@ -42,6 +43,7 @@ Every research document has a numbers table that gives a source for each number.
 | M3 direction: exotic payoffs (insurance derivative layer on binary contracts) | team | [analysis/23_exotic_payouts.md](analysis/23_exotic_payouts.md) | done 2026-11-08 |
 | M3: contract design (equal premium, holdout term sheet, utility-optimal payout), the designer tab and the advisor | team | [analysis/24_contract_design.md](analysis/24_contract_design.md) | done 2026-11-09 |
 | Expansion research: uninsured farmers, multi-sector weather market maker, counterparty netting backtest | team | [analysis/25_weather_hedging_expansion.md](analysis/25_weather_hedging_expansion.md), notes in [research/expansion_notes/](research/expansion_notes/) | draft, second pass and logic reviews 2026-11-20 |
+| Expansion follow-up: the two-way market structure, and the capital, costs, gains and losses of an insurer or other intermediary | team | [analysis/26_intermediary_capital.md](analysis/26_intermediary_capital.md) | draft 2026-11-20 |
 
 ## Study sites
 
@@ -215,6 +217,15 @@ Doc 25. Six web research tracks (uninsured farmers, venues, ski/snow, market-mak
   - In the data-neutral ranking the on-exchange market maker (the original idea) rises from #6 to #2, and the rancher Companion falls to #10.
   - Restaurants, ski resorts and international stay low for measured reasons: no matching listed contract, carrier or ECP rules, Kalshi country restrictions.
 - **Not measured:** real purchase behavior in any non-farm segment; snow-contractor HE; whether Kalshi prices El Niño (the December books are the test).
+
+## Intermediaries and capital (2026-11-20)
+Doc 26 (`scripts/run_intermediary_capital.py`). It prices the middle seat between dry-side ranchers (puts) and wet-side venues (calls) on doc 25's contracts, for five books and three risk-holding intermediaries. Capital is set at 1-in-200, from a copula fitted to 1951-2025 station rain.
+
+- **Two-way flow cuts capital about 60%, but only if it exists.** On a $10M-a-year south-central Nov-Feb book, balanced wet premium cuts our Kalshi maker's capital from $39.6M to $15.2M and a lean carrier's from $28.1M to $9.6M. Break-even loads fall from 14% to 6% and 9%. At today's 1:80 flow nothing changes.
+- **A fronted insurer/MGA is the costliest middle.** About 33% of premium goes to fronting, commission, tax and admin, so the hedger pays 1.49-1.59 per $1 of expected payout. On Kalshi today the hedger pays 1.15, and subsidized PRF costs a rancher 0.61. Capital costs the insurer only 0-7% of premium, so cheap reinsurance capital does not help much.
+- **Kalshi's netting helps a maker, diversification helps a carrier.** Maker break-even: 14% ranch-only, 11% national puts, 5% national balanced. Lean carrier: 14%, 11%, 9%.
+- **Drift is the biggest loss.** Priced on 1951-1995, the south-central books paid 1.18-1.22 per $1 of expected payout in 1996-2025. Every intermediary loses money there at 9% and 20% loads, about $23M in the 2008 season alone on the ranch book. Only the national balanced book is profitable out of sample.
+- **Verdict.** Intermediaries pay for themselves when they bring buyers (brokers, premium financiers: about 4% of premium for pay-at-harvest), bring the other side, or bring a subsidy (508(h), not modeled). A risk-holding insurer for ranchers alone does not.
 
 ## Next steps
 The full roadmap (wet-side cover, two-month mock market, national coverage, loss-based target, temperature, demo-exchange orders, liquidity plan) is in [DEMO.md](DEMO.md#roadmap-expanding-on-the-showcase-milestone-iii-and-beyond). Near-term:

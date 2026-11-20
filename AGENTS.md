@@ -12,6 +12,8 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 
 **Added 2026-11-19: expansion research (doc 25).** Bridge insurance abroad fails (Kalshi country restrictions, no local stations, tiny tickets); pairing opposite weather hedgers mostly buys ordinary diversification and its worst-year benefit only exists on an insurer's own book. Second pass (2026-11-20) reversed the ranking. Lenders show no drought losses to hedge, so they are distributors. Kalshi already nets same-event collateral (`DIRECNET`). A 17-strategy head-to-head finds no clear winner: a loose pack led by 508(h), structuring software and a snow Companion; own-book pairings rank #10 or lower. Recommended combination: fix the menu, sell the engine, seed the book. Three independent logic reviews are in `docs/research/expansion_notes/logic_review_*.md`. Non-farm demand is unmeasured.
 
+**Added 2026-11-20: intermediaries (doc 26).** Balanced wet and dry flow at the same station-months cuts an intermediary's capital about 60%, but today's 1:80 flow saves nothing. A fronted insurer/MGA adds about 33% of premium (hedger pays 1.49-1.59 per $1 of expected payout, against 1.15 on Kalshi). A lean carrier and our own Kalshi maker both break even near a 14% load on the ranch book. Priced on 1951-1995, every south-central book loses money in 1996-2025: drift costs more than capital. The intermediaries worth having bring buyers or the other side, not capital.
+
 **Added 2026-11-09: contract design and the advisor (doc 24).** At equal premium, convex shapes beat linear in 0 of 36 insured windows at the saved book's depth. Under a modeled farmer with risk aversion 2, wealth twice the month's insured value and a 20% price load, smooth exponential and quadratic shapes capture 93% and 90% of the utility-optimal contract's modeled value, versus 67% for linear. The raw optimum overfits; these are modeled utility results, not observed income gains. The app has a contract designer and advisor. The rule-based advisor runs in the demo; the Claude path has scripted-client tests but no live API test yet.
 
 ## Deadlines
@@ -36,12 +38,13 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 - `src/agri_hedge/design.py` + `scripts/run_exotic_design.py`: equal-premium comparison, holdout term sheet, utility-optimal payout (doc 24; about 5 minutes, same flags). `src/agri_hedge/advisor.py`: the prompt-driven designer (crop table, geocoders, tool schemas, system prompt, rule-based fallback). The app's exotic entry points are `platform.exotic_quote`, `platform.exotic_compare` and `advisor.advise`.
 - `scripts/run_expansion_netting.py`: counterparty-netting backtest for the multi-sector market-maker idea (doc 25; downloads NOAA ACIS daily data into `data/raw/stations/acis_expansion/` on first run, about 2.5 minutes; `--offline` about 45 s). Research notes and the four gap reviews are in `docs/research/expansion_notes/`; the reviews' checks are in `scripts/experiments/expansion_review/`.
 - `scripts/run_expansion_lenses.py` (about 130 s; caches NASA POWER in `data/raw/nasa_power/`, `--offline`): lender-book HE, ENSO in Kalshi prices, solar. `scripts/run_expansion_compare.py` (about 1 s): head-to-head of the strategies scored in `data/processed/expansion_strategy_scores.csv`. Edit the scores CSV, not the script; it rewrites doc 25's AUTO block.
+- `scripts/run_intermediary_capital.py` (about 10 s, committed data only): doc 26, the two-way market's middle seat. Capital, capital cost, break-even load and 1996-2025 gains and losses for a Kalshi maker, a lean carrier and a fronted insurer/MGA; cost inputs are constants at the top of the script, sourced in doc 26's numbers table. Rewrites doc 26's AUTO block.
 - Demand from losses (doc 25 "Demand estimate" section): `scripts/run_rain_reservations.py` (OpenTable seated diners vs rain), `scripts/run_rain_venues.py` (Retrosheet MLB attendance vs rain, Divvy), `scripts/run_weather_demand.py` (loss-based demand by segment; about 5 s). The live OpenTable file `data/raw/opentable/opentable_soti_20261119.json` was saved by hand from the dashboard's data endpoint (opentable.com/c/wapi/r9-ot-soti/v1/data, which blocks scripted downloads); data/raw is gitignored, so teammates rerunning the reservations script need to save that file themselves. The committed `data/processed/rain_reservations_*.csv` are enough for the demand script.
 
 ## Run it
 
 ```bash
-.venv/bin/python -m pytest              # 390 tests, ~12 s (~35 s on Windows)
+.venv/bin/python -m pytest              # 396 tests, ~12 s (~35 s on Windows)
 .venv/bin/python scripts/run_app.py     # http://localhost:8473/?demo  (PRF Companion, Dallas hay farm); ?demo=exotic, ?demo=advisor
 ```
 
