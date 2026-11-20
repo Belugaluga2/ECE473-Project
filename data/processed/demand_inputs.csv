@@ -1,0 +1,302 @@
+segment,parameter,low,central,high,unit,source,status
+A_restaurants_bars,US full-service restaurant establishments (722511),257282,264208,264208,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private); low = third-party CBP-style count https://data.mewayz.com/industry/722511 (year unstated)",verified
+A_restaurants_bars,US full-service restaurant annual payroll (722511),163.6,163.6,163.6,USD bn,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private)",verified
+A_restaurants_bars,US full-service restaurant annual sales (722511),424.4,475.1,500,USD bn,https://fred.stlouisfed.org/series/IPUTN722511T300000000 (BLS sectoral output 2023); low https://verticaliq.com/product/full-service-restaurants (undated); high assumption,secondary
+A_restaurants_bars,Full-service sales per establishment,1.0,1.8,2.3,USD m/yr,"central = 475.1bn / 264,208 (BLS output 2023 / QCEW 2024); low/high assumption for independents vs chains",assumption
+A_restaurants_bars,Full-service payroll / sales ratio,0.3,0.344,0.4,ratio,163.6bn QCEW 2024 wages / 475.1bn BLS output 2023; NRA labor 34.2% of sales https://restaurant.org/research-and-media/research/restaurant-economic-insights/analysis-commentary/elevated-labor-costs-had-a-significant-impact-on-restaurant-profitability-in-2024/ (2025),secondary
+A_restaurants_bars,US drinking places establishments (722410),42624,42624,42624,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private)",verified
+A_restaurants_bars,US drinking places annual payroll (722410),11.0,11.0,11.0,USD bn,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private)",verified
+A_restaurants_bars,Drinking places payroll / sales ratio,0.25,0.3,0.4,ratio,no 2022 Economic Census figure retrieved (Census API now requires a key),assumption
+A_restaurants_bars,US drinking places annual sales (722410),27.5,36.7,44.0,USD bn,payroll 11.0bn / ratio above,assumption
+A_restaurants_bars,Full-service median pre-tax margin,0.028,0.04,0.06,share of sales,NRA Restaurant Operations Data Abstract FY2024 median 2.8% https://restaurant.org/research-and-media/research/restaurant-economic-insights/analysis-commentary/elevated-labor-costs-had-a-significant-impact-on-restaurant-profitability-in-2024/ (2025); 4.0% = FSR 2019; 6% = vendor range,verified
+A_restaurants_bars,Limited-service median pre-tax margin,0.04,0.04,0.06,share of sales,"same NRA source (FY2024 4.0%, 2019 6.0%)",verified
+A_restaurants_bars,"Fixed-cost share of sales (rent, salaried mgmt, utilities, insurance, depreciation)",0.15,0.2,0.3,share of sales,inference from NRA labor 34.2% median; no direct fixed-cost survey retrieved,assumption
+A_restaurants_bars,Contribution margin lost per $ of lost sales,0.55,0.65,0.7,share of lost sales,1 - food/bev cost (~30-35%) - variable hourly labor; assumption,assumption
+A_restaurants_bars,Median small-restaurant cash buffer,12,16,27,days of outflows,"JPMorgan Chase Institute 'Cash is King' https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/report-cash-flows-balances-and-buffer-days (2016, restaurants 16; all SMB 27); low = Orlando all-SMB 12.8 https://www.jpmorganchase.com/institute/all-topics/business-growth-and-entrepreneurship/small-business-cash-liquidity-in-25-metro-areas (2025 data)",verified
+A_restaurants_bars,Share of full-service operators with outdoor dining (peak season),0.57,0.72,0.72,share,"NRA Sept 2021 https://www.restaurant.org/articles/news/customer-demand-for-outdoor-dining-rose (72% FSR, 57% LSR, 65% all)",verified
+A_restaurants_bars,Share of operators with outdoor dining in winter (Feb),0.3,0.4,0.49,share,"NRA tracking 40% Feb, 49% Nov (same page; year likely 2020-21)",secondary
+A_restaurants_bars,Share of patio operators with outdoor >40% of daily sales,0.2,0.35,0.35,share,NRA Sept 2021 (same page); low = assumption for post-pandemic decline,verified
+A_restaurants_bars,Patio share of in-season sales (patio operators),0.1,0.2,0.4,share of sales,inference from NRA 35% >40%; assumption,assumption
+A_restaurants_bars,Diners who choose restaurants specifically for outdoor seating,0.41,0.41,0.7,share of diners,Toast survey (undated) https://pos.toasttab.com/blog/data/restaurant-outdoor-seating-insights (41%; 70% willing to wait longer),secondary
+A_restaurants_bars,"Monthly comp-sales gap, rainy vs dry month",0.008,0.012,0.016,share of month sales,APT June/July 2015 https://www.qsrweb.com/news/rain-impacts-june-restaurant-sales/ (FSR +2.0 vs +2.8; all +2.1 vs +3.3),secondary
+A_restaurants_bars,New York: full-service establishments (722511),19470,19470,19470,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,New York: full-service payroll (722511),12706.0,12706.0,12706.0,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,New York: full-service sales (722511),31765,36936,42353,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Chicago: full-service establishments (722511),7256,7256,7256,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Chicago: full-service payroll (722511),3818.6,4492.5,5166.4,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Chicago: full-service sales (722511),11231,13060,14975,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Los Angeles: full-service establishments (722511),10896,10896,10896,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Los Angeles: full-service payroll (722511),8583.3,8583.3,8583.3,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Los Angeles: full-service sales (722511),21458,24951,28611,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Miami: full-service establishments (722511),6230,6230,6230,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Miami: full-service payroll (722511),4978.9,4978.9,4978.9,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Miami: full-service sales (722511),12447,14474,16596,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Houston: full-service establishments (722511),5050,5050,5050,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Houston: full-service payroll (722511),2657.7,3126.7,3595.7,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Houston: full-service sales (722511),7817,9089,10422,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Dallas-Fort Worth: full-service establishments (722511),5730,5730,5730,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Dallas-Fort Worth: full-service payroll (722511),4349.0,4349.0,4349.0,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Dallas-Fort Worth: full-service sales (722511),10872,12642,14497,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Austin: full-service establishments (722511),1676,1676,1676,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Austin: full-service payroll (722511),882.0,1037.7,1193.4,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Austin: full-service sales (722511),2594,3017,3459,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,San Antonio: full-service establishments (722511),1770,1770,1770,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,San Antonio: full-service payroll (722511),1304.1,1304.1,1304.1,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,San Antonio: full-service sales (722511),3260,3791,4347,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Atlanta: full-service establishments (722511),5349,5349,5349,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Atlanta: full-service payroll (722511),2815.0,3311.8,3808.6,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Atlanta: full-service sales (722511),8280,9627,11039,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Boston: full-service establishments (722511),4278,4278,4278,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Boston: full-service payroll (722511),3739.9,3739.9,3739.9,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Boston: full-service sales (722511),9350,10872,12466,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Philadelphia: full-service establishments (722511),4318,4318,4318,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Philadelphia: full-service payroll (722511),2272.5,2673.5,3074.5,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Philadelphia: full-service sales (722511),6684,7772,8912,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Washington DC: full-service establishments (722511),4959,4959,4959,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Washington DC: full-service payroll (722511),2609.8,3070.4,3531.0,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Washington DC: full-service sales (722511),7676,8926,10235,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Denver: full-service establishments (722511),2292,2292,2292,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Denver: full-service payroll (722511),1206.2,1419.1,1632.0,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Denver: full-service sales (722511),3548,4125,4730,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Seattle: full-service establishments (722511),3935,3935,3935,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Seattle: full-service payroll (722511),2597.3,2597.3,2597.3,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Seattle: full-service sales (722511),6493,7550,8658,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Phoenix: full-service establishments (722511),2838,2838,2838,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Phoenix: full-service payroll (722511),2743.8,2743.8,2743.8,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Phoenix: full-service sales (722511),6860,7976,9146,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Las Vegas: full-service establishments (722511),1805,1805,1805,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Las Vegas: full-service payroll (722511),2135.6,2135.6,2135.6,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Las Vegas: full-service sales (722511),5339,6208,7119,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,New Orleans: full-service establishments (722511),1292,1292,1292,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,New Orleans: full-service payroll (722511),710.9,710.9,710.9,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,New Orleans: full-service sales (722511),1777,2067,2370,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Minneapolis: full-service establishments (722511),2481,2481,2481,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Minneapolis: full-service payroll (722511),1305.7,1536.1,1766.5,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Minneapolis: full-service sales (722511),3840,4465,5120,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Detroit: full-service establishments (722511),3140,3140,3140,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Detroit: full-service payroll (722511),1679.9,1679.9,1679.9,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Detroit: full-service sales (722511),4200,4883,5600,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,San Francisco: full-service establishments (722511),4939,4939,4939,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,San Francisco: full-service payroll (722511),3320.9,3320.9,3320.9,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,San Francisco: full-service sales (722511),8302,9654,11070,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Oklahoma City: full-service establishments (722511),1227,1227,1227,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Oklahoma City: full-service payroll (722511),645.7,759.7,873.7,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Oklahoma City: full-service sales (722511),1899,2208,2532,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,St. Louis: full-service establishments (722511),1980,1980,1980,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,St. Louis: full-service payroll (722511),1042.0,1225.9,1409.8,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,St. Louis: full-service sales (722511),3065,3564,4086,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Tampa: full-service establishments (722511),2760,2760,2760,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Tampa: full-service payroll (722511),1978.6,1978.6,1978.6,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722511.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Tampa: full-service sales (722511),4946,5752,6595,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,New York: drinking places establishments (722410),2592,2592,2592,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,New York: drinking places payroll (722410),981.7,981.7,981.7,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,New York: drinking places sales (722410),2454,3272,3927,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Chicago: drinking places establishments (722410),1554,1554,1554,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Chicago: drinking places payroll (722410),341.3,401.5,461.7,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Chicago: drinking places sales (722410),1004,1338,1606,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Los Angeles: drinking places establishments (722410),879,879,879,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Los Angeles: drinking places payroll (722410),356.7,356.7,356.7,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Los Angeles: drinking places sales (722410),892,1189,1427,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Miami: drinking places establishments (722410),447,447,447,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Miami: drinking places payroll (722410),288.8,288.8,288.8,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Miami: drinking places sales (722410),722,963,1155,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Houston: drinking places establishments (722410),677,677,677,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Houston: drinking places payroll (722410),148.7,174.9,201.1,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Houston: drinking places sales (722410),437,583,700,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Dallas-Fort Worth: drinking places establishments (722410),515,515,515,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Dallas-Fort Worth: drinking places payroll (722410),113.0,133.0,152.9,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Dallas-Fort Worth: drinking places sales (722410),332,443,532,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Austin: drinking places establishments (722410),387,387,387,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Austin: drinking places payroll (722410),174.2,174.2,174.2,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Austin: drinking places sales (722410),435,581,697,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,San Antonio: drinking places establishments (722410),392,392,392,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,San Antonio: drinking places payroll (722410),86.1,101.3,116.5,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,San Antonio: drinking places sales (722410),253,338,405,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Atlanta: drinking places establishments (722410),360,360,360,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Atlanta: drinking places payroll (722410),79.0,93.0,106.9,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Atlanta: drinking places sales (722410),232,310,372,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Boston: drinking places establishments (722410),230,230,230,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Boston: drinking places payroll (722410),106.5,106.5,106.5,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Boston: drinking places sales (722410),266,355,426,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Philadelphia: drinking places establishments (722410),777,777,777,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Philadelphia: drinking places payroll (722410),174.4,174.4,174.4,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Philadelphia: drinking places sales (722410),436,581,698,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Washington DC: drinking places establishments (722410),319,319,319,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Washington DC: drinking places payroll (722410),70.0,82.4,94.8,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Washington DC: drinking places sales (722410),206,275,330,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Denver: drinking places establishments (722410),424,424,424,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Denver: drinking places payroll (722410),93.1,109.5,125.9,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Denver: drinking places sales (722410),274,365,438,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Seattle: drinking places establishments (722410),480,480,480,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Seattle: drinking places payroll (722410),194.2,194.2,194.2,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Seattle: drinking places sales (722410),485,647,777,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Phoenix: drinking places establishments (722410),378,378,378,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Phoenix: drinking places payroll (722410),167.9,167.9,167.9,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Phoenix: drinking places sales (722410),420,560,672,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Las Vegas: drinking places establishments (722410),280,280,280,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Las Vegas: drinking places payroll (722410),255.6,255.6,255.6,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Las Vegas: drinking places sales (722410),639,852,1022,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,New Orleans: drinking places establishments (722410),485,485,485,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,New Orleans: drinking places payroll (722410),106.5,125.3,144.1,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,New Orleans: drinking places sales (722410),313,418,501,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Minneapolis: drinking places establishments (722410),397,397,397,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Minneapolis: drinking places payroll (722410),87.2,102.6,118.0,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Minneapolis: drinking places sales (722410),256,342,410,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Detroit: drinking places establishments (722410),538,538,538,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Detroit: drinking places payroll (722410),195.5,195.5,195.5,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Detroit: drinking places sales (722410),489,652,782,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,San Francisco: drinking places establishments (722410),666,666,666,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,San Francisco: drinking places payroll (722410),222.6,222.6,222.6,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,San Francisco: drinking places sales (722410),556,742,890,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Oklahoma City: drinking places establishments (722410),136,136,136,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Oklahoma City: drinking places payroll (722410),29.8,35.1,40.4,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,Oklahoma City: drinking places sales (722410),88,117,140,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,St. Louis: drinking places establishments (722410),560,560,560,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,St. Louis: drinking places payroll (722410),123.0,144.7,166.4,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA (payroll suppressed; imputed = estabs x US payroll per estab)",assumption
+A_restaurants_bars,St. Louis: drinking places sales (722410),362,482,579,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+A_restaurants_bars,Tampa: drinking places establishments (722410),461,461,461,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Tampa: drinking places payroll (722410),158.1,158.1,158.1,USD m/yr,"https://data.bls.gov/cew/data/api/2024/a/industry/722410.csv (BLS QCEW 2024 annual, private) MSA",verified
+A_restaurants_bars,Tampa: drinking places sales (722410),395,527,632,USD m/yr,payroll / payroll-to-sales ratio (see national rows),assumption
+B_outdoor_venues,MLB teams,30,30,30,teams,league structure,verified
+B_outdoor_venues,MLB 2025 total attendance,71.4,71.4,71.4,million fans,https://frontofficesports.com/mlb-tops-71-4-million-fans-first-3-year-growth-run-since-2007/ (2025 season),secondary
+B_outdoor_venues,MLB open-air or retractable share of parks exposed to rain,0.7,0.77,0.8,share of 30 parks,assumption: about 7 of 30 parks have roofs (retractable or fixed),assumption
+B_outdoor_venues,MiLB affiliated teams,120,120,120,teams,https://www.milb.com/news/dragons-finish-3-among-120-teams-in-attendance-in-2025 (2025),verified
+B_outdoor_venues,MiLB 2025 total attendance,30.36,30.36,30.36,million fans,"same MiLB source (30,360,682; avg 3,847/game)",verified
+B_outdoor_venues,MiLB per-capita revenue per fan (tickets+concessions+parking),20,30,40,USD per fan,no source retrieved,assumption
+B_outdoor_venues,Spectator-sports team establishments (711211),3803,3803,3803,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/711211.csv (BLS QCEW 2024 annual, private)",verified
+B_outdoor_venues,Spectator-sports team payroll (711211),30.9,30.9,30.9,USD bn,"https://data.bls.gov/cew/data/api/2024/a/industry/711211.csv (BLS QCEW 2024 annual, private)",verified
+B_outdoor_venues,US music festivals per year,512,1120,1140,festivals,low Music Festival Wizard 2023 listings; central/high JamBase 2023/2019 https://www.jambase.com/article/music-festivals-by-the-numbers-year-in-review-2024 (2024),secondary
+B_outdoor_venues,"US festivals drawing >50,000",18,18,30,festivals,Music Festival Wizard 2023 (via search summary); high assumption,secondary
+B_outdoor_venues,Amusement and theme park establishments (713110),1338,1338,1338,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/713110.csv (BLS QCEW 2024 annual, private)",verified
+B_outdoor_venues,Amusement and theme park payroll (713110),7.88,7.88,7.88,USD bn,"https://data.bls.gov/cew/data/api/2024/a/industry/713110.csv (BLS QCEW 2024 annual, private)",verified
+B_outdoor_venues,North America theme park visits,300,300,335,million visits,IAAPA forecast 2024 https://iaapa.org/iaapa-announces-2024-summer-travel-trends (2024); high third-party 335M (unverified),secondary
+B_outdoor_venues,North America theme park consumer spending,32,32,32,USD bn,same IAAPA 2024 forecast,secondary
+B_outdoor_venues,Theme-park quarterly attendance swing blamed on rain,0.06,0.1,0.17,share of quarter attendance,repo note docs/research/expansion_notes/hospitality_venues.md (company filings),secondary
+B_outdoor_venues,US golf facilities,13900,14000,14000,facilities,NGF end-2025 https://www.ngf.org/short-game/golfs-state-of-industry-in-3-minutes-3/ (2026),verified
+B_outdoor_venues,US golf courses (18-hole equivalents),16000,16000,16000,courses,same NGF source,verified
+B_outdoor_venues,Golf course and country club establishments (713910),11106,11106,11106,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/713910.csv (BLS QCEW 2024 annual, private)",verified
+B_outdoor_venues,Golf course and country club payroll (713910),15.55,15.55,15.55,USD bn,"https://data.bls.gov/cew/data/api/2024/a/industry/713910.csv (BLS QCEW 2024 annual, private)",verified
+B_outdoor_venues,US rounds played 2025,531,540,545,million rounds,record year; +1.2% Golf Datatech https://www.ngf.org/short-game/record-rounds-again-in-2025-with-2k-fewer-courses/ (2026); 540M from secondary summary,secondary
+B_outdoor_venues,Average 18-hole public green fee,35,41,60,USD per round,NGF via https://www.golfdigest.com/story/green-fees-may-be-surging-post-pandemic--but-not-as-much-as-you- (non-resort ~$41); high assumption incl. resorts,secondary
+B_outdoor_venues,Total revenue per occupied tee time vs green fee,1.3,1.45,1.6,multiple of green fee,NGF RevPOTT ~45% above playing fees (same Golf Digest/NGF),secondary
+B_outdoor_venues,US golf on-course revenue (rounds x fee x RevPOTT),20,32,45,USD bn/yr,inference: 540M x $41 x 1.45,assumption
+B_outdoor_venues,Golf rounds lost per extra inch of monthly rain,0.015,0.022,0.03,share of month rounds,repo note docs/research/expansion_notes/other_sectors.md,secondary
+C_construction,Construction establishments (NAICS 23),938478,938478,938478,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/23.csv (BLS QCEW 2024 annual, private)",verified
+C_construction,Construction payroll (NAICS 23),659.4,659.4,659.4,USD bn,"https://data.bls.gov/cew/data/api/2024/a/industry/23.csv (BLS QCEW 2024 annual, private)",verified
+C_construction,US value of construction put in place,2000,2150,2200,USD bn/yr,Census VIP (not fetched this pass; recalled ~2.1-2.2T SAAR 2024),unverified
+C_construction,Share of workdays lost to weather (humid East/South),0.08,0.14,0.2,share of days,Asheville NC study ~14% of days (51 days/yr) via https://eng.auburn.edu/files/centers/hrc/aldot-930987-final1.pdf context; range assumption,secondary
+C_construction,Contract rain-day allowance example,10,15,25,days per 6-month project,"practitioner example (projul.com construction weather delay guide, undated)",secondary
+C_construction,Liquidated damages per day (commercial),500,2500,5000,USD per day,"practitioner blogs (projul.com, cmicglobal.com), undated",unverified
+C_construction,Share of projects delayed by weather in a year,0.21,0.45,0.6,share,"vendor figures, conflicting (search summary); low 21% of delays",unverified
+C_construction,US annual cost of weather delays,20,40,80,USD bn/yr,secondhand $40B estimate (cordulus.com blog); range assumption,unverified
+C_construction,Parametric construction delay deductible example,30,42,60,days,Descartes $18M project structure https://www.insurancebusinessmag.com/au/news/breaking-news/parametric-construction-delay-cover-inside-an-18-million-structure-597584.aspx (Nov 2026),verified
+C_construction,Contractors buying weather-delay parametric cover,0.002,0.01,0.03,share of firms,ENR: few US contractors have bought https://www.enr.com/articles/48588-will-contractors-limit-weather-risk-with-indexed-insurance (date unclear); numbers assumption,assumption
+C_construction,Firms with >=20 employees (realistic hedgers) share of construction estabs,0.05,0.08,0.1,share,assumption (most construction estabs are small),assumption
+D_snow,Boston FY26 snow and winter supplemental (over budget),47.1,47.1,47.1,USD m,https://content.boston.gov/sites/default/files/file/2026/05/%2447120292%20Snow%20Winter.pdf (2026),verified
+D_snow,Boston projected FY27 deficit driven by snow,48.4,48.4,48.4,USD m,https://www.wgbh.org/news/politics/2026-03-30/boston-projects-48m-budget-deficit-next-fiscal-year-driven-by-snow-removal-costs (2026),verified
+D_snow,Massachusetts state FY26 snow budget,85,85,85,USD m,https://www.nbcboston.com/news/local/massachusetts-winter-cleanup-tab-tops-156m-could-surpass-2015s-snowmaggedon/3914139/?amp=1 (2026),verified
+D_snow,Massachusetts state FY26 snow spend to date,156.5,156.5,156.5,USD m,same NBC Boston (2026),verified
+D_snow,Baltimore 2026 snow response cost,80,88,88,USD m,https://foxbaltimore.com/news/local/baltimore-spent-88m-on-snow-removal-in-2026-heres-what-the-city-plans-to-change (2026),secondary
+D_snow,Minneapolis annual snow and ice budget,11,12,13,USD m,conflicting secondary: https://smartcitiesdive.com/news/budgeting-for-winter-weather-in-an-era-of-climate-uncertainty/512243 ($11M) and aggregator ($13M),secondary
+D_snow,Philadelphia FY26 snow operations budget (likely),4.1,4.1,4.1,USD m,https://www.inquirer.com/weather/city-spending-snow-removal-workforce-20260218.html (2026); snippet did not name the city; $50M general-fund transfer mentioned,unverified
+D_snow,NYC annual snow and ice budget,60,100,150,USD m,NYC Charter sets budget = 5-yr average https://comptroller.nyc.gov/reports/the-slippery-cost-slope-of-ice-and-snow-removal-in-new-york-city (2015); dollar range is assumption,assumption
+D_snow,Chicago annual snow budget,15,25,40,USD m,not found; assumption,assumption
+D_snow,Denver annual snow budget,5,10,15,USD m,not found (2026 budget kept snow removal uncut); assumption,assumption
+D_snow,City overrun in a heavy-snow year,0.5,1.0,2.0,multiple of budget,Boston +$47M; Massachusetts 156.5/85 = 1.84x; Barrie ~1.8x (repo note ski_snow.md),secondary
+D_snow,Private snow and ice removal revenue (US),16.8,18,20.8,USD bn/yr,SIMA 2017 https://www.buildings.com/articles/28533/private-snow-removal-168-billion-industry ; high = secondary blog citing SIMA 2024/25,secondary
+D_snow,Private snow workers,110000,110000,180000,workers,"SIMA 2017 (88,000 sole practitioners); high secondary 2024/25",secondary
+D_snow,Snow removal businesses,88000,110000,116000,firms,SIMA sole practitioners; IBISWorld ~116k establishments (older) https://www.ibisworld.com/united-states/industry/snowplowing-services/5400/,secondary
+D_snow,Commercial snow contractors big enough to hedge (>$1M revenue),3000,6000,10000,firms,assumption,assumption
+D_snow,Landscaping services establishments (561730; many plow in winter),123133,123133,123133,establishments,"https://data.bls.gov/cew/data/api/2024/a/industry/561730.csv (BLS QCEW 2024 annual, private)",verified
+D_snow,Compass Minerals salt sales drop in a mild winter,0.15,0.15,0.15,share of segment sales,FY2015 10-K https://www.sec.gov/Archives/edgar/data/0001227654/000122765416000082/cmp-20151231x10k.htm (salt $849.0M),verified
+E_farmers_ranchers,9-state PRF insured acres,102.12,112.07,112.07,million acres,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,TX PRF insured acres,36.31,38.88,38.88,million acres,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,OK PRF insured acres,3.36,3.67,3.67,million acres,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,KS PRF insured acres,4.99,5.88,5.88,million acres,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,NE PRF insured acres,8.27,9.34,9.34,million acres,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,MO PRF insured acres,0.55,0.64,0.64,million acres,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,SD PRF insured acres,6.26,8.1,8.1,million acres,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,ND PRF insured acres,3.91,5.21,5.21,million acres,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,CO PRF insured acres,11.29,12.48,12.48,million acres,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,NM PRF insured acres,26.72,27.88,29.85,million acres,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,9-state PRF total premium,577.72,677.42,677.42,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,TX PRF total premium,224.54,253.36,253.36,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,OK PRF total premium,29.84,34.25,34.25,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,KS PRF total premium,54.29,67.93,67.93,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,NE PRF total premium,52.86,59.83,59.83,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,MO PRF total premium,11.86,13.53,13.62,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,SD PRF total premium,48.9,67.24,67.24,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,ND PRF total premium,27.38,39.75,39.75,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,CO PRF total premium,40.75,44.36,44.36,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,NM PRF total premium,84.77,97.17,101.75,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,9-state PRF producer-paid premium,270.19,317.61,317.61,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,TX PRF producer-paid premium,102.89,116.34,116.34,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,OK PRF producer-paid premium,14.16,16.29,16.29,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,KS PRF producer-paid premium,25.53,31.91,31.91,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,NE PRF producer-paid premium,25.16,28.52,28.52,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,MO PRF producer-paid premium,5.75,6.56,6.6,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,SD PRF producer-paid premium,23.64,32.44,32.44,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,ND PRF producer-paid premium,13.29,19.34,19.34,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,CO PRF producer-paid premium,19.5,21.22,21.22,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,NM PRF producer-paid premium,38.96,44.99,47.34,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,9-state PRF policies earning premium,39446.0,45402.0,45402.0,policies,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,TX PRF policies earning premium,14064.0,15058.0,15058.0,policies,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,OK PRF policies earning premium,2312.0,2563.0,2563.0,policies,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,KS PRF policies earning premium,5124.0,6289.0,6289.0,policies,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,NE PRF policies earning premium,5075.0,5849.0,5849.0,policies,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,MO PRF policies earning premium,2060.0,2244.0,2286.0,policies,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,SD PRF policies earning premium,4430.0,5956.0,5956.0,policies,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,ND PRF policies earning premium,3019.0,3983.0,3983.0,policies,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,CO PRF policies earning premium,1715.0,1715.0,1752.0,policies,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,NM PRF policies earning premium,1568.0,1745.0,1767.0,policies,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025)",verified
+E_farmers_ranchers,US PRF insured acres 2025,273.7,298.3,298.3,million acres,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025) (low = 2024)",verified
+E_farmers_ranchers,US PRF total premium 2025,1308,1458,1458,USD m,"data/processed/prf_summary_of_business_state.csv (RMA Summary of Business; low/high = min/max 2023-2025, central = 2025) (low = 2024)",verified
+E_farmers_ranchers,9-state PRF loss ratio (indemnity/total premium),0.38,0.91,1.34,ratio,computed 2015-2025 from data/processed/prf_summary_of_business_state.csv; central = pooled,verified
+E_farmers_ranchers,9-state PRF producer return per producer-paid dollar,1.0,1.97,2.9,USD per USD,computed pooled 2015-2025 (low/high assumption around it),verified
+E_farmers_ranchers,PRF premium subsidy share,0.51,0.53,0.59,share of premium,computed pooled 2015-2025 (9 states); range by coverage level,verified
+E_farmers_ranchers,US farms with beef cows (2022),622000,622000,622000,farms,"USDA NASS 2022 Census of Agriculture highlight (29.2M cows, avg 47) https://iowabeefcenter.org/gb/2024/June2024Census.html",secondary
+E_farmers_ranchers,"Feedlots with >=1,000 head capacity",2105,2105,2105,feedlots,NASS Jan 1 2025 via https://www.drovers.com/markets/market-reports/review-feedlot-structure-and-2024-marketings (2025),secondary
+E_farmers_ranchers,"Share of fed-cattle marketings from >=1,000 head lots",0.85,0.872,0.872,share,same (2024 marketings 87.2%),secondary
+E_farmers_ranchers,"Feedlots with <1,000 head capacity",24000,24000,24000,feedlots,same,secondary
+E_farmers_ranchers,"Cattle on feed in >=1,000 head lots (Dec 1 2025)",11.1,11.7,11.7,million head,https://www.dtnpf.com/agriculture/web/ag/livestock/article/2025/12/22/dec-1-cattle-feed-2-year-ago-11 (2025); low Sep 1 2025,secondary
+E_farmers_ranchers,Feedlot gain loss in mud,0.14,0.2,0.25,share of daily gain,K-State MF2673 https://bookstore.ksre.ksu.edu/download/how-feeding-site-mud-and-temperature-affect-animal-performance_MF2673 (old trials),secondary
+E_farmers_ranchers,Farm Credit System loans outstanding (YE2025),401.2,429.3,429.3,USD bn,FCA YBS report https://www.fca.gov/newsroom/pr_detail/fca-board-receives-2025-annual-report-on-the-farm-credit-systems-young-beginning-and-small-farmers-mission-performance (2026); low = YE2024,secondary
+E_farmers_ranchers,Farm Credit System number of loans (YE2025),1059214,1122979,1122979,loans,same FCA source,secondary
+E_farmers_ranchers,Farm Credit associations (US),50,55,60,associations,not found (FCA examined 50 associations in 2025); assumption,assumption
+E_farmers_ranchers,Share of 9-state ag loan book exposed to rangeland drought,0.1,0.2,0.3,share,assumption,assumption
+F_wtp_takeup,Index-insurance price elasticity of take-up (India),-0.88,-0.77,-0.66,elasticity,Cole et al. 2013 AEJ Applied 5(1) https://econpapers.repec.org/RePEc:aea:aejapp:v:5:y:2013:i:1:p:104-35 (figure carried from repo note uninsured_farmers.md; full text 403 this pass),unverified
+F_wtp_takeup,Take-up gain from liquidity grant of one premium (India),1.0,1.4,1.4,relative increase,Cole et al. 2013 (repo note uninsured_farmers.md),secondary
+F_wtp_takeup,Take-up gain from trusted endorser (India),0.36,0.36,0.36,relative increase,Cole et al. 2013 abstract https://openknowledge.worldbank.org/entities/publication/60c08adb-cb0c-5880-96fe-891d2c744aaf/full,verified
+F_wtp_takeup,Take-up at actuarially fair price (Ghana),0.4,0.45,0.5,share of farmers,Karlan et al. 2014 QJE via J-PAL https://www.povertyactionlab.org/evaluation/examining-underinvestment-agriculture-returns-capital-and-insurance-among-farmers-ghana,verified
+F_wtp_takeup,Take-up at market price ~1.4-1.5x fair (Ghana),0.1,0.15,0.2,share of farmers,same J-PAL (<20%),verified
+F_wtp_takeup,"Take-up after marketing visit (India, Mobarak-Rosenzweig)",0.35,0.4,0.45,share of households,J-PAL summary https://www.povertyactionlab.org/print/pdf/node/1721,secondary
+F_wtp_takeup,Take-up when premium deferred to harvest (Kenya),0.72,0.72,0.72,share,Casaburi & Willis 2018 AER https://www.aeaweb.org/doi/10.1257/aer.20171526 (vs 5% upfront),verified
+F_wtp_takeup,Take-up with upfront premium (Kenya),0.05,0.05,0.05,share,same,verified
+F_wtp_takeup,US crop insurance median WTP relative to fair premium,0.4,0.5,1.0,multiple of fair premium,"Feng, Du & Hennessy 2020 (median WTP <= fair premium net of >=50% subsidy) https://econpapers.repec.org/RePEc:oup:ajagec:v:99:y:2017:i:3:p:732-756. ; central = 1 - subsidy",secondary
+F_wtp_takeup,"US crop insurance coverage-demand elasticity (75% level, S Plains)",-0.9,-0.654,-0.3,elasticity,"Yi, Richardson & Bryant AAEA 2016 https://ideas.repec.org/p/ags/aaea16/236249.html ; range assumption",secondary
+F_wtp_takeup,Drop in high-coverage purchase if subsidies decoupled,0.36,0.36,0.36,relative decrease,Babcock & Hart 2005 CARD WP 393 https://econpapers.repec.org/RePEc:ias:cpaper:05-wp393,verified
+F_wtp_takeup,Small businesses with business-interruption insurance,0.29,0.35,0.46,share,Nationwide 2017 (71% lack) and 2015 (66% lack) https://www.insurancejournal.com/news/national/2015/09/02/380367.htm ; NAIC 2007 35% have,secondary
+F_wtp_takeup,Weather-sensitive firms that used weather derivatives,0.05,0.1,0.15,share,CME/Storm Exchange 2008 survey of 205 firms https://www.artemis.bm/news/cme-group-and-storm-exchange-weather-risk-study-released/ (10%; 42% quantified exposure),verified
+F_wtp_takeup,Weather-sensitive firms that quantified exposure,0.42,0.42,0.42,share,same,verified
+F_wtp_takeup,Sensible Weather guarantee attach rate,0.05,0.12,0.5,share of bookings,"12% Yonder Hospitality (single partner); 50% CEO claim, early channels https://techcrunch.com/2022/05/05/it-is-like-raaaaaaaaaaain-on-your-wedding-day/ ; low assumption",secondary
+F_wtp_takeup,Sensible guarantee price,0.08,0.1,0.12,share of booking value,repo note hospitality_venues.md,secondary
+F_wtp_takeup,Sensible guarantees sold,1.0,1.0,1.0,million,https://www.businesswire.com/news/home/20250825060512/en (2025),secondary
+F_wtp_takeup,Weather-promotion insurance premium,0.015,0.03,0.055,share of promoted sales,"https://money.cnn.com/2010/12/30/smallbusiness/snow_jewelry_full_refunds/index.htm (2010; 1.5-5.5%, jeweler 2.2%)",secondary
+F_wtp_takeup,Weather-promotion payout probability,0.01,0.03,0.05,probability,same CNN (1-5%; 5 of 100 paid),secondary
+F_wtp_takeup,Implied weather-promotion price multiple (premium / expected loss),1.0,1.5,3.0,multiple,inference: 3% premium on full-refund promotions paying 1-5% of the time,assumption
+F_wtp_takeup,Event rain cover rate on line example,0.084,0.084,0.084,premium / limit,"2008 event policy $63k for $750k (search summary, nautil.us/travelweekly context)",unverified
+F_wtp_takeup,Lloyd's attritional loss ratio (all classes),0.47,0.47,0.48,ratio,https://www.lloyds.com/insights/media-centre/press-releases/lloyds-reports-preliminary-full-year-results-2024 (2024 47.1%; 2023 48.3%),verified
+F_wtp_takeup,Parametric/event line price multiple buyers accept (premium / expected loss),1.3,1.6,2.5,multiple,assumption anchored on Lloyd's ~47% attritional LR and promotion pricing; no event-cancellation LR found,assumption
+F_wtp_takeup,Kalshi cost vs subsidized PRF,1.8,1.8,1.8,multiple,repo docs 08-09 (AGENTS.md),verified
+F_wtp_takeup,Load assumed in doc 25 netting,0.2,0.2,0.2,price load,docs/analysis/25_weather_hedging_expansion.md,verified
+G_kalshi_liquidity,"Total YES ask depth, all rain markets 2026-10-29 (rewards on)",1053904,1053904,1053904,USD,data/processed/kalshi_rain_orderbook_summary_20261029.csv,verified
+G_kalshi_liquidity,"Total NO ask depth, all rain markets 2026-10-29 (rewards on)",3133381,3133381,3133381,USD,data/processed/kalshi_rain_orderbook_summary_20261029.csv,verified
+G_kalshi_liquidity,Median YES ask depth per series 2026-10-29 (rewards on),27922,27922,27922,USD per series,"data/processed/kalshi_rain_orderbook_summary_20261029.csv (36 series, 353 markets)",verified
+G_kalshi_liquidity,Median bid-ask spread 2026-10-29 (rewards on),0.12,0.12,0.12,USD per $1 contract,data/processed/kalshi_rain_orderbook_summary_20261029.csv,verified
+G_kalshi_liquidity,"Total YES ask depth, all rain markets 2026-11-02 (rewards off)",83532,83532,83532,USD,data/processed/kalshi_rain_orderbook_summary_20261102.csv,verified
+G_kalshi_liquidity,"Total NO ask depth, all rain markets 2026-11-02 (rewards off)",159662,159662,159662,USD,data/processed/kalshi_rain_orderbook_summary_20261102.csv,verified
+G_kalshi_liquidity,Median YES ask depth per series 2026-11-02 (rewards off),1083,1083,1083,USD per series,"data/processed/kalshi_rain_orderbook_summary_20261102.csv (36 series, 269 markets)",verified
+G_kalshi_liquidity,Median bid-ask spread 2026-11-02 (rewards off),0.12,0.12,0.12,USD per $1 contract,data/processed/kalshi_rain_orderbook_summary_20261102.csv,verified
+G_kalshi_liquidity,Depth multiple needed for 90% of uncapped companion fit,5,5,25,x saved depth,docs/analysis/22_making_it_better.md table A (2026-11-02),verified
+G_kalshi_liquidity,"Contracts needed, DFW hay farm companion",21472,21472,21472,contracts,"doc 22 table A (depth near fair value 2,986)",verified
+G_kalshi_liquidity,Kalshi weather/climate annualized volume pace,0.564,1.1,1.1,USD bn/yr,"https://marketsmedia.com/kalshi-partners-with-the-weather-company (Aug 28 2026; +500% YoY); low = $564M YTD through July (WSJ, secondary)",verified

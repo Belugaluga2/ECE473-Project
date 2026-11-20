@@ -1,0 +1,7 @@
+key,criterion,value,reason
+restaurant_pos,demand_evidence,3,"Loss is measured (rain cuts diners 4.4%; about $3.2B a year of profit nationally, the largest weather-loss pool found). Its demand was scored in the strict cash frame while ranchers were scored in the narrow frame"
+restaurant_pos,market_size,4,"Frame-matched (narrow) premium $39M a year against ranchers' $14M"
+winter_rain_pair,demand_evidence,2,"Frame-matched wet:dry at the rancher stations is about 1:3, not 1:80"
+onexchange_maker,demand_evidence,3,"Frame-matched wet:dry about 1:3, so a two-sided quoter at the rancher stations sees real flow on both sides"
+onexchange_maker,capital_light,4,"At 1:3 rather than 80:1, about a third of the dry book pairs and nets under directional collateral return"
+lender_finance,market_size,2,"Rancher demand is $14M frame-matched, a tenth of the $134M wet side; ranchers looked large only because they were scored in a different frame"

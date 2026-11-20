@@ -1,0 +1,108 @@
+=== 1. Out-of-sample national pools (price 1951-1995, realize 1996-2025) ===
+median of station-month loss ratios: put 0.992 call 1.175
+pooled (ratio of sums) loss ratios:  put 1.028 call 1.203 pair 1.116
+national annual put  OOS: mean loss/prem -0.143  capital95/prem 0.100  worst +0.218  P(loss) 0.17
+national annual call OOS: mean loss/prem +0.002  capital95/prem 0.332  worst +0.461  P(loss) 0.53
+national annual pair OOS: mean loss/prem -0.070  capital95/prem 0.038  worst +0.055  P(loss) 0.30
+national monthly put OOS capital95/prem median of months 0.552
+national monthly pair OOS capital95/prem median of months 0.379
+
+=== 2. Placebo: shuffle years (same permutation for all stations), split 45/30 ===
+null median call ratio: mean 0.979, 2.5-97.5% [0.865, 1.084]; actual 1.175; p(one-sided) 0.000
+null median put ratio:  mean 1.029, 2.5-97.5% [0.924, 1.154]; actual 0.992
+null pooled call ratio: 2.5-97.5% [0.924, 1.143]; actual 1.203; p 0.000
+
+=== 3. Walk-forward pricing, rain_total ===
+--- rain: pooled loss ratio (sum payout / sum pure premium), 1996-2025, prior-years strikes
+      method  put_LR  call_LR  pair_LR  put_LR_mad_log  call_LR_mad_log  share_pair_LR_gt_1.2
+         all   1.033    1.136    1.091           0.275            0.300                 0.333
+      last30   1.079    1.049    1.061           0.225            0.244                 0.216
+      last15   1.069    1.035    1.049           0.162            0.162                 0.145
+     detrend   1.246    0.992    1.083           0.465            0.221                 0.341
+payout_trend   1.117    0.961    1.020           0.278            0.221                 0.211
+
+=== 3b. Walk-forward pricing, temp (monthly mean, put floor 5th pct) ===
+--- temp: pooled loss ratio (sum payout / sum pure premium), 1996-2025, prior-years strikes
+      method  put_LR  call_LR  pair_LR  put_LR_mad_log  call_LR_mad_log  share_pair_LR_gt_1.2
+         all   0.454    1.902    1.182           0.879            0.600                 0.452
+      last30   0.612    1.505    1.177           0.576            0.393                 0.436
+      last15   0.794    1.264    1.136           0.292            0.230                 0.317
+     detrend   0.715    1.203    1.064           0.523            0.260                 0.274
+payout_trend   0.710    1.268    1.102           0.486            0.257                 0.314
+
+=== 3c. Walk-forward pricing, snow_total (13 snow cities, Nov-Apr) ===
+--- snow: pooled loss ratio (sum payout / sum pure premium), 1996-2025, prior-years strikes
+      method  put_LR  call_LR  pair_LR  put_LR_mad_log  call_LR_mad_log  share_pair_LR_gt_1.2
+         all   1.250    1.049    1.150           0.392            0.215                 0.442
+      last30   1.157    1.009    1.085           0.329            0.125                 0.302
+      last15   1.116    0.987    1.053           0.200            0.120                 0.116
+     detrend   1.311    0.965    1.127           0.513            0.169                 0.465
+payout_trend   1.082    0.931    1.008           0.263            0.147                 0.209
+
+=== 4. ENSO conditioning ===
+Nov-Mar unit payouts (climatological mean = 1.00) by preceding ASO ONI phase:
+                  put                    call                
+phase         El Nino La Nina neutral El Nino La Nina neutral
+region                                                       
+midwest          1.26    0.78    0.96    0.99    1.10    0.96
+northeast        0.86    0.96    1.09    1.33    0.87    0.89
+south_central    0.66    1.49    0.95    1.35    0.70    0.95
+southeast        0.51    1.37    1.09    1.48    0.71    0.88
+west             0.82    1.17    1.01    1.23    0.80    0.97
+seasons per phase: {'neutral': 38, 'El Nino': 20, 'La Nina': 18}
+  DFW: put LaNina 1.46 ElNino 0.69 | call LaNina 0.73 ElNino 1.01
+  OKC: put LaNina 1.40 ElNino 0.82 | call LaNina 0.66 ElNino 1.42
+  SAT: put LaNina 1.76 ElNino 0.53 | call LaNina 0.52 ElNino 1.43
+  AUS: put LaNina 1.41 ElNino 0.62 | call LaNina 0.95 ElNino 1.44
+  HOU: put LaNina 1.42 ElNino 0.67 | call LaNina 0.61 ElNino 1.34
+  ABQ: put LaNina 1.31 ElNino 0.72 | call LaNina 0.43 ElNino 1.56
+  PHX: put LaNina 1.59 ElNino 0.50 | call LaNina 0.56 ElNino 1.33
+  LAX: put LaNina 1.17 ElNino 0.65 | call LaNina 0.70 ElNino 1.23
+  SEA: put LaNina 0.55 ElNino 1.29 | call LaNina 1.64 ElNino 0.73
+  CMH: put LaNina 0.50 ElNino 1.28 | call LaNina 1.17 ElNino 1.05
+  IND: put LaNina 0.91 ElNino 1.25 | call LaNina 1.04 ElNino 0.93
+  LEX: put LaNina 0.35 ElNino 1.60 | call LaNina 1.39 ElNino 0.95
+  PIT: put LaNina 0.68 ElNino 0.98 | call LaNina 1.29 ElNino 0.94
+  MIA: put LaNina 1.41 ElNino 0.51 | call LaNina 0.83 ElNino 1.26
+  TPA: put LaNina 1.49 ElNino 0.37 | call LaNina 0.82 ElNino 1.60
+national Nov-Mar put pool: corr with ASO ONI -0.28 (R2 0.08); call pool corr 0.41
+south_central Nov-Mar put pool corr with ONI -0.40 (R2 0.16)
+  corr(south_central winter put, SEA winter put) = -0.34
+  corr(south_central winter put, CMH+IND+LEX+PIT winter put) = -0.18
+  corr(south_central winter put, MIA+TPA winter put) = 0.31
+  corr(south_central winter put, PHX+LAX+ABQ winter put) = 0.37
+southern-tier winter put mean pairwise corr: 0.25 over 12 stations
+Adverse selection, Nov-Mar: loss ratio to MM priced at climatology (1.00 = fair; load is 1.20)
+  south_central put, bought only after La Nina ASO: 1.49  (n station-months 521)
+  south_central call, bought only after El Nino ASO: 1.35  (n station-months 591)
+  west put, bought only after La Nina ASO: 1.17  (n station-months 615)
+  southeast put, La Nina: 1.37  (n station-months 439)
+  southeast call, El Nino: 1.48  (n station-months 500)
+  SEA call, La Nina: 1.64  (n station-months 87)
+  midwest+OH put, El Nino: 1.26  (n station-months 900)
+current ASO 2026 ONI: [2.46]
+
+=== 5. Demand-concentrated farmer put pool (south_central+west, Apr-Sep) vs equal-weight national ===
+  plains+west growing season: 15 stations, 74 years, capital95/prem 0.337, worst +0.702
+  south_central only, Nov-Feb (companion months): 6 stations, 67 years, capital95/prem 1.318, worst +1.898
+  national all months (equal weight): 34 stations, 74 years, capital95/prem 0.132, worst +0.518
+
+=== 6. Ladder (any function of the monthly total) vs wet-day count payouts ===
+     corr_count_total  r2_payout_from_total
+var                                        
+wet             0.747                 0.438
+wk              0.526                 0.267
+         r2_payout_from_total
+var                          
+wet 0.1                 0.285
+    0.9                 0.655
+wk  0.1                 0.155
+    0.9                 0.419
+
+=== 7. OOS split-year sensitivity, rain_total pooled loss ratios ===
+  split 1980: put 1.027 call 1.285
+  split 1985: put 1.025 call 1.229
+  split 1990: put 1.004 call 1.212
+  split 1995: put 1.028 call 1.203
+  split 2000: put 1.007 call 1.198
+  split 2005: put 0.971 call 1.201

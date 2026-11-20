@@ -1,0 +1,18 @@
+key,strategy,loses_most_on,beats_leader_on
+usda_508h,USDA 508(h) endorsement for PRF (drought-weighted intervals),,
+saas_structuring,Structuring and pricing software for parametric MGAs and carriers,Liquidity (3 vs 5); Defensibility (2 vs 4); Legal path (4 vs 5),Time to proof (3 vs 1)
+snow_companion,Snow Companion for per-push plow contractors and salt distributors (listed monthly snow),Liquidity (2 vs 5); Legal path (4 vs 5); Market size (2 vs 3),Time to proof (3 vs 1)
+consumer_embedded,"Embedded consumer weather guarantees (bookings, events, tee times)",Legal path (2 vs 5); Defensibility (1 vs 4); Liquidity (4 vs 5),Demand evidence (5 vs 2)
+contract_design,"Sell contract designs and demand data to Kalshi (seasonal strip, PRF-grid index, day count)",Liquidity (2 vs 5); Market size (1 vs 3); Defensibility (2 vs 4),Time to proof (4 vs 1)
+onexchange_maker,"Two-sided Kalshi quoting per station-month (collateral-netted, ENSO-aware)",Pricing risk (2 vs 4); Defensibility (2 vs 4); Liquidity (4 vs 5),Time to proof (3 vs 1)
+promotions,Zero-basis weather promotions settled at Kalshi stations,Liquidity (2 vs 5); Legal path (3 vs 5); Market size (1 vs 3),Time to proof (4 vs 1)
+lender_finance,Lender- or buyer-financed Companion (farmer holds hedge; financier fronts premium),Liquidity (1 vs 5); Legal path (3 vs 5); Pricing risk (3 vs 4),Time to proof (3 vs 1)
+hay_dealer,Hay dealer or auction barn sells rain-indexed supply contracts and lays off the residual on Kalshi,Legal path (3 vs 5); Liquidity (3 vs 5); Market size (2 vs 3),Time to proof (2 vs 1)
+snow_mga,City snow book on an insurance (MGA) balance sheet,Legal path (2 vs 5); Defensibility (2 vs 4); Liquidity (4 vs 5),Demand evidence (3 vs 2)
+solar_pair,Ranchers against ERCOT solar owners on an MGA book,Legal path (2 vs 5); Defensibility (1 vs 4); Hedge quality (2 vs 3),Time to proof (3 vs 1)
+lender_book,Lender holds hedges on its own loan book (old #1),Liquidity (2 vs 5); Legal path (3 vs 5); Demand evidence (1 vs 2),Time to proof (4 vs 1)
+restaurant_pos,Restaurant dinner-rain cover through POS or booking partner,Legal path (2 vs 5); Liquidity (2 vs 5); Defensibility (2 vs 4),Time to proof (2 vs 1)
+ski_resort,Ski resort low-snow hedges on resort-reported series,Liquidity (1 vs 5); Legal path (3 vs 5); Market size (1 vs 3),Time to proof (2 vs 1)
+retail_ib,Retail routing of hedgers to Kalshi (introducing broker),Liquidity (1 vs 5); Legal path (2 vs 5); Defensibility (1 vs 4),Time to proof (2 vs 1)
+winter_rain_pair,South-central winter rain pairing on an own book,Legal path (2 vs 5); Pricing risk (1 vs 4); Liquidity (3 vs 5),Time to proof (2 vs 1)
+intl_aggregator,International smallholder bridge via an aggregator,Legal path (1 vs 5); Liquidity (1 vs 5); Hedge quality (1 vs 3),
