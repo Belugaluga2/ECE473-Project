@@ -8,7 +8,7 @@ Team: Maya, Evan, Jack.
 [the paper evidence guide](docs/PAPER_EVIDENCE_GUIDE.md) for the branch map, offline
 commands, actual PRF curves, matched-budget and PRF-kept comparisons, loss and liquidity
 audits, and the Chipata feasibility pilot. These preserve the app and prior results;
-no new team direction is implied. The guide links email drafts and a single group handoff.
+no new team direction is implied. The guide links outreach drafts and calculation sources.
 
 We set out to build a platform that lets a farmer approximate USDA rainfall-index insurance
 (Pasture, Rangeland, Forage, or PRF) with a portfolio of Kalshi weather event contracts, and
@@ -50,7 +50,7 @@ for the evidence index; [docs/MILESTONE_2.md](docs/MILESTONE_2.md) and the
 
 | Path | Contents |
 |---|---|
-| `AGENTS.md` | Handoff for new contributors and agents |
+| `AGENTS.md` | Contribution and reproduction guidance |
 | `docs/00_OVERVIEW.md` | Milestone overview, status, headline findings |
 | `docs/DEMO.md`, `docs/MILESTONE_2.md` | Demo script + roadmap; Milestone II summary |
 | `docs/milestone2/` | Milestone II write-up, November 12 update, and PDFs |

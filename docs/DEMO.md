@@ -4,7 +4,7 @@
 [paper evidence guide](PAPER_EVIDENCE_GUIDE.md) for actual-PRF curves, fixed-budget
 results, PRF-kept add-ons, loss/capacity audits, source distinctions, and the optional
 public-data pilot. The app's product behavior is unchanged; injected advisor tests can
-now run without the optional SDK installed. The guide links one consolidated group handoff.
+now run without the optional SDK installed. The guide links outreach drafts and calculation sources.
 
 **One-line pitch:** keep USDA rainfall insurance (PRF), use Kalshi where a sample farmer left months unselected, then design a drought-weighted payout where the station signal and available book support it.
 

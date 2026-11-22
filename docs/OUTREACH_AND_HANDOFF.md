@@ -1,8 +1,8 @@
-# AgriHedge outreach drafts and team handoff
+# AgriHedge outreach drafts and calculation sources
 
 These drafts ask for answers by email. Their goal is to check real needs, loss
 assumptions, data availability and market constraints before making product claims.
-No messages have been sent. Start with the regional RMA office and local extension;
+Start with the regional RMA office and local extension;
 use the other drafts for specific gaps rather than sending every message at once.
 
 ## RMA regional office
@@ -132,59 +132,6 @@ Maya, Evan and Jack
 Related official routes: [request strikes](https://help.kalshi.com/en/articles/13823834-request-additional-strikes),
 [suggest a market](https://help.kalshi.com/en/articles/13823833-suggesting-a-new-market).
 No government grant or Kalshi market-maker admission is assumed in the experiments.
-
-## One message Maya can send the group
-
-Hey! I put the paper checks on `maya-paper-evidence`, based on Jack's PR 12. Please
-start at `docs/PAPER_EVIDENCE_GUIDE.md`; it maps the branches, results, formulas and
-reproduce commands, and should work as an entry point for your AIs too. Nothing was
-merged over your work, and the earlier rainfall/dairy/corn attempts are preserved.
-
-Main findings:
-
-- Fixed PR 12's double-counted taker fee: the old direct-buyer reference is $1.09
-  all-in per $1 expected payout; adding the same fee again was incorrect. This does
-  not overturn the capital/demand limitations.
-- Reconstructed case-specific subsidized PRF curves from policy terms. The ~$5.5
-  market-priced linear target in the slides isn't actual subsidized PRF. See doc 30.
-- Compared both reallocating an existing budget and keeping all original PRF with
-  a 20% extra budget. These answer different questions. The add-on experiment uses
-  exactly the frozen Kalshi portfolios, with cash as an alternative use of the extra
-  money. No refitting to the evaluation outcomes. See doc 32.
-- Found an important loss-value issue: pasture rent is much smaller than the existing
-  feed-replacement estimate. Albuquerque has modest tail improvements under the
-  replacement-cost proxy, but the HE sign changes under rent valuation. Dallas
-  worsens residual variation; San Antonio is mixed. We still cannot claim validated
-  farm-income improvement. All six timing/valuation variants and uncertainty checks
-  are retained, not just the favorable result.
-- Quantified required quantities and missing offers per ticket. Some small winter
-  add-ons need modest extra depth in the saved-book proxy; some tail designs lack
-  useful offers entirely. These are repeated-November capacity scenarios, not
-  executable annual quotes. See doc 33 and the per-leg CSV.
-- Zambia already has FISP/R4 index insurance. The Chipata pilot is a hypothetical
-  local settlement example, not an available Kalshi product. CHIRPS and NASA disagree
-  enough to change the motivating 2024 payout, so we should keep it as a short,
-  qualified extension rather than another main pivot. See doc 31.
-
-Evan: the backend already has public Kalshi price/order-book access; a live Dallas
-read worked. For app polish, could we show station/distance, months, desired payout,
-total cost and actual fillable size together, clearly separating live/saved/estimated
-prices and listed/proposed contracts? Explain HE as tracking a stated target, not
-farmer-income accuracy. A paper-trade/partial-fill demo is enough; any order prototype
-should use Kalshi's separate mock-funded demo. Please confirm the app branch and URL
-you are presenting: `exotic-payouts` has newer code than `main`, and the package rename
-to `raincheck` needs care when integrating.
-
-Jack: doc 26 has the fee correction; docs 32-33 give extra-cover and capacity audits
-that can qualify the intermediary story. Matching wet and dry demand still requires
-real customers; current calculations don't establish those customers exist.
-
-For the paper, research track fits best: lead with the final question/findings, then
-evidence, comparisons and limitations. Four pages of text excludes figures/references;
-appendix text isn't explicitly authorized. Keep pivot history brief. I saved short
-email-answerable outreach drafts in `docs/OUTREACH_AND_HANDOFF.md`; nothing has been sent.
-The immediate priority is external validation of losses/unmet needs and app clarity,
-not another large topic pivot or retuning the already-inspected test years.
 
 ## Calculation and source map
 

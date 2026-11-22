@@ -5,7 +5,7 @@
 [doc 31: Chipata public-data feasibility](analysis/31_chipata_index_feasibility.md),
 [doc 32: PRF-kept add-ons and loss audit](analysis/32_prf_addons_and_loss_audit.md),
 [doc 33: capacity requirements](analysis/33_liquidity_requirements.md), and
-[email drafts/group handoff](OUTREACH_AND_HANDOFF.md).
+[outreach drafts and calculation sources](OUTREACH_AND_HANDOFF.md).
 These are exploratory, preserve the companion, and do not demonstrate a general
 advantage over PRF or observed farm-income protection. Doc 26's direct buyer cost is
 corrected to the existing **1.09 all-in modeled reference**, charging taker fees once.

@@ -18,8 +18,8 @@ and all earlier research. This is a separate review branch, not an agreed new di
    outside DRIVE's countries. It demonstrates feasibility, not improved farmer protection.
 6. [Earlier contract-design study](analysis/24_contract_design.md): why equal premium and
    equal maximum payout answer different questions.
-7. [Email drafts and one group handoff](OUTREACH_AND_HANDOFF.md): questions that can be
-   answered by email, an Evan app request, and a calculation/source map. Nothing was sent.
+7. [Outreach drafts and calculation sources](OUTREACH_AND_HANDOFF.md): research
+   questions that can be answered by email and a map from claims to calculations.
 
 The fixed-budget US replay did **not** establish better worst-loss protection than
 subsidized PRF in its three fixed cases. It finds isolated higher gross payouts, while the
@@ -104,6 +104,22 @@ This verifies data portability with the existing environment, not installation o
 second operating system. Older generated slide drafts in the original checkout's
 untracked `output/` are separate local artifacts, not part of this research branch.
 
+## Files available from GitHub
+
+| Material | Location or transfer requirement |
+|---|---|
+| Current evidence documents and calculations | This branch, `docs/analysis/30` through `33`, `scripts/`, `src/agri_hedge/` |
+| New PRF comparison figure | This branch, `docs/figures/maya_actual_prf_curves.png` and `.pdf` |
+| New analysis inputs and result tables | This branch, `data/processed/maya_*`; enough for the offline evidence runs |
+| Earlier dairy/corn experiments | Remote `maya-experiments`, commit `34410e9`; fetch that branch separately |
+| Original course PDFs, uploaded decks and screenshots | Separate source files outside the repository; transfer privately if needed |
+| Older generated slide drafts and review notes | Local `output/`; transfer separately if needed |
+| Raw download caches and temporary review exports | Gitignored; not needed for the current evidence runs |
+| Python environment | Local `.venv`; use the new computer's environment and README setup |
+
+Some earlier data-download pipelines may need their own raw inputs or a fresh download;
+the offline reproduction check above applies to the three named evidence analyses.
+
 ## What the app does, and API status
 
 This branch retains the merged app: custom portfolio quotes, PRF companion, exotic
@@ -125,17 +141,13 @@ Official references:
 - [Public market data](https://docs.kalshi.com/getting_started/quick_start_market_data)
 - [Mock-funded demo](https://docs.kalshi.com/getting_started/demo_env)
 
-## Message Maya can send Evan
+## Quote display requirements
 
-Hey! The backend already has public Kalshi market/order-book access, and the live Dallas
-read worked. Could we focus the app polish on making the quote understandable? It would
-help to show the station and distance, months, desired payout, total modeled/quoted cost,
-and how much the book can actually fill, with clear labels for live, saved and estimated
-prices. Please separate proposed third-inch/two-month contracts from contracts actually
-listed, and explain HE as payout tracking rather than farmer-income protection. A paper
-trade/partial-fill demo is enough; if we add order submission, let's use Kalshi's demo
-environment. Also, which branch/deployed URL should we treat as the latest app so we
-don't overwrite your work?
+A quote should identify its station and distance, covered months, desired payout,
+total cost and fillable quantity. Distinguish live, saved and estimated prices, and
+listed contracts from proposed instruments. Define HE against the stated target;
+it is not measured farm-income accuracy. The deployed branch and commit should be
+visible so a demonstration can be reproduced.
 
 ## Paper framing
 
@@ -146,14 +158,14 @@ portfolio comparison decides how much of it survives geography, prices and capac
 Do not claim arbitrage, commercial viability, insured farm-income improvement, or a
 legally cleared international product from these experiments.
 
-The supplied rubric images say **four pages of text maximum, excluding figures and
+The course rubric specifies **four pages of text maximum, excluding figures and
 references**. The suggested order is question/main finding, evidence, further comparisons,
 then conclusion/limitations/next steps. They do not explicitly authorize extra appendix
 text or exempt tables. Ask the TA whether supplementary figure pages may also contain
 captions, tables and prose; keep the question, essential methods and core evidence in
-the main report. Paper drafting remains paused at Maya's request.
+the main report.
 
 Verification on November 22: **410 tests passed** using the original project venv and
 this branch's `src` on `PYTHONPATH`. New accounting, missing-offer, fitting-boundary and
-zero-event-pricing checks are in the tests linked by the handoff. No dependencies were
+zero-event-pricing checks are in `tests/`. No dependencies were
 installed. No live order or deployed app was tested by this evidence work.

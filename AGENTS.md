@@ -1,4 +1,4 @@
-# Agent handoff: ECE473 AgriHedge
+# ECE473 AgriHedge contribution guide
 
 Read this first, then [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) (index of every doc, headline numbers, next steps).
 
@@ -9,8 +9,8 @@ and a Chipata rainfall-index feasibility pilot (doc 31). Docs 32-33 keep origina
 with an extra 20% budget, audit six loss timing/valuation assumptions, and quantify
 per-ticket capacity needs. `scripts/run_prf_addons.py` reuses frozen doc-30 tickets
 offline; do not refit to the already-inspected replay. Read the loss-value and saved-book
-limitations before quoting results. `docs/OUTREACH_AND_HANDOFF.md` contains email drafts
-and one group message; no messages have been sent. Preserve the original Maya
+limitations before quoting results. `docs/OUTREACH_AND_HANDOFF.md` contains outreach
+drafts and a calculation map. Preserve the original Maya
 branch and all teammate work. Evaluation years were already inspected; do not retune
 or describe them as new confirmation. No app/order/insurance business was deployed.
 Use the original checkout's `.venv/Scripts/python.exe` with this worktree's `src` on
@@ -75,6 +75,10 @@ In the Claude desktop app, `.claude/launch.json` defines the `agrihedge` preview
 - Local branches `run/datafix-2`, `run/factcheck-1`, `run/lossmodel-2`, `run/rowcrop-2` are the losing alternates of reviewed two-run comparisons (see doc 11 and the 2026-11-01 merge commits). Kept only for reference.
 
 ## Conventions
+
+- Write project documentation for any contributor. Keep personal team messages in chat,
+  and use guides for methods, results, limitations and run instructions. Do not describe
+  guides as written for an automated reader. Keep research attribution accurate.
 
 - Every number in a doc goes in that doc's numbers table with a source, or is marked unverified.
 - Report hedge effectiveness (HE) out of sample (leave one year out, or the 2001-2025 holdout). In-sample HE overstates by about 40%.
