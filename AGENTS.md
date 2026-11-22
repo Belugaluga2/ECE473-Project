@@ -23,7 +23,7 @@ trigger/power family, selecting on 1986-2000 after fitting 1951-1985, then refit
 pre-2001 and replaying 2001-2025. Results are now inspected; do not retune on them.
 All candidates and six loss sensitivities are retained. Albuquerque's unlimited-depth
 add-on has a modest point-estimate gain; saved-depth and price stresses weaken it,
-and selected CVaR intervals include zero. No observed farm-income validation or
+and primary selected add-on CVaR intervals include zero. No observed farm-income validation or
 seasonal market availability is established. Read doc 34 before citing the figures.
 
 ## What the project is now (2026-11-13)

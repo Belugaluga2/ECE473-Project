@@ -20,7 +20,8 @@ loss-year protection remains worse for those frozen replacements under feed valu
 Doc 34 optimizes quantities directly against bad-year net outlays and selects methods
 using earlier validation years. It improves the unlimited-depth Albuquerque add-on
 relative to target fitting, but the benefit is modest; saved depth and price/loss
-sensitivities weaken it. All primary selected CVaR intervals include zero.
+sensitivities weaken it. No primary selected result has a strictly positive lower
+CVaR-improvement bound.
 
 **Project:** Agricultural Risk Management & Weather Derivative Replicating Platform (ECE473, Maya / Evan / Jack)
 > **Current direction (2026-11-13): the PRF Companion and drought-weighted contract design.** Milestone I ruled out replacing subsidized PRF with Kalshi's current rain contracts. Milestone II tested using Kalshi in months the sample farmers did not select under PRF: the companion's holdout rain-payout HE is 0.61 (doc 21), while saved order-book depth limits usable size (doc 22). The next study designed other payout shapes (doc 23), then corrected its apparent convex liquidity advantage with an equal-premium comparison and a modeled farmer-utility test (doc 24). This is a sequence of tests, not evidence yet that farm income improves. Read the [November 12 update](milestone2/milestone2_update.pdf), [demo guide](DEMO.md), and [agent handoff](../AGENTS.md) for the current presentation path.

@@ -37,8 +37,8 @@ window sensitivity; it does not establish farmer benefit or a new commercial mar
 The latest direct-risk experiment (doc 34) selects parameters/methods using earlier
 years. The Albuquerque unlimited-depth add-on has a larger point-estimate benefit
 than the selected target-fitting control on the same menu. The saved-depth result
-is much smaller and price/valuation-sensitive. All primary selected CVaR intervals
-include zero. Preserve those qualifications; the experiment does not establish a
+is much smaller and price/valuation-sensitive. No primary selected result has a
+strictly positive lower CVaR-improvement bound. Preserve those qualifications; the experiment does not establish a
 generally superior replacement for PRF.
 
 HE means **hedge effectiveness**: `1-Var(target-payout)/Var(target)`. It measures remaining
@@ -120,6 +120,12 @@ years and summary; loss-scale audit; liquidity summary; Chipata replay and summa
 This verifies data portability with the existing environment, not installation on a
 second operating system. Older generated slide drafts in the original checkout's
 untracked `output/` are separate local artifacts, not part of this research branch.
+
+The direct-risk experiment was separately reproduced from an export of commit
+`50c0cb6`, with no `.git` directory or local raw caches. All nine `maya_direct_*.csv`
+result tables matched the committed outputs within floating-point tolerance. Its
+two figures, protocol and method/environment metadata are also committed. The same
+existing Python environment was used; this is a committed-input portability check.
 
 ## Files available from GitHub
 
