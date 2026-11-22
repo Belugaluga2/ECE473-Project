@@ -74,6 +74,29 @@ descriptive filename and commit. Merge or selectively integrate changes with tes
 do not overwrite another branch's `run_exotic_payouts.py` because its name matches.
 No branch, experimental result, or teammate file was deleted or renumbered in this work.
 
+## Continue on another computer
+
+The Windows interpreter path above is specific to Maya's current machine. On another
+computer, use that machine's project environment and the README's dependency setup;
+the virtual environment itself is not transferred by Git. For a separate fresh checkout:
+
+```text
+git clone --branch maya-paper-evidence https://github.com/Belugaluga2/ECE473-Project.git ECE473-paper-evidence
+cd ECE473-paper-evidence
+```
+
+Set `PYTHONPATH` to this checkout's `src` and run the three analysis commands above
+using the local Python environment. They need no Kalshi credentials or data download.
+Read AGENTS.md before edits and preserve the previously inspected evaluation results.
+
+On November 22, all three scripts ran from an export of commit `8673ad7`, containing
+only committed files and no local raw caches. Ten key result CSVs matched the committed
+outputs within floating-point tolerance: the four matched-budget/curve CSVs; add-on
+years and summary; loss-scale audit; liquidity summary; Chipata replay and summary.
+This verifies data portability with the existing environment, not installation on a
+second operating system. Older generated slide drafts in the original checkout's
+untracked `output/` are separate local artifacts, not part of this research branch.
+
 ## What the app does, and API status
 
 This branch retains the merged app: custom portfolio quotes, PRF companion, exotic

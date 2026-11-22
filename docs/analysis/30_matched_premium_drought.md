@@ -185,6 +185,13 @@ these reproduces the undocumented dashed curve in the final presentation.
   proposed digital target beats the Dallas PRF payout in all three evaluation years
   flagged by a severe selected interval; its fitted airport portfolio does so in none.
   These are three case-years, not three independent scientific replications.
+- A November 22 read-only check of the central-price yearly CSV found no severe-year
+  payout advantage for any tested existing-monthly-strike strategy, including the
+  mixtures. Accounting for premium differences and retained cash did not create a
+  severe-year win either. This is the fixed family in these cases, not an impossibility
+  theorem about every portfolio. Some monthly portfolios pay more in other years,
+  including when their intended farm-grid target is zero; higher payout alone is not
+  proof of better agricultural loss protection.
 - Some loss-proxy HE scores are strongly negative even for PRF. In particular, the
   rent-valued Albuquerque modeled forage loss is much smaller than its insured value,
   so payments can add variance while already covering the modeled shortfall. This is
@@ -211,3 +218,13 @@ Every generated result above is sourced to `scripts/run_matched_premium.py` and
 `data/processed/maya_matched_premium_summary.csv`. Curve coordinates are in
 `maya_actual_prf_curves.csv`; the primitive policy premiums are in
 `prf_scenario_results.csv` and trace to the RMA actuarial input files.
+
+| Read-only severe-state check | Result | Source and scope |
+|---|---:|---|
+| Severe case-years by profile | DFW 3/24; SAT 4/24; ABQ 5/25 | Yearly CSV, test/central, deduplicate farm/year; any selected interval index <=30 |
+| Existing-monthly strategies with a positive severe-year gross or cost-adjusted gain vs PRF | 0 across 12 case-years | Exclude `prf_only` and `proposed` policies; both depth scenarios; compare `payout-prf_reference` and `payout-premium-prf_reference+budget` |
+| Proposed-contract severe-year gross winner | ABQ 2018, +$1,505 | `tail_deep50_proposed_sum_third`, unlimited depth; not an existing market |
+
+The 12 case-years are geographically correlated and do not count as 12 independent
+catastrophe observations. Proposed two-month totals and finer strikes change together
+in this family, so that winner does not isolate the effect of either design change.
