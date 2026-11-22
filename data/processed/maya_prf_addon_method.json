@@ -1,0 +1,18 @@
+{
+  "original_policies_kept": true,
+  "additional_budget_fraction": 0.2,
+  "source": "doc 30 frozen reallocation tickets decomposed; no refit",
+  "primary_loss_variant": "growth_replacement",
+  "all_loss_variants": [
+    "growth_rent",
+    "growth_replacement",
+    "growth_protection",
+    "allocation_rent",
+    "allocation_replacement",
+    "allocation_protection"
+  ],
+  "pricing": "central and wide-spread inherited modeled prices; not live quotes",
+  "loss_validation": "proxy sensitivities only, no observed farm-income validation",
+  "status": "exploratory; evaluation years already inspected; no new held-out confirmation",
+  "cash": "Unspent extra cash; foregone 31-day interest already included in market economic cost"
+}

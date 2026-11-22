@@ -1,0 +1,39 @@
+{
+  "provider": "https://climateserv.servirglobal.net/api/",
+  "dataset": "ClimateSERV Global CHIRPS datatype 0",
+  "geometry": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [
+          32.6,
+          -13.7
+        ],
+        [
+          32.7,
+          -13.7
+        ],
+        [
+          32.7,
+          -13.6
+        ],
+        [
+          32.6,
+          -13.6
+        ],
+        [
+          32.6,
+          -13.7
+        ]
+      ]
+    ]
+  },
+  "period": [
+    "1981-01-01",
+    "2025-12-31"
+  ],
+  "units": "mm/day",
+  "spatial_operation": "area mean",
+  "version_caveat": "Archive datatype 0; do not label this CHIRPS v3 without provider confirmation",
+  "source_docs": "https://github.com/SERVIR/ClimateSERV/blob/master/docs/api.rst"
+}

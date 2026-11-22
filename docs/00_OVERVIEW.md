@@ -1,5 +1,19 @@
 # Project Overview: Milestone 1 (Research Foundation), Milestone 2 (Contract Design & Platform), and the PRF Companion
 
+**Paper evidence branch (2026-11-22):** [entry guide](PAPER_EVIDENCE_GUIDE.md),
+[doc 30: actual PRF curves and matched-budget diagnostics](analysis/30_matched_premium_drought.md),
+[doc 31: Chipata public-data feasibility](analysis/31_chipata_index_feasibility.md),
+[doc 32: PRF-kept add-ons and loss audit](analysis/32_prf_addons_and_loss_audit.md),
+[doc 33: capacity requirements](analysis/33_liquidity_requirements.md), and
+[email drafts/group handoff](OUTREACH_AND_HANDOFF.md).
+These are exploratory, preserve the companion, and do not demonstrate a general
+advantage over PRF or observed farm-income protection. Doc 26's direct buyer cost is
+corrected to the existing **1.09 all-in modeled reference**, charging taker fees once.
+Keeping PRF and spending extra gives modest, valuation-dependent Albuquerque improvements;
+Dallas worsens residual variation and San Antonio is mixed. These are proxy sensitivities,
+not validation against farm income. Small add-on depth requirements differ from those
+of the earlier full-size portfolios; missing useful offers are recorded separately.
+
 **Project:** Agricultural Risk Management & Weather Derivative Replicating Platform (ECE473, Maya / Evan / Jack)
 > **Current direction (2026-11-13): the PRF Companion and drought-weighted contract design.** Milestone I ruled out replacing subsidized PRF with Kalshi's current rain contracts. Milestone II tested using Kalshi in months the sample farmers did not select under PRF: the companion's holdout rain-payout HE is 0.61 (doc 21), while saved order-book depth limits usable size (doc 22). The next study designed other payout shapes (doc 23), then corrected its apparent convex liquidity advantage with an equal-premium comparison and a modeled farmer-utility test (doc 24). This is a sequence of tests, not evidence yet that farm income improves. Read the [November 12 update](milestone2/milestone2_update.pdf), [demo guide](DEMO.md), and [agent handoff](../AGENTS.md) for the current presentation path.
 
@@ -221,8 +235,8 @@ Doc 25. Six web research tracks (uninsured farmers, venues, ski/snow, market-mak
 ## Intermediaries and capital (2026-11-20)
 Doc 26 (`scripts/run_intermediary_capital.py`). It prices the middle seat between dry-side ranchers (puts) and wet-side venues (calls) on doc 25's contracts, for five books and three risk-holding intermediaries. Capital is set at 1-in-200, from a copula fitted to 1951-2025 station rain.
 
-- **Two-way flow cuts capital about 60%, but only if it exists.** On a $10M-a-year south-central Nov-Feb book, balanced wet premium cuts our Kalshi maker's capital from $39.6M to $15.2M and a lean carrier's from $28.1M to $9.6M. Break-even loads fall from 14% to 6% and 9%. At today's 1:80 flow nothing changes.
-- **A fronted insurer/MGA is the costliest middle.** About 33% of premium goes to fronting, commission, tax and admin, so the hedger pays 1.49-1.59 per $1 of expected payout. On Kalshi today the hedger pays 1.15, and subsidized PRF costs a rancher 0.61. Capital costs the insurer only 0-7% of premium, so cheap reinsurance capital does not help much.
+- **Balanced hypothetical flow cuts modeled capital about 60%.** On a $10M-a-year south-central Nov-Feb book, balanced wet premium cuts our Kalshi maker's capital from $39.6M to $15.2M and a lean carrier's from $28.1M to $9.6M. Break-even seller loads fall from 14% to 6% and 9%. The low-wet-demand 1:80 scenario saves little; it is not observed purchase flow and is sensitive to the wealth framing.
+- **A fronted insurer/MGA is the costliest middle in this model.** About 33% of premium goes to fronting, commission, tax and admin, giving 1.49-1.59 per $1 expected payout. Doc 09's direct-Kalshi modeled reference is **1.09 all-in**, with taker fees included once; sampled subsidized PRF costs 0.61. Capital costs the insurer only 0-7% of premium in these scenarios.
 - **Kalshi's netting helps a maker, diversification helps a carrier.** Maker break-even: 14% ranch-only, 11% national puts, 5% national balanced. Lean carrier: 14%, 11%, 9%.
 - **Drift is the biggest loss.** Priced on 1951-1995, the south-central books paid 1.18-1.22 per $1 of expected payout in 1996-2025. Every intermediary loses money there at 9% and 20% loads, about $23M in the 2008 season alone on the ranch book. Only the national balanced book is profitable out of sample.
 - **Verdict.** Intermediaries pay for themselves when they bring buyers (brokers, premium financiers: about 4% of premium for pay-at-harvest), bring the other side, or bring a subsidy (508(h), not modeled). A risk-holding insurer for ranchers alone does not.

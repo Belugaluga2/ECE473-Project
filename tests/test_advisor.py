@@ -124,6 +124,14 @@ def test_claude_failure_falls_back_to_rules():
     assert out["mode"] == "rules" and out["status"] == "designed" and "RuntimeError" in out["fallback_reason"]
 
 
+def test_injected_client_runs_without_live_sdk(monkeypatch):
+    import sys
+    monkeypatch.setitem(sys.modules, 'anthropic', None)
+    out = adv.advise({"messages": [{"role": "user", "content": f"hay at {DFW}"}],
+                      "price_source": "model"}, client=_FakeClient())
+    assert out['mode'] == 'claude' and out['status'] == 'question'
+
+
 def test_status_reports_mode_and_crops(monkeypatch):
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
     monkeypatch.delenv("ANTHROPIC_AUTH_TOKEN", raising=False)

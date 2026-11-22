@@ -23,7 +23,7 @@ payout is one premium unit. A put and a call on the same station-month cannot bo
 Books (pure premium normalized to 1; dollar tables scale it to BOOK_EL):
   ranch_sc       south-central Nov-Feb ranch puts (DFW, OKC, SAT, AUS, CLL, HOU), station
                  weights from doc 25's rancher demand (weather_demand_depth.csv)
-  two_way_obs    the same plus wet calls at the observed wet:dry premium ratio (doc 25: 0.012)
+  two_way_obs    the same plus wet calls at a modeled wet:dry premium ratio (doc 25: 0.012)
   two_way_bal    the same plus an equal premium of wet calls at every station-month
   national_put   puts at every long-record Kalshi station, all 12 months, equal weight
   national_bal   puts and equal-premium calls at every long-record station, all months
@@ -71,10 +71,10 @@ LOAD = rx.LOAD                     # doc 24/25 base-case price load
 
 SC = rx.REGIONS["south_central"]
 WINTER = (11, 12, 1, 2)
-WET_DRY_OBS = 0.012                # doc 25 central wet:dry premium ratio at shared stations, Nov-Feb
+WET_DRY_OBS = 0.012                # modeled, mismatched-wealth-frame scenario; not observed flow
 
 # ---- cost inputs (doc 26 numbers table gives sources) ----------------------------------------
-KALSHI_OBS_LOAD = 0.09             # doc 09 Table 6: Kalshi cost per $1 expected payout 1.09 (central)
+KALSHI_ALL_IN_REFERENCE = 1.09     # doc 09 modeled cost ALREADY includes spread, taker fee and capital
 TAKER_FEE = 0.07                   # Kalshi taker fee = 0.07 * C * P * (1 - P); makers pay 0
 P_PAY = 0.24                       # typical hit rate of the ranch put (doc 25 p_mm_loss) -> fee share 0.07 * (1 - P)
 KALSHI_APY = 0.035                 # Kalshi interest on cash and positions (help center, Oct 2026)
@@ -94,10 +94,10 @@ TAKER_SHARE = TAKER_FEE * (1 - P_PAY)
 
 STRUCTURES = {
     # key: (label, capital measure, required return, interest earned, expense share, hedger-paid fee share)
-    "kalshi_today": ("Hedger trades Kalshi directly (no intermediary)", None, None, None, 0.0, TAKER_SHARE),
+    "kalshi_today": ("Hedger trades Kalshi directly (modeled all-in reference)", None, None, None, 0.0, 0.0),
     "maker_direcnet": ("Our on-exchange maker, Kalshi collateral return", "collat_direcnet", MAKER_COE, KALSHI_APY, 0.0, TAKER_SHARE),
     "maker_plain": ("Our on-exchange maker, no collateral return", "collat_separate", MAKER_COE, KALSHI_APY, 0.0, TAKER_SHARE),
-    "broker": ("Broker routes the hedger to Kalshi (no capital)", None, None, None, 0.0, TAKER_SHARE + BROKER_COMM),
+    "broker": ("Broker routes the hedger to Kalshi (no capital)", None, None, None, 0.0, BROKER_COMM),
     "insurer": ("Insurer/MGA book, fronted and reinsured", "var995", INSURER_COC, TBILL, INSURER_EXPENSE, 0.0),
     "insurer_lean": ("Lean insurer book (existing carrier or captive, no MGA layer)", "var995", INSURER_COC, TBILL,
                      PREMIUM_TAX + ADMIN, 0.0),
@@ -105,7 +105,7 @@ STRUCTURES = {
 
 BOOK_LABELS = {
     "ranch_sc": "Ranch puts only, south-central Nov-Feb",
-    "two_way_obs": "Two-way at today's flow (wet:dry 1:80)",
+    "two_way_obs": "Two-way, modeled low-wet-flow scenario (wet:dry 1:80)",
     "two_way_bal": "Two-way balanced (wet = dry)",
     "national_put": "One-way puts, 34 stations, all months",
     "national_bal": "Two-way balanced, 34 stations, all months",
@@ -331,7 +331,9 @@ def structure_rows(book_key: str, risk: dict) -> list[dict]:
         r = {"book": book_key, "structure": key, "label": label, "expense_share": expense,
              "hedger_fee_share": hedger_fee}
         if cap is None:
-            lam = KALSHI_OBS_LOAD
+            # Unlike a new maker's break-even price, this reference is already
+            # buyer-all-in. Add only a separate broker commission, never a second taker fee.
+            lam = KALSHI_ALL_IN_REFERENCE - 1
             r.update({"capital_per_prem": 0.0, "hold_years": 0.0, "carry": 0.0, "capital_cost_per_prem": 0.0,
                       "break_even_load": np.nan, "price_load": lam, "hedger_cost_per_1": (1 + lam) * (1 + hedger_fee)})
             rows.append(r)
@@ -358,7 +360,9 @@ def backtest(units_oos: pd.DataFrame, book: pd.DataFrame, load: float, expense: 
 
 PNL_BOOKS = ("ranch_sc", "two_way_bal", "national_bal")
 PNL_STRUCTURES = ("maker_direcnet", "insurer_lean", "insurer")
-PNL_LOADS = (KALSHI_OBS_LOAD, LOAD)
+# These are assumed seller-price loads, not observed maker margins. The buyer's
+# 1.09 all-in reference cannot be interpreted as a 9% maker revenue margin.
+PNL_LOADS = (0.09, LOAD)
 
 
 def pnl_rows(book_key: str, risk: dict, units_oos: pd.DataFrame, book: pd.DataFrame) -> list[dict]:
@@ -420,7 +424,8 @@ def auto_block(risk: pd.DataFrame, econ: pd.DataFrame, bt: pd.DataFrame, sens: p
           "the 1-in-200 loss on months already settled plus the current month's full collateral, at its largest. "
           "Capital cost = capital x (required return - interest earned) x years held. Break-even load covers expenses plus "
           "capital cost. The hedger's all-in cost adds fees the hedger pays (Kalshi taker fee, broker commission). "
-          "Direct-Kalshi and broker rows use today's observed Kalshi price (load 9%, doc 09).", "",
+          "Direct-Kalshi uses doc 09's modeled 1.09 all-in buyer reference, with no additional taker fee; "
+          "the broker adds only its assumed commission. New maker rows add a taker fee once to the seller price.", "",
           "| Book | Intermediary | Capital per $1 premium, at that price | Held (yrs) | Capital cost, % premium | Expenses, % premium | Break-even load | Hedger pays per $1 expected payout |",
           "|---|---|---|---|---|---|---|---|"]
     for _, r in econ.iterrows():
@@ -434,7 +439,7 @@ def auto_block(risk: pd.DataFrame, econ: pd.DataFrame, bt: pd.DataFrame, sens: p
     L.append("")
 
     L += [f"**Table C. Gains and losses on a ${BOOK_EL / 1e6:.0f}M book (expected payouts a year).** "
-          "Load 9% = today's Kalshi price (doc 09), which a new seller has to match; 20% = doc 25's base case. "
+          "Loads 9% and 20% are assumed seller-price scenarios; the 1.09 buyer-all-in reference is not a maker margin. "
           "Peak capital = most money tied up at once. Expected profit is after expenses and after paying for capital "
           "(required return minus interest). Return on peak capital = expected profit before the capital charge, plus interest, "
           "over peak capital. Out-of-sample (OOS) columns price on 1951-1995 and pay 1996-2025 (30 seasons), "

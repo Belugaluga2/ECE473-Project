@@ -351,15 +351,25 @@ def _text_only_history(history: list) -> list:
 
 
 def claude_advise(history: list, state: dict, api_key: str | None, client=None, live=None, today=None) -> dict:
-    import anthropic
-    client = client or _client(api_key)
+    # An injected client (including an offline scripted client) should not need
+    # the optional live SDK merely to identify its API error type.
+    try:
+        import anthropic
+    except ImportError:
+        if client is None:
+            raise
+        bad_request_errors = ()
+    else:
+        bad_request_errors = (anthropic.BadRequestError,)
+    if client is None:
+        client = _client(api_key)
     messages = list(history)
     calls = []
     reply, status = "", "info"
     for _ in range(MAX_TURNS):
         try:
             resp = _create(client, messages, SYSTEM_PROMPT)
-        except anthropic.BadRequestError as exc:
+        except bad_request_errors as exc:
             if messages is history or len(messages) == 1:
                 raise
             messages = _text_only_history(history)          # a stale replay: retry with text only

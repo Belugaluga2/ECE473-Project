@@ -4,6 +4,12 @@
 
 Team: Maya, Evan, Jack.
 
+**Paper-evidence branch (2026-11-22):** start with
+[the paper evidence guide](docs/PAPER_EVIDENCE_GUIDE.md) for the branch map, offline
+commands, actual PRF curves, matched-budget and PRF-kept comparisons, loss and liquidity
+audits, and the Chipata feasibility pilot. These preserve the app and prior results;
+no new team direction is implied. The guide links email drafts and a single group handoff.
+
 We set out to build a platform that lets a farmer approximate USDA rainfall-index insurance
 (Pasture, Rangeland, Forage, or PRF) with a portfolio of Kalshi weather event contracts, and
 to measure where the remaining coverage error comes from.

@@ -64,3 +64,13 @@ def test_books_have_unit_pure_premium_and_balanced_book_is_half_calls():
     assert abs(books["two_way_bal"]["w_call"].sum() - 0.5) < 1e-12
     assert set(books["ranch_sc"]["month"]) == {11, 12, 1, 2}
     assert books["ranch_sc"].attrs["start"] == 11 and books["national_bal"].attrs["start"] == 1
+
+
+def test_direct_reference_includes_taker_fee_once_and_broker_adds_only_commission():
+    r = _risk(np.zeros((100, 4)), [1, 1, 1, 1], [0.25]*4, q995=4)
+    rows = {row['structure']: row for row in ic.structure_rows('ranch_sc', r)}
+    assert np.isclose(rows['kalshi_today']['hedger_cost_per_1'], 1.09)
+    assert np.isclose(rows['broker']['hedger_cost_per_1'], 1.09*1.05)
+    maker = rows['maker_direcnet']
+    assert np.isclose(maker['hedger_cost_per_1'],
+                      (1+maker['break_even_load'])*(1+ic.TAKER_SHARE))

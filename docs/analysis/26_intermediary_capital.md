@@ -6,13 +6,22 @@
 
 **Headline: an intermediary helps only if it brings the other side of the trade or the buyers. A traditional fronted insurer adds about 33% of premium in costs and loses money on the ranch book at any realistic price. Capital is the smaller cost; climate drift is the bigger one.**
 
-1. **The two-way structure saves real capital, but only if the wet side shows up.** With equal wet and dry premium at the ranchers' own stations and months, the money an intermediary must hold falls by about 60%: from $39.6M to $15.2M for our Kalshi maker on a $10M-a-year book, and from $28.1M to $9.6M for a lean insurer. Its break-even price load falls from 14% to 6% (maker) or 9% (lean insurer). At today's measured flow, about 1 wet dollar per 80 dry (doc 25), the saving is nil: 1-in-200 loss 4.00 vs 4.01 per $1 of expected payout.
-2. **A fronted insurer/MGA is the most expensive middle.** Fronting fee, MGA and producer commission, premium tax and admin add about 33% of premium. The hedger would pay $1.49-1.59 per $1 of expected payout. Trading Kalshi directly costs $1.15 (doc 09's 1.09 price plus the taker fee), and subsidized PRF costs a rancher $0.61. Cheap reinsurance capital (10.5% cost of equity) does not rescue it: capital costs an insurer only 0-7% of premium.
+1. **The two-way structure saves modeled capital, but only if the wet side shows up.** With equal wet and dry premium at the ranchers' own stations and months, the money an intermediary must hold falls by about 60%: from $39.6M to $15.2M for our Kalshi maker on a $10M-a-year book, and from $28.1M to $9.6M for a lean insurer. Its break-even price load falls from 14% to 6% (maker) or 9% (lean insurer). In doc 25's modeled low-wet-flow scenario, about 1 wet dollar per 80 dry, the saving is nil: 1-in-200 loss 4.00 vs 4.01 per $1 of expected payout. This is not measured purchase flow; the ratio also depends strongly on the wealth framing (see doc 25's bias check).
+2. **A fronted insurer/MGA is the most expensive middle in this model.** Fronting fee, MGA and producer commission, premium tax and admin add about 33% of premium. The hedger would pay $1.49-1.59 per $1 of expected payout. Doc 09's direct-Kalshi reference is $1.09, already including spread, taker fee and capital cost; subsidized PRF costs a sample rancher $0.61. Capital costs this modeled insurer only 0-7% of premium.
 3. **A lean carrier and our own Kalshi maker cost about the same.** Both break even near a 14% load on the ranch-only book. Kalshi's full collateral costs the maker about 12% of premium; the carrier's smaller 1-in-200 reserve costs about 7%, plus 6% in expenses. Kalshi's same-event collateral return only matters once there are calls to net against: it cuts the balanced book's break-even from 9% to 6%.
 4. **Pricing error is the biggest loss.** Priced on 1951-1995 and paid 1996-2025, the south-central winter books paid out 1.18-1.22 per $1 of expected payout. Every intermediary loses money there at both a 9% and a 20% load. The worst season, Nov 2008-Feb 2009, costs about $23-27M on the $10M book. Only the national balanced book is profitable out of sample (maker at 20%: +$0.45M a year).
 5. **The intermediaries worth having do not hold the risk.** They are distributors (a broker, a co-op, a hay buyer that finances the premium to harvest), the carrier behind a 508(h) endorsement, and whoever brings wet-side buyers to the same station-months. That agrees with doc 25's "fix the menu, sell the engine, seed the book".
 
 These are modeled rain-index payouts on airport stations, not farm or venue income. The demand weights come from doc 25 and are biased high. All cost inputs are listed with sources in the numbers table.
+
+**Fee correction (2026-11-21, Maya branch).** The old direct-market calculation charged
+the taker fee twice: `1.09 * (1 + 0.0532) = 1.147988`. Doc 09's 1.09 already includes
+that fee. Direct cost is now 1.09; the assumed 5% broker commission gives
+`1.09 * 1.05 = 1.1445`. New maker break-even quotes still add a taker fee once because
+those seller prices exclude it. The 9% and 20% seller-load backtests are now labeled
+as assumptions, rather than treating a buyer's all-in load as observed maker revenue.
+This makes the balanced-maker break-even cost (about 1.12) higher than the sampled
+1.09 direct reference, so capital savings alone do not establish a cheaper product.
 
 ## The two-way market structure
 
@@ -55,7 +64,7 @@ If the middle seat sells $1 of expected payout to each side, it collects two pre
 | Term | Meaning in this doc | How it is computed |
 |---|---|---|
 | Expected payout (pure premium) | What the contracts pay on average | Mean payout over 1951-2025; the $10M book has $10M of it a year |
-| Load | Price above expected payout | Premium = (1 + load) x expected payout. Kalshi's observed load is 9% (doc 09); doc 25 assumed 20% |
+| Load | Price above expected payout | Premium = (1 + load) x expected payout. Seller loads of 9% and 20% are assumptions, distinct from doc 09's 1.09 buyer-all-in reference |
 | Capital | Money that must sit idle so payouts can always be met | Insurer: 1-in-200 season loss minus premium (Solvency II's 99.5% one-year standard). Kalshi maker: before each month, the 1-in-200 loss on months already settled plus that month's full collateral, at its largest |
 | Capital cost | What tying the capital up costs | Capital x (required return - interest earned on it) x years held. Required return 12% for a small trading firm (assumption) or 10.5% for reinsurers (Guy Carpenter 2026). Interest 3.5% on Kalshi, 4.2% T-bills for an insurer |
 | Expenses | Fees and commissions | Insurer/MGA: fronting 7% + MGA and producer 20% + premium tax 2% + admin 4% = 33% of premium. Lean carrier: 6%. Kalshi maker: 0 (no maker fee on weather); the hedger pays the taker fee, about 5.3% of premium |
@@ -71,7 +80,7 @@ No capital gains in the tax sense are involved. The "gain" is underwriting profi
 
 **Books.**
 - *Ranch puts, south-central Nov-Feb.* DFW, OKC, SAT, AUS, CLL and HOU, weighted by doc 25's modeled rancher demand per station.
-- *Two-way at today's flow.* The same, plus calls at the observed 1:80 wet:dry premium ratio.
+- *Two-way at low modeled wet flow.* The same, plus calls at the assumed 1:80 wet:dry premium ratio. This is a demand-model scenario, not observed order flow.
 - *Two-way balanced.* The same, plus an equal premium of calls at every station-month.
 - *National books.* All 34 long-record Kalshi stations, all 12 months (393 station-months with both contracts): puts only, and puts plus equal-premium calls. They show what diversification alone buys.
 
@@ -91,36 +100,36 @@ No capital gains in the tax sense are involved. The "gain" is underwriting profi
 | Book | Station-months | Copula | Worst year (season) | 1-in-20 | 1-in-100 | 1-in-200 | Kalshi collateral, separate | Kalshi collateral, netted |
 |---|---|---|---|---|---|---|---|---|
 | Ranch puts only, south-central Nov-Feb | 24 | t(10) | 3.44 (1970) | 2.66 | 3.64 | 4.01 | 7.40 | 7.40 |
-| Two-way at today's flow (wet:dry 1:80) | 24 | t(10) | 3.40 (1970) | 2.65 | 3.62 | 4.00 | 7.40 | 7.32 |
+| Two-way, modeled low-wet-flow scenario (wet:dry 1:80) | 24 | t(10) | 3.40 (1970) | 2.65 | 3.62 | 4.00 | 7.40 | 7.32 |
 | Two-way balanced (wet = dry) | 24 | Gaussian | 1.83 (1991) | 1.69 | 2.04 | 2.15 | 7.07 | 3.77 |
 | One-way puts, 34 stations, all months | 393 | Gaussian | 1.81 (1963) | 1.46 | 1.69 | 1.77 | 8.90 | 8.90 |
 | Two-way balanced, 34 stations, all months | 393 | Gaussian | 1.19 (1998) | 1.25 | 1.36 | 1.41 | 7.79 | 4.60 |
 
-Simulation check (simulated vs empirical over the season years with data): Ranch puts only, south-central Nov-Feb: sd 0.84 vs 0.85, 1-in-20 2.66 vs 3.00 (68 seasons); Two-way at today's flow (wet:dry 1:80): sd 0.83 vs 0.83, 1-in-20 2.65 vs 2.97 (68 seasons); Two-way balanced (wet = dry): sd 0.39 vs 0.38, 1-in-20 1.69 vs 1.64 (68 seasons); One-way puts, 34 stations, all months: sd 0.26 vs 0.23, 1-in-20 1.46 vs 1.41 (75 seasons); Two-way balanced, 34 stations, all months: sd 0.15 vs 0.09, 1-in-20 1.25 vs 1.17 (75 seasons).
+Simulation check (simulated vs empirical over the season years with data): Ranch puts only, south-central Nov-Feb: sd 0.84 vs 0.85, 1-in-20 2.66 vs 3.00 (68 seasons); Two-way, modeled low-wet-flow scenario (wet:dry 1:80): sd 0.83 vs 0.83, 1-in-20 2.65 vs 2.97 (68 seasons); Two-way balanced (wet = dry): sd 0.39 vs 0.38, 1-in-20 1.69 vs 1.64 (68 seasons); One-way puts, 34 stations, all months: sd 0.26 vs 0.23, 1-in-20 1.46 vs 1.41 (75 seasons); Two-way balanced, 34 stations, all months: sd 0.15 vs 0.09, 1-in-20 1.25 vs 1.17 (75 seasons).
 
-**Table B. Break-even load: what each intermediary must charge above expected payouts.** Capital = money on hand for the season: an insurer's 1-in-200 season loss net of premium; for a Kalshi maker, the 1-in-200 loss on months already settled plus the current month's full collateral, at its largest. Capital cost = capital x (required return - interest earned) x years held. Break-even load covers expenses plus capital cost. The hedger's all-in cost adds fees the hedger pays (Kalshi taker fee, broker commission). Direct-Kalshi and broker rows use today's observed Kalshi price (load 9%, doc 09).
+**Table B. Break-even load: what each intermediary must charge above expected payouts.** Capital = money on hand for the season: an insurer's 1-in-200 season loss net of premium; for a Kalshi maker, the 1-in-200 loss on months already settled plus the current month's full collateral, at its largest. Capital cost = capital x (required return - interest earned) x years held. Break-even load covers expenses plus capital cost. The hedger's all-in cost adds fees the hedger pays (Kalshi taker fee, broker commission). Direct-Kalshi uses doc 09's modeled 1.09 all-in buyer reference, with no additional taker fee; the broker adds only its assumed commission. New maker rows add a taker fee once to the seller price.
 
 | Book | Intermediary | Capital per $1 premium, at that price | Held (yrs) | Capital cost, % premium | Expenses, % premium | Break-even load | Hedger pays per $1 expected payout |
 |---|---|---|---|---|---|---|---|
-| Ranch puts only, south-central Nov-Feb | Hedger trades Kalshi directly (no intermediary) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.15 |
+| Ranch puts only, south-central Nov-Feb | Hedger trades Kalshi directly (modeled all-in reference) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.09 |
 | Ranch puts only, south-central Nov-Feb | Our on-exchange maker, Kalshi collateral return | 3.52 | 0.42 | 12.4% | 0.0% | 14.2% | 1.20 |
-| Ranch puts only, south-central Nov-Feb | Broker routes the hedger to Kalshi (no capital) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.20 |
+| Ranch puts only, south-central Nov-Feb | Broker routes the hedger to Kalshi (no capital) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.14 |
 | Ranch puts only, south-central Nov-Feb | Insurer/MGA book, fronted and reinsured | 1.52 | 0.42 | 4.0% | 33.0% | 58.7% | 1.59 |
 | Ranch puts only, south-central Nov-Feb | Lean insurer book (existing carrier or captive, no MGA layer) | 2.50 | 0.42 | 6.6% | 6.0% | 14.4% | 1.14 |
-| Two-way balanced (wet = dry) | Hedger trades Kalshi directly (no intermediary) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.15 |
+| Two-way balanced (wet = dry) | Hedger trades Kalshi directly (modeled all-in reference) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.09 |
 | Two-way balanced (wet = dry) | Our on-exchange maker, Kalshi collateral return | 1.57 | 0.42 | 5.5% | 0.0% | 5.9% | 1.12 |
 | Two-way balanced (wet = dry) | Our on-exchange maker, no collateral return | 2.31 | 0.42 | 8.2% | 0.0% | 8.9% | 1.15 |
-| Two-way balanced (wet = dry) | Broker routes the hedger to Kalshi (no capital) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.20 |
+| Two-way balanced (wet = dry) | Broker routes the hedger to Kalshi (no capital) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.14 |
 | Two-way balanced (wet = dry) | Insurer/MGA book, fronted and reinsured | 0.42 | 0.42 | 1.1% | 33.0% | 51.8% | 1.52 |
 | Two-way balanced (wet = dry) | Lean insurer book (existing carrier or captive, no MGA layer) | 0.97 | 0.42 | 2.5% | 6.0% | 9.3% | 1.09 |
-| Two-way balanced, 34 stations, all months | Hedger trades Kalshi directly (no intermediary) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.15 |
+| Two-way balanced, 34 stations, all months | Hedger trades Kalshi directly (modeled all-in reference) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.09 |
 | Two-way balanced, 34 stations, all months | Our on-exchange maker, Kalshi collateral return | 0.59 | 1.00 | 5.0% | 0.0% | 5.3% | 1.11 |
 | Two-way balanced, 34 stations, all months | Our on-exchange maker, no collateral return | 0.81 | 1.00 | 6.9% | 0.0% | 7.4% | 1.13 |
-| Two-way balanced, 34 stations, all months | Broker routes the hedger to Kalshi (no capital) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.20 |
+| Two-way balanced, 34 stations, all months | Broker routes the hedger to Kalshi (no capital) | 0 (seller on Kalshi posts it) | 0.00 | 0.0% | 0.0% | n/a (market price) | 1.14 |
 | Two-way balanced, 34 stations, all months | Insurer/MGA book, fronted and reinsured | 0.00 | 1.00 | 0.0% | 33.0% | 49.3% | 1.49 |
 | Two-way balanced, 34 stations, all months | Lean insurer book (existing carrier or captive, no MGA layer) | 0.29 | 1.00 | 1.9% | 6.0% | 8.5% | 1.09 |
 
-**Table C. Gains and losses on a $10M book (expected payouts a year).** Load 9% = today's Kalshi price (doc 09), which a new seller has to match; 20% = doc 25's base case. Peak capital = most money tied up at once. Expected profit is after expenses and after paying for capital (required return minus interest). Return on peak capital = expected profit before the capital charge, plus interest, over peak capital. Out-of-sample (OOS) columns price on 1951-1995 and pay 1996-2025 (30 seasons), charging expenses and capital cost every year.
+**Table C. Gains and losses on a $10M book (expected payouts a year).** Loads 9% and 20% are assumed seller-price scenarios; the 1.09 buyer-all-in reference is not a maker margin. Peak capital = most money tied up at once. Expected profit is after expenses and after paying for capital (required return minus interest). Return on peak capital = expected profit before the capital charge, plus interest, over peak capital. Out-of-sample (OOS) columns price on 1951-1995 and pay 1996-2025 (30 seasons), charging expenses and capital cost every year.
 
 | Book | Intermediary | Load | Peak capital | Expected profit / yr | Return on peak capital | OOS loss ratio | OOS mean P&L / yr | OOS worst year (season) | OOS losing years | OOS 30-yr total | OOS max drawdown |
 |---|---|---|---|---|---|---|---|---|---|---|---|
@@ -178,7 +187,7 @@ Simulation check (simulated vs empirical over the season years with data): Ranch
 
 **Table A: the two-way structure, and diversification, cut the tail.**
 - Adding equal wet premium at the same south-central station-months cuts the 1-in-200 loss from 4.01 to 2.15 per $1 of expected payout, and Kalshi's netted collateral from 7.40 to 3.77.
-- At today's 1:80 flow nothing changes: 4.00 and 7.32.
+- In the modeled 1:80 scenario little changes: 4.00 and 7.32. This is not observed flow.
 - Spreading puts over 34 stations and 12 months, with no wet side at all, cuts the 1-in-200 to 1.77. Adding the wet side there cuts it to 1.41.
 - Kalshi collateral does not shrink with diversification (8.90 for national puts), because it is posted event by event.
 
@@ -187,10 +196,10 @@ Simulation check (simulated vs empirical over the season years with data): Ranch
 | Route | Ranch-only book | Two-way balanced | National balanced |
 |---|---|---|---|
 | Subsidized PRF (farmer share, doc 09) | 0.61 | n/a | n/a |
-| Kalshi directly, today's book (1.09 + taker fee) | 1.15 | 1.15 | 1.15 |
+| Kalshi directly, doc 09 modeled all-in reference | 1.09 | 1.09 | 1.09 |
 | Our Kalshi maker at break-even (+ taker fee) | 1.20 | 1.12 | 1.11 |
 | Lean carrier at break-even | 1.14 | 1.09 | 1.09 |
-| Broker to Kalshi (5% commission, assumption) | 1.20 | 1.20 | 1.20 |
+| Broker to Kalshi (5% commission on all-in cost, assumption) | 1.14 | 1.14 | 1.14 |
 | Fronted insurer/MGA at break-even | 1.59 | 1.52 | 1.49 |
 
 What drives each row:
@@ -198,7 +207,7 @@ What drives each row:
 - **Diversification and the opposite side help different intermediaries.** For the lean carrier, diversification does most of the work: ranch-only 14.4%, national puts only 10.8%, national balanced 8.5%. For the Kalshi maker, the opposite side does: ranch-only 14.2%, national puts 10.6%, national balanced 5.3%. Kalshi nets only within an event, so a maker gains from wet flow at the same station-month and little from spreading puts around the country.
 
 **Table C: gains and losses on a $10M book.**
-- **Ranch-only book at Kalshi's 9% price.** Neither our maker nor a lean carrier covers its cost of capital (−$0.5M a year in expectation). At a 20% load, both earn about +$0.6M a year on $28-40M of capital, a 6-7% return against the 10.5-12% investors require.
+- **Ranch-only book at an assumed 9% seller load.** Neither our maker nor a lean carrier covers its cost of capital (−$0.5M a year in expectation). At a 20% load, both earn about +$0.6M a year on $28-40M of capital, a 6-7% return against the 10.5-12% investors require. These loads are scenarios, not observed maker margins derived from the buyer's all-in reference.
 - **The balanced two-way book** earns 14-15% at a 20% load, with $10-15M of capital.
 - **Out of sample, every south-central book loses money.** Over 27 seasons, ranch-only and balanced, maker and lean carrier alike, at both loads: −$0.7M to −$2.3M a year, and the 2008 season alone costs about $23M on the ranch book. Winter rain in this region drifted away from its 1951-1995 history (loss ratio 1.18 on puts, 1.22 with calls). That costs more than any capital or fee line.
 - **Only the national balanced book makes money out of sample:** maker +$0.45M a year at a 20% load, worst year −$1.1M, max drawdown $1.9M.
@@ -212,7 +221,7 @@ What drives each row:
 
 | Intermediary | What it brings | What it costs | Verdict |
 |---|---|---|---|
-| Fronted insurer / MGA, reinsured | Insurance paper (needed for non-ECP buyers and loss-linked triggers; doc 25's ECP rules); netting across stations and months; seasonal contracts sold before Kalshi lists the months; access to about $800B of reinsurance capital | About 33% of premium in fronting, commission, tax and admin; licensing; a fronting partner | **No for rain-index ranch cover**: the hedger would pay 1.49-1.59 against 1.15 on Kalshi. Worth it only for products Kalshi cannot list (loss-linked cover, day-count or snow wet sides, cross-city pools), as doc 25 concluded |
+| Fronted insurer / MGA, reinsured | Insurance paper (needed for non-ECP buyers and loss-linked triggers; doc 25's ECP rules); netting across stations and months; seasonal contracts sold before Kalshi lists the months; access to about $800B of reinsurance capital | About 33% of premium in fronting, commission, tax and admin; licensing; a fronting partner | **No for rain-index ranch cover**: the hedger would pay 1.49-1.59 against the modeled 1.09 direct-Kalshi reference. Worth it only for products Kalshi cannot list (loss-linked cover, day-count or snow wet sides, cross-city pools), as doc 25 concluded |
 | Lean carrier (an existing AIP or a captive, no MGA layer) | The same reserve-based book without the distribution stack | About 6% expenses plus capital | **About even with our own maker**: break-even 14% ranch-only, 9% balanced. Under a 508(h) endorsement, FCIC subsidy and reinsurance would change these numbers completely (not modeled) |
 | Reinsurer / ILS fund (Nephila and others) | Cheap capital: 10.5% cost of equity, cat-bond multiples near 2.4x expected loss | Reached only through a carrier | **Small gain.** Capital costs 0-12% of premium in every row, so cheaper capital saves at most a few points |
 | Our on-exchange maker | Two-sided quotes; same-event collateral netting; no license needed for proprietary trading (doc 25, inference) | Full collateral; 12% required return (assumption) | **Only with wet flow at the same station-months**: break-even 6% balanced vs 14% ranch-only, against Kalshi's 9% today |

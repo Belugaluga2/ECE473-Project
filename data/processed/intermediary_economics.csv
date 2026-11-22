@@ -1,31 +1,31 @@
 book,structure,label,expense_share,hedger_fee_share,capital_per_prem,hold_years,carry,capital_cost_per_prem,break_even_load,price_load,hedger_cost_per_1
-ranch_sc,kalshi_today,Hedger trades Kalshi directly (no intermediary),0.0,0.053200000000000004,0.0,0.0,0.0,0.0,,0.09,1.147988
+ranch_sc,kalshi_today,Hedger trades Kalshi directly (modeled all-in reference),0.0,0.0,0.0,0.0,0.0,0.0,,0.09000000000000008,1.09
 ranch_sc,maker_direcnet,"Our on-exchange maker, Kalshi collateral return",0.0,0.053200000000000004,3.515016706625215,0.4166666666666667,0.08499999999999999,0.12449017502630969,0.1421916367758074,0.1421916367758074,1.2029562318522802
 ranch_sc,maker_plain,"Our on-exchange maker, no collateral return",0.0,0.053200000000000004,3.515016706625215,0.4166666666666667,0.08499999999999999,0.12449017502630969,0.1421916367758074,0.1421916367758074,1.2029562318522802
-ranch_sc,broker,Broker routes the hedger to Kalshi (no capital),0.0,0.10320000000000001,0.0,0.0,0.0,0.0,,0.09,1.202488
+ranch_sc,broker,Broker routes the hedger to Kalshi (no capital),0.0,0.05,0.0,0.0,0.0,0.0,,0.09000000000000008,1.1445
 ranch_sc,insurer,"Insurer/MGA book, fronted and reinsured",0.33,0.0,1.5234877275292238,0.4166666666666667,0.063,0.03999155284764213,0.5872803047641764,0.5872803047641764,1.5872803047641764
 ranch_sc,insurer_lean,"Lean insurer book (existing carrier or captive, no MGA layer)",0.06,0.0,2.502075427971437,0.4166666666666667,0.063,0.06567947998425022,0.1437453166282615,0.1437453166282615,1.1437453166282614
-two_way_obs,kalshi_today,Hedger trades Kalshi directly (no intermediary),0.0,0.053200000000000004,0.0,0.0,0.0,0.0,,0.09,1.147988
+two_way_obs,kalshi_today,Hedger trades Kalshi directly (modeled all-in reference),0.0,0.0,0.0,0.0,0.0,0.0,,0.09000000000000008,1.09
 two_way_obs,maker_direcnet,"Our on-exchange maker, Kalshi collateral return",0.0,0.053200000000000004,3.5030653477762015,0.4166666666666667,0.08499999999999999,0.12406689773374048,0.14163969532918455,0.14163969532918455,1.202374927120697
 two_way_obs,maker_plain,"Our on-exchange maker, no collateral return",0.0,0.053200000000000004,3.519040135119893,0.4166666666666667,0.08499999999999999,0.12463267145216286,0.14237756812208,0.14237756812208,1.2031520547461745
-two_way_obs,broker,Broker routes the hedger to Kalshi (no capital),0.0,0.10320000000000001,0.0,0.0,0.0,0.0,,0.09,1.202488
+two_way_obs,broker,Broker routes the hedger to Kalshi (no capital),0.0,0.05,0.0,0.0,0.0,0.0,,0.09000000000000008,1.1445
 two_way_obs,insurer,"Insurer/MGA book, fronted and reinsured",0.33,0.0,1.5184979115848836,0.4166666666666667,0.063,0.03986057017910319,0.5869503679276632,0.5869503679276632,1.5869503679276633
 two_way_obs,insurer_lean,"Lean insurer book (existing carrier or captive, no MGA layer)",0.06,0.0,2.4951506026124153,0.4166666666666667,0.063,0.06549770331857589,0.14350757430233937,0.14350757430233937,1.1435075743023393
-two_way_bal,kalshi_today,Hedger trades Kalshi directly (no intermediary),0.0,0.053200000000000004,0.0,0.0,0.0,0.0,,0.09,1.147988
+two_way_bal,kalshi_today,Hedger trades Kalshi directly (modeled all-in reference),0.0,0.0,0.0,0.0,0.0,0.0,,0.09000000000000008,1.09
 two_way_bal,maker_direcnet,"Our on-exchange maker, Kalshi collateral return",0.0,0.053200000000000004,1.5662569532718893,0.4166666666666667,0.08499999999999999,0.055471600428379404,0.05872941507480123,0.05872941507480123,1.1150538199567805
 two_way_bal,maker_plain,"Our on-exchange maker, no collateral return",0.0,0.053200000000000004,2.3112752275117727,0.4166666666666667,0.08499999999999999,0.08185766430770862,0.08915574538449625,0.08915574538449625,1.1470988310389514
-two_way_bal,broker,Broker routes the hedger to Kalshi (no capital),0.0,0.10320000000000001,0.0,0.0,0.0,0.0,,0.09,1.202488
+two_way_bal,broker,Broker routes the hedger to Kalshi (no capital),0.0,0.05,0.0,0.0,0.0,0.0,,0.09000000000000008,1.1445
 two_way_bal,insurer,"Insurer/MGA book, fronted and reinsured",0.33,0.0,0.42008330860374554,0.4166666666666667,0.063,0.01102718685084832,0.5175132874163966,0.5175132874163966,1.5175132874163966
 two_way_bal,insurer_lean,"Lean insurer book (existing carrier or captive, no MGA layer)",0.06,0.0,0.9707798878827563,0.4166666666666667,0.063,0.025482972056922352,0.09347335199344488,0.09347335199344488,1.093473351993445
-national_put,kalshi_today,Hedger trades Kalshi directly (no intermediary),0.0,0.053200000000000004,0.0,0.0,0.0,0.0,,0.09,1.147988
+national_put,kalshi_today,Hedger trades Kalshi directly (modeled all-in reference),0.0,0.0,0.0,0.0,0.0,0.0,,0.09000000000000008,1.09
 national_put,maker_direcnet,"Our on-exchange maker, Kalshi collateral return",0.0,0.053200000000000004,1.1297720886092073,1.0,0.08499999999999999,0.09603062753178261,0.10623216942580536,0.10623216942580536,1.165083720839258
 national_put,maker_plain,"Our on-exchange maker, no collateral return",0.0,0.053200000000000004,1.1297720886092073,1.0,0.08499999999999999,0.09603062753178261,0.10623216942580536,0.10623216942580536,1.165083720839258
-national_put,broker,Broker routes the hedger to Kalshi (no capital),0.0,0.10320000000000001,0.0,0.0,0.0,0.0,,0.09,1.202488
+national_put,broker,Broker routes the hedger to Kalshi (no capital),0.0,0.05,0.0,0.0,0.0,0.0,,0.09000000000000008,1.1445
 national_put,insurer,"Insurer/MGA book, fronted and reinsured",0.33,0.0,0.1684845127689333,1.0,0.063,0.0106145243044428,0.5165635836081214,0.5165635836081214,1.5165635836081215
 national_put,insurer_lean,"Lean insurer book (existing carrier or captive, no MGA layer)",0.06,0.0,0.5988949062854573,1.0,0.063,0.037730379095983806,0.10831615830982347,0.10831615830982347,1.1083161583098236
-national_bal,kalshi_today,Hedger trades Kalshi directly (no intermediary),0.0,0.053200000000000004,0.0,0.0,0.0,0.0,,0.09,1.147988
+national_bal,kalshi_today,Hedger trades Kalshi directly (modeled all-in reference),0.0,0.0,0.0,0.0,0.0,0.0,,0.09000000000000008,1.09
 national_bal,maker_direcnet,"Our on-exchange maker, Kalshi collateral return",0.0,0.053200000000000004,0.5897346794827922,1.0,0.08499999999999999,0.050127447756037335,0.0527728142450449,0.0527728142450449,1.1087803279628814
 national_bal,maker_plain,"Our on-exchange maker, no collateral return",0.0,0.053200000000000004,0.8137762558351,1.0,0.08499999999999999,0.06917098174598349,0.07431115746233345,0.07431115746233345,1.1314645110393295
-national_bal,broker,Broker routes the hedger to Kalshi (no capital),0.0,0.10320000000000001,0.0,0.0,0.0,0.0,,0.09,1.202488
+national_bal,broker,Broker routes the hedger to Kalshi (no capital),0.0,0.05,0.0,0.0,0.0,0.0,,0.09000000000000008,1.1445
 national_bal,insurer,"Insurer/MGA book, fronted and reinsured",0.33,0.0,0.0,1.0,0.063,0.0,0.4925373134328619,0.4925373134328619,1.492537313432862
 national_bal,insurer_lean,"Lean insurer book (existing carrier or captive, no MGA layer)",0.06,0.0,0.29497791812369506,1.0,0.063,0.01858360884179279,0.08528566411002773,0.08528566411002773,1.0852856641100277

@@ -2,6 +2,20 @@
 
 Read this first, then [docs/00_OVERVIEW.md](docs/00_OVERVIEW.md) (index of every doc, headline numbers, next steps).
 
+**Paper evidence branch (2026-11-22):** `maya-paper-evidence` is based on PR 12 (`492c274`),
+in a separate worktree. Read [docs/PAPER_EVIDENCE_GUIDE.md](docs/PAPER_EVIDENCE_GUIDE.md).
+It fixes double-counted taker fees, adds exploratory matched-premium diagnostics (doc 30)
+and a Chipata rainfall-index feasibility pilot (doc 31). Docs 32-33 keep original PRF
+with an extra 20% budget, audit six loss timing/valuation assumptions, and quantify
+per-ticket capacity needs. `scripts/run_prf_addons.py` reuses frozen doc-30 tickets
+offline; do not refit to the already-inspected replay. Read the loss-value and saved-book
+limitations before quoting results. `docs/OUTREACH_AND_HANDOFF.md` contains email drafts
+and one group message; no messages have been sent. Preserve the original Maya
+branch and all teammate work. Evaluation years were already inspected; do not retune
+or describe them as new confirmation. No app/order/insurance business was deployed.
+Use the original checkout's `.venv/Scripts/python.exe` with this worktree's `src` on
+`PYTHONPATH`; no installation is needed.
+
 ## What the project is now (2026-11-13)
 
 ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall insurance (PRF) with Kalshi monthly-rain contracts". That failed: Kalshi costs about 1.8x subsidized PRF, airport gauges sit 30-55 miles from the farm, and order books are thin (docs 08-09, 16).
@@ -12,7 +26,7 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 
 **Added 2026-11-19: expansion research (doc 25).** Bridge insurance abroad fails (Kalshi country restrictions, no local stations, tiny tickets); pairing opposite weather hedgers mostly buys ordinary diversification and its worst-year benefit only exists on an insurer's own book. Second pass (2026-11-20) reversed the ranking. Lenders show no drought losses to hedge, so they are distributors. Kalshi already nets same-event collateral (`DIRECNET`). A 17-strategy head-to-head finds no clear winner: a loose pack led by 508(h), structuring software and a snow Companion; own-book pairings rank #10 or lower. Recommended combination: fix the menu, sell the engine, seed the book. Three independent logic reviews are in `docs/research/expansion_notes/logic_review_*.md`. Non-farm demand is unmeasured.
 
-**Added 2026-11-20: intermediaries (doc 26).** Balanced wet and dry flow at the same station-months cuts an intermediary's capital about 60%, but today's 1:80 flow saves nothing. A fronted insurer/MGA adds about 33% of premium (hedger pays 1.49-1.59 per $1 of expected payout, against 1.15 on Kalshi). A lean carrier and our own Kalshi maker both break even near a 14% load on the ranch book. Priced on 1951-1995, every south-central book loses money in 1996-2025: drift costs more than capital. The intermediaries worth having bring buyers or the other side, not capital.
+**Added 2026-11-20: intermediaries (doc 26), corrected 2026-11-21.** Balanced hypothetical wet and dry flow at the same station-months cuts modeled capital about 60%; the low-wet-demand 1:80 scenario saves little, but it is not measured flow. A fronted insurer/MGA adds about 33% of premium (hedger pays 1.49-1.59 per $1 expected payout). The direct-Kalshi reference is 1.09, already including taker fees; it must not be charged a fee again. A lean carrier and our own Kalshi maker break even near a 14% seller load on the ranch book. Priced on 1951-1995, south-central books lose money in 1996-2025 under the stated cost/price scenarios. These are model results, not operating businesses.
 
 **Added 2026-11-09: contract design and the advisor (doc 24).** At equal premium, convex shapes beat linear in 0 of 36 insured windows at the saved book's depth. Under a modeled farmer with risk aversion 2, wealth twice the month's insured value and a 20% price load, smooth exponential and quadratic shapes capture 93% and 90% of the utility-optimal contract's modeled value, versus 67% for linear. The raw optimum overfits; these are modeled utility results, not observed income gains. The app has a contract designer and advisor. The rule-based advisor runs in the demo; the Claude path has scripted-client tests but no live API test yet.
 
@@ -44,7 +58,7 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 ## Run it
 
 ```bash
-.venv/bin/python -m pytest              # 396 tests, ~12 s (~35 s on Windows)
+.venv/bin/python -m pytest              # 410 passed on paper-evidence branch, 2026-11-22
 .venv/bin/python scripts/run_app.py     # http://localhost:8473/?demo  (PRF Companion, Dallas hay farm); ?demo=exotic, ?demo=advisor
 ```
 

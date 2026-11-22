@@ -1,5 +1,11 @@
 # AgriHedge demo guide (Milestone II showcase)
 
+**Paper follow-up (2026-11-22, experimental branch):** use the
+[paper evidence guide](PAPER_EVIDENCE_GUIDE.md) for actual-PRF curves, fixed-budget
+results, PRF-kept add-ons, loss/capacity audits, source distinctions, and the optional
+public-data pilot. The app's product behavior is unchanged; injected advisor tests can
+now run without the optional SDK installed. The guide links one consolidated group handoff.
+
 **One-line pitch:** keep USDA rainfall insurance (PRF), use Kalshi where a sample farmer left months unselected, then design a drought-weighted payout where the station signal and available book support it.
 
 **Current presentation:** [PowerPoint](presentation/AgriHedge_Journey_2026-11-17.pptx) and [PDF](presentation/AgriHedge_Journey_2026-11-17.pdf). Slides are due **November 16 at 11:59pm**; presentations start November 17. The 10-minute talk follows the project's decisions: attempted PRF replacement, measured reasons it failed, the companion pivot, the liquidity limit, drought-weighted design, and the equal-premium correction. The [November 12 Milestone II update](milestone2/milestone2_update.pdf) is the written source for that arc.

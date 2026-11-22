@@ -1,0 +1,35 @@
+{
+  "cases": [
+    "DFW_hay",
+    "SAT_graze",
+    "ABQ_graze"
+  ],
+  "fit": [
+    1951,
+    2000
+  ],
+  "evaluate": [
+    2001,
+    2025
+  ],
+  "mix_prf_share": 0.8,
+  "tail_shapes": "exp5, deep50, digital30 inherited from prior study; not retuned",
+  "family_audit": "deep50/digital30 added after first exp5 results; all retained as exploratory sensitivities",
+  "bootstrap": {
+    "draws": 2000,
+    "block_years": 2,
+    "seed": 473
+  },
+  "status": "exploratory; evaluation years already inspected in prior work",
+  "loss": "modeled forage-loss proxy, NRCS growth weights; not observed farm income",
+  "proposed": "two-month third-inch instruments are not listed",
+  "depth": "November 2026 ladder repeated across calendar months: capacity stress, not historical fills",
+  "input_files": [
+    "prf_scenario_results.csv",
+    "prf_official_index.csv",
+    "station_monthly_precip.csv",
+    "ncei_monthly_precip_grids.parquet",
+    "kalshi_rain_orderbook_summary.csv"
+  ],
+  "actual_prf": "2026 actuarial terms applied counterfactually to NCEI historical index, not actual historical payments"
+}
