@@ -45,6 +45,7 @@ $env:PYTHONPATH = (Join-Path (Get-Location) 'src')
 & $py scripts/run_matched_premium.py
 & $py scripts/run_prf_addons.py
 & $py scripts/run_chipata_pilot.py
+& $py scripts/inspect_paper_results.py
 & $py -m pytest
 ```
 
@@ -52,6 +53,12 @@ All three analyses work offline from committed inputs. The US runs regenerate
 summary/year/ticket CSVs, policy curves, loss/capacity audits and their AUTO tables.
 The Zambia run regenerates its seasonal replay, summary, and AUTO table. None submits orders. Preserve prose
 outside AUTO blocks; use the scripts to change generated tables.
+
+The optional inspection command fits nothing: it joins the frozen matched-budget
+portfolios to all six loss sensitivities and writes `maya_matched_loss_audit.csv`.
+Doc 32 gives retrospective Albuquerque 2009/2018 examples of higher/lower payouts,
+and balances them against the full-family worst-loss results. It distinguishes an
+individual existing-strike win from proposed-market results and overall protection.
 
 The first new US analysis used the inherited exponential shape. The later family audit
 adds the prior deck's disaster-only and binary designs after that first run, retaining

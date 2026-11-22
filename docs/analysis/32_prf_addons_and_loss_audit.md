@@ -125,11 +125,45 @@ Rent-to-replacement conversion changes valuation, not rainfall sensitivity calib
 or geographic mismatch. Actual feed purchases, stocking changes and farm income would
 be needed to validate protection. Do not inflate a proxy merely to make a hedge win.
 
+## Can an existing-strike portfolio win in an individual year?
+
+Yes, under the modeled prices and full-fill assumption. This retrospective illustration
+uses frozen doc-30 portfolios and the growth/replacement loss sensitivity. It is not
+selection on a new confirmation sample or an actual trade. The 2009 year is outside
+doc 30's very specific severe-state flag (any selected PRF interval index <=30), even
+though the growth/replacement proxy estimates a substantial annual forage loss.
+
+| Albuquerque example | PRF payout | Portfolio payout | Replacement loss proxy | Interpretation |
+|---|---:|---:|---:|---|
+| 2009, existing monthly digital-target portfolio | $2,059 | $19,495 | $62,072 | Lower modeled shortfall in this year at approximately the same $12,120 budget; assumes unlimited depth |
+| 2018, same existing-monthly portfolio | $25,055 | $15,625 | $68,900 | Pays less than PRF in this severe-flagged year |
+| 2018, proposed two-month third-inch deep50 portfolio | $25,055 | $26,560 | $68,900 | Higher payout and lower modeled shortfall; proposed instruments, unlimited depth |
+
+Source: join `maya_matched_premium_years.csv` and `maya_addon_loss_variants.csv` on
+farm/year, central prices, test years, growth/replacement variant. Exact costs and
+premium-inclusive shortfalls are printed by `scripts/inspect_paper_results.py`.
+
+The full frozen-family audit is saved as `maya_matched_loss_audit.csv`, including all
+six loss variants and both price scenarios. Under growth/replacement and central prices,
+the Albuquerque monthly digital-target portfolio has lower premium-inclusive shortfall
+than PRF in 8 of 25 replay years and higher shortfall in 15, with 2 ties. Its mean
+shortfall in the five worst modeled-loss years is about $28,547 worse than PRF with
+unlimited depth. Across these three cases, no tested replacement or reallocation
+strategy improves that five-worst-years metric under this valuation. These numbers
+are sourced to the audit CSV via the inspection script, which checks that its rent
+variant reproduces doc 30. Annual wins can also result from spending less and retaining
+cash; a win count is not a sufficient insurance-quality score.
+
+Thus "sometimes pays more" is supported, including an existing-strike illustration.
+"Protects the worst losses better overall" is not supported for these frozen replacements.
+The PRF-kept add-ons answer a separate extra-budget question, as reported above.
+
 ## Reproduce, sources and numbers
 
 ```powershell
 $env:PYTHONPATH='src'
 python scripts/run_prf_addons.py
+python scripts/inspect_paper_results.py
 ```
 
 Use the original project `.venv` as shown in the entry guide. The script is offline.
