@@ -1,0 +1,14 @@
+farm_id,depth,arm,candidate,contracts,contracts_with_training_fair_one,contracts_with_clipped_ask_below_training_fair
+ABQ_graze,saved_depth_proxy,addon,power_T100_p1,1908,0,0
+ABQ_graze,saved_depth_proxy,reallocation,power_T100_p1,1908,0,0
+ABQ_graze,saved_depth_proxy,replacement,direct_cvar,13199,1540,1540
+ABQ_graze,unlimited,addon,direct_cvar,5031,0,0
+ABQ_graze,unlimited,reallocation,direct_cvar,3560,0,0
+ABQ_graze,unlimited,replacement,direct_cvar,17809,0,0
+DFW_hay,saved_depth_proxy,replacement,power_T90_p3,1404,0,0
+SAT_graze,saved_depth_proxy,addon,power_T70_p1,305,0,0
+SAT_graze,saved_depth_proxy,reallocation,power_T70_p1,305,0,0
+SAT_graze,saved_depth_proxy,replacement,power_T70_p1,305,0,0
+SAT_graze,unlimited,addon,power_T100_p1,1762,0,0
+SAT_graze,unlimited,reallocation,power_T100_p1,1762,0,0
+SAT_graze,unlimited,replacement,direct_cvar,9288,0,0

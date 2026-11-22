@@ -16,6 +16,16 @@ or describe them as new confirmation. No app/order/insurance business was deploy
 Use the original checkout's `.venv/Scripts/python.exe` with this worktree's `src` on
 `PYTHONPATH`; no installation is needed.
 
+**Direct-risk experiment (doc 34):** `scripts/run_direct_tail.py` runs offline from
+committed inputs. Protocol `data/scenarios/maya_direct_protocol.json` was committed
+before outputs as `bb50e11`. It compares direct CVaR quantities with a declared
+trigger/power family, selecting on 1986-2000 after fitting 1951-1985, then refitting
+pre-2001 and replaying 2001-2025. Results are now inspected; do not retune on them.
+All candidates and six loss sensitivities are retained. Albuquerque's unlimited-depth
+add-on has a modest point-estimate gain; saved-depth and price stresses weaken it,
+and selected CVaR intervals include zero. No observed farm-income validation or
+seasonal market availability is established. Read doc 34 before citing the figures.
+
 ## What the project is now (2026-11-13)
 
 ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall insurance (PRF) with Kalshi monthly-rain contracts". That failed: Kalshi costs about 1.8x subsidized PRF, airport gauges sit 30-55 miles from the farm, and order books are thin (docs 08-09, 16).
@@ -58,7 +68,7 @@ ECE473 team project (Maya, Evan, Jack). It started as "replicate USDA rainfall i
 ## Run it
 
 ```bash
-.venv/bin/python -m pytest              # 410 passed on paper-evidence branch, 2026-11-22
+.venv/bin/python -m pytest              # 420 passed on paper-evidence branch, 2026-11-22
 .venv/bin/python scripts/run_app.py     # http://localhost:8473/?demo  (PRF Companion, Dallas hay farm); ?demo=exotic, ?demo=advisor
 ```
 

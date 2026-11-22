@@ -143,8 +143,9 @@ No government grant or Kalshi market-maker admission is assumed in the experimen
 | Keep PRF and spend extra? | `analysis/32_prf_addons_and_loss_audit.md` | `scripts/run_prf_addons.py`, `paper_followup.py`, `maya_prf_addon_*.csv` |
 | Why do loss values differ? | Doc 32 and existing doc 13 | `loss_model.py`, `maya_loss_scale_audit.csv`, `maya_addon_loss_variants.csv` |
 | How much market depth? | `analysis/33_liquidity_requirements.md` | `maya_liquidity_requirements_{legs,summary}.csv` |
+| Can direct risk optimization improve target fitting? | `analysis/34_direct_tail_optimization.md` | `scripts/run_direct_tail.py`, `direct_tail.py`, `maya_direct_{validation,selection,summary}.csv` |
 | Zambia data and existing cover? | `analysis/31_chipata_index_feasibility.md` | `scripts/run_chipata_pilot.py`, `maya_chipata_*.csv`, source JSON |
-| Unit checks? | `tests/` | `test_paper_evidence.py`, `test_paper_followup.py`, `test_chipata_pilot.py`, intermediary/advisor tests |
+| Unit checks? | `tests/` | `test_direct_tail.py`, `test_paper_evidence.py`, `test_paper_followup.py`, `test_chipata_pilot.py`, intermediary/advisor tests |
 
 Processed filenames in this table live under `data/processed/`; modules live under
 `src/agri_hedge/`. This branch retains the merged app rather than silently importing

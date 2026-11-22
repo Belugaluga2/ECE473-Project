@@ -2,23 +2,26 @@
 
 This guide belongs to **`maya-paper-evidence`**, based on Jack's PR 12 (`492c274`).
 It adds a fee correction, matched-budget and PRF-kept comparisons, a loss audit,
-capacity requirements and a small Zambia index pilot. It preserves the companion app
+capacity requirements, direct risk optimization and a small Zambia index pilot. It preserves the companion app
 and all earlier research. This is a separate review branch, not an agreed new direction.
 
 ## Read in this order
 
-1. [PRF-kept add-ons and loss audit](analysis/32_prf_addons_and_loss_audit.md): why
+1. [Direct risk optimization](analysis/34_direct_tail_optimization.md): quantities chosen
+   to reduce tail shortfalls, a fixed trigger/curvature family, earlier-year validation,
+   all replay results, uncertainty checks and committed figures.
+2. [PRF-kept add-ons and loss audit](analysis/32_prf_addons_and_loss_audit.md): why
    extra spending differs from reallocation, six loss sensitivities, and conditional results.
-2. [Liquidity requirements](analysis/33_liquidity_requirements.md): required contracts,
+3. [Liquidity requirements](analysis/33_liquidity_requirements.md): required contracts,
    missing offers and depth multipliers for the same frozen add-ons.
-3. [Matched-premium drought study](analysis/30_matched_premium_drought.md): definitions,
+4. [Matched-premium drought study](analysis/30_matched_premium_drought.md): definitions,
    formulas, actual PRF curves and the original budget-reallocation experiment.
-4. [Intermediary model](analysis/26_intermediary_capital.md): corrected once-only fees.
-5. [Chipata pilot](analysis/31_chipata_index_feasibility.md): local public rainfall data
+5. [Intermediary model](analysis/26_intermediary_capital.md): corrected once-only fees.
+6. [Chipata pilot](analysis/31_chipata_index_feasibility.md): local public rainfall data
    outside DRIVE's countries. It demonstrates feasibility, not improved farmer protection.
-6. [Earlier contract-design study](analysis/24_contract_design.md): why equal premium and
+7. [Earlier contract-design study](analysis/24_contract_design.md): why equal premium and
    equal maximum payout answer different questions.
-7. [Outreach drafts and calculation sources](OUTREACH_AND_HANDOFF.md): research
+8. [Outreach drafts and calculation sources](OUTREACH_AND_HANDOFF.md): research
    questions that can be answered by email and a map from claims to calculations.
 
 The fixed-budget US replay did **not** establish better worst-loss protection than
@@ -30,6 +33,13 @@ rent valuation; Dallas worsens residual variation and San Antonio is mixed. Extr
 costs extra money, and these are not validated farm-income results.
 The Zambia pilot establishes data/settlement feasibility and exposes product and
 window sensitivity; it does not establish farmer benefit or a new commercial market.
+
+The latest direct-risk experiment (doc 34) selects parameters/methods using earlier
+years. The Albuquerque unlimited-depth add-on has a larger point-estimate benefit
+than the selected target-fitting control on the same menu. The saved-depth result
+is much smaller and price/valuation-sensitive. All primary selected CVaR intervals
+include zero. Preserve those qualifications; the experiment does not establish a
+generally superior replacement for PRF.
 
 HE means **hedge effectiveness**: `1-Var(target-payout)/Var(target)`. It measures remaining
 variation, not percentage accuracy or profit. Always say what the target is. A portfolio
@@ -46,6 +56,7 @@ $env:PYTHONPATH = (Join-Path (Get-Location) 'src')
 & $py scripts/run_prf_addons.py
 & $py scripts/run_chipata_pilot.py
 & $py scripts/inspect_paper_results.py
+& $py scripts/run_direct_tail.py
 & $py -m pytest
 ```
 
@@ -53,6 +64,12 @@ All three analyses work offline from committed inputs. The US runs regenerate
 summary/year/ticket CSVs, policy curves, loss/capacity audits and their AUTO tables.
 The Zambia run regenerates its seasonal replay, summary, and AUTO table. None submits orders. Preserve prose
 outside AUTO blocks; use the scripts to change generated tables.
+
+`run_direct_tail.py` is an additional independent offline entry point (about five
+seconds on the reviewed environment). It regenerates doc 34, all `maya_direct_*`
+tables and both PNG/PDF figures. It does not depend on having run docs 30-33 first.
+Protocol, algorithm, selections, prices, tickets, yearly outcomes, all sensitivities,
+fit/rounding checks and input/code hashes are recorded; see doc 34's output map.
 
 The optional inspection command fits nothing: it joins the frozen matched-budget
 portfolios to all six loss sensitivities and writes `maya_matched_loss_audit.csv`.
@@ -108,8 +125,9 @@ untracked `output/` are separate local artifacts, not part of this research bran
 
 | Material | Location or transfer requirement |
 |---|---|
-| Current evidence documents and calculations | This branch, `docs/analysis/30` through `33`, `scripts/`, `src/agri_hedge/` |
+| Current evidence documents and calculations | This branch, `docs/analysis/30` through `34`, `scripts/`, `src/agri_hedge/` |
 | New PRF comparison figure | This branch, `docs/figures/maya_actual_prf_curves.png` and `.pdf` |
+| Direct-risk and add-on uncertainty figures | This branch, `docs/figures/maya_direct_tail_results.*` and `maya_direct_addon_uncertainty.*` |
 | New analysis inputs and result tables | This branch, `data/processed/maya_*`; enough for the offline evidence runs |
 | Earlier dairy/corn experiments | Remote `maya-experiments`, commit `34410e9`; fetch that branch separately |
 | Original course PDFs, uploaded decks and screenshots | Separate source files outside the repository; transfer privately if needed |
@@ -165,7 +183,7 @@ text or exempt tables. Ask the TA whether supplementary figure pages may also co
 captions, tables and prose; keep the question, essential methods and core evidence in
 the main report.
 
-Verification on November 22: **410 tests passed** using the original project venv and
+Verification on November 22: **420 tests passed** using the original project venv and
 this branch's `src` on `PYTHONPATH`. New accounting, missing-offer, fitting-boundary and
 zero-event-pricing checks are in `tests/`. No dependencies were
 installed. No live order or deployed app was tested by this evidence work.
